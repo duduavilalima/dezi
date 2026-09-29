@@ -1,0 +1,40 @@
+include:
+  - project: 'avd/deploy'
+    ref: master
+    file: '/ci/gitlab-ci.common.yml'
+
+variables:
+  DEZI_SERVICE_VARNAME: QUEUE
+  DEZI_SERVICE_NAME: queue
+
+.artifact-paths: &artifact-paths
+  paths:
+    - build/target/dezi-queue.jar
+
+.cache-paths: &cache-paths
+  paths:
+    - build/m2/repository
+
+build-production-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-hotfix-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-staging-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths

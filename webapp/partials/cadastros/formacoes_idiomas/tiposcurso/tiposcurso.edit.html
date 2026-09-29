@@ -1,0 +1,53 @@
+<form-page
+	can-create="{{ $ctrl.canEdit }}"
+	on-create="$ctrl.handleCreate()"
+	on-back="$ctrl.back()"
+>
+	<form-card
+		name="formCargo"
+		card-title="TIPOS.DESCRICAO"
+		on-save="$ctrl.save()"
+		on-cancel="$ctrl.cancel()"
+	>
+		<labeled-input
+			flex-gt-xs="25"
+			name="nome"
+			label="TIPOS.TIPODECURSO"
+			value="$ctrl.tipoCurso.nome"
+			options="{
+				required: true,
+				min: 2,
+				max: 20
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="25"
+			name="preencheGraduacao"
+			type="select-boolean"
+			label="TIPOS.REQUER"
+			value="$ctrl.tipoCurso.preencheGraduacao"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="25"
+			name="preencheEspecializacao"
+			type="select-boolean"
+			label="TIPOS.REQUEROUTRO"
+			value="$ctrl.tipoCurso.preencheEspecializacao"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="25"
+			name="situacao"
+			label="TIPOS.SITUACAO"
+			value="'SITUACAO.' + $ctrl.tipoCurso.situacao"
+			options="{ disabled: true, translate: true }"
+		/>
+	</form-card>
+</form-page>

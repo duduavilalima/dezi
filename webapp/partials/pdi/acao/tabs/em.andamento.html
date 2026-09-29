@@ -1,0 +1,142 @@
+<md-table-container style="background-color: #FFF">
+		<div layout-align="end center" layout-align-xs="center center" layout="row" ng-if="$ctrl.model.listaAcao.length > 0">
+			<md-button ng-click="$ctrl.gerarRelatorio($ctrl.model.funcionario.id)" class="md-button md-primary md-accent-fg text-capitalize">
+				<md-icon md-font-icon="icon-file" class="md-accent-fg"/>
+				<span translate>PDI.BOTAO_RELATORIO</span>
+			</md-button>
+	</div>
+		<table id="table-list" md-table md-progress="$ctrl.model.listaAcao">
+			<body md-body>
+				<tr md-row ng-show="$ctrl.model.listaAcao.length == 0" class="text-left" style="vertical-align: middle">
+					<td>
+						<div layout="row" layout-wrap="" layout-align="center center" class="p-20 m-20 cel_no_border" translate="PDI.NAOHA">
+							Não há Ação para desenvolvimento Em andamento.
+						</div>
+					</td>
+				</tr>
+				<tr md-row ng-show="$ctrl.model.listaAcao.length > 0"
+					ng-repeat="item in $ctrl.model.listaAcao | pdiFilter: filtro | orderBy: $ctrl.query.order | limitTo: tableControl.limit : ($ctrl.query.page -1) * tableControl.limit"
+					class="text-left">
+					<td md-cell style="border-top: 0px rgba(0, 0, 0, 0.12) solid !important; padding: 0px !important">
+						<md-table-container>
+							<table md-table>
+								<tbody md-body>
+									<tr md-row  class="text-left" style="vertical-align: middle" >
+										<td style="width: 1px;">
+											<div layout="row" style="padding-left: 5px;">
+												<md-checkbox ng-model="item.aprovadoPrintCheckbox" class="font-size-5" aria-label="Checkbox tabela"/>
+											</div>
+										</td>
+										<td>
+											<div layout="row" layout-wrap="" class="p-8 mt-5 ml-5 mr-5 mb-8 cel_no_border">
+												<div class="pr-8 pb-8" flex="30">
+													<b><span translate="PDI.TEXT_ACAODEV">Ação para desenvolvimento</span></b><br/>
+													<span>{{::item.acaoParaDesenvolvimento}}</span>
+												</div>
+												<div flex="{{$ctrl.canEdit? 15 : 20}}" class="pr-8 pb-8">
+													<b><span translate="PDI.TEXT_DATAPREVINI">Data prevista inicial</span></b><br/>
+													<span>{{::item.dataPrevistaInicio | date : 'dd/MM/yyyy' : '-120'}}</span>
+												</div>
+												<div flex="{{$ctrl.canEdit? 15 : 20}}" class="pr-8 pb-8">
+													<b><span translate="PDI.TEXT_DATAPREVFIM">Data prevista fim</span></b><br/>
+													<span>{{::item.dataPrevistaFim | date : 'dd/MM/yyyy' : '-120'}}</span>
+												</div>
+												<div flex="{{$ctrl.canEdit? 15 : 20}}" class="pr-8 pb-8">
+													<b><span translate="PDI.TEXT_DATAINI">Data de início</span></b><br />
+													<span>{{::item.dataInicio | date : 'dd/MM/yyyy' : '-120'}}</span>
+												</div>
+												<div flex="15" ng-if="$ctrl.canEdit" class="text-center">
+													<b><span translate="PDI.TEXT_OPCAO">Opções</span></b>
+													<div layout="row" flex layout-align="center center">
+														<md-button ng-click="$ctrl.AdicionarAcaoEdit(item)" class="md-icon-button">
+															<md-icon style="color: black"
+																md-font-icon="icon-pencil" />
+																<md-tooltip class="h4" hide-xs hide-sm>
+																		{{'PDI.OPCAO_EDITAR' | translate}}
+																</md-tooltip>
+														</md-button>
+
+														<md-button ng-click="$ctrl.remover(item)" class="md-icon-button">
+															<md-icon style="color: black"
+																md-font-icon="icon-trash" />
+																<md-tooltip class="h4" hide-xs hide-sm>
+																		{{'PDI.OPCAO_REMOVER' | translate}}
+																</md-tooltip>
+														</md-button>
+													</div>
+												</div>
+												<div ng-if="$ctrl.user.id === item.funcionario.id" flex="10" layout-align="center center">
+													<md-button 
+													ng-click="$ctrl.finalizarAcaoPDI(item)"
+													layout-align="center center" 
+													class="md-icon-button">
+														<md-icon 
+															class="md-accent"
+															style="font-size: 2em;"
+															md-font-icon="icon-check-circle" />
+															<md-tooltip class="h4" hide-xs hide-sm>
+																{{'PDI.OPCAO_FINALIZAR' | translate}}
+															</md-tooltip>
+													</md-button>
+												</div>
+	
+												<div flex="30" class="pb-8">
+													<div ng-if="item.participante.avaliacao.campanha.descricao != null">
+														<b><span>Campanha</span>: </b>{{::item.participante.avaliacao.campanha.descricao}}
+													</div>
+												</div>
+												<div flex="70"  class="pb-8">
+													<div ng-if="item.participante.avaliacao.descricaoAbreviada != null">
+														<b><span>Avaliação</span>: </b>{{::item.participante.avaliacao.descricaoAbreviada}}
+													</div>
+												</div>
+												<div flex="60" class="pb-8">
+													<div ng-if="item.pdiAcaoCompetencias.length  > 0" >
+														<b><span translate="PDI.TEXT_COMP">Competência</span>: </b>
+														<!-- Span usado para não ter uma vírgula (',') antes do primeira competencia -->
+														<span>
+															<span class="competenciasPDI" ng-repeat="itemComp in item.pdiAcaoCompetencias">
+																{{::itemComp.competencia.descricaoAbreviada}}
+															</span>
+														</span>
+													</div>
+												</div>
+												<div flex="40" ></div>
+	
+												<div flex="100"  class="pb-8" >
+													<div ng-repeat="itemCompDet in item.pdiAcaoCompetencias"
+														ng-if="item.pdiAcaoCompetencias.length === 1 && itemCompDet.competenciaDetalhamento.descricao != null">
+														<b><span translate="PDI.TEXT_DET">Detalhamento</span>: </b>
+														{{::itemCompDet.competenciaDetalhamento.descricao}}
+													</div>
+												</div>
+												<div flex="100" class="mb-8">
+													<div ng-if="item.observacaoInicial">
+														<b><span translate="PDI.TEXT_OBS_INICIAL">Observação Inicial</span>:</b>
+														{{::item.observacaoInicial}}
+													</div>
+												</div>
+												<div flex="100" class="pb-8">
+													<div style="float: right" ng-if="!item.atualizador">
+														<b><span translate="PDI.TEXT_CRIACAO">Criado por</span>: </b>
+														{{::item.criador.split('%')[1]}} - {{::item.dataCriacao | date:"dd/MM/yyyy ' - ' HH:mm'H'"}}
+													</div>
+													<div style="float: right" ng-if="item.atualizador">
+														<b><span translate="PDI.TEXT_ATUAL">Atualizado por</span>: </b>
+														{{::item.atualizador.split('%')[1]}} - {{::item.dataAtualizacao | date:"dd/MM/yyyy ' - ' HH:mm'H'"}}
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</md-table-container>
+					</td>
+				</tr>
+			</body>
+		</table>
+	</md-table-container>
+	<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" ng-show="$ctrl.model.listaAcao.length != 0"
+		paginate="logPagination" md-page="$ctrl.query.page" md-total="{{($ctrl.model.listaAcao|pdiFilter: filtro).length}}"
+		md-page-select md-label="{{'CAMPANHASLISTAR.LBLPAGINA' | translate}}" />

@@ -1,0 +1,29 @@
+<div id="preenchimento" class="page-layout simple fullwidth doc-page" style="background-color: rgb(238,238,238);">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title" id="title_av"><span>{{'PREENCHIMENTO.TITLE' | translate}}</span></div>
+		</div>
+	</div>
+	<div class="p-8 mt-50">
+		<div flex-xs flex-gt-xs="100" layout="column" class="m4">
+			<div class="white-bg style_card m-8" id="av">
+				<md-content>
+					<md-tabs md-dynamic-height md-border-bottom>
+						<md-tab label="{{'PREENCHIMENTO.LBLCOMPETENCIAS' | translate}}">
+							<md-content>
+								<div ng-include="'preenchimento.list.secao.competencias.html'">
+								</div>
+							</md-content>
+						</md-tab>
+						<md-tab label="{{'PREENCHIMENTO.LBLFUNCIONARIOS' | translate}}">
+							<div ng-include="'preenchimento.list.secao.funcionarios.html'">
+							</div>
+						</md-tab>
+					</md-tabs>
+				</md-content>
+			</div>
+		</div>
+	</div>
+
+	<div style="height: 200px"></div>
+</div>

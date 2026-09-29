@@ -1,0 +1,49 @@
+{
+  "password-not-match" : "Connectez-vous et / ou mot de passe incorrect",
+  "validation": {
+    "title": "Erreur de validation",
+    "duplicate": "cette {{field}} est déjà enregistré.",
+    "not-null": "O campo \"{{field}}\" não pode ser vazio.",
+    "password-not-match": "Les mots de passe ne correspondent pas.",
+    "login-password-invalid" : "Vous devez vous identifier ou mot de passe invalide.",
+    "not-found":"E-mail ne se trouve pas.",
+    "canceled":"N'est pas possible canceler le donné.",
+    "permission":"Vous n'êtes pas autorisé pour cette action!",
+    "empty_cargo_competencia":"La position de l'évaluation {{nome}} n'a pas les types de compétences sélectionnés pour cette évaluation.",
+    "empty_tipos_competencias":"Il existe plusieurs types de compétences sélectionnés pour cette évaluation.",
+    "idDepartamentoCliente" : "Ce (a) ID du secteur est déjà enregistré (a).",
+    "departamentoNome" : "Ce secteur (a) est déjà enregistré (a)."
+  },
+  "competencia":{
+    "not-found":"Il n'y a pas de compétences associées aux positions"
+  },
+  "estatistica": {
+    "no-data-report":"Pour générer le fichier Excel est nécessaire d'avoir au moins un (1) participant qui répond aux exigences de filtrage"
+  },
+  "field": {
+    "matricula": "enregistré",
+    "detalhamento": "détaillant",
+    "descricaoModelo" : "modèle",
+    "label" : "graduation",
+    "descricaoAbreviada" : "compétence",
+    "idDepartamentoCliente" : "Id du département du client",
+    "idCargoCliente" : "Id du poste du travail",
+    "nome" : "nom",
+    "descricao" : "évaluation",
+    "situacao" : "situation",
+    "senha" : "mot de passe",
+    "confirmar_senha": "Confirmez le mot de passe",
+    "email":"e-mail",
+    "campanha": "campagne"
+  },
+  "avaliacao-participante": {
+    "inactive-user": "Il N'est pas possible d'ajouter un employé ({{field}}) inactif à une évaluation",
+    "inactive-cargo": "Il N'est pas possible d'ajouter un employé ({{field}}) dont le poste est inactif, à une évaluation.",
+    "inactive-dept": "Il N'est pas possible d'ajouter un employé ({{field}}) dont le dépt est inactif, à une évaluation.",
+    "inactive-compet": "Il N'est pas possible d'ajouter un employé ({{field}}) dont le posta n'ait pas de competénces actives à une évaluation."
+  },
+  "avaliacao":{
+    "error-status-remover-avaliacao": "Il n'est pas permis de supprimer une évaluation ({{field}}), car elle n'a pas le statut 'Ag liberação'."
+  }
+}
+

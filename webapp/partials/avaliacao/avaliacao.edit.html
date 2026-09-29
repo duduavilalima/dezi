@@ -1,0 +1,28 @@
+<div id="avaliacao" class="page-layout simple fullwidth doc-page" layout="column">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="start center">
+		<div layout="column" layout-align="space-between">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span class="parent"><a href ng-click="$ctrl.backToList()">{{ 'NAV.'+ $ctrl.modulo | uppercase | translate }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.backToCampanha()">{{ 'CAMPANHA.'+ $ctrl.subtitulo | uppercase | translate }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.backEdit()">{{ 'CAMPANHA.' + $ctrl.titulo | uppercase | translate }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"></a>{{ 'CAMPANHASLISTAR.EDITAR' | uppercase | translate }}</span>
+			</div>
+		</div>
+	</div>
+	<div layout="column" class="mt-50">
+		<div>
+			<md-content>
+				<form name="basicForm" novalidate>
+					<md-tabs md-dynamic-height md-border-bottom ng-show="$ctrl.object != null">
+						<md-tab  label="{{'RESUMO.RESUMO' | translate}}">
+							<div ng-include="'aba.resumo.edit.html'"></div>
+						</md-tab>
+					</md-tabs>
+				</form>
+			</md-content>
+		</div>
+	</div>
+</div>

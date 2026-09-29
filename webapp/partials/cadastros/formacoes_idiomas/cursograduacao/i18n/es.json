@@ -1,0 +1,28 @@
+{
+  "GRADUACAO":{
+    "CADASTOS":"Registros",
+    "FORMACAO":"Idiomas y formación",
+    "GRADU": "Cursos de graduación",
+    "PESQUISAR":"Investigación",
+    "BTNNOVO":"Nuevo Cursos de Graduación",
+    "SITUACAO": "Situación",
+    "REQUER": "Requiere la realización de otros cursos",
+    "CURSODEGRADUACAO": "Curso de graduação",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 80 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "SIM": "Sim",
+    "NAO": "Não",
+    "DESCRICAO" : "Descripción"
+  }
+}

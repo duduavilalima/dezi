@@ -1,0 +1,7 @@
+<ion-slides (ionSlideDidChange)="onChangeTipoCompetencia()" centeredSlides slidesPerView="2">
+	<div *ngFor="let tipoCompetencia of tipoCompetenciaList">
+		<ion-slide class="inactive text" [ngClass]="activeId === tipoCompetencia.id ? 'active' : ''">
+			{{ (tipoCompetencia.nomeCurto || tipoCompetencia.nomeTipoCompetencia || tipoCompetencia.descricaoTipoCompetencia ||"").toUpperCase() }}
+		</ion-slide>
+	</div>
+</ion-slides>

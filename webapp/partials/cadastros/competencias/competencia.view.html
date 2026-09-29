@@ -1,0 +1,263 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::$ctrl.modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.back()">{{ ::$ctrl.titulo }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ 'COMPETENCIA.EXIBICAO' | translate }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input">
+
+			<!-- BOTÃO NOVO -->
+			<md-button hide-xs id="btn_novo" type="button"
+					   class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize"
+					   translate-attr-aria-label="COMPETENCIA.BTNNOVO" aria-label="Novo" ng-click="$ctrl.displayNew()">
+				{{'COMPETENCIA.BTNNOVO' | translate}}
+			</md-button>
+
+			<md-button hide show-xs type="button" translate-attr-aria-label="COMPETENCIA.BTNNOVO" class="md-fab md-mini md-accent"  aria-label="Criar"
+				ng-click="$ctrl.displayNew()" value="Novo">
+				<md-icon md-font-icon="icon-plus" hide show-xs></md-icon>
+			</md-button>
+
+		</div>
+	</div>
+
+	<div flex>
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar"
+					translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+					{{'COMPETENCIA.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div flex layout="row" layout-xs="column" flex-xs="100" flex-sm="100" class="p-8 m-10 div-cards">
+			<div layout="column" flex="65" flex-xs="100" flex-sm="100">
+				<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+					<div layout="row" class="content h50" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1 class="mt-10">{{'COMPETENCIA.DESCRICAO' | translate }}</h1>
+						</div>
+						<div layout-align="end center" layout-align-xs="center center" layout="row">
+							<md-switch ng-model="$ctrl.mdswitch.situacao" aria-label="Botão situação"
+									   ng-change="$ctrl.onChangeSituacao($ctrl.object, 'competencia')">
+								{{'SITUACAO.' + $ctrl.object.situacao | translate }}
+							</md-switch>
+							<span class="width-20"></span>
+							<md-button ng-click="$ctrl.displayEdit()"
+									   class="md-fab md-mini md-accent-bg" aria-label="Editar" translate
+									   translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+								<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+								<md-tooltip class="h4">{{'CAMPANHASLISTAR.EDITAR' | translate}}</md-tooltip>
+							</md-button>
+							<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin" class="md-icon-button"
+									   aria-label="Editar" translate
+									   translate-attr-aria-label="DIMENSAO.DETALHES">
+								<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+								<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+							</md-button>
+						</div>
+					</div>
+					<md-divider></md-divider>
+					<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+						<div layout="column" layout-gt-sm="row" flex layout-xs="column" layout-sm="row">
+
+							<md-input-container flex="50">
+								<label id="lbl_descricao" for="descricao">{{'COMPETENCIA.COMPETENCIA' | translate}}</label>
+								<input id="descricao" name="descricao" type="text" value="{{::$ctrl.object.descricaoAbreviada}}" ng-disabled="true">
+							</md-input-container>
+
+							<span class="width-20"></span>
+
+							<md-input-container flex="20">
+								<label id="lbl_tipo_competencia" for="tipo_competencia">{{'COMPETENCIA.TIPOCOMPETENCIA' | translate}}</label>
+								<input id="tipo_competencia" name="tipo_competencia" type="text" value="{{::$ctrl.object.tipo.nome}}" ng-disabled="true">
+							</md-input-container>
+
+
+							<span class="width-20"></span>
+
+
+							<md-input-container flex="10">
+								<label id="lbl_situacao" for="situacao">{{'COMPETENCIA.SITUACAO' | translate}}</label>
+								<input id="situacao" name="situacao" type="text" value="{{'SITUACAO.'+ $ctrl.object.situacao | translate}}"
+									ng-disabled="true">
+							</md-input-container>
+
+						</div>
+
+						<div layout="column" layout-gt-sm="column" flex class="top_25">
+							<md-input-container flex="100" class="md-block">
+								<label id="lbl_des_gestores" for="des_gestores">{{'COMPETENCIA.DESCRICAOGESTORES' | translate}}</label>
+								<textarea id="des_gestores" name="des_gestores" type="text" ng-model="::$ctrl.object.direcionamentoGestor"
+									value="{{::$ctrl.object.direcionamentoGestor}}" ng-disabled="true"></textarea>
+							</md-input-container>
+
+
+							<md-input-container flex="100" class="md-block">
+								<label id="lbl_des_no_gestores" for="des_no_gestores">{{'COMPETENCIA.DESCRICAONAOGESTORES' | translate}}</label>
+								<textarea id="des_no_gestores" name="des_no_gestores" type="text" ng-model="::$ctrl.object.direcionamentoNaoGestor"
+									value="{{::$ctrl.object.direcionamentoNaoGestor}}" ng-disabled="true"></textarea>
+							</md-input-container>
+						</div>
+
+					</form>
+				</div>
+				<div flex class="white-bg style_card mt-15 mx-h-350" flex-xs="100" flex-sm="100">
+					<div class="content">
+						<div layout="row" class="content h50" layout-xs="column">
+							<!--Ação botão Voltar-->
+							<div flex layout-align="center center" class="pl-16 pr-16">
+								<div id="title_detalhamentos" class="md-accent-fg">
+									<h1 class="mt-10">{{'COMPETENCIA.DETALHAMENTOS' | translate}}</h1>
+								</div>
+							</div>
+							<!--Ação botão Editar-->
+							<div layout-align="end center" hide-xs>
+								<md-button id="btn_novo_detalhamento"
+										   translate-attr-aria-label="COMPETENCIA.NOVODETALHAMENTO"
+										   ng-click="$ctrl.displayNewAssociation($event)"
+										   class="mt-10 md-button md-accent text-capitalize"
+										   aria-label="novo detalhamento" style="float: right">
+									<md-icon md-font-icon="icon-plus"></md-icon>
+									{{'COMPETENCIA.NOVODETALHAMENTO' | translate}}
+								</md-button>
+							</div>
+							<md-button hide show-xs id="btn_novo_detalhamento" translate-attr-aria-label="COMPETENCIA.NOVODETALHAMENTO"
+								ng-click="$ctrl.displayNewAssociation($event)" class="mt-10 md-button md-accent text-capitalize"
+								aria-label="novo detalhamento" style="float: right">
+								<md-icon md-font-icon="icon-plus"></md-icon>
+								{{'COMPETENCIA.NOVODETALHAMENTO' | translate}}
+							</md-button>
+						</div>
+						<md-divider></md-divider>
+
+						<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="$ctrl.listAssociations == null">
+							<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+						</div>
+						<!-- MODE VIEW -->
+						<div ng-show="$ctrl.listAssociations != null">
+							<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+							<md-table-container class="scroll_tables">
+								<table md-table id="table-list" md-progress="$ctrl.listAvaliacoesPromise">
+									<thead md-head>
+									<tr md-row ng-show="$ctrl.listAssociations.length == 0">
+										<th md-column colspan="3"> </th>
+									</tr>
+									<tr md-row ng-show="$ctrl.listAssociations.length > 0" class="grey-200-bg">
+										<th md-column width="80%">
+											<div class="table-header text-left"><span class="column-title">{{'COMPETENCIA.DESCRICAO' | translate}}</span></div>
+										</th>
+										<th md-column width="10%">
+											<div class="table-header text-center"><span class="column-title">{{'COMPETENCIA.SITUACAO' | translate}}</span></div>
+										</th>
+										<th md-column width="10%" class="text_align_center">
+											<div class="table-header text-center"><span class="column-title">{{'COMPETENCIA.OPCOES' | translate}}</span></div>
+										</th>
+									</tr>
+									</thead>
+									<tbody md-body>
+										<tr md-row md-row ng-show="$ctrl.listAssociations.length == 0">
+											<td md-cell md-cell colspan="3" class="text-center">{{'COMPETENCIA.NAODETALHAMENTO' | translate}}</td>
+										</tr>
+										<tr md-row ng-show="$ctrl.listAssociations.length > 0" ng-repeat="item in $ctrl.listAssociations">
+											<td md-cell hide show-gt-xs class="text-left">
+												<a href ng-click="$ctrl.displayEditAssociation($event,$index,item)">
+													<b>{{::item.descricao | limitTo: 300}}</b>
+												</a>
+											</td>
+											<td md-cell class="text_align_center">
+												<span ng-class="{'green-bg': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}" class="estilo_situacao">
+													<b>{{ 'SITUACAO.' + item.situacao | translate }}</b></span>
+											</td>
+											<td md-cell class="text_align_center">
+												<md-menu>
+													<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+														<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+													</md-button>
+													<md-menu-content class="p-0">
+
+
+														<!-- DETALHAMENTOS BOTÃO SUBIR MENU -->
+														<md-menu-item>
+															<md-button id="btn_subir_detalhamento"
+																		ng-disabled="$first"
+																		translate-attr-aria-label="COMPETENCIA.SUBIR"
+																		aria-label="Subir"
+																		ng-click="$ctrl.moveUp(item, $index)">
+																<md-icon style="color: blue" md-font-icon="icon-arrow-up-bold-circle-outline"></md-icon>{{'COMPETENCIA.SUBIR' | translate}}
+															</md-button>
+														</md-menu-item>
+
+
+														<!-- DETALHAMENTOS BOTÃO DESCER MENU -->
+														<md-menu-item>
+															<md-button id="btn_descer_detalhamento"
+																		ng-disabled="$last"
+																		translate-attr-aria-label="COMPETENCIA.DESCER"
+																		aria-label="Descer"
+																		ng-click="$ctrl.moveDown(item, $index)">
+																<md-icon style="color: blue" md-font-icon="icon-arrow-down-bold-circle-outline"></md-icon>{{'COMPETENCIA.DESCER' | translate}}
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item>
+																<md-button 
+																id="btn_situacao_detalhamento"
+																 aria-label="Situacao" 
+																 translate-attr-aria-label="{{item.situacao === 'ATIVA'? COMPETENCIA.INATIVAR : COMPETENCIA.ATIVAR}}" 
+																 ng-click="$ctrl.onChangeSituacao(item, 'detalhamento')">
+																		<md-icon ng-if="item.situacao === 'ATIVA'" style="color: red" md-font-icon="icon-cancel"></md-icon>
+																		<md-icon ng-if="item.situacao !== 'ATIVA'" style="color: green" md-font-icon="icon-check"></md-icon>
+																		{{(item.situacao === 'ATIVA'? 'COMPETENCIA.INATIVAR' : 'COMPETENCIA.ATIVAR') | translate}}
+																</md-button>
+															</md-menu-item>
+
+													</md-menu-content>
+												</md-menu>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<span class="width-15"></span>
+			<span class="height-15" hide show-xs></span>
+			<div flex="35" layout="column" class="white-bg style_card mx-h-600" flex-xs="100" flex-sm="100">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div flex layout-align="center center" class="pl-16 pr-16">
+						<div id="title_hierarquia" class="md-accent-fg">
+							<h1 class="mt-10">{{'COMPETENCIA.HIERARQUIA' | translate }}</h1>
+						</div>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				
+				<div class="content overflow" style="padding: 20px;" >
+					<treecontrol class="tree-classic"
+								 tree-model="$ctrl.dataForTheTree"
+								 options="$ctrl.treeOptions"
+								 expanded-nodes="$ctrl.expandedNodes"
+								 on-selection="$ctrl.showSelected(node)"
+								 selected-node="node1">
+						<b ng-show="node.tipoCompetencia" class="md-accent-fg">{{node.nome}}</b>
+						<a ng-show="!node.tipoCompetencia"
+						   ng-click="$ctrl.viewNodeCompetencia(node.idCompetencia)"
+						   ng-class="{'node_tree': $ctrl.object.descricaoAbreviada == node.nome, 'md-accent-fg': $ctrl.object.descricaoAbreviada != node.nome}"><b>{{node.nome}}</b></a>
+					</treecontrol>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>

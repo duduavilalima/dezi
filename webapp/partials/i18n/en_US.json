@@ -1,0 +1,48 @@
+{
+  "password-not-match" : "Login and / or password invalid",
+  "validation": {
+    "title": "Validation Error",
+    "duplicate": "This {{field}} is already registered.",
+    "not-null": "The field \"{{field}}\" can not be empty.",
+    "password-not-match": "Passwords do not match.",
+    "login-password-invalid" : "Login or password invalid.",
+    "email-not-found":"E-mail not found.",
+    "canceled":"Não é possível cancelar o registro.",
+    "permission":"You do not have permission for this action!",
+    "empty_cargo_competencia":"The position of the evaluated {{nome}} does not have the kinds of skills selected for this evaluation.",
+    "empty_tipos_competencias":"There are types of skills selected for this evaluation.",
+    "idDepartamentoCliente" : "This sector identification is already registered.",
+    "departamentoNome" : "This sector has already been registered."
+  },
+  "competencia":{
+    "not-found":"There aren't skills associated with positions."
+  },
+  "estatistica": {
+    "no-data-report":"To generate the Excel file is necessary to have at least one (1) participant that meets the filter requirements"
+  },
+  "field": {
+    "matricula": "registration",
+    "detalhamento": "detailing",
+    "descricaoModelo" : "model",
+    "label" : "graduation",
+    "descricaoAbreviada" : "competency",
+    "idDepartamentoCliente" : "client department",
+    "idCargoCliente" : "job post id",
+    "nome" : "name",
+    "descricao" : "evaluation",
+    "situacao" : "status",
+    "senha" : "password",
+    "confirmar_senha": "confirm password",
+    "email":"e-mail",
+    "campanha": "campaign"
+  },
+  "avaliacao-participante": {
+    "inactive-user": "It is not permitted to add an employee ({{field}}) inactive to an avaliation.",
+    "inactive-cargo": "It is not permitted to add an employee ({{field}}) which position is inactive, to an avaliation.",
+    "inactive-dept": "It is not permitted to add an employee ({{field}}) which dept is inactive, to an avaliation.",
+    "inactive-compet": "It is not permitted to add an employee ({{field}}) whose position does not have active competences, an avaliation."
+  },
+  "avaliacao":{
+    "error-status-remover-avaliacao": "It is not permitted to remove an evaluation ({{field}}), because it does not have the status 'Ag. liberação'."
+  }
+}

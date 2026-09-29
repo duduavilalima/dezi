@@ -1,0 +1,33 @@
+<md-dialog>
+	<form>
+		<md-toolbar class="cor_title">
+			<div class="md-toolbar-tools">
+				<h2 class="white-fg">Comentários</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="dialog.hidecomentarios()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="width:800px;height:640px;padding: 0px;">
+			<md-tabs md-border-bottom>
+				<md-tab label="Autoavaliação">
+					<md-content class="md-padding">
+						<p>{{ dialog.av1 }}</p>
+					</md-content>
+				</md-tab>
+				<md-tab label="Avaliação">
+					<md-content class="md-padding">
+						<p>{{ dialog.av2 }}</p>
+					</md-content>
+				</md-tab>
+			</md-tabs>
+		</md-dialog-content>
+		<md-dialog-actions layout="row" layout-align="center center">
+			<span flex></span>
+			<md-button class="md-raised md-accent" ng-click="dialog.hidecomentarios()">
+				Fechar
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

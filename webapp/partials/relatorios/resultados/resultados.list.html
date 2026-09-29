@@ -1,0 +1,68 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span>Resultados</span></div>
+		</div>
+		<img src="{{loginInfo.server}}/cookie.jsp?id={{loginInfo.sessionId}}" style="visibility: none">
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-16 mt-70">
+		<div class="white-bg style_card mt-5 ml-10 mr-10">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<md-progress-linear
+						ng-if="promise"
+						ng-hide="avaliacoes.length > 0"
+						md-mode="indeterminate"
+					/>
+					<thead fix-head md-head md-order="$ctrl.tableConf.order">
+						<tr md-row class="grey-200-bg">
+							<th md-column md-order-by="descricao">
+								<span>Campanha</span>
+							</th>
+							<th md-column width="12%" md-order-by="totalAvaliacoes" ng-show="isAdministrator">
+								<span>Nº de avaliações</span>
+							</th>
+							<th md-column width="12%">
+								<span>Resultados</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody md-body>
+						<tr md-row ng-show="$ctrl.listCampanhas.length == 0">
+							<td md-cell colspan="3" hide show-gt-xs>
+								<div class="text-center">{{'CAMPANHASLISTAR.NAOHA' | translate}}</div>
+							</td>
+						</tr>
+						<tr
+							md-row
+							ng-show="$ctrl.listCampanhas.length > 0"
+							ng-repeat="item in $ctrl.listCampanhas | orderBy: $ctrl.tableConf.order | limitTo: $ctrl.tableConf.limit : ($ctrl.tableConf.page-1) * $ctrl.tableConf.limit"
+							class="text-left"
+						>
+							<td md-cell>{{item.descricao}}</td>
+							<td md-cell ng-show="isAdministrator">{{item.totalAvaliacoes}}</td>
+							<td md-cell>
+								<md-button
+									class="md-icon-button"
+									aria-label="Botão Resultado"
+									ng-click="$ctrl.mostraResultado(item)"
+								>
+									<md-icon md-font-icon="icon-chart-bar" class="md-accent-fg"></md-icon>
+									<md-tooltip class="h4">Visualizar Resultado</md-tooltip>
+								</md-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination
+				md-limit="$ctrl.tableConf.limit"
+				md-limit-options="tableControl.limit_options"
+				md-page="$ctrl.tableConf.page"
+				md-total="{{$ctrl.listCampanhas.length}}"
+				md-page-select
+				md-label="{{'FUNCIONARIO.LBLPAGINA' | translate}}"
+			/>
+		</div>
+	</div>
+</div>

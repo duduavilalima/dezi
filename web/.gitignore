@@ -1,0 +1,24 @@
+# Maven
+target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse & VS Code
+.project
+.classpath
+.settings
+.vscode
+.factorypath
+
+# Maven home para geração de imagem docker
+build/m2
+
+# Execução/depuração do REST no VSCode
+.attach_pid*
+.sts4-cache
+
+servers/
+node_modules
+/logs/

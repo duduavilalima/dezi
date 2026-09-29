@@ -1,0 +1,30 @@
+<md-dialog id="dialog_titulo_popup_confirmacao_confirmar" aria-label="Construção" style="width: 600px;" class="white-bg">
+	<form name="DialogRemocaoTributoForm">
+		<md-toolbar class="red-bg">
+			<div class="md-toolbar-tools">
+				<h2 md-autofocus id="titulo_popup_confirmacao_confirmar">Importação</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+
+		<md-dialog-content class="md-dialog-content" role="document" tabindex="-1" id="dialog_54">
+
+			<table align="center" width="100%">
+				<tr><div align="center"> <img   src="../img/construcao.png" style="width: 100px; height: 100px;"></div></tr>
+				</br> </br>
+				<tr><div align="center" class="font-size-20 text-center black-fg">Em construção</div></tr>
+			</table>
+
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" layout-align="center center" style="background-color: rgba(255,255,255,1);">
+
+			<md-button id="btn_confirmar_confirmar_nregistro"  class="md-raised md-default" ng-click="confirmar()">fechar</md-button>
+
+		</md-dialog-actions>
+	</form>
+</md-dialog>

@@ -1,0 +1,21 @@
+{
+  "CONTATO": {
+    "TITULO":"Contacto",
+    "VALIDATION": "Necesario"
+  },
+  "DIALOG":{
+    "TITULO":"Llamada abierta",
+    "ASSUNTO":"Tema",
+    "CLASSIFICACAO":"Clasificación",
+    "MENSAGEM":"Mensaje",
+    "CANCELAR":"Cancelar",
+    "ENVIAR":"Llamada abierta",
+    "SUCCESS":"Convocatoria abierta con éxito!"
+  },
+  "CLASSIFICACAO": {
+    "DUVIDA":"Duda",
+    "CRITICA":"Crítica",
+    "SUGESTAO":"Sugerencia",
+    "RECLAMACAO":"Queja"
+  }
+}

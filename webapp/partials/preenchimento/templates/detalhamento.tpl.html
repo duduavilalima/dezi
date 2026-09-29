@@ -1,0 +1,50 @@
+<form name="basicForm" novalidate>
+	<div layout="column" layout-align="center" class="ph-16">
+		<p><strong>{{ $ctrl.index }} - <span ng-bind-html="$ctrl.detalhamento.descricao | trustHtml"></span></strong></p>
+	</div>
+
+	<div layout="column" layout-align="left" class="ph-16 mt-10" flex id="detalhamentos">
+		<md-radio-group layout-gt-sm="row" layout="row" layout-sm="column" layout-xs="column"
+			ng-model="$ctrl.respostas[$ctrl.stage]" ng-change="$ctrl.selectOption($ctrl.stage, $ctrl.detalhamento)">
+			<md-radio-button ng-repeat="compDetalhamentoHint in $ctrl.detalhamento.hints"
+				value="{{::compDetalhamentoHint.graduacao.idGraduacao}}"
+				ng-disabled="($ctrl.stage == 'av3' && $ctrl.respostas.av1 == $ctrl.respostas.av2) || ($ctrl.stage != 'av3' && $ctrl.detalhamento.preenchimentos[0].participante.consensoLiberado)">
+				{{::compDetalhamentoHint.graduacao.label}}
+				<md-tooltip class="large">{{::compDetalhamentoHint.hint}}</md-tooltip>
+				<ad-av-indicator ng-if="$ctrl.stage == 'av3'" option="compDetalhamentoHint.graduacao.idGraduacao"
+					av1="$ctrl.respostas.av1" av2="$ctrl.respostas.av2"></ad-av-indicator>
+			</md-radio-button>
+		</md-radio-group>
+	</div>
+	<div layout="column" layout-align="left" class="ph-16 mt-15">
+		<md-input-container class="md-primary mb-0">
+			<label>Comente registrando as evidências para sua escolha</label>
+			<textarea ng-model="$ctrl.comentarios[$ctrl.stage]" ng-model-options="{ debounce: 1000 }"
+				id="comentario_{{$ctrl.detalhamento.id}}"
+				name="comentario_{{$ctrl.detalhamento.id}}" ng-change="$ctrl.changeComment($ctrl.stage)" md-maxlength="500" ng-maxlength="500"
+				ng-required="$ctrl.detalhamento.obrigatorio"
+				ng-disabled="$ctrl.stage == 'av2' && $ctrl.detalhamento.preenchimentos[0].participante.consensoLiberado"></textarea>
+			<div ng-hide="$ctrl.detalhamento.obrigatorio" ng-if="$ctrl.stage != 'av3'"
+				ng-messages="{ warning: !$ctrl.comentarios[$ctrl.stage] }" md-auto-hide="false">
+				<div ng-message="warning" class="md-accent-fg" style="margin-right: 50px;">
+					<strong>O comentário é opcional, mas é um importante instrumento de argumentação na avaliação de
+						feedback.</strong>
+				</div>
+			</div>
+			<div ng-messages="basicForm['comentario_' +  $ctrl.detalhamento.id].$error"
+				ng-show="basicForm['comentario_' + $ctrl.detalhamento.id].$touched">
+				<div ng-message="required">
+					<span>Campo obrigatório!</span>
+				</div>
+				<div ng-message="maxlength">
+					<span>Número máximo de caracteres excedido!</span>
+				</div>
+			</div>
+		</md-input-container>
+	</div>
+	<div ng-if="$ctrl.stage == 'av3'" layout="row" layout-align="left" class="ph-16">
+		<md-button class="md-accent m-0" ng-click="$ctrl.showcomentarios($event, $ctrl.comentarios)">
+			<small>Comentários ({{ ($ctrl.comentarios.av1 ? 1 : 0) + ($ctrl.comentarios.av2 ? 1 : 0) }})</small>
+		</md-button>
+	</div>
+</form>

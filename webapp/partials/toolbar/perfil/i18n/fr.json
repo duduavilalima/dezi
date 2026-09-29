@@ -1,0 +1,45 @@
+{
+  "FUNCIONARIO":{
+    "MATRICULA":"Registration",
+    "NOME":"Name",
+    "SITUACAO":"Status",
+    "EMAILFUNCIONAL":"Functional Email",
+    "SEXO":"Gender",
+    "NASCIMENTO":"Birth",
+    "PERFIL":"Profile",
+    "SITUACAOFUNCIONAL":"Functional status",
+    "EMPRESAPRINCIPAL":"Main company",
+    "ADMISSAO":"Admission",
+    "DESLIGAMENTO":"Cierre",
+    "DEPARTAMENTO":"Department",
+    "AVALIADOR":"Valuer",
+    "REVISOR":"Reviser",
+    "CARGO":"Office",
+    "DATACARGO":"Post date",
+    "FORMACAO":"Formation",
+    "IDIOMAS":"Languages",
+    "EMPRESAS":"Companies"
+  },
+  "FORMACAO":{
+    "ESCOLARIDADE":"Education",
+    "TIPOCURSO":"Type of course",
+    "GRADUACAO":"Graduation",
+    "ESPECIALIZACAO":"Specialization",
+    "OUTROS":"Others",
+    "SITUACAO":"Status",
+    "EMPTY":"No formations registered"
+  },
+  "IDIOMAS":{
+    "IDIOMA":"Language",
+    "FALA":"Speaks",
+    "ESCRITA":"Writing",
+    "LEITURA":"Reading",
+    "EMPTY":"No registered languages"
+  },
+  "EMPRESAS":{
+    "NOME":"Name",
+    "SELECIONADA":"Selected by the user company",
+    "PRINCIPAL":"Main company",
+    "EMPTY":"No associated companies"
+  }
+}

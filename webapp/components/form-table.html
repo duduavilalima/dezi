@@ -1,0 +1,89 @@
+<div class="white-bg style_card m-16">
+	<md-table-container class="table_pesquisa">
+		<table md-table>
+			<thead fix-head md-head md-order="$ctrl.order">
+				<tr md-row class="grey-200-bg">
+					<th
+						ng-repeat="field in $ctrl.fields"
+						md-column
+						md-order-by="{{ $ctrl.fieldsWithOrder.includes(field.name)?field.name:null }}"
+						width="{{:: field.width || '' }}"
+						ng-class="{ 'text-center': field.align == 'center', 'text-right': field.align == 'right', 'compact': field.compact }"
+						ng-if="field.name !== 'iconHeader'"
+					>
+						<span translate>{{:: field.label }}</span>
+					</th>
+
+					<th
+						ng-repeat="field in $ctrl.fields"
+						ng-if="field.name === 'iconHeader'"
+						md-column class="text-center"
+						style="padding-top: 12px;"
+						width="{{:: field.width || '' }}"
+						ng-class="{ 'text-center': field.align == 'center', 'text-right': field.align == 'right', 'compact': field.compact }">
+						<span class="column-title" translate>{{:: field.label }}</span>
+						<div>
+							<md-button class="md-icon-button"
+								aria-label="{{ field.hintHeader(field, object) | translate }}"
+								ng-click="$ctrl.handleClickHeader(field)">
+								<md-icon md-font-icon="icon-email" class="md-accent-fg" style="font-size: 24px !important"></md-icon>
+								<md-tooltip class="h4" hide-xs hide-sm>
+									{{ field.hintHeader(field, object) | translate }}
+								</md-tooltip>
+							</md-button>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody md-body>
+				<tr
+					md-row
+					ng-repeat="object in $ctrl.source | filter: $ctrl.filterPredicate | orderBy: $ctrl.order | limitTo: $ctrl.conf.limit : ($ctrl.page-1) * $ctrl.conf.limit"
+					class="text-left"
+				>
+					<td
+						ng-repeat="field in $ctrl.fields"
+						md-cell
+						ng-class="{ 'text-center': field.align == 'center', 'text-right': field.align == 'right', 'compact': field.compact }"
+					>
+						<a href
+							ng-if="$ctrl.hasLink(field) && !field.icon"
+							class="link-table-search"
+							ng-click="$ctrl.handleClick(field, object)"
+						>
+							{{:: $ctrl.fieldValue(field, object) | formTable__translateFieldValue: field }}
+						</a>
+						<md-button
+							class="md-icon-button"
+							ng-if="$ctrl.hasLink(field) && field.icon"
+							ng-click="$ctrl.handleClick(field, object)"
+						>
+							<md-icon class="md-accent" md-font-icon="{{:: field.icon }}" />
+							<md-tooltip ng-if="field.hint" class="h4" hide-xs hide-sm>
+								{{ field.hint(field, object) | translate }}
+							</md-tooltip>
+						</md-button>
+						<span
+							ng-if="!$ctrl.hasLink(field)"
+							ng-class="$ctrl.fieldClass(field, object)"
+							ng-click="$ctrl.handleClick(field, object)"
+						>
+							{{ $ctrl.fieldValue(field, object) | formTable__translateFieldValue: field }}
+							<md-tooltip ng-if="field.hint" class="h4" hide-xs hide-sm>
+								{{ field.hint(field, object) | translate }}
+							</md-tooltip>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</md-table-container>
+	<md-table-pagination
+		md-limit="$ctrl.conf.limit"
+		md-limit-options="$ctrl.conf.limitOptions"
+		md-page="$ctrl.page"
+		md-total="{{ ($ctrl.source | filter: $ctrl.filterPredicate).length }}"
+		md-page-select
+		md-label="{{ 'FORM.TABLE_PAGE' | translate }}"
+	/>
+</div>

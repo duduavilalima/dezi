@@ -1,0 +1,115 @@
+<div class="page-layout simple fullwidth">
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::$ctrl.modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.back()">{{ ::$ctrl.titulo }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ 'COMPETENCIA.EDICAO' | translate }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input"></div>
+	</div>
+
+	<div flex>
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+					{{'COMPETENCIA.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+
+		<div flex-xs flex-gt-xs="100" flex="100" layout="row" layout-sm="column" layout-xs="column" class="margin-default">
+			<div class="white-bg style_card" flex flex-xs="100" flex-sm="100" layout="column">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div id="title_descricao_new" flex class="md-accent-fg pl-16 pr-16">
+						<h1 class="mt-10">{{'COMPETENCIA.DESCRICAO' | translate }}</h1>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<div class="content">
+					<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+						<!-- MODE EDIT/NEW -->
+						<div layout="column" flex>
+
+							<!--DADOS PESSOAIS-->
+							<div layout="column" layout-gt-sm="row" flex layout-sm="row" layout-xs="column">
+
+								<md-input-container flex="50">
+									<label id="lbl_descricao_edit" for="descricao">{{'COMPETENCIA.COMPETENCIA' | translate}}</label>
+									<input id="descricao_edit" name="descricao" type="text"
+										   ng-model="$ctrl.object.descricaoAbreviada" required="true" ng-maxlength="150"
+										   ng-minlength="2" md-maxlength="150" focus-me="true">
+									<div ng-messages="basicForm.descricao.$error" ng-show="basicForm.descricao.$touched">
+										<div ng-message="required">
+											<span>{{'COMPETENCIA.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+										<div ng-message="maxlength">
+											<span>{{'COMPETENCIA.MAXIMO' | translate}}.</span>
+										</div>
+										<div ng-message="minlength">
+											<span>{{'COMPETENCIA.MINIMO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="20">
+									<label id="lbl_tipo_competencia_edit" for="tipo_competencia">{{'COMPETENCIA.TIPOCOMPETENCIA' | translate}}</label>
+									<input id="tipo_competencia_edit" name="tipo_competencia" type="text"
+										   ng-model="$ctrl.object.tipo.nome" ng-required="true" ng-disabled="true">
+								</md-input-container>
+
+								<div layout-align="end center">
+									<md-button id="btn_add_tipo_competencia" translate-attr-aria-label="COMPETENCIA.NOVODETALHAMENTO" ng-click="$ctrl.displayTipoDeCompetencia($event)" class="md-fab md-mini md-accent text-capitalize" aria-label="tipo de competencia" style="float: right">
+										<md-icon md-font-icon="icon-plus"></md-icon>
+									</md-button>
+								</div>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="10">
+									<label id="lbl_situacao_edit" for="situacao">{{'COMPETENCIA.SITUACAO' | translate}}</label>
+									<input id="situacao_edit" name="situacao" type="text" value="{{'SITUACAO.' +$ctrl.object.situacao | translate }}" ng-disabled="true">
+								</md-input-container>
+
+							</div>
+
+							<div style="width: 100%">
+								<md-input-container flex="100" style="width: 100%">
+									<label id="lbl_des_gestores_edit" for="des_gestores">{{'COMPETENCIA.DESCRICAOGESTORES'
+										| translate}}</label>
+									<textarea id="des_gestores_edit" name="des_gestores" type="text"
+											  ng-model="$ctrl.object.direcionamentoGestor" md-select-on-focus></textarea>
+								</md-input-container>
+							</div>
+
+							<div style="width: 100%">
+								<md-input-container flex="100" style="width: 100%">
+									<label id="lbl_des_no_gestores_edit" for="des_no_gestores">{{'COMPETENCIA.DESCRICAONAOGESTORES' | translate}}</label>
+									<textarea id="des_no_gestores_edit" name="des_no_gestores" type="text" ng-model="$ctrl.object.direcionamentoNaoGestor" md-select-on-focus></textarea>
+								</md-input-container>
+							</div>
+
+						</div>
+					</form>
+					<md-divider></md-divider>
+					<!-- BOTÕES -->
+					<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+						<md-button ng-click="$ctrl.back()" class="md-raised md-accent-fg text-capitalize" aria-label="Cancelar" translate translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR">
+							{{'CAMPANHASLISTAR.CANCELAR' | translate}}
+						</md-button>
+
+						<md-button ng-click="$ctrl.update()" class="md-raised md-accent text-capitalize" ng-disabled="basicForm.$invalid" aria-label="Salvar" translate translate-attr-aria-label="CAMPANHASLISTAR.SALVAR">
+							{{'CAMPANHASLISTAR.SALVAR' | translate}}
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>

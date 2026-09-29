@@ -1,0 +1,43 @@
+<form-page
+	can-create="{{ $ctrl.canEdit }}"
+	on-create="$ctrl.handleCreate()"
+	on-back="$ctrl.back()"
+>
+	<form-card
+		name="formCargo"
+		card-title="GRADUACAO.DESCRICAO"
+		on-save="$ctrl.save()"
+		on-cancel="$ctrl.cancel()"
+	>
+		<labeled-input
+			flex-gt-xs="40"
+			name="nome"
+			label="GRADUACAO.CURSO"
+			value="$ctrl.cursoGraduacao.nome"
+			options="{
+				required: true,
+				min: 2,
+				max: 80
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="30"
+			name="preencheOutrosCursos"
+			type="select-boolean"
+			label="GRADUACAO.REQUER"
+			value="$ctrl.cursoGraduacao.preencheOutrosCursos"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="30"
+			name="situacao"
+			label="GRADUACAO.SITUACAO"
+			value="'SITUACAO.' + $ctrl.cursoGraduacao.situacao"
+			options="{ disabled: true, translate: true }"
+		/>
+	</form-card>
+</form-page>

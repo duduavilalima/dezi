@@ -1,0 +1,336 @@
+<md-content class="content tab-content-resumo" style="background-color: rgb(245,245,245);" ng-if="$ctrl.object">
+	<div layout="row" class="content white-bg">
+		<div flex layout-align="start center">
+			<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize">
+				<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"/>
+				<span translate>CARGO.VOLTAR</span>
+			</md-button>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column" class="margin-default">
+		<div class="white-bg style_card">
+			<div layout="row" class="content h-50" layout-xs="column">
+				<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+					<h1 class="mt-10" translate>RESUMO.DESCRICAO</h1>
+				</div>
+				<div layout-align="end center" layout-align-xs="center center" layout="row">
+					<md-button ng-click="$ctrl.editar()" class="md-fab md-mini md-accent-bg" ng-show="$ctrl.object.status !== 'CONCLUIDA'">
+						<md-icon md-font-icon="icon-pencil" class="white-fg"/>
+						<md-tooltip class="h4">{{'CAMPANHASLISTAR.EDITAR' | translate}}</md-tooltip>
+					</md-button>
+					<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin" class="md-icon-button">
+						<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"/>
+						<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+			<md-divider/>
+			<div layout="column" layout-gt-xs="row" class="p-16" layout-xs="column" flex="100">
+				<md-input-container flex="30">
+					<label for="av_gestor2" translate>RESUMO.CAMPANHA</label>
+					<input id="av_gestor2" name="campanha" type="text" ng-model="$ctrl.object.campanha.descricao" ng-disabled="true">
+				</md-input-container>
+
+				<span class="width-20"></span>
+
+				<md-input-container flex="40">
+					<label for="descricao_abreviado_campanha" translate>RESUMO.AVALIACAO</label>
+					<input id="descricao_abreviado_campanha" name="av_gestor" type="text" ng-model="$ctrl.object.descricaoAbreviada" ng-disabled="true">
+				</md-input-container>
+
+				<span class="width-20"></span>
+
+				<md-input-container flex="30">
+					<label translate>RESUMO.SITUACAO</label>
+					<input id="situacao" name="situacao" type="text" value="{{ 'SITUACAO.'+$ctrl.object.status | translate }}" ng-disabled="true">
+				</md-input-container>
+
+				<div layout-align="end center">
+					<md-button ng-click="$ctrl.ajudaResumo('view')" class="md-fab md-mini amber-400-bg">
+						<md-icon md-font-icon="icon-help"/>
+						<md-tooltip class="h4">{{'AJUDA' | translate}}</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+			<div layout="row" flex class="p-16 m40">
+				<md-input-container id="descricao_resumo_view" class="md-block" flex>
+					<label for="descricao_resumo_view_input" translate>RESUMO.DESCRICAO</label>
+					<textarea
+						ng-model="$ctrl.object.descricao"
+						name="textarea1"
+						id="descricao_resumo_view_input"
+						md-maxlength="2000"
+						ng-disabled="true"
+						ng-maxlength="2000"
+					>
+					</textarea>
+				</md-input-container>
+			</div>
+			<div layout="column" flex layout-xs="column" class="p-16 m50">
+				<v-accordion class="vAccordion--default" multiple flex>
+					<v-pane id="agentes_datas_limites" expanded="true">
+						<v-pane-header>
+							<div class="md-accent-fg">
+								<h3 translate>AVALIACAO.AGENTES_DATA_LIMITES</h3>
+							</div>
+						</v-pane-header>
+						<v-pane-content>
+							<div layout="row" layout-xs="column" class="h-accordion">
+								<div layout="column" flex="80" flex-xs="100">
+									<div layout="row" layout-xs="column" id="perfis"
+											class="mt-10">
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												id="autoavaliacao_view"
+												ng-model="$ctrl.object.preencheAv1"
+												class="font-size-14 ml-5"
+												ng-disabled="true">
+													{{'RESUMO.AUTOAVALIACAO' | translate}}
+											</md-checkbox>
+											<span class="width-20"></span>
+											<md-checkbox ng-model="$ctrl.object.gestores" class="font-size-14" ng-disabled="true">
+												{{'RESUMO.GESTORES' | translate}}
+											</md-checkbox>
+										</div>
+										<span class="width-20"></span>
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												ng-model="$ctrl.object.subordinados"
+												class="font-size-14"
+												ng-disabled="true">
+													{{'RESUMO.SUBORDINADOS' | translate}}
+											</md-checkbox>
+											<span class="width-20"></span>
+											<md-checkbox
+												ng-model="$ctrl.object.pares"
+												class="font-size-14"
+												ng-disabled="true">
+													{{'RESUMO.PARES' | translate}}
+											</md-checkbox>
+										</div>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex="30" flex-xs="100" flex-sm="100">
+											<label id="lbl_dataAv2_view" for="dataAv2" translate>RESUMO.DATALIMITE</label>
+											<input
+												id="dataAv2_view"
+												name="dataAv2"
+												type="text"
+												value="{{$ctrl.object.dataLimite | date: 'dd/MM/yyyy'}}"
+												ng-disabled="true"
+											/>
+										</md-input-container>
+									</div>
+								</div>
+								<div layout="column" flex>
+									<div layout="row" class="mt-10">
+										<md-checkbox
+											id="consenso_view"
+											ng-model="$ctrl.object.preencheAv3"
+											class="font-size-14 ml-5"
+											ng-disabled="true"
+										>
+											{{'RESUMO.CONSENSO' | translate}}
+										</md-checkbox>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+											<label id="lbl_dataAv3" for="dataAv3" translate>RESUMO.DATALIMITE</label>
+											<input
+												id="dataAv3"
+												name="dataAv3"
+												type="text"
+												value="{{$ctrl.object.limiteAv3 | date: 'dd/MM/yyyy'}}"
+												ng-disabled="true"
+											/>
+										</md-input-container>
+									</div>
+								</div>
+							</div>
+						</v-pane-content>
+					</v-pane>
+					<v-pane id="tipo_vs_peso">
+						<v-pane-header>
+							<div id="agentes" class="md-accent-fg">
+								<h3 translate>{{'RESUMO.PLANEJAMENTOAGENTESCONTEUDOPESO' | translate}}</h3>
+							</div>
+						</v-pane-header>
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<md-table-container class="table_pesquisa">
+									<table id="table-list" md-table md-progress="promise">
+										<thead md-head md-order="query.order">
+										<tr md-row class="grey-200-bg">
+											<th md-column><span translate>RESUMO.TIPOCOMPETENCIA</span>
+											</th>
+											<th md-column><span translate>RESUMO.AGENTES</span>
+											</th>
+											<th md-column><span translate>RESUMO.TOTAL</span>
+											</th>
+										</tr>
+										</thead>
+										<tbody md-body>
+										<tr md-row
+											ng-repeat="tiposCompetencia in $ctrl.object.tiposCompetencia"
+											class="text-left">
+											<td md-cell>{{ tiposCompetencia.nome }}</td>
+											<td md-cell>
+												<div layout="row" class="mb-5 mt-5">
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.autoavaliacao"
+															ng-disabled="true"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.AUTOAVALIACAO' | translate}}																			</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="text"
+																style="width: 30%;"
+																name="autoavaliacao"
+																ng-model="tiposCompetencia.percentualAutoavaliacao"
+																ng-disabled="true"
+																max="100"
+															/>
+															&nbsp;
+															<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.gestor"
+															ng-disabled="true"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.GESTORES' | translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="text"
+																style="width: 30%;"
+																name="gestor"
+																ng-model="tiposCompetencia.percentualGestor"
+																ng-disabled="true"
+																max="100"
+															/>
+															&nbsp;
+															<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.subordinados"
+															ng-disabled="true"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.SUBORDINADOS' | translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="text"
+																name="subordinados"
+																style="width: 30%;"
+																ng-model="tiposCompetencia.percentualSubordinados"
+																ng-disabled="true"
+																max="100"
+															>
+															&nbsp;
+															<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.pares"
+															ng-disabled="true"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.PARES' | translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="text"
+																style="width: 30%;"
+																name="pares"
+																ng-model="tiposCompetencia.percentualPares"
+																ng-disabled="true"
+																max="100"
+															>
+															&nbsp;
+															<span>%</span>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td md-cell>
+												<div layout="row" class="mt-10">
+													<input
+														type="text"
+														style="width: 30%;"
+														name="total"
+														value="{{tiposCompetencia.percentualAutoavaliacao + tiposCompetencia.percentualGestor + tiposCompetencia.percentualSubordinados + tiposCompetencia.percentualPares}}"
+														max="100"
+														ng-disabled="true"
+													>
+													&nbsp;
+													<span>%</span>
+												</div>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+						</v-pane-content>
+					</v-pane>
+					<v-pane ng-if="$ctrl.object.campanha.dimensao">
+						<v-pane-header>
+							<div id="dimensoes" class="md-accent-fg">
+								<h3 translate>MODELOS.DIMENSOES</h3>
+							</div>
+						</v-pane-header>
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<md-table-container class="table_pesquisa">
+									<table id="table-dimensao" md-table md-progress="$ctrl.promise">
+										<thead md-head md-order="$ctrl.query.order">
+										<tr md-row>
+											<th md-column><span translate>DIMENSAO.NOME</span></th>
+										</tr>
+										</thead>
+										<tbody md-body>
+											<tr md-row ng-repeat="item in $ctrl.object.listaDimensao" class="text-left">
+												<td md-cell>{{ item.dimensao.nome }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+								<md-divider></md-divider>
+							</div>
+						</v-pane-content>
+					</v-pane>
+				</v-accordion>
+			</div>
+			<md-divider ng-if="true"></md-divider>
+			<!-- BOTÕES -->
+			<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+				<md-button
+					id="ajustar_pesos"
+					ng-click="$ctrl.pesos($ctrl.object.id)"
+					ng-if="$ctrl.admin"
+					class="md-raised md-accent text-none"
+					aria-label="Ajustar pesos"
+					translate translate-attr-aria-label="RESUMO.AJUSTARPESOS"
+				>
+					{{'RESUMO.AJUSTARPESOS'|translate}}
+				</md-button>
+			</div>
+		</div>
+	</div>
+</md-content>

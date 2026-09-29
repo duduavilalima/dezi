@@ -1,0 +1,150 @@
+<md-content class="content" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 m4">
+		<!-- Front -->
+		<div class="white-bg style_card m-8">
+			<div>
+				<!--CABECALHO FIXO -->
+				<div layout="column" layout-gt-md="row" flex class="p-16">
+					<md-input-container flex="30">
+						<label for="empresa">{{'MENSAGEM.EMPRESA' | translate}}</label>
+						<input id="empresa" name="empresa" type="text" ng-model="$ctrl.avaliacao.campanha.empresa.nome" ng-disabled="true">
+					</md-input-container>
+					<span class="width-20"></span>
+					<md-input-container flex="30">
+						<label for="campanha">{{'MENSAGEM.CAMPANHA' | translate}}</label>
+						<input id="campanha" name="campanha" type="text" ng-model="$ctrl.avaliacao.campanha.descricao" ng-disabled="true">
+					</md-input-container>
+					<span class="width-20"></span>
+					<md-input-container flex="30">
+						<label for="avaliacao">{{'MENSAGEM.AVALIACAO' | translate}}</label>
+						<input id="avaliacao" name="avaliacao" type="text" ng-model="$ctrl.avaliacao.descricaoAbreviada" ng-disabled="true">
+					</md-input-container>
+				</div>
+				<md-tabs md-dynamic-height>
+					<md-tab label="{{ 'MENSAGEM.ABAENVIADAS' | translate }}">
+						<md-content>
+							<div class="widget-group" layout="row" flex="100" layout-wrap>
+								<div layout="column" layout-gt-md="row" layout-xs="row" flex="100">
+									<div flex>
+										<md-table-container>
+											<table id="table-list-envidas-msg" md-table md-progress="$ctrl.promiseMensagensEnviadas">
+												<thead md-head>
+													<tr md-row>
+														<th md-column width="50%">
+															<span class="column-title">{{'MENSAGEM.TITULO' | translate}}</span>
+														</th>
+														<th md-column  width="13%">
+															<span class="column-title">{{'MENSAGEM.QTD' | translate}}</span>
+														</th>
+														<th md-column  width="12%"  hide-xs>
+															<span class="column-title">{{'MENSAGEM.DATA' | translate}}</span>
+														</th>
+													</tr>
+												</thead>
+												<tbody md-body ng-show="!$ctrl.mensagensEnviadasPage.length || $ctrl.mensagensEnviadasPage.length == 0">
+													<tr md-row>
+														<td md-cell colspan="5"> <div class="text-center">{{'MENSAGEM.NAOHA' | translate}}.</div> </td>
+													</tr>
+												</tbody>
+												<tbody md-body ng-show="$ctrl.mensagensEnviadasPage.length && $ctrl.mensagensEnviadasPage.length > 0">
+													<tr
+														md-row ng-repeat="item in $ctrl.mensagensEnviadasPage"
+														class="text-left"
+													>
+														<td md-cell><a href ng-click="$ctrl.onExibirMensagem($event, item)">{{ ::item.titulo }}</a></td>
+														<td md-cell>{{ ::item.totalEnviados }}</td>
+														<td md-cell>{{ ::item.dataHoraEnvio | date : 'dd/MM/yyyy HH:mm' }}</td>
+													</tr>
+												</tbody>
+											</table>
+										</md-table-container>
+										<md-table-pagination
+											md-page-select
+											md-limit="$ctrl.enviadosTableParams.limit"
+											md-limit-options="$ctrl.enviadosTableParams.limitOptions"
+											md-page="$ctrl.enviadosTableParams.page"
+											md-total="{{ $ctrl.mensagensEnviadas.length }}"
+											md-label="{{ $ctrl.enviadosTableParams.labels }}"
+											md-on-paginate="$ctrl.onPaginateMensagensEnviadas"
+										></md-table-pagination>
+									</div>
+								</div>
+							</div>
+						</md-content>
+					</md-tab>
+					<md-tab label="{{ 'MENSAGEM.ABARESPOSTAS' | translate }}">
+						<md-content>
+							<div class="widget-group" layout="row" flex="100" layout-wrap>
+								<div layout="column" layout-gt-md="row" layout-xs="row" flex="100">
+									<div flex>
+										<md-table-container>
+											<table id="table-list-recebidas-msg" md-table md-progress="$ctrl.promise">
+												<thead md-head>
+													<tr md-row>
+														<th md-column width="50%">
+															<span class="column-title">{{'MENSAGEM.TITULO' | translate}}</span>
+														</th>
+														<th md-column  width="12%"  hide-xs>
+															<span class="column-title">De</span>
+														</th>
+														<th md-column  width="12%"  hide-xs>
+															<span class="column-title">{{'MENSAGEM.DATA' | translate}}</span>
+														</th>
+													</tr>
+												</thead>
+												<tbody md-body ng-if="!$ctrl.mensagensRecebidasPage || $ctrl.mensagensRecebidasPage.length == 0">
+													<td md-cell colspan="4"><div class="text-center p-16">{{ 'MENSAGEM.NAOHARESPOSTAS' | translate }}</div></td>
+												</tbody>
+												<tbody md-body ng-if="$ctrl.mensagensRecebidasPage && $ctrl.mensagensRecebidasPage.length > 0">
+													<tr
+														md-row
+														ng-repeat="item in $ctrl.mensagensRecebidasPage"
+														class="text-left"
+													>
+														<td md-cell ng-class="{'md-body-2' : item.isNew}">
+															<md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+															<a href ng-click="$ctrl.onExibirMensagem($event, item)">{{ ::item.titulo }}</a>
+															<span ng-if="item.isNew" class="nova">nova</span>
+														</td>
+														<td md-cell ng-if="item.avaliacaoEnvio == null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.funcionarioEnvio.nome }}</td>
+														<td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+													</tr>
+												</tbody>
+											</table>
+										</md-table-container>
+										<md-table-pagination
+											md-page-select
+											md-limit="$ctrl.recebidosTableParams.limit"
+											md-limit-options="$ctrl.recebidosTableParams.limitOptions"
+											md-page="$ctrl.recebidosTableParams.page"
+											md-total="{{ $ctrl.mensagensRecebidas.length }}"
+											md-label="{{ $ctrl.recebidosTableParams.labels }}"
+											md-on-paginate="$ctrl.onPaginateMensagensRecebidas"
+										></md-table-pagination>
+									</div>
+								</div>
+							</div>
+						</md-content>
+					</md-tab>
+				</md-tabs>
+				<div layout="row" class="content" style="margin-top: 15px;">
+					<div flex layout-align="start center">
+					</div>
+					<div layout-align="end center">
+						<md-button
+							id="btn_nova"
+							ng-hide="$ctrl.canAdicionarMensagem()"
+							ng-click="$ctrl.onAdicionarMensagem()"
+							class="m-0 ph-20 pv-10 md-button md-accent text-capitalize"
+							aria-label="Nova mensagem"
+							translate-attr-aria-label="MENSAGEM.BTNNOVAMENSAGEM"
+						>
+							<md-icon md-font-icon="icon-email"></md-icon>
+							{{'MENSAGEM.BTNNOVAMENSAGEM' | translate}}
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</md-content>

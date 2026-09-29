@@ -1,0 +1,76 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div class="header  md-toolbar-tools" layout="row" layout-xs="column" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{'DASHBOARD.TITLE' | translate}}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.back()">{{'DASHBOARD.PREENCHIMENTOS' | translate}}</a></span>
+			</div>
+		</div>
+
+		<div layout="row" layout-align="end center">
+			<div show-gt-xs class="filter-list breadcrumb">
+				<label class="label-filter-list">{{ 'CADASTRO.PESQUISAR' | translate }}:&nbsp;</label>
+				<input id="input_search" type="text" name="input_search" ng-model="$ctrl.filter" class="input-filter-list">
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button
+					ng-click="$ctrl.back()"
+					class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize"
+					translate
+				>
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline" />
+					{{'DASHBOARD.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+
+		<div flex-xs flex-gt-xs="100" ng-if="$ctrl.avaliados.length == 0"
+			layout="column" class="p-8">
+			<div class="text-center">
+				{{'DASHBOARD.NAOTEM' | translate}}
+			</div>
+		</div>
+
+	<form-card
+		name="formPendencias"
+		card-title="Pendências de Preenchimento - {{$ctrl.tipoAvaliacao | translate}}"
+	>
+		<labeled-input
+			flex
+			flex-gt-xs="50"
+			name="campanha"
+			label="Campanha"
+			value="$ctrl.avaliacao.campanha.descricao"
+			options="{ disabled: true }"
+		/>
+
+		<labeled-input
+			flex
+			flex-gt-xs="50"
+			name="avaliacao"
+			label="Avaliação"
+			value="$ctrl.avaliacao.descricaoAbreviada"
+			options="{ disabled: true }"
+		/>
+
+		<div flex="100">
+			<md-checkbox ng-model="$ctrl.apenasPendencias" ng-change="$ctrl.filterList()">
+				Mostrar apenas colaboradores com pendências
+			</md-checkbox>
+		</div>
+	</form-card>
+
+	<form-table
+			source="$ctrl.responsaveisFiltrados"
+			fields="$ctrl.fields"
+			filter="$ctrl.filter"
+			conf="$ctrl.conf"
+		/>
+	</div>
+</div>

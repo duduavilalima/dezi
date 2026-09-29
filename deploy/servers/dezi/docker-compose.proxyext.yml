@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  rest:
+    networks:
+      - default
+      - proxy
+  web:
+    networks:
+      - default
+      - proxy
+  queue:
+    networks:
+      - default
+      - proxy
+  mobile:
+    networks:
+      - default
+      - proxy
+
+networks:
+  default:
+  proxy:
+    external:
+      name: ${DEZI_PROXY_NETWORK_NAME}

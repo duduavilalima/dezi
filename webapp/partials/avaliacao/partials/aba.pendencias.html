@@ -1,0 +1,91 @@
+<md-content class="content" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="margin-default">
+		<div class="white-bg style_card">
+			<div flex layout="column" layout-xs="column">
+				<div class="pl-8 border-bottom h50" layout="row" layout-xs="column">
+					<div id="title__participantes" flex layout-align="start center" layout-align-xs="center center">
+						<h2 class="md-accent-fg mt-10">Pendências</h2>
+					</div>
+					<div ng-if="$ctrl.model.avaliacao.pendencias.length > 0" layout-align="end center" class="p-16">
+							Última validação em {{$ctrl.dataAtualizacao}}
+					</div>
+				</div>
+				<div id="pendencias">
+					<div layout="column" layout-align="start start" class="p-8"
+						 ng-if="$ctrl.model.avaliacao.pendencias.length > 0">
+						<span class="grey-700-fg">Existem pendências que devem ser resolvidas:</span>
+					</div>
+					<md-table-container class="scroll_tables">
+						<table md-table id="table-list"><!--md-progress="listPendenciasPromise"-->
+							<thead md-head>
+							<tr md-row class="grey-200-bg">
+								<th md-column>
+									Pendência
+								</th>
+								<th md-column>
+									Descrição
+								</th>
+								<th md-column width="5%">
+									Opções
+								</th>
+							</tr>
+							</thead>
+							<tbody md-body>
+							<tr md-row ng-show="$ctrl.model.avaliacao.pendencias.length == 0">
+								<td md-cell md-cell colspan="3" class="text-center">
+									{{ 'COMPETENCIA.NAOPENDENCIAS' | translate }}
+								</td>
+							</tr>
+							<tr md-row ng-repeat="item in $ctrl.model.avaliacao.pendencias">
+								<td md-cell style="padding: 0 24px">
+									<a href ng-click="$ctrl.resolverPendencia(item)">
+										<b>{{ item.tipoPendencia === $ctrl.TipoPendencia.COLABORADORES ?
+											item.avaliado.nome
+											: item.tipoPendencia === $ctrl.TipoPendencia.CARGO ?
+												item.cargo.nome
+												: null }}
+										</b>
+									</a>
+								</td>
+								<td md-cell>{{ item.mensagemErro }}</td>
+								<td md-cell>
+									<div layout="row">
+										<md-button
+										class="md-icon-button md-warn"
+										ng-click="$ctrl.resolverPendencia(item)"
+										aria-label="Resolver">
+											<md-icon md-font-icon="icon-rename-box"></md-icon>
+											<md-tooltip class="h4">Resolver pendência</md-tooltip>
+										</md-button>
+										<md-button
+										ng-click="$ctrl.removerPendencia($event, item)"
+										aria-label="excluir"
+										class="md-icon-button">
+											<md-icon md-font-icon="icon-trash"></md-icon>
+											<md-tooltip class="h4">Remover pendência</md-tooltip>
+										</md-button>
+									</div>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</md-table-container>
+					<md-divider></md-divider>
+					<!-- BOTÕES -->
+					<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+						<md-button
+						ng-click="$ctrl.revalidar()"
+						class="md-raised md-accent text-capitalize"
+						ng-disabled="basicForm.$invalid"
+						aria-label="Salvar"
+						translate
+						translate-attr-aria-label="CAMPANHASLISTAR.SALVAR">
+							Revalidar
+						</md-button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</md-content>

@@ -1,0 +1,42 @@
+<ion-slides centeredSlides slidesPerView="1" (ionSlideWillChange)="onChangeSlide($event)">
+	<ion-slide *ngFor="let detalhamento of detalhamentoList">
+		<app-avatar-avaliados
+			(touchstart)="onTouchStart($event)"
+			(touchend)="onTouchEnd($event)"
+			[preenchimentoList]="detalhamento.listaPreenchimentos"
+		>
+		</app-avatar-avaliados>
+		<span class="separator grey"></span>
+		<ion-grid class="grid">
+			<ion-row>
+				<ion-col class="m-auto">
+					<app-page-indicator
+						[paginatorLength]="detalhamentoList.length"
+						[activePage]="slides.realIndex"
+						(selectedPage)="onClickPager($event)"
+					></app-page-indicator>
+				</ion-col>
+				<ion-col>
+					<button (click)="onSaveDetalhamentos()" float-right ion-button icon-start>
+						SALVAR
+					</button>
+				</ion-col>
+			</ion-row>
+			<ion-row class="detalhamento-descricao">
+					{{ detalhamento.descricao }}
+			</ion-row>
+		</ion-grid>
+		<span class="separator grey"></span>
+		<app-detalhamento
+			(updatedDetalhamento)="onUpdateDetalhamento($event)"
+			[detalhamento]="detalhamento"
+		></app-detalhamento>
+	</ion-slide>
+
+	<!-- <div *ngIf="currentIndex > 0"
+				class="swiper-button-prev swiper-button-white"
+				(click)="previousSlide()"></div>
+		   <div *ngIf="currentIndex < slides.length()-1"
+				class="swiper-button-next swiper-button-white"
+				(click)="nextSlide()"></div> -->
+</ion-slides>

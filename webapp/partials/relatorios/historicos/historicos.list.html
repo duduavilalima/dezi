@@ -1,0 +1,82 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span>Histórico de Desempenho</span></div>
+		</div>
+		<img ng-src="{{loginInfo.server}}/cookie.jsp?id={{loginInfo.sessionId}}" style="display:none">
+		<div layout-align="end center" layout="row" class="margin-input">
+			<div hide show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'FUNCIONARIO.PESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+		</div>
+	</div>
+
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-16 mt-70">
+		<div class="white-bg style_card mt-5 ml-10 mr-10">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<md-progress-linear
+						ng-if="promise"
+						ng-hide="avaliacoes.length > 0"
+						md-mode="indeterminate"
+					/>
+					<thead fix-head md-head md-order="$ctrl.tableConf.order">
+						<tr md-row class="grey-200-bg">
+							<th md-column md-order-by="nome" width="30%">
+								<span>Colaborador</span>
+							</th>
+							<th md-column width="30%">
+								<span>Setor</span>
+							</th>
+							<th md-column width="20%">
+								<span>Cargo</span>
+							</th>
+							<th md-column width="15%">
+								<span>Dt. admissão</span>
+							</th>
+							<th md-column>
+								<span>Histórico</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody md-body>
+						<tr md-row ng-show="$ctrl.listFuncionarios.length == 0">
+							<td md-cell colspan="9" hide show-gt-xs>
+								<div class="text-center">{{'CAMPANHASLISTAR.NAOHA' | translate}}</div>
+							</td>
+							<td md-cell colspan="9" hide-gt-xs>
+								<div class="pl-16">{{'CAMPANHASLISTAR.NAOHA' | translate}}</div>
+							</td>
+						</tr>
+						<tr
+							md-row
+							ng-show="$ctrl.listFuncionarios.length > 0"
+							ng-repeat="item in $ctrl.listFuncionarios | funcionariosFilter: filtro | orderBy: $ctrl.tableConf.order | limitTo: tableConf.limit : (tableConf.page-1) * tableConf.limit"
+							class="text-left"
+						>
+							<td md-cell>{{item.nome}}</td>
+							<td md-cell>{{item.departamento.nome}}</td>
+							<td md-cell>{{item.cargo.nome}}</td>
+							<td md-cell>{{item.admissao | date: 'dd/MM/yyyy' }}</td>
+							<td md-cell>
+								<md-button class="md-icon-button" aria-label="Botão Resultado" ng-click="$ctrl.mostraResultado(item)">
+									<md-icon md-font-icon="icon-chart-line" class="md-accent-fg"></md-icon>
+									<md-tooltip class="h4">Visualizar Histórico</md-tooltip>
+								</md-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination
+				md-limit="$ctrl.tableConf.limit"
+				md-limit-options="tableControl.limit_options"
+				md-page="$ctrl.tableConf.page"
+				md-total="{{($ctrl.listFuncionarios|funcionariosFilter: filtro).length}}"
+				md-page-select
+				md-label="{{'FUNCIONARIO.LBLPAGINA' | translate}}"
+			/>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<md-dialog aria-label="dialog" style="width: 550px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'$dialog.save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{$dialog.title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;" >
+			<div class="md-dialog-content">
+
+				<!-- TRABALHAR AQUI -->
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate ng-show="$dialog.dataForTheTree != null && $dialog.dataForTheTree.length > 0">
+
+					<div layout="column" layout-gt-md="row" flex="100">
+
+						<treecontrol class="tree-classic" tree-model="$dialog.dataForTheTree" options="$dialog.treeOptions"
+									 on-selection="$dialog.showSelected(node)" selected-node="node"
+									 expanded-nodes="$dialog.expandedNodes">
+							<md-checkbox id="check_{{node.id}}" ng-model="node.selected" aria-label="Checkbox arvore"></md-checkbox>{{node.nome}}
+						</treecontrol>
+
+					</div>
+
+				</form>
+
+
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions flex layout="row">
+			<div flex layout-align="start center">
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="$dialog.cancel()" ng-if="$dialog.object.ponto != 0">
+					Cancelar
+				</md-button>
+			</div>
+
+			<div flex="auto" ng-if="$dialog.object.ponto == 0">
+				<md-button id="btn_fechar" class="md-raised md-default text-capitalize" ng-click="$dialog.cancel()">
+					Fechar
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="$dialog.confirm()" ng-disabled="!$dialog.habilitar">
+					Salvar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

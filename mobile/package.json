@@ -1,0 +1,107 @@
+{
+  "name": "dezi-mobile",
+  "version": "3.6.3",
+  "author": "Fasolti",
+  "license": "UNLICENSED",
+  "homepage": "http://ionicframework.com/",
+  "private": true,
+  "scripts": {
+    "start": "cross-env DEZI_ENV=development ionic-app-scripts serve --nobrowser",
+    "start:pwa": "cross-env DEZI_MOBILE_BUILD_TYPE=pwa npm start",
+    "serve": "node ./server.js",
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "build:pwa": "DEZI_MOBILE_BUILD_TYPE=pwa npm run build",
+    "build:app": "node ./apk-build.js",
+    "lint": "ionic-app-scripts lint",
+    "generate-res": "cordova-res",
+    "emulate": "ionic cordova emulate --livereload",
+    "emulate:android": "ionic cordova emulate --livereload android",
+    "release": "npm run docs:readme && standard-version",
+    "release:major": "npm run docs:readme && standard-version --major",
+    "release:minor": "npm run docs:readme && standard-version --minor",
+    "release:patch": "npm run docs:readme && standard-version --patch",
+    "publish": "npm run publish:git",
+    "publish:git": "git push --follow-tags origin master",
+    "publish:npm": "npm publish",
+    "docs:readme": "markdown-toc -i README.md",
+    "ci:build:app": "./build/scripts/find-python.sh && npm i && npm rebuild node-sass && npm run build:app",
+    "build:resources:ios": "find ./resources/ios -name '*.png' -exec convert -flatten -background white -alpha remove -alpha off '{}' '{}' \\;"
+  },
+  "dependencies": {
+    "@angular/animations": "5.2.11",
+    "@angular/common": "5.2.11",
+    "@angular/compiler": "5.2.11",
+    "@angular/compiler-cli": "5.2.11",
+    "@angular/core": "5.2.11",
+    "@angular/forms": "5.2.11",
+    "@angular/http": "5.2.11",
+    "@angular/platform-browser": "5.2.11",
+    "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/core": "~4.20.0",
+    "@ionic-native/keyboard": "^4.20.0",
+    "@ionic-native/network": "^4.20.0",
+    "@ionic-native/splash-screen": "~4.20.0",
+    "@ionic-native/status-bar": "~4.20.0",
+    "@ngx-translate/core": "^9.1.1",
+    "@ngx-translate/http-loader": "^2.0.1",
+    "cordova-android": "8.1.0",
+    "cordova-ios": "5.1.1",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.1.3",
+    "cordova-plugin-ionic-webview": "^4.0.1",
+    "cordova-plugin-network-information": "^2.0.2",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "ionic-angular": "3.9.5",
+    "ionic-rating": "^1.0.6",
+    "ionicons": "3.0.0",
+    "ng-circle-progress": "^1.0.0",
+    "rxjs": "5.5.11",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.8.29"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "3.2.3",
+    "cordova": "^9.0.0",
+    "cordova-res": "^0.8.1",
+    "cordova-set-version": "^8.0.1",
+    "cross-env": "^7.0.2",
+    "env-cmd": "^9.0.3",
+    "fs-extra": "^8.1.0",
+    "ionic": "^3.20.1",
+    "markdown-toc": "^1.2.0",
+    "semver": "^6.3.0",
+    "standard-version": "^6.0.1",
+    "typescript": "^2.8.4"
+  },
+  "description": "Sistema de Avaliação de Desempenho",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-network-information": {}
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "config": {
+    "ionic_source_map_type": "source-map",
+    "ionic_webpack": "./config/webpack.config.js"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "npx cordova-set-version",
+      "postcommit": "git add config.xml README.md && git commit --amend --no-edit"
+    }
+  }
+}

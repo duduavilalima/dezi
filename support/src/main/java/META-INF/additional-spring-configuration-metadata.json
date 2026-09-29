@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "dezi.empresa.name",
+    "type": "java.lang.String",
+    "description": "Nome da Empresa no banco de dados a ser usando na importação"
+  },
+  {
+    "name": "dezi.createdby.name",
+    "type": "java.lang.String",
+    "description": "Nome de quem esta importando os dados"
+  },
+  {
+    "name": "comp.import",
+    "type": "java.lang.String",
+    "description": "Importe planilha competencia"
+  },
+  {
+    "name": "funcionario.import",
+    "type": "java.lang.String",
+    "description": "Importe planilha funcionario"
+  },
+  {
+    "name": "default.dimensao.id",
+    "type": "java.lang.String",
+    "description": "dimensao.id"
+  },
+  {
+    "name": "default.dimensao.nome",
+    "type": "java.lang.String",
+    "description": "dimensao.nome"
+  },
+  {
+    "name": "associacoes.import",
+    "type": "java.lang.String",
+    "description": "Importe planilha associacoes"
+  }
+]}

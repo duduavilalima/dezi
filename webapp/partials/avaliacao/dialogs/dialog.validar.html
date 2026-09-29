@@ -1,0 +1,33 @@
+<md-dialog id="dialog_titulo_popup_validar" aria-label="Popup validar" style="width: 700px;" class="white-bg">
+	<form name="DialogValidar" novalidate ui-keypress="{13:'confirm()'}">
+		<md-toolbar class="{{toolBarClassDialog}}">
+			<div class="md-toolbar-tools">
+				<h2 md-autofocus id="titulo_popup_confirmacao_confirmar">
+					<span>{{::title}}</span>
+				</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content class="md-dialog-content" role="document" tabindex="-1" id="dialog_54">
+			<div class="md-dialog-content-body ng-scope">
+				<p id="msg_popup_confirmacao_confirmar" class="ng-binding">{{::msg}}</p>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row" flex class="{{::mdActionClassDialog}}" style="background-color: rgba(255,255,255,1);">
+			<div layout-align="start center">
+				<md-button id="btn_cancelar_cancelar_nregistro" style="float: left" class="md-raised text-capitalize" ng-click="cancel()">
+					{{ 'DIALOG.BOTAO_CANCELAR' | translate }}
+				</md-button>
+			</div>
+
+			<div flex layout-align="end center">
+				<md-button id="btn_confirmar_confirmar_nregistro" style="float: right" class="md-raised text-capitalize" ng-click="salvar()">
+					{{ 'DIALOG.BOTAO_CONFIRMAR' | translate }}
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

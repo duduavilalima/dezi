@@ -1,0 +1,26 @@
+{
+  "ESPECIALIZACAO":{
+    "CADASTOS":"Registros",
+    "FORMACAO":"Idiomas y formación",
+    "ESPECIALIZA": "Cursos de especialización",
+    "PESQUISAR":"Investigación",
+    "BTNNOVO":"Nuevo Cursos de Especialización",
+    "SITUACAO": "Situación",
+    "REQUER": "Requiere la realización de otros cursos",
+    "CURSO": "Curso de especialização",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 80 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "DESCRICAO" : "Descripción"
+  }
+}

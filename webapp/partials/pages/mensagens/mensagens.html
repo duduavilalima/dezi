@@ -1,0 +1,203 @@
+<div id="mensageria" class="page-layout simple fullwidth doc-page">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="title"><span>Mensagens</span></div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div flex md-background-bg class="md-background-bg zoomable" layout="column">
+
+        <div ng-cloak>
+            <md-content>
+
+                <md-tabs md-dynamic-height md-border-bottom>
+
+                    <md-tab label="Todas">
+                        <md-content class="content" style="background-color: rgb(245,245,245);">
+
+							<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+								<div class="white-bg style_card mt-5 ml-10 mr-10">
+									<md-table-container>
+										<table id="table-list-todas-msg" md-table md-progress="promise">
+											<thead md-head md-order="queryTodos.order">
+											<tr md-row>
+												<th md-column md-order-by="titulo" width="45%">
+													<span>Título</span>
+												</th>
+												<th md-column ng-if="avaliacaoEnvio == null" md-order-by="usuarioEnvio.nome" width="15%">
+													<span>De</span>
+												</th>
+												<th md-column ng-if="avaliacaoEnvio != null" md-order-by="avaliacaoEnvio.descricaoAbreviada" width="15%">
+													<span>De</span>
+												</th>
+												<th md-column md-order-by="usuarioDestino.nome" width="15%">
+													<span>Para</span>
+												</th>
+												<th md-column md-order-by="totalAvaliacoes" width="10%">
+													<span>Data Recebimento</span>
+												</th>
+												<th md-column md-order-by="dataHoraAbertura" width="12%">
+													<span>Data Leitura</span>
+												</th>
+												<th md-column width="3%">
+													<span>Opções</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body ng-if="listTodos == null || listTodos.length == 0">
+											<td md-cell colspan="6"><div class="text-center p-16">Não há mensagens.</div></td>
+											</tbody>
+
+											<tbody md-body ng-if="listTodos != null && listTodos.length > 0">
+											<tr md-row ng-repeat="item in listTodos | orderBy: queryTodos.order | limitTo: tableControl.limit : (queryTodos.page -1) * tableControl.limit">
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">
+													<md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+													<a class="" href ng-click="acaoExibirMensagemEnviada($event, $index, item)">{{ ::item.titulo }}</a>
+													<span ng-if="item.isNew" class="nova">nova</span>
+
+												</td>
+												<td md-cell ng-if="item.avaliacaoEnvio == null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.usuarioEnvio.nome }}</td>
+												<td md-cell ng-if="item.avaliacaoEnvio != null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.avaliacaoEnvio.descricaoAbreviada }}</td>
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.usuarioDestino.nome }}</td>
+												<td md-cell ng-class="{'md-body-2' : item.isNew}"> {{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.dataHoraAbertura | date: 'dd/MM/yyyy HH:mm' }}</td>
+												<td md-cell style="padding: 0">
+													<md-menu id="menu-table" ng-if="item.isDestino">
+														<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+															<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+														</md-button>
+														<md-menu-content class="p-0">
+															<md-menu-item ng-if="false">
+																<md-button aria-label="Encaminhar" ng-click="acaoEncaminharMensagem($event, $index, item)">
+																	<md-icon style="color: blue" md-font-icon="icon-send"></md-icon>Encaminhar
+																</md-button>
+															</md-menu-item>
+															<md-menu-item ng-if="item.isDestino">
+																<md-button aria-label="responder" ng-click="acaoResponderMensagem($event, $index, item)">
+																	<md-icon style="color: green" md-font-icon="icon-send"></md-icon>Responder
+																</md-button>
+															</md-menu-item>
+														</md-menu-content>
+													</md-menu>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</md-table-container>
+									<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" md-page="queryTodos.page" md-total="{{listTodos.length}}" md-page-select
+														 md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+								</div>
+							</div>
+                        </md-content>
+                    </md-tab>
+
+                    <md-tab label="Recebidas">
+                        <md-content class="content" style="background-color: rgb(245,245,245);">
+
+							<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+								<div class="white-bg style_card mt-5 ml-10 mr-10">
+									<md-table-container>
+										<table id="table-list-recebidas-msg" md-table md-progress="promise">
+											<thead md-head md-order="queryRecebidos.order">
+											<tr md-row>
+												<th md-column md-order-by="titulo" width="45%">
+													<span>Título</span>
+												</th>
+												<th md-column ng-if="avaliacaoEnvio == null" md-order-by="usuarioEnvio.nome" width="15%">
+													<span>De</span>
+												</th>
+												<th md-column ng-if="avaliacaoEnvio != null" md-order-by="avaliacaoEnvio.descricaoAbreviada" width="15%">
+													<span>De</span>
+												</th>
+												<th md-column md-order-by="totalAvaliacoes" width="10%">
+													<span>Data Recebimento</span>
+												</th>
+												<th md-column md-order-by="dataHoraAbertura" width="10%">
+													<span>Data Leitura</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body ng-if="listDestinos == null || listDestinos.length == 0">
+											<td md-cell colspan="4"><div class="text-center p-16">Não há mensagens recebidas.</div></td>
+											</tbody>
+
+											<tbody md-body ng-if="listDestinos != null && listDestinos.length > 0">
+											<tr md-row ng-repeat="item in listDestinos | orderBy: queryRecebidos.order | limitTo: tableControl.limit : (queryRecebidos.page -1) * tableControl.limit" class="text-left">
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">
+													<md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+													<a class="" href ng-click="acaoExibirMensagemEnviada($event, $index, item)">{{ ::item.titulo }}</a>
+													<span ng-if="item.isNew" class="nova">nova</span>
+												</td>
+												<td md-cell ng-if="item.avaliacaoEnvio == null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.usuarioEnvio.nome }}</td>
+												<td md-cell ng-if="item.avaliacaoEnvio != null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.avaliacaoEnvio.descricaoAbreviada }}</td>
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+												<td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.dataHoraAbertura | date: 'dd/MM/yyyy HH:mm' }}</td>
+
+											</tbody>
+										</table>
+									</md-table-container>
+									<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" md-page="queryRecebidos.page" md-total="{{listDestinos.length}}" md-page-select
+														 md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+								</div>
+							</div>
+                        </md-content>
+                    </md-tab>
+
+                    <md-tab label="Enviadas">
+                        <md-content class="content" style="background-color: rgb(245,245,245);">
+
+							<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+								<div class="white-bg style_card mt-5 ml-10 mr-10">
+									<md-table-container>
+										<table id="table-list-envidas-msg" md-table md-progress="promise">
+											<thead md-head md-order="queryEnviados.order">
+											<tr md-row>
+												<th md-column md-order-by="titulo" width="45%">
+													<span>Título</span>
+												</th>
+												<th md-column md-order-by="usuarioDestino.nome" width="15%">
+													<span>Para</span>
+												</th>
+												<th md-column md-order-by="totalAvaliacoes" width="10%">
+													<span>Data Recebimento</span>
+												</th>
+												<th md-column md-order-by="dataHoraAbertura" width="10%">
+													<span>Data Leitura</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body ng-if="listEnviados == null || listEnviados.length == 0">
+											<td md-cell colspan="4"><div class="text-center p-16">Não há mensagens enviadas.</div></td>
+											</tbody>
+
+											<tbody md-body ng-if="listEnviados != null && listEnviados.length > 0">
+											<tr md-row ng-repeat="item in listEnviados | orderBy: queryRecebidos.order | limitTo: tableControl.limit : (queryEnviados.page -1) * tableControl.limit" class="text-left">
+												<td md-cell>
+													<md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+													<a class="link-table-search" href ng-click="acaoExibirMensagemEnviada($event, $index, item)">{{ ::item.titulo }}</a>
+												</td>
+												<td md-cell>{{ ::item.usuarioDestino.nome }}</td>
+												<td md-cell>{{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+												<td md-cell>{{ ::item.dataHoraAbertura | date: 'dd/MM/yyyy HH:mm' }}</td>
+											</tbody>
+										</table>
+									</md-table-container>
+									<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" md-page="queryEnviados.page" md-total="{{listEnviados.length}}" md-page-select
+														 md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+								</div>
+							</div>
+                        </md-content>
+                    </md-tab>
+
+                </md-tabs>
+            </md-content>
+        </div>
+
+    </div>
+</div>

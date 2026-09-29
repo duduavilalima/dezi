@@ -1,0 +1,59 @@
+<div class="page-layout simple fullwidth">
+	<md-toolbar class="header md-toolbar-tools" layout="row">
+		<div class="breadcrumb" layout="row" layout-align="start center">
+			<span hide show-gt-xs>
+				<span>Cadastros</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator" />
+			</span>
+			<span ng-if="$state.current.data.mode">
+				<a href ng-click="$ctrl.back()" translate>{{ $state.current.data.entity }}</a>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator" />
+				<span class="parent">{{ 'CADASTRO.MODE.' + $state.current.data.mode | translate }}</span>
+			</span>
+			<span ng-if="!$state.current.data.mode">
+				<span class="parent" translate>{{ $state.current.data.entity }}</span>
+			</span>
+		</div>
+
+		<div flex></div>
+
+		<div layout="row" layout-align="end center">
+			<div
+				ng-if="!$state.current.data.mode"
+				hide
+				show-gt-xs
+				class="filter-list breadcrumb"
+			>
+				<label class="label-filter-list">{{ 'CADASTRO.PESQUISAR' | translate }}:&nbsp;</label>
+				<input class="input-filter-list" ng-model="filter.value">
+			</div>
+			<div ng-if="$ctrl.canCreate()">
+				<md-button
+					hide-xs
+					class="md-raised md-accent text-capitalize"
+					ng-click="$ctrl.goNew()"
+					translate="{{ $state.current.data.newBtn }}"
+				/>
+				<md-button
+					hide
+					show-xs
+					class="md-fab md-mini md-accent"
+					aria-label="."
+					translate-attr-aria-label="CADASTRO.CRIAR"
+					ng-click="$ctrl.goNew()"
+				>
+					<md-icon md-font-icon="icon-plus" />
+				</md-button>
+			</div>
+		</div>
+	</md-toolbar>
+
+	<div ng-if="$state.current.data.mode" class="white-bg">
+		<md-button ng-click="$ctrl.back()" class="md-button md-primary md-accent-fg text-capitalize">
+			<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline" />
+			<span translate>FORM.BACK</span>
+		</md-button>
+	</div>
+
+	<ui-view />
+</div>

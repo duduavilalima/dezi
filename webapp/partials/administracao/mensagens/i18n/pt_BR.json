@@ -1,0 +1,20 @@
+{
+  "MENSAGEM": {
+  },
+  "PERFIL": {
+    "ADMINISTRADOR": "Administrador",
+    "FUNCIONARIO": "Funcionario",
+    "CONSULTOR_RH": "Consultor de RH",
+    "GESTOR_RH": "Gestor de RH",
+    "GESTOR_AREA": "Gestor de Área",
+    "TODOS": "Todos",
+    "PONTO_FOCAL": "Ponto Focal",
+    "GESTOR": "Gestor",
+    "PARES": "Pares",
+    "SUBORDINADO": "Subordinado"
+  },
+  "TIPO" : {
+    "MASCULINO" : "Masculino",
+    "FEMININO"  : "Feminino"
+  }
+}

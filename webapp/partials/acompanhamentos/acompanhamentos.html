@@ -1,0 +1,109 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate="DASHBOARD.TITLE">Acompanhamentos</span></div>
+		</div>
+	</div>
+
+	<div id="dashboard-server" class="mt-50" ng-intro-options="IntroOptions" ng-intro-method="CallMe">
+		<div id="widgets">
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div layout="row" class="content" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1></h1>
+						</div>
+					</div>
+					<md-divider/>
+
+					<div class="content">
+						<form name="formFiltro" novalidate class="p-16">
+							<div layout="row" layout-gt-xs="row" layout-xs="column" class="pl-16 pt-16 pr-16" flex="100">
+								<md-input-container flex="33" id="campanha">
+									<label><span translate>DASHBOARD.SELECTLABELCAMPANHA</span></label>
+									<md-select id="campanha" name="campanha" ng-model="$ctrl.selectedFilter.campanha"
+										ng-model-options="{trackBy: '$value.id'}" ng-required="true" required
+										ng-change="$ctrl.changeCampanha()">
+										<md-option ng-repeat="item in $ctrl.listaCampanhas | orderBy: 'descricao'"
+											ng-value="{{item}}" value="{{item}}">
+											{{item.descricao}}
+										</md-option>
+									</md-select>
+									<div ng-messages="formFiltro.campanha.$error">
+										<div ng-message="required">
+											<span translate="">CAMPANHASLISTAR.OBRIGATORIO</span>
+										</div>
+									</div>
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="33">
+									<label><span translate>DASHBOARD.SELECTLABELAVALIACAO</span></label>
+									<md-select id="avaliacao" name="avaliacao" ng-model="$ctrl.selectedFilter.avaliacao"
+										ng-disabled="$ctrl.listaAvaliacoes == null || $ctrl.listaAvaliacoes.length == 0"
+										ng-required="true" required ng-model-options="{trackBy: '$value.id'}"
+										placeholder="{{'DASHBOARD.SELECTLABELAVALIACAO' | translate}}">
+										<md-option
+											ng-repeat="item in $ctrl.listaAvaliacoes | orderBy: 'descricaoAbreviada'"
+											ng-value="{{item}}" value="{{item}}">
+											{{item.descricaoAbreviada}}
+										</md-option>
+									</md-select>
+									<div ng-messages="formFiltro.avaliacao.$error">
+										<div ng-message="required">
+											<span translate>CAMPANHASLISTAR.OBRIGATORIO</span>
+										</div>
+									</div>
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="33">
+									<label id="lbl_setor"
+										for="id_setor">{{'FUNCIONARIO.DEPARTAMENTO' | translate}}</label>
+									<md-select id="id_setor" name="setor" ng-model="$ctrl.selectedFilter.departamento"
+										ng-model-options="{trackBy: '$value.id'}">
+										<md-select-header>
+											<input id="searchTermSetor" ng-model="searchTermSetor" type="search"
+												ng-keydown="$ctrl.onSearchChange($event)"
+												placeholder="Pesquisar Setor...">
+										</md-select-header>
+										<md-optgroup label="Setor">
+											<md-option
+												ng-repeat="item in $ctrl.listaDepartamentos | orderBy:'nome' | filter:{nome: searchTermSetor}"
+												ng-value="item">{{item.nome}}</md-option>
+										</md-optgroup>
+									</md-select>
+								</md-input-container>
+							</div>
+						</form>
+					</div>
+
+					<md-divider/>
+
+					<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+						<md-button id="bt_limpar"
+							ng-click="$ctrl.limpar(formFiltro)"
+							hide-xs
+							class="md-raised md-accent-fg text-capitalize"
+							aria-label="Limpar"
+							translate
+							translate-attr-aria-label="DASHBOARD.LIMPAR">
+							<span translate="DASHBOARD.LIMPAR">Limpar</span>
+						</md-button>
+						<md-button id="filtrar"
+							class="md-raised md-accent text-capitalize"
+							ng-click="$ctrl.filtrar($ctrl.selectedFilter)"
+							ng-disabled="formFiltro.$invalid">
+							<span translate="DASHBOARD.BTNFILTRAR">Gerar Gráfico</span>
+						</md-button>
+					</div>
+				</div>
+			</div>
+
+			<ui-view></ui-view>
+
+		</div>
+	</div>
+</div>

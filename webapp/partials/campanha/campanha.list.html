@@ -1,0 +1,82 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate>CAMPANHASLISTAR.TITLE</span></div>
+		</div>
+
+		<div layout-align="end center" layout="row" class="margin-input">
+			<div show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'CAMPANHASLISTAR.LBLPESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+			<md-button
+				hide-xs
+				class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize"
+				style="text-transform: inherit;"
+				ng-click="$ctrl.displayNew()"
+				value="Nova"
+			>
+				{{'CAMPANHASLISTAR.BTNNOVA' | translate}}
+			</md-button>
+		</div>
+	</div>
+
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 mt-50">
+		<div class="white-bg style_card m-8">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="$ctrl.listResult">
+					<md-progress-linear ng-if="true" ng-hide="$ctrl.listResult.length > 0" md-mode="indeterminate">
+					</md-progress-linear>
+					<thead fix-head md-head md-order="$ctrl.query.order">
+						<tr md-row class="grey-200-bg">
+							<th md-column md-order-by="descricao" width="45%">
+								<span translate>CAMPANHASLISTAR.TITLE</span>
+							</th>
+							<th md-column md-order-by="empresa.nome" width="25%">
+								<span translate>CAMPANHASLISTAR.TITLEEMPRESA</span>
+							</th>
+							<th md-column md-order-by="dataCriacao" width="20%">
+								<span translate>CAMPANHASLISTAR.TITLEDATA</span>
+							</th>
+							<th md-column md-order-by="totalAvaliacoes" width="10%">
+								<span translate>CAMPANHASLISTAR.TITLENUMERO</span>
+							</th>
+							<th md-column class="text-center">
+								<span class="column-title" translate>CAMPANHASLISTAR.SITUACAO</span>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody md-body>
+						<tr
+							md-row
+							ng-repeat="item in $ctrl.listResult | campanhasFilter: filtro | orderBy: $ctrl.query.order | limitTo: tableControl.limit : ($ctrl.query.page -1) * tableControl.limit"
+							class="text-left">
+								<td md-cell>
+									<a class="link-table-search" href ng-click="$ctrl.displayView(item)">{{ ::item.descricao }}</a>
+								</td>
+								<td md-cell>{{ ::item.empresa.nome }}</td>
+								<td md-cell>{{ ::item.dataCriacao | date: 'dd/MM/yyyy HH:mm' }}</td>
+								<td md-cell>{{ ::item.totalAvaliacoes }}</td>
+								<td md-cell class="text-center">
+									<span
+										ng-class="{'green-bg white-fg': item.status == 'ATIVA', 'red-bg white-fg': item.status == 'INATIVA'}"
+										class="estilo_situacao line_break"><b>{{ 'SITUACAO.' +item.status | translate }}</b>
+									</span>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination
+				md-limit="tableControl.limit"
+				md-limit-options="tableControl.limit_options"
+				paginate="logPagination"
+				md-page="$ctrl.query.page"
+				md-total="{{($ctrl.listResult|campanhasFilter: filtro).length}}"
+				md-page-select
+				md-label="{{'CAMPANHASLISTAR.LBLPAGINA' | translate}}"
+			/>
+		</div>
+	</div>
+</div>

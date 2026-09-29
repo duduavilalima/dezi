@@ -1,0 +1,30 @@
+<md-input-container
+	fill-width
+	ng-form="{{ $ctrl.name }}"
+	ng-keyup="$ctrl._onReset($event)"
+>
+	<label for="input">
+		<span translate ng-if="$ctrl.translateLabel">{{ $ctrl.label }}</span>
+		<span ng-if="!$ctrl.translateLabel">{{ $ctrl.label }}</span>
+	</label>
+
+	<input
+		name="input"
+		type="{{ $ctrl.inputType }}"
+		ng-model="$ctrl.value"
+		ng-change="$ctrl._onChange($ctrl.value)"
+		ng-required="$ctrl.required"
+		ng-disabled="$ctrl.readOnly"
+		ng-minlength="$ctrl.minlength"
+		ng-maxlength="$ctrl.maxlength"
+		ng-pattern="$ctrl.pattern"
+		md-minlength="$ctrl.minlength"
+		md-maxlength="$ctrl.maxlength"
+	/>
+
+	<div ng-messages="$ctrl._getFormErrors()">
+		<div ng-repeat="(message, value) in $ctrl.messages" ng-message="{{:: message }}">
+			<span translate translate-values="$ctrl.translateValues">{{ value }}</span>
+		</div>
+	</div>
+</md-input-container>

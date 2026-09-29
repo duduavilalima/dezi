@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-toolbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>{{ "app.views.feedforwards-recebidos.title" | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="content-color">
+	<ion-grid>
+		<ion-row class="white">
+			<ion-col>
+				<app-tipo-competencia-slides
+					[tipoCompetenciaList]="tiposCompetencia"
+					(selectedTipo)="onSelectedTipoCompetencia($event)"
+				></app-tipo-competencia-slides>
+			</ion-col>
+		</ion-row>
+		<span class="separator grey"></span>
+		<ion-row class="row-grey">
+			<ion-col>
+				<ion-card  *ngIf="empty" padding>
+					<p>{{ "app.views.feedforwards-recebidos.messages.no-data" | translate }}</p>
+				</ion-card>
+				<app-apontamentos-card  *ngIf="!empty" [apontamentosList]="feedforwards"></app-apontamentos-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

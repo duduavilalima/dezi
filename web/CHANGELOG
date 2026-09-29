@@ -1,0 +1,19 @@
+v 1.0.0 (Sprint AVD-3, Sprint AVD-4, Sprint AVD-5)
+  - Nova tela de seleção departicipantes (Nova avaliação)
+  - Preenchimento de avaliações por competência
+  - Novo status para preenchimento (Parcialmente preenchido)
+  - Novos ícones de preenchimento
+  - Indicação de verificação de mensagens
+  - Novo botão de "NOVO" nas exibições dos cadastros
+  FIX
+  - Pesquisa da tela de dashboard com período (Outros)
+  - Datas de AV1, AV2 e AV3 na tela de análise (Avaliação)
+  - Correção do componente datetimepicker.js. Conversão de data interna.
+  - Usuários inativos estavam logando. Bloqueando login de funcionários inativos
+  - Tela de perfil não funcionava. Erro na listagem de avaliações
+  - Data trocava dia pelo mês ao salvar
+
+v 2.0.0
+  -
+  FIX
+  -

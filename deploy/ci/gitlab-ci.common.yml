@@ -1,0 +1,475 @@
+variables:
+  # A ser definido nos subprojetos do dezi:
+  # - DEZI_SERVICE_VARNAME: nome da imagem do Docker, sem o prefixo "dezi-", all-caps
+  # - DEZI_SERVICE_NAME: nome do serviço a ser reiniciado no Docker Compose durante o redeploy
+  ENVIRONMENT: production
+  M2_PROFILES: "build.docker,build.prod"
+  # FIXME Atualizar o Gitlab para a versão 12.3 e determinar DEZI_MATURITY no YAML via "rules:if"
+  # Vide https://docs.gitlab.com/ee/ci/yaml/#rules
+
+stages:
+  - build
+  - image
+  - migrate
+  - deploy
+  - pack
+
+before_script:
+  - docker info
+
+.only-production-phases:
+  only:
+    # TODO Atualizar o Gitlab para a versão 12.3 e adicionar "only:web" via "rules:if"
+    # - master
+    - /^v[0-9]+(\.[0-9]+){2,}$/
+    - /^v[0-9]+(\.[0-9]+){2,}[-.](release|final).*$/i
+  variables: &only-production-phases-variables
+    DEZI_PHASE: production
+    DEZI_DOCKER_TAG: production-${CI_COMMIT_REF_NAME}
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+
+.only-staging-phases:
+  only:
+    - development
+    - /^v[0-9]+(\.[0-9]+){2,}[-.]snapshot.*$/i
+  variables: &only-staging-phases-variables
+    DEZI_PHASE: staging
+    DEZI_DOCKER_TAG: staging-${CI_COMMIT_SHORT_SHA}
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+
+.only-prerelease-phases:
+  only:
+    - /^v[0-9]+(\.[0-9]+){2,}[-.](alpha|beta|rc).*$/i
+  variables: &only-prerelease-phases-variables
+    DEZI_PHASE: prerelease
+    DEZI_DOCKER_TAG: prerelease-${CI_COMMIT_REF_NAME}
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+
+.only-prerelease-hotfix-phases:
+  only:
+    - hotfix
+    - /^v[0-9]+(\.[0-9]+){2,}[-.](fix|hotfix).*$/i
+  variables: &only-prerelease-phases-variables
+    DEZI_PHASE: prerelease
+    DEZI_DOCKER_TAG: prerelease-${CI_COMMIT_SHORT_SHA}
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+
+.only-production-remotes: &only-production-remotes
+  when: manual
+  variables: &only-production-remotes-variables
+    DEZI_COMPOSE_PATH: ${DEZI_PROD_COMPOSE_PATH}
+    DEZI_PROJECT_PATH: ${DEZI_PROD_PROJECT_PATH}
+    DEZI_SSH_SERVER: ${DEZI_PROD_SSH_SERVER}
+    DEZI_DB_LINK: ${DEZI_PROD_DB_LINK}
+    DEZI_DB_URL: ${DEZI_PROD_DB_URL}
+    DEZI_DB_USER: ${DEZI_PROD_DB_USER}
+    DEZI_DB_PASS: ${DEZI_PROD_DB_PASS}
+    DEZI_DB_DUMP_BASENAME: dezi-${CI_ENVIRONMENT_NAME}.latest.nolog.dmp.xz
+  environment:
+    name: production
+    url: https://rtm.dezi.com.br
+
+.only-demo-remotes: &only-demo-remotes
+  when: manual
+  variables: &only-demo-remotes-variables
+    DEZI_COMPOSE_PATH: ${DEZI_DEMO_COMPOSE_PATH}
+    DEZI_PROJECT_PATH: ${DEZI_DEMO_PROJECT_PATH}
+    DEZI_SSH_SERVER: ${DEZI_DEMO_SSH_SERVER}
+    DEZI_DB_LINK: ${DEZI_DEMO_DB_LINK}
+    DEZI_DB_URL: ${DEZI_DEMO_DB_URL}
+    DEZI_DB_USER: ${DEZI_DEMO_DB_USER}
+    DEZI_DB_PASS: ${DEZI_DEMO_DB_PASS}
+    DEZI_DB_DUMP_BASENAME: dezi-${CI_ENVIRONMENT_NAME}.latest.nolog.dmp.xz
+  environment:
+    name: demo
+    url: https://demo.dezi.com.br
+
+.only-staging-remotes: &only-staging-remotes
+  variables: &only-staging-remotes-variables
+    DEZI_COMPOSE_PATH: ${DEZI_STG_COMPOSE_PATH}
+    DEZI_PROJECT_PATH: ${DEZI_STG_PROJECT_PATH}
+    DEZI_SSH_SERVER: ${DEZI_STG_SSH_SERVER}
+    DEZI_DB_LINK: ${DEZI_STG_DB_LINK}
+    DEZI_DB_URL: ${DEZI_STG_DB_URL}
+    DEZI_DB_USER: ${DEZI_STG_DB_USER}
+    DEZI_DB_PASS: ${DEZI_STG_DB_PASS}
+    DEZI_DB_DUMP_BASENAME: dezi-${CI_ENVIRONMENT_NAME}.latest.nolog.dmp.xz
+  environment:
+    name: staging
+    url: http://homo.dezi.com.br
+
+.only-staging-hotfix-remotes: &only-staging-hotfix-remotes
+  variables: &only-staging-hotfix-remotes-variables
+    DEZI_COMPOSE_PATH: ${DEZI_FIX_COMPOSE_PATH}
+    DEZI_PROJECT_PATH: ${DEZI_FIX_PROJECT_PATH}
+    DEZI_SSH_SERVER: ${DEZI_FIX_SSH_SERVER}
+    DEZI_DB_LINK: ${DEZI_FIX_DB_LINK}
+    DEZI_DB_URL: ${DEZI_FIX_DB_URL}
+    DEZI_DB_USER: ${DEZI_FIX_DB_USER}
+    DEZI_DB_PASS: ${DEZI_FIX_DB_PASS}
+    DEZI_DB_DUMP_BASENAME: dezi-${CI_ENVIRONMENT_NAME}.latest.nolog.dmp.xz
+  environment:
+    name: staging-hotfix
+    url: https://hotfix.dezi.com.br
+
+.only-production-stable-base:
+  extends: .only-production-phases
+  <<: *only-production-remotes
+  when: manual
+
+.only-demo-stable-base:
+  extends: .only-production-phases
+  <<: *only-demo-remotes
+  when: manual
+
+.only-demo-prerelease-base:
+  extends: .only-prerelease-phases
+  <<: *only-demo-remotes
+  when: manual
+
+.only-staging-hotfix-stable-base:
+  extends: .only-production-phases
+  <<: *only-staging-hotfix-remotes
+  when: manual
+
+.only-staging-hotfix-prerelease-base:
+  extends: .only-prerelease-phases
+  <<: *only-staging-hotfix-remotes
+  when: manual
+
+.only-staging-hotfix-prerelease-hotfix-base:
+  extends: .only-prerelease-hotfix-phases
+  <<: *only-staging-hotfix-remotes
+  when: on_success
+
+.only-staging-hotfix-unstable-base:
+  extends: .only-staging-phases
+  <<: *only-staging-hotfix-remotes
+  when: manual
+
+.only-staging-stable-base:
+  extends: .only-production-phases
+  <<: *only-staging-remotes
+  when: manual
+
+.only-staging-prerelease-base:
+  extends: .only-prerelease-phases
+  <<: *only-staging-remotes
+  when: manual
+
+.only-staging-unstable-base:
+  extends: .only-staging-phases
+  <<: *only-staging-remotes
+  when: on_success
+
+.do-build-sources: &do-build-sources
+  - cd build
+  - ./build.sh
+
+build-production-sources:
+  extends: .only-production-phases
+  stage: build
+  #interruptible: true
+  script: *do-build-sources
+
+build-prerelease-sources:
+  extends: .only-prerelease-phases
+  stage: build
+  #interruptible: true
+  script: *do-build-sources
+
+build-prerelease-hotfix-sources:
+  extends: .only-prerelease-hotfix-phases
+  stage: build
+  #interruptible: true
+  script: *do-build-sources
+
+build-staging-sources:
+  extends: .only-staging-phases
+  stage: build
+  #interruptible: true
+  script: *do-build-sources
+
+.do-build-image: &do-build-image
+  - docker login -u ${DEZI_NEXUS_USER} -p ${DEZI_NEXUS_PASSWORD} docker.fasolti.com.br
+  - cd build
+  - ./image.sh
+
+build-production-image:
+  extends: .only-production-phases
+  stage: image
+  #interruptible: true
+  script: *do-build-image
+
+build-prerelease-image:
+  extends: .only-prerelease-phases
+  stage: image
+  #interruptible: true
+  script: *do-build-image
+
+build-prerelease-hotfix-image:
+  extends: .only-prerelease-hotfix-phases
+  stage: image
+  #interruptible: true
+  script: *do-build-image
+
+build-staging-image:
+  extends: .only-staging-phases
+  stage: image
+  #interruptible: true
+  script: *do-build-image
+
+.do-deploy-image: &do-deploy-image
+  - >
+    echo "Caminho do projeto Compose: ${DEZI_COMPOSE_PATH}" &&
+    echo "DEZI_VERSION_${DEZI_SERVICE_VARNAME} -> ${DEZI_DOCKER_TAG}" &&
+    echo "ENVIRONMENT -> ${ENVIRONMENT}" &&
+    echo "Serviços a reiniciar: ${DEZI_SERVICE_NAME}"
+  - eval $(ssh-agent -s)
+  - echo "${DEZI_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+  - >
+    ssh ${DEZI_SSH_SERVER} "
+      cd ${DEZI_COMPOSE_PATH} &&
+      sed -i 's/DEZI_VERSION_${DEZI_SERVICE_VARNAME}=.*$/DEZI_VERSION_${DEZI_SERVICE_VARNAME}=${DEZI_DOCKER_TAG}/' .env &&
+      sed -i 's/ENVIRONMENT=.*$/ENVIRONMENT=${ENVIRONMENT}/' .env &&
+      docker-compose up --force-recreate --remove-orphans -d ${DEZI_SERVICE_NAME}"
+
+.deploy-base: &deploy-base
+  stage: deploy
+  # Desabilita download de artefatos criados na etapa de build (já que não são necessários)
+  dependencies: []
+  script: *do-deploy-image
+
+deploy-production-stable:
+  <<: *deploy-base
+  extends: .only-production-stable-base
+
+deploy-demo-stable:
+  <<: *deploy-base
+  extends: .only-demo-stable-base
+
+deploy-demo-prerelease:
+  <<: *deploy-base
+  extends: .only-demo-prerelease-base
+
+deploy-staging-hotfix-stable:
+  <<: *deploy-base
+  extends: .only-staging-hotfix-stable-base
+
+deploy-staging-hotfix-prerelease:
+  <<: *deploy-base
+  extends: .only-staging-hotfix-prerelease-base
+
+deploy-staging-hotfix-prerelease-hotfix:
+  <<: *deploy-base
+  extends: .only-staging-hotfix-prerelease-hotfix-base
+
+deploy-staging-hotfix-unstable:
+  <<: *deploy-base
+  extends: .only-staging-hotfix-unstable-base
+
+deploy-staging-stable:
+  <<: *deploy-base
+  extends: .only-staging-stable-base
+
+deploy-staging-prerelease:
+  <<: *deploy-base
+  extends: .only-staging-prerelease-base
+
+deploy-staging-unstable:
+  <<: *deploy-base
+  extends: .only-staging-unstable-base
+
+.do-db-restore: &do-db-restore
+  - eval $(ssh-agent -s)
+  - echo "${DEZI_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+  - |
+    set -e
+
+    DEZI_PROD_SSH_SERVER="${DEZI_PROD_SSH_SERVER:?Faltando DEZI_PROD_SSH_SERVER.}"
+    DEZI_SSH_SERVER="${DEZI_SSH_SERVER:?Faltando DEZI_SSH_SERVER.}"
+
+    DEZI_PROD_PROJECT_PATH="${DEZI_PROD_PROJECT_PATH:?Faltando DEZI_PROD_PROJECT_PATH.}"
+    DEZI_PROJECT_PATH="${DEZI_PROJECT_PATH:?Faltando DEZI_PROJECT_PATH.}"
+
+    echo "Caminho do projeto Compose: ${DEZI_SSH_SERVER}:${DEZI_PROJECT_PATH}" >&2
+    echo "Caminho do projeto Compose (Produção): ${DEZI_PROD_SSH_SERVER}:${DEZI_PROD_PROJECT_PATH}" >&2
+
+    echo "Criando dump de produção..." >&2
+    DUMP_REMOTE_FILENAME="$(
+      ssh "${DEZI_PROD_SSH_SERVER}" "
+        cd ${DEZI_PROD_PROJECT_PATH} &&
+        ./compose.sh dump
+      "
+    )" || {
+      echo "Erro ao criar o dump!" >&2
+      exit 1
+    }
+
+    DUMP_ENV_BASENAME="$(basename "${DUMP_REMOTE_FILENAME}")"
+    DUMP_ENV_FILENAME="${DEZI_PROJECT_PATH}/${DUMP_ENV_BASENAME}"
+    echo "Dump de produção criado: ${DUMP_REMOTE_FILENAME}" >&2
+    echo "Destino do dump no ambiente atual: ${DUMP_ENV_FILENAME}" >&2
+
+    echo "Copiando dump de produção para o ambiente atual..." >&2
+    scp -3 "${DEZI_PROD_SSH_SERVER}:${DUMP_REMOTE_FILENAME}" "${DEZI_SSH_SERVER}:${DUMP_ENV_FILENAME}" || {
+      echo "Erro ao copiar o dump! Excluindo '${DUMP_REMOTE_FILENAME}' em '${DEZI_PROD_SSH_SERVER}:${DEZI_PROD_PROJECT_PATH}'..." >&2
+      ssh "${DEZI_PROD_SSH_SERVER}" "
+        cd ${DEZI_PROD_PROJECT_PATH} &&
+        rm ${DUMP_REMOTE_FILENAME}
+      "
+      exit 1
+    }
+
+    echo "Removendo arquivo de dump no ambiente de Produção..." >&2
+    ssh "${DEZI_PROD_SSH_SERVER}" "
+      cd ${DEZI_PROD_PROJECT_PATH} &&
+      rm ${DUMP_REMOTE_FILENAME}
+    "
+
+    echo "Executando operação de restauração do BD no ambiente de destino..." >&2
+    ssh "${DEZI_SSH_SERVER}" "
+      cd ${DEZI_PROJECT_PATH} &&
+      ./compose.sh restore ${DUMP_ENV_FILENAME} &&
+      rm ${DUMP_ENV_FILENAME}
+    "
+
+    echo "Operação finalizada." >&2
+
+.db-restore-base: &db-restore-base
+  stage: migrate
+  # Desabilita download de artefatos criados na etapa de build (já que não são necessários)
+  dependencies: []
+  when: manual
+  script: *do-db-restore
+
+db-restore-demo-stable:
+  extends: .only-demo-stable-base
+  <<: *db-restore-base
+
+db-restore-demo-prerelease:
+  extends: .only-demo-prerelease-base
+  <<: *db-restore-base
+
+db-restore-staging-hotfix-stable:
+  extends: .only-staging-hotfix-stable-base
+  <<: *db-restore-base
+
+db-restore-staging-hotfix-prerelease:
+  extends: .only-staging-hotfix-prerelease-base
+  <<: *db-restore-base
+
+db-restore-staging-hotfix-prerelease-hotfix:
+  extends: .only-staging-hotfix-prerelease-hotfix-base
+  <<: *db-restore-base
+
+db-restore-staging-hotfix-unstable:
+  extends: .only-staging-hotfix-unstable-base
+  <<: *db-restore-base
+
+db-restore-staging-stable:
+  extends: .only-staging-stable-base
+  <<: *db-restore-base
+
+db-restore-staging-prerelease:
+  extends: .only-staging-prerelease-base
+  <<: *db-restore-base
+
+db-restore-staging-unstable:
+  extends: .only-staging-unstable-base
+  <<: *db-restore-base
+
+.do-db-dump: &do-db-dump
+  - eval $(ssh-agent -s)
+  - echo "${DEZI_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+  - |
+    #!/bin/bash
+
+    DEZI_DB_DUMP_BASENAME="${DEZI_DB_DUMP_BASENAME:?Faltando DEZI_DB_DUMP_BASENAME.}"
+    DEZI_SSH_SERVER="${DEZI_SSH_SERVER:?Faltando DEZI_SSH_SERVER.}"
+    DEZI_PROJECT_PATH="${DEZI_PROJECT_PATH:?Faltando DEZI_PROJECT_PATH.}"
+
+    echo "Caminho do projeto Compose: ${DEZI_SSH_SERVER}:${DEZI_PROJECT_PATH}" >&2
+    echo "Nome do arquivo de dump final: ${DEZI_DB_DUMP_BASENAME}" >&2
+
+    echo "Criando dump no ambiente '${CI_ENVIRONMENT_NAME}'..." >&2
+    DUMP_REMOTE_FILENAME="$(
+        ssh "${DEZI_SSH_SERVER}" "
+        cd ${DEZI_PROJECT_PATH} &&
+        ./compose.sh dump
+        "
+    )" || {
+        echo "Erro ao criar o dump!" >&2
+        exit 1
+    }
+
+    echo "Dump de produção criado: ${DUMP_REMOTE_FILENAME}" >&2
+
+    echo "Copiando dump para a pasta do projeto no Runner (destino: '${DEZI_DB_DUMP_BASENAME}')..." >&2
+    scp -3 "${DEZI_SSH_SERVER}:${DUMP_REMOTE_FILENAME}" "${DEZI_DB_DUMP_BASENAME}" || {
+        echo "Erro ao copiar o dump! Excluindo '${DUMP_REMOTE_FILENAME}' em '${DEZI_SSH_SERVER}:${DEZI_PROJECT_PATH}'..." >&2
+        ssh "${DEZI_SSH_SERVER}" "
+        cd ${DEZI_PROJECT_PATH} &&
+        rm ${DUMP_REMOTE_FILENAME}
+        "
+        exit 1
+    }
+
+    echo "Removendo arquivo de dump no ambiente '${CI_ENVIRONMENT_NAME}'..." >&2
+    ssh "${DEZI_SSH_SERVER}" "
+        cd ${DEZI_PROJECT_PATH} &&
+        rm ${DUMP_REMOTE_FILENAME}
+    "
+
+    echo "Dump finalizado." >&2
+
+.db-dump-base: &db-dump-base
+  stage: build
+  # Desabilita download de artefatos criados na etapa de build (já que não são necessários)
+  dependencies: []
+  when: manual
+  artifacts:
+    expire_in: 3 hours
+    paths:
+      - ${DEZI_DB_DUMP_BASENAME}
+  script: *do-db-dump
+
+db-dump-demo-stable:
+  extends: .only-demo-stable-base
+  <<: *db-dump-base
+
+db-dump-demo-prerelease:
+  extends: .only-demo-prerelease-base
+  <<: *db-dump-base
+
+db-dump-staging-hotfix-stable:
+  extends: .only-staging-hotfix-stable-base
+  <<: *db-dump-base
+
+db-dump-staging-hotfix-prerelease:
+  extends: .only-staging-hotfix-prerelease-base
+  <<: *db-dump-base
+
+db-dump-staging-hotfix-prerelease-hotfix:
+  extends: .only-staging-hotfix-prerelease-hotfix-base
+  <<: *db-dump-base
+
+db-dump-staging-hotfix-unstable:
+  extends: .only-staging-hotfix-unstable-base
+  <<: *db-dump-base
+
+db-dump-staging-stable:
+  extends: .only-staging-stable-base
+  <<: *db-dump-base
+
+db-dump-staging-prerelease:
+  extends: .only-staging-prerelease-base
+  <<: *db-dump-base
+
+db-dump-staging-unstable:
+  extends: .only-staging-unstable-base
+  <<: *db-dump-base

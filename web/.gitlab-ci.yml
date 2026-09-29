@@ -1,0 +1,104 @@
+include:
+  - project: 'avd/deploy'
+    ref: master
+    file: '/ci/gitlab-ci.common.yml'
+
+variables:
+  DEZI_SERVICE_VARNAME: SERVICES
+  DEZI_SERVICE_NAME: rest
+
+.build-base:
+  artifacts: &build-base-artifacts
+    paths:
+      - build/target/*.war
+      - build/target/*.tgz
+  cache: &build-base-cache
+    paths:
+      - build/m2/repository
+
+build-production-sources:
+  artifacts:
+    <<: *build-base-artifacts
+  cache:
+    <<: *build-base-cache
+
+build-prerelease-sources:
+  artifacts:
+    <<: *build-base-artifacts
+  cache:
+    <<: *build-base-cache
+
+build-prerelease-hotfix-sources:
+  artifacts:
+    <<: *build-base-artifacts
+  cache:
+    <<: *build-base-cache
+
+build-staging-sources:
+  artifacts:
+    <<: *build-base-artifacts
+  cache:
+    <<: *build-base-cache
+
+.do-migrate-db: &do-migrate-db
+  - >
+    echo "Caminho do projeto Compose: ${DEZI_COMPOSE_PATH}" &&
+    echo "DEZI_DB_LINK=${DEZI_DB_LINK}" &&
+    echo "DEZI_DOCKER_TAG=${DEZI_DOCKER_TAG}" &&
+    echo "DEZI_DB_URL=${DEZI_DB_URL}" &&
+    echo "DEZI_DB_USER=${DEZI_DB_USER}" &&
+    echo "DEZI_DB_MIGRATE_OPTS=${DEZI_DB_MIGRATE_OPTS}"
+  - eval $(ssh-agent -s)
+  - echo "${DEZI_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+  - >
+    ssh ${DEZI_SSH_SERVER} "
+    docker run --rm ${DEZI_DB_LINK} docker.fasolti.com.br/dezi-db-migration:${DEZI_DOCKER_TAG} -url=${DEZI_DB_URL} -user=${DEZI_DB_USER} -password=${DEZI_DB_PASS} -outOfOrder=true ${DEZI_DB_MIGRATE_OPTS} info &&
+    docker run --rm ${DEZI_DB_LINK} docker.fasolti.com.br/dezi-db-migration:${DEZI_DOCKER_TAG} -url=${DEZI_DB_URL} -user=${DEZI_DB_USER} -password=${DEZI_DB_PASS} -outOfOrder=true ${DEZI_DB_MIGRATE_OPTS} migrate"
+
+.migrate-base: &migrate-base
+  stage: migrate
+  script: *do-migrate-db
+  dependencies: []
+  cache:
+    <<: *build-base-cache
+    key: ${CI_COMMIT_REF_SLUG}
+
+db-migrate-production:
+  <<: *migrate-base
+  extends: .only-production-stable-base
+
+db-migrate-demo-stable:
+  <<: *migrate-base
+  extends: .only-demo-stable-base
+
+db-migrate-demo-prerelease:
+  <<: *migrate-base
+  extends: .only-demo-prerelease-base
+
+db-migrate-staging-hotfix-stable:
+  <<: *migrate-base
+  extends: .only-staging-hotfix-stable-base
+
+db-migrate-staging-hotfix-prerelease:
+  <<: *migrate-base
+  extends: .only-staging-hotfix-prerelease-base
+
+db-migrate-staging-hotfix-prerelease-hotfix:
+  <<: *migrate-base
+  extends: .only-staging-hotfix-prerelease-hotfix-base
+
+db-migrate-staging-hotfix-unstable:
+  <<: *migrate-base
+  extends: .only-staging-hotfix-unstable-base
+
+db-migrate-staging-stable:
+  <<: *migrate-base
+  extends: .only-staging-stable-base
+
+db-migrate-staging-prerelease:
+  <<: *migrate-base
+  extends: .only-staging-prerelease-base
+
+db-migrate-staging-unstable:
+  <<: *migrate-base
+  extends: .only-staging-unstable-base

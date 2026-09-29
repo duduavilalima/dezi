@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<security:global-method-security pre-post-annotations="enabled" />
+
+	<security:http
+		create-session="stateless"
+		pattern="/auth/**"
+		security="none"
+	/>
+
+	<security:http
+		create-session="stateless"
+		pattern="/homeofficebrasil/**"
+		security="none"
+	/>
+
+	<security:http
+		create-session="stateless"
+		pattern="/municipio/**"
+		security="none"
+	/>
+
+	<security:http
+		entry-point-ref="unauthorizedEntryPoint"
+		create-session="stateless"
+		pattern="/**"
+	>
+		<!-- Processamento do Token -->
+		<security:custom-filter ref="authenticationTokenProcessingFilter" position="PRE_AUTH_FILTER" />
+
+		<security:csrf disabled="true"/>
+<!--		<security:custom-filter after="CSRF_FILTER" ref="csrfHeaderFilter" />-->
+<!--		<security:csrf token-repository-ref="csrfTokenRepository"/>-->
+
+		<security:intercept-url pattern="/**" method="OPTIONS" access="permitAll" />
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
+	</security:http>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider user-service-ref="userDetailsService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<!-- CSRF beans -->
+	<bean id="csrfHeaderFilter" class="br.com.fasolti.commons.security.config.CsrfHeaderFilter" />
+	<bean id="csrfTokenRepository" class="br.com.fasolti.commons.security.config.CsrfTokenRepository" />
+	<!--
+	<bean id="csrfRequestMatcher" class="br.com.fasolti.commons.security.config.CsrfRequestMatcher">
+		<constructor-arg>
+			<list>
+				<value>/rest</value>
+				<value>/app</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	-->
+
+	<!-- Custom UserDetailService -->
+	<bean id="userDetailsService" class="br.com.fasolti.commons.services.security.UserDetailsServiceImpl" />
+
+	<!-- Token filter -->
+	<bean id="authenticationTokenProcessingFilter" class="br.com.fasolti.commons.security.token.AuthenticationTokenProcessingFilter" />
+
+	<bean id="unauthorizedEntryPoint" class="br.com.fasolti.commons.security.config.UnauthorizedEntryPoint" />
+
+	<!-- Password encoders -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+</beans>

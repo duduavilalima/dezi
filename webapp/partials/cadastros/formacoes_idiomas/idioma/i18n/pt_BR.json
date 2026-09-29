@@ -1,0 +1,26 @@
+{
+  "IDIOMA":{
+    "CADASTOS":"Cadastros",
+    "FORMACAO":"Formação e idiomas",
+    "IDIOMA": "Idioma",
+    "IDIOMAS": "Idiomas",
+    "PESQUISAR":"Pesquisar",
+    "BTNNOVO":"Novo Idioma",
+    "SITUACAO": "Situação",
+    "IDIOMA2": "Idioma",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 15 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "DESCRICAO" : "Descrição"
+  }
+}

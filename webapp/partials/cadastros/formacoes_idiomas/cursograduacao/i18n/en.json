@@ -1,0 +1,28 @@
+{
+  "GRADUACAO":{
+    "CADASTOS":"Data",
+    "FORMACAO":"Education and languages",
+    "GRADU": "Graduation Courses",
+    "PESQUISAR":"Search",
+    "BTNNOVO":"New Graduate Courses",
+    "SITUACAO": "Situation",
+    "REQUER": "Other courses is required",
+    "CURSODEGRADUACAO": "Graduation Course",
+    "CRIADOR": "Author",
+    "DATACRIACAO": "Creation Date",
+    "ATUALIZADOR": "Updater",
+    "DATAATUALIZA": "Update Date",
+    "SALVAR": "Save",
+    "VOLTAR": "Back",
+    "EDITAR": "Edit",
+    "CANCELAR": "Cancel",
+    "ATIVAR": "Activate",
+    "INATIVAR": "Inactivate",
+    "CAMPOOBRIGATORIO": "Required field",
+    "MAXIMO": "Maximum 80 characters",
+    "MINIMO": "Minimum 2 characters",
+    "SIM": "Yes",
+    "NAO": "No",
+    "DESCRICAO" : "Description"
+  }
+}

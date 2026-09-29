@@ -1,0 +1,23 @@
+<ion-row>
+	<ion-col>
+		<ion-list lines="full" scroll="true">
+			<ion-item
+				no-padding
+				*ngFor="let competencia of listaCompetencias"
+				(click)="onClickCompetencia(competencia)"
+			>
+				<ion-row>
+					<ion-col>
+						<div>
+							<div>
+								<span class="title">{{ competencia.descricaoAbreviada }} -
+									{{ competencia.qtdCompletosPorPreenchimento }}/{{ competencia.qtdTotalDePreenchimentos }}</span>
+							</div>
+							<app-progress-bar [progress]="competencia.porcentagemPreenchimento"></app-progress-bar>
+						</div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+		</ion-list>
+	</ion-col>
+</ion-row>

@@ -1,0 +1,13 @@
+<ion-row>
+	<ion-col col-5>
+		<ion-item no-lines>
+			<ion-avatar>
+				<img [src]="avaliado.fotoBase64" />
+			</ion-avatar>
+		</ion-item>
+	</ion-col>
+	<ion-col col-7 class="col-info">
+		<p class="title-info">{{ avaliado.nome }}</p>
+		<p class="subtitle-info">{{ avaliado.cargo?.nome }}</p>
+	</ion-col>
+</ion-row>

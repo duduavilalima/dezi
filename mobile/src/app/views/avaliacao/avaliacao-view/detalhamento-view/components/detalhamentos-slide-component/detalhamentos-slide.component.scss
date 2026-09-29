@@ -1,0 +1,30 @@
+app-detalhamentos-slide {
+	.detalhamento-descricao {
+		font-size: 14px;
+		margin: 0px 5px 0px 5px;
+		margin-bottom: 5px;
+	}
+
+	/* Ambas classes usadas pelo "scroll" horizontal */
+	.swiper-container.swiper-container-horizontal {
+		/* iOS */
+		height: auto;
+	}
+
+	.button-md {
+		height: 3rem;
+	}
+
+	.button-ios {
+		height: 3rem;
+	}
+
+	.swiper-container.swiper-container-horizontal.swiper-container-android {
+		/* Android */
+		height: auto;
+	}
+
+	.grid {
+		box-shadow: 0px 2px 3px #bbbbbb;
+	}
+}

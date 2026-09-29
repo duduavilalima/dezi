@@ -1,0 +1,70 @@
+<div class="form-card" layout="column">
+	<div class="md-accent-fg h50 ph-16" layout="row" layout-xs="column">
+		<div flex layout-align="start center" layout-align-xs="center center" layout="row">
+			<h1 class="mt-16" translate>{{:: $ctrl.cardTitle }}</h1>
+		</div>
+		<div layout-align="end center" layout-align-xs="center center" layout="row">
+			<md-switch
+				ng-model="$ctrl.active"
+				ng-if="$ctrl.canEditSituation"
+				aria-label="Alterar situação"
+			>
+				{{ 'SITUACAO.' + $ctrl.object.situacao | translate }}
+			</md-switch>
+			<span>&nbsp;</span>
+			<md-button
+				ng-click="$ctrl.goEdit()"
+				ng-if="$ctrl.canEdit"
+				class="md-fab md-mini md-accent-bg"
+				translate
+			>
+				<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+				<md-tooltip class="h4">{{ 'CADASTRO.EDITAR' | translate }}</md-tooltip>
+			</md-button>
+			<md-button
+				ng-click="$ctrl.detalhes($event)"
+				ng-if="$ctrl.showDetalhes"
+				class="md-icon-button"
+				translate
+			>
+				<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+				<md-tooltip class="h4">{{ 'CADASTRO.DETALHES' | translate }}</md-tooltip>
+			</md-button>
+		</div>
+	</div>
+
+	<md-divider />
+
+	<div
+		ng-transclude
+		ng-form="{{ $ctrl.name }}"
+		class="mt-16"
+		layout="row"
+		layout-xs="column"
+		layout-wrap="wrap"
+		layout-padding="8"
+	/>
+
+	<md-divider ng-if="$ctrl.canSave" />
+
+	<div
+		ng-if="$ctrl.canSave"
+		class="pl-16 pr-8 pv-8"
+		layout="row"
+		layout-align="end center"
+		layout-align-xs="center center"
+	>
+		<md-button
+			ng-click="$ctrl.onCancel({})"
+			class="md-primary md-raised text-capitalize"
+			translate="FORM.CANCEL"
+		/>
+		<md-button
+			ng-click="$ctrl.onSave({})"
+			class="md-accent md-raised text-capitalize"
+			ng-disabled="this[$ctrl.name].$invalid || this[$ctrl.name].$pristine"
+			translate="FORM.SAVE"
+		/>
+	</div>
+</div>
+

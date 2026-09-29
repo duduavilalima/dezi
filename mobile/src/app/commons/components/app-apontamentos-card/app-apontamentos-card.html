@@ -1,0 +1,56 @@
+<ion-list>
+	<ion-card *ngFor="let apontamento of apontamentosList">
+		<ion-grid>
+			<!-- <ion-row class="title-row">
+				<ion-col class="title-comp-col" style="text-align: center">
+					<span>{{ getNomeFuncionario(apontamento) }}</span>
+				</ion-col>
+			</ion-row> -->
+			<ion-row>
+				<ion-col col-3 *ngIf="hasFoto(apontamento)" class="p-bottom-0">
+					<img src="{{ getFoto(apontamento) }}" />
+				</ion-col>
+				<ion-col col-9 *ngIf="hasFoto(apontamento)" class="p-bottom-0">
+					<ion-row class="title-row">
+						<ion-col class="title-comp-col">
+							<span>{{ getNomeCompetencia(apontamento) }}</span>
+						</ion-col>
+						<ion-col col-4 class="title-date-col">
+							<span>{{ getData(apontamento) | date: "dd/MM/yyyy" }}</span>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col class="p-bottom-0">
+							<p class="apontamento">{{ getDescricao(apontamento) }}</p>
+						</ion-col>
+					</ion-row>
+				</ion-col>
+				<ion-col *ngIf="!hasFoto(apontamento)" class="p-bottom-0">
+					<ion-row class="title-row">
+						<ion-col class="title-comp-col">
+							<span>{{ getNomeCompetencia(apontamento) }}</span>
+						</ion-col>
+						<ion-col col-3 class="title-date-col">
+							<span>{{ getData(apontamento) | date: "dd/MM/yyyy" }}</span>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col class="p-bottom-0">
+							<p>{{ getNomeFuncionario(apontamento) }}</p>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col class="p-bottom-0">
+							<p class="apontamento">{{ getDescricao(apontamento) }}</p>
+						</ion-col>
+					</ion-row>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col class="p-0">
+					<rating [rate]="getNota(apontamento)" readonly="true" nullable="false"> </rating>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+</ion-list>

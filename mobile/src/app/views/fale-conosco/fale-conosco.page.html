@@ -1,0 +1,50 @@
+<ion-header>
+	<ion-toolbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title> {{ "app.views.fale-conosco.title" | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid class="content">
+		<ion-row class="image-row">
+				<div class="image"></div>
+		</ion-row>
+		<ion-row class="form-expand">
+			<form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+				<ion-col col-12>
+					<ion-item>
+						<ion-label color="primary" floating>
+							{{ "app.views.fale-conosco.fields.classificacao.label" | translate }}*
+						</ion-label>
+						<ion-select [cancelText]="'app.system.cancel' | translate" name="classificacao"
+							formControlName="classificacao">
+							<ion-option *ngFor="let classificacao of classificacoes" [value]="classificacao.valor">
+								{{"app.views.fale-conosco.fields.classificacoes." + classificacao.nome | translate}}
+							</ion-option>
+						</ion-select>
+					</ion-item>
+
+					<ion-item>
+						<ion-label color="primary" floating>
+							{{ "app.views.fale-conosco.fields.assunto.label" | translate }}*
+						</ion-label>
+						<ion-input name="assunto" type="text" formControlName="assunto" required></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label color="primary" floating>
+							{{ "app.views.fale-conosco.fields.mensagem.label" | translate }}*
+						</ion-label>
+						<ion-input name="mensagem" type="text" formControlName="mensagem" required></ion-input>
+					</ion-item>
+
+						<button ion-button class="btn-send" type="submit" [disabled]="form.invalid">
+							{{ "app.views.fale-conosco.actions.submit.label" | translate }}
+						</button>
+				</ion-col>
+			</form>
+		</ion-row>
+	</ion-grid>
+</ion-content>

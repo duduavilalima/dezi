@@ -1,0 +1,45 @@
+{
+  "FUNCIONARIO":{
+    "MATRICULA":"Matrícula",
+    "NOME":"Nome",
+    "SITUACAO":"Situação",
+    "EMAILFUNCIONAL":"E-mail funcional",
+    "SEXO":"Sexo",
+    "NASCIMENTO":"Nascimento",
+    "PERFIL":"Perfil",
+    "SITUACAOFUNCIONAL":"Situação funcional",
+    "EMPRESAPRINCIPAL":"Empresa principal",
+    "ADMISSAO":"Admissão",
+    "DESLIGAMENTO":"Desligamento",
+    "DEPARTAMENTO":"Setor",
+    "AVALIADOR":"Avaliador",
+    "REVISOR":"Revisor",
+    "CARGO":"Cargo",
+    "DATACARGO":"Data do cargo",
+    "FORMACAO":"Formação",
+    "IDIOMAS":"Idiomas",
+    "EMPRESAS":"Empresas"
+  },
+  "FORMACAO":{
+    "ESCOLARIDADE":"Escolaridade",
+    "TIPOCURSO":"Tipo de curso",
+    "GRADUACAO":"Graduação",
+    "ESPECIALIZACAO":"Especialização",
+    "OUTROS":"Outros",
+    "SITUACAO":"Situação",
+    "EMPTY":"Não há formações cadastradas"
+  },
+  "IDIOMAS":{
+    "IDIOMA":"Idioma",
+    "FALA":"Fala",
+    "ESCRITA":"Escrita",
+    "LEITURA":"Leitura",
+    "EMPTY":"Não há idiomas cadastrados"
+  },
+  "EMPRESAS":{
+    "NOME":"Nome",
+    "SELECIONADA":"Empresa selecionada pelo usuário",
+    "PRINCIPAL":"Empresa principal",
+    "EMPTY":"Não há empresas associadas"
+  }
+}

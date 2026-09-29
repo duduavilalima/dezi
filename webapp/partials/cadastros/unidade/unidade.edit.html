@@ -1,0 +1,37 @@
+<form-card
+	name="formUnidade"
+	card-title="UNIDADES.DESCRICAO"
+	on-save="$ctrl.save()"
+	on-cancel="$ctrl.cancel()"
+>
+
+	<labeled-input
+			flex-gt-xs="30"
+			name="nome"
+			label="UNIDADES.UNIDADE"
+			value="$ctrl.unidade.nome"
+			options="{
+				required: true
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="descricao"
+		label="UNIDADES.DESCRICAO"
+		value="$ctrl.unidade.descricao"
+		options="{
+			required: true
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="20"
+		name="situacao"
+		label="UNIDADES.SITUACAO"
+		value="'SITUACAO.'+ $ctrl.unidade.situacao"
+		options="{ disabled: true, translate: true }"
+	/>
+</form-card>

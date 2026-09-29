@@ -1,0 +1,33 @@
+<form-page
+	can-create="{{ $ctrl.canEdit }}"
+	on-create="$ctrl.handleCreate()"
+	on-back="$ctrl.back()"
+>
+	<form-card
+		name="formCargo"
+		card-title="IDIOMA.DESCRICAO"
+		on-save="$ctrl.save()"
+		on-cancel="$ctrl.cancel()"
+	>
+		<labeled-input
+			flex-gt-xs="80"
+			name="nome"
+			label="IDIOMA.IDIOMA"
+			value="$ctrl.idioma.nome"
+			options="{
+				required: true,
+				min: 2,
+				max: 15
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="20"
+			name="situacao"
+			label="IDIOMA.SITUACAO"
+			value="'SITUACAO.' + $ctrl.idioma.situacao"
+			options="{ disabled: true, translate: true }"
+		/>
+	</form-card>
+</form-page>

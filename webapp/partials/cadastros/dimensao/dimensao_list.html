@@ -1,0 +1,80 @@
+<div id="dimensao" class="page-layout simple fullwidth doc-page">
+
+	<!-- HEADER -->
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ ::titulo }}</span>
+			</div>
+		</div>
+
+
+		<div layout-align="end center" layout="row" class="margin-input">
+
+			<!-- INPUT SEARCH -->
+			<div hide show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'DIMENSAO.PESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+
+			<!-- BOTÃO NOVO -->
+			<md-button type="button" class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize"
+					   translate-attr-aria-label="CARGO.BTNNOVO" aria-label="Criar" ng-click="displayNew()"
+					   value="Novo">
+				{{'DIMENSAO.BTNNOVO' | translate}}
+			</md-button>
+
+			<!-- BOTÃO IMPORTAR -->
+			<md-button hide ng-if="import" show-gt-xs type="button"
+					   class="font-size-13 md-raised md-accent m-0 text-capitalize"
+					   translate-attr-aria-label="CARGO.BTNIMPORTAR" aria-label="Importar"
+					   ng-click="acaoContrucao($event)">
+				{{'DIMENSAO.BTNIMPORTAR' | translate}}
+			</md-button>
+		</div>
+	</div>
+
+	<!-- CONTENT -->
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-16 mt-70">
+		<div class="white-bg style_card">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<thead md-head md-order="query.order">
+					<tr md-row class="grey-200-bg">
+						<th md-column md-order-by="nome" width="40%">
+							<span>{{'DIMENSAO.NOME' | translate}}</span>
+						</th>
+						<th md-column md-order-by="descricao" width="40%">
+							<span>{{'DIMENSAO.DESCRICAO' | translate}}</span>
+						</th>
+						<th md-column md-order-by="situacao" width="10%">
+							<span>{{'TIPODECOMPETENCIAS.SITUACAO' | translate}}</span>
+						</th>
+					</tr>
+					</thead>
+
+					<tbody md-body>
+					<tr md-row
+						ng-repeat="item in listResult | filter: filtro | orderBy: query.order | limitTo: tableControl.limit : (query.page -1) * tableControl.limit"
+						class="text-left">
+						<td md-cell><a class="link-table-search" href ng-click="displayView(item)">{{ ::item.nome }}</a>
+						</td>
+						<td md-cell>{{ ::item.descricao }}</td>
+						<td md-cell><span
+							ng-class="{'green-bg ml-5': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}"
+							class="estilo_situacao"><b>{{ 'SITUACAO.' + item.situacao | translate }}</b></span></td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options"
+								 paginate="logPagination" md-page="query.page" md-total="{{listResult.length}}"
+								 md-page-select
+								 md-label="{{'DIMENSAO.LBLPAGINA' | translate}}"></md-table-pagination>
+		</div>
+
+	</div>
+
+</div>

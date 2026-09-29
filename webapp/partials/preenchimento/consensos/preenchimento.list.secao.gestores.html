@@ -1,0 +1,122 @@
+<md-content>
+	<div class="widget-group" layout="column" flex>
+		<div
+			class="pesquisa-preenchimentos border-bottom layout-column-medium"
+			layout="row"
+			layout-xs="column"
+		>
+			<div id="legendas_funcionario"
+				class="p-8"
+				style="align-items: baseline;"
+				layout-align="start center"
+				layout="column"
+				flex="100"
+				layout-gt-sm="row"
+			>
+					<div class="nao_preenchida">
+						<md-checkbox ng-model="$ctrl.filtroPorTipo2.naoPreenchida" aria-label="Não preenchida"><span class="nao-preenchida line_break"><b>{{'PREENCHIMENTO.NAOPREENCHIDA' | translate}}</b></span></md-checkbox>
+					</div>
+					<span class="width-20" hide-xs></span>
+					<div>
+						<md-checkbox ng-model="$ctrl.filtroPorTipo2.parcial" aria-label="Parcialmente preenchida"><span class="parcial line_break"><b>{{'PREENCHIMENTO.PARCIALMENTEPREENCHIDA' | translate}}</b></span></md-checkbox>
+					</div>
+					<span class="width-20" hide-xs></span>
+					<div class="totalmente_preenchida">
+						<md-checkbox ng-model="$ctrl.filtroPorTipo2.preenchida" aria-label="Totalmente Preenchida"><span class="preenchidas line_break"><b>{{'PREENCHIMENTO.TOTALMENTEPREENCHIDA' | translate}}</b></span></md-checkbox>
+					</div>
+					<div flex layout="row" layout-align="end center">
+						<input
+							style="border: solid 2px #E1E1E1; height: 30px; padding: 0.5em"
+							id="input_pesquisa3"
+							type="text"
+							name="input_search"
+							ng-model="$ctrl.filtroAvaliador"
+							placeholder="{{'PREENCHIMENTO.LBLPESQUISAR' | translate}}">
+					</div>
+			</div>
+		</div>
+			<md-table-container
+				class="tabela_preenchimentos"
+				id="lista_competencias"
+				layout="column"
+				flex="100"
+			>
+				<div class="tabela_preenchimentos_container"><table id="table-gestores" md-table>
+					<thead id="tabela-funcionario" md-head md-order="$ctrl.queryAvaliacoesRevisores.order">
+					<tr md-row>
+						<th md-column md-order-by="$ctrl.avaliacao.campanha.descricao" width="10%">
+							<span class="column-title">{{'PREENCHIMENTO.CAMPANHA' | translate}}</span>
+						</th>
+						<th md-column md-order-by="$ctrl.avaliacao.descricaoAbreviada" width="7%">
+							<span class="column-title">{{'PREENCHIMENTO.AVALIACAO' | translate}}</span>
+						</th>
+						<th md-column md-order-by="$ctrl.avaliado.nome" width="10%">
+							<span class="column-title">{{'PREENCHIMENTO.GESTOR' | translate}}</span>
+						</th>
+						<th md-column width="5%" class="p8 text-center">
+							<span class="column-title">{{'PREENCHIMENTO.DATAAV3' | translate}}</span>
+						</th>
+						<th md-column width="5%" class="p8 text-center">
+							<span class="column-title">{{'PREENCHIMENTO.PREENCHIMENTOS' | translate}}</span>
+						</th>
+						<th md-column width="3%" class="text-center">
+							<span class="column-title">{{'PREENCHIMENTO.OPCOES' | translate}}</span>
+						</th>
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-if="$ctrl.avaliacoes.avaliado.length == 0">
+						<td md-cell style="text-align: center;" colspan="6">
+							<b>Não há consensos</b>
+						</td>
+					</tr>
+					<tr md-row ng-if="$ctrl.avaliacoes.avaliado.length > 0" ng-repeat="item in $ctrl.avaliacoes.avaliado
+							| avaliacoesRevisoresFilter: $ctrl.filtroAvaliador
+							| avaliacoesFiltroPreenchimentoConsensoFilter: $ctrl.filtroPorTipo2
+							| avaliacoesFiltroConsensoGestorApenas: $ctrl.user
+							| orderBy: $ctrl.queryAvaliacoesRevisores.order
+							| limitTo: $ctrl.queryAvaliacoesRevisores.limit : ($ctrl.queryAvaliacoesRevisores.page -1) * $ctrl.queryAvaliacoesRevisores.limit
+						" class="text-left"
+					>
+						<td md-cell>{{ item.avaliacao.campanha.descricao }}</td>
+						<td md-cell>{{ item.avaliacao.descricaoAbreviada }}</td>
+						<td md-cell>{{ item.avaliador.nome }}</td>
+						<td md-cell class="text-center">{{ (item.limiteAv3 === null || item.limiteAv3 === '' ||
+							angular.isUndefined(item.limiteAv3)) ? item.avaliacao.limiteAv3 : item.limiteAv3 | date:
+							'dd/MM/yyyy' }}
+						</td>
+						<td md-cell class="text-center">
+							<md-icon md-font-icon="icon-brightness-1" ng-if="$ctrl.exibirIconeVerde(item, 'av3')"
+									 class="preenchimento-verde">
+								<md-tooltip>Consenso</md-tooltip>
+							</md-icon>
+							<md-icon md-font-icon="icon-brightness-1" ng-if="$ctrl.exibirIconeAzul(item, 'av3')"
+									 class="preenchimento-azul">
+								<md-tooltip>Consenso</md-tooltip>
+							</md-icon>
+							<md-icon md-font-icon="icon-brightness-1" ng-if="$ctrl.exibirIconeVermelho(item, 'av3')"
+									 class="preenchimento-vermelho">
+								<md-tooltip>Consenso</md-tooltip>
+							</md-icon>
+						</td>
+						<td md-cell style="padding: 0" layout="row" class="text-center">
+							<md-button class="md-raised green-bg white-fg btn-preencher" id="botao_preencher"
+									   ng-repeat="acao in item.acoes2" ng-click="acao.click(item.id)" ng-disabled="acao.disabled(item)">Preencher</md-button>
+						</td>
+					</tr>
+					</tbody>
+				</table></div>
+			</md-table-container>
+			<div layout="column" flex="100">
+				<md-table-pagination
+					md-limit="$ctrl.queryAvaliacoesRevisores.limit"
+					md-limit-options="[5, 10, 15, 20, 25, 30, 35, 40]"
+					md-page="$ctrl.queryAvaliacoesRevisores.page"
+					md-total="{{($ctrl.avaliacoes.avaliador | avaliacoesRevisoresFilter: $ctrl.filtroAvaliador | avaliacoesFiltroPreenchimentoConsensoFilter: $ctrl.filtroPorTipo2 | avaliacoesFiltroConsensoGestorApenas: $ctrl.user).length}}"
+					md-page-select
+					md-label="{{'PREENCHIMENTO.LBLPAGINA' | translate}}"
+				></md-table-pagination>
+			</div>
+		</div>
+	</div>
+</md-content>

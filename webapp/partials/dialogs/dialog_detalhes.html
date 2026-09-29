@@ -1,0 +1,48 @@
+<md-dialog aria-label="Detalhes">
+	<form ng-cloak>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>Detalhes</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content>
+			<div layout="column" layout-gt-sm="row" flex class="top_25" layout-xs="column" layout-sm="row">
+				<md-input-container flex="40">
+					<label for="input_criador">{{'DIALOG.CRIADOR' | translate}}</label>
+					<input id="input_criador" name="criador" type="text"
+						   ng-disabled="true" value="{{::object.criador.split('%').length > 1 ? object.criador.split('%')[1] : object.criador}}">
+				</md-input-container>
+				<span class="width-20"></span>
+				<md-input-container flex="40">
+					<label for="input_data_criacao">{{'DIALOG.DATACRIACAO' | translate}}</label>
+					<input id="input_data_criacao" name="data-criacao" type="text"
+						   ng-disabled="true" value="{{::object.dataCriacao | date: 'dd/MM/yyyy HH:mm'}}">
+				</md-input-container>
+				<span class="width-20"></span>
+				<md-input-container flex="40">
+					<label for="input_atualizador">{{'DIALOG.ATUALIZADOR' | translate}}</label>
+					<input id="input_atualizador" name="atualizador" type="text"
+						   ng-disabled="true" value="{{::object.atualizador.split('%').length > 1 ? object.atualizador.split('%')[1] : object.atualizador}}">
+				</md-input-container>
+				<span class="width-20"></span>
+				<md-input-container flex="40">
+					<label for="input_data_atualizacao">{{'DIALOG.DATAATUALIZACAO' | translate}}</label>
+					<input id="input_data_atualizacao" name="data-atualizacao" type="text"
+						   ng-disabled="true"
+						   value="{{::object.dataAtualizacao | date: 'dd/MM/yyyy HH:mm'}}">
+				</md-input-container>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" flex class="white-bg" layout-align="center center">
+			<md-button id="btn_cancelar_cancelar_nregistro" aria-label="Cancelar" ng-disabled="action" class="md-raised md-default text-capitalize" ng-click="cancel()">
+				Fechar
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

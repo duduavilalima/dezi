@@ -1,0 +1,54 @@
+<form-card
+	name="formDepartamento"
+	card-title="DEPARTAMENTO.DESCRICAO"
+	on-save="$ctrl.save()"
+	on-cancel="$ctrl.cancel()"
+>
+	<labeled-input
+		flex-gt-xs="70"
+		name="nome"
+		label="DEPARTAMENTO.DEPARTAMENTO"
+		value="$ctrl.departamento.nome"
+		options="{
+			required: true,
+			min: 2,
+			max: 50
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="30"
+		name="situacao"
+		label="DEPARTAMENTO.SITUACAO"
+		value="'SITUACAO.'+ $ctrl.departamento.situacao"
+		options="{ disabled: true, translate: true }"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="idDepartamentoCliente"
+		label="DEPARTAMENTO.ID"
+		value="$ctrl.departamento.idDepartamentoCliente"
+		options="{
+			required: true,
+			min: 1,
+			max: 10
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="departamentoPai"
+		type="select"
+		label="DEPARTAMENTO.PAI"
+		value="$ctrl.departamento.departamentoPai"
+		select-options="{
+			list: $ctrl.listSetoresPai,
+			label: 'nome'
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+</form-card>

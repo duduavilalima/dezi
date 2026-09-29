@@ -1,0 +1,27 @@
+.div-label-picklist{
+    margin-bottom: 5px;
+}
+.label-picklist{
+    color: rgba(0,0,0,0.26);
+    font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 15px;
+}
+.source-picklist{
+    width: 100%;
+    border-color: rgba(0,0,0,0.26);
+}
+.div-buttons-picklist{
+    margin-top: 15px;
+}
+.dest-picklist{
+    width: 100%;
+    border-color: rgba(0,0,0,0.26);
+}
+
+.picklist-main{
+    width: 100%;
+}

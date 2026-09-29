@@ -1,0 +1,97 @@
+<md-dialog aria-label="Mensagem" style="width: 1160px;">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{'DIALOG.ENVIAR_MSG.TITLE' | translate}}</h2>
+				<span flex></span>
+				<md-button
+					id="bt_fechar_popup_confirmacao_confirmar"
+					class="md-icon-button"
+					ng-click="cancel()"
+					style="padding: 0px 0px 0px 0px;"
+				>
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Fechar" />
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+			<div class="md-dialog-content p-16" style="background-color: rgb(245,245,245);">
+				<div class="white-bg style_card" layout-wrap>
+					<div flex layout="column" class="pl-16 pr-16">
+						<md-input-container flex="100" style="margin-bottom: 10px; margin-top: 25px;">
+							<label id="lbl_de" for="de">{{'DIALOG.ENVIAR_MSG.DE' | translate}}</label>
+							<input id="de" name="de" type="text" ng-model="remetente" ng-disabled="true">
+						</md-input-container>
+
+						<md-input-container flex style="margin-bottom: -20px;">
+							<label id="lbl_para" for="de">{{'DIALOG.ENVIAR_MSG.PARA' | translate}}</label>
+							<input id="para" name="para" type="text" value="{{para}}" ng-disabled="true">
+						</md-input-container>
+					</div>
+
+					<div flex style="margin-top: 15px;" class="pl-16 pr-16">
+						<md-checkbox ng-model="object.envioEmail" class="font-size-14" aria-label="Envio por email">{{'DIALOG.ENVIAR_MSG.NOTIFICAR' | translate}}</md-checkbox>
+					</div>
+
+					<div flex class="pl-16 pr-16">
+						<md-input-container flex="100" style="width: 100%">
+							<label id="lbl_assunto" for="assunto">{{'DIALOG.ENVIAR_MSG.TITULO' | translate}}</label>
+							<input id="assunto" name="assunto" type="text" ng-model="object.titulo" ng-required="true" ng-maxlength="255" md-maxlength="255" max="255">
+							<div ng-messages="basicForm.assunto.$error" ng-show="basicForm.assunto.$touched">
+								<div ng-message="required">
+									<span>{{'DIALOG.ENVIAR_MSG.REQUIRED' | translate}}</span>
+								</div>
+								<div ng-message="maxlength">
+									<span>{{'DIALOG.ENVIAR_MSG.MAX_255' | translate}}</span>
+								</div>
+							</div>
+						</md-input-container>
+					</div>
+					<div flex="100" style="margin-top: -40px;" class="pl-16 pr-16 pb-20">
+						<div id="title_participantes_msg" flex class="md-accent-fg"><h1>{{'DIALOG.ENVIAR_MSG.MENSAGEM' | translate}}</h1></div>
+						<text-angular
+							ta-disabled="object.titulo == null"
+							id="mensagem"
+							name="mensagem"
+							style="color: black; border: 2px solid #9EB44D !important;"
+							ng-required="true"
+							ng-model="object.texto"
+							ng-style="{border: basicForm.mensagem.$error.required && basicForm.mensagem.$touched ? '2px solid red' : '2px solid #9EB44D'}"
+						/>
+						<div ng-messages="basicForm.mensagem.$error" ng-show="basicForm.mensagem.$touched">
+							<div style="color: red" ng-message="required">
+								<span>{{'DIALOG.ENVIAR_MSG.REQUIRED' | translate}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" class="white-bg">
+			<div flex layout-align="start center">
+				<md-button
+					style="float: left"
+					class="md-raised md-default text-capitalize"
+					ng-click="cancel()"
+				>
+				{{'DIALOG.ENVIAR_MSG.CANCELAR' | translate}}
+				</md-button>
+			</div>
+			<div flex layout-align="center center">
+			</div>
+			<div flex layout-align="end center">
+				<md-button
+					ng-disabled="basicForm.$invalid || verificarEnvio()"
+					style="float: right"
+					class="md-raised md-accent text-capitalize"
+					ng-click="confirmar()"
+				>
+				{{'DIALOG.ENVIAR_MSG.ENVIAR' | translate}}
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

@@ -1,0 +1,113 @@
+<div id="login-v2" flex layout="row" layout-align="start">
+	<div id="login-v2-intro" flex hide show-gt-sm>
+	</div>
+
+	<div id="login-v2-form-wrapper" flex class="flex-scrollable md-whiteframe-8dp" ms-scroll>
+		<div id="login-v2-form">
+			<div class="logo">
+				<img class="logo-image" src="../../img/logos/logo-dezi.png">
+			</div>
+
+			<div class="title text-center"><span translate="LOGIN.CONTA">Faça login na sua conta</span></div>
+
+			<form name="loginForm" novalidate ng-submit="vm.login()">
+				<md-input-container class="md-block" flex>
+					<label id="lbl_input_login" for="input_login">
+						<span translate="LOGIN.EMAIL" />
+					</label>
+					<input
+						type="text"
+						autocorrect="off"
+						autocapitalize="none"
+						id="input_login"
+						name="login"
+						ng-model="vm.matricula"
+						ng-required="true"
+						required
+					>
+					<div ng-messages="loginForm.login.$error" ng-show="loginForm.login.$touched" role="alert" multiple>
+						<div ng-message="required">
+							<span translate="LOGIN.VALIDATION" />
+						</div>
+						<div ng-message="pattern" translate>LOGIN.VALIDATION-EMAIL</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex>
+					<label id="lbl_input_password" for="input_password">
+						<span translate="LOGIN.SENHA">Senha</span>
+					</label>
+					<input
+						type="password"
+						id="input_password"
+						name="password"
+						ng-model="vm.password"
+						ng-required="true"
+						required
+					>
+					<div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$touched" role="alert">
+						<div ng-message="required">
+							<span translate="LOGIN.VALIDATION">Obrigatório</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex ng-if="!vm.hideSelectEmpresa">
+					<label id="lbl_empresa" for="empresa">
+						<span translate="LOGIN.EMPRESA">Empresa</span>
+					</label>
+					<md-select
+						id="empresa"
+						name="empresa"
+						ng-model="vm.empresaSelId"
+						md-no-asterisk
+						ng-required="true"
+						my-enter="vm.login()"
+						required
+					>
+						<md-option ng-repeat="item in vm.listaEmpresas" ng-value="{{::item.id}}">
+							{{::item.nome}}
+						</md-option>
+					</md-select>
+					<div ng-messages="loginForm.empresa.$error" ng-show="loginForm.empresa.$touched">
+						<div ng-message="required">
+							<span translate="LOGIN.VALIDATION">Obrigatório</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<md-button
+					id="bt_entrar"
+					focus-me="vm.empresaId > 0"
+					type="submit"
+					class="md-raised md-accent submit-button"
+					ng-disabled="loginForm.$invalid || loginForm.$pristine || vm.loadingProgress || !vm.empresaSelId"
+					translate
+					translate-attr-aria-label="LOGIN.BTNENTRAR"
+				>
+					<span translate="LOGIN.BTNENTRAR" ng-show="!vm.loadingProgress" class="white-fg">ENTRAR</span>
+					<md-progress-circular
+						id="toolbar-progress"
+						ng-show="vm.loadingProgress"
+						class="md-primary"
+						md-mode="indeterminate"
+						md-diameter="24"
+						style="margin: auto;"
+					/>
+				</md-button>
+			</form>
+
+			<div
+				class="remember-forgot-password"
+				layout="row"
+				layout-sm="column"
+				layout-align="space-between center"
+				style="margin-top: 30px"
+			>
+				<a href ng-click="vm.forgot()" class="forgot-password md-accent-color">
+					<span translate="LOGIN.ESQUECER">Esqueceu a senha?</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

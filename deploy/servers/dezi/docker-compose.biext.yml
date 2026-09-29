@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  rest:
+    environment:
+      - DEZI_BI_URL=$EXT_BI_URL
+      - DEZI_BI_USER=$EXT_BI_USER
+      - DEZI_BI_PASS=$EXT_BI_PASS
+    extra_hosts:
+      - "bi.dezi.com.br:${EXT_BI_HOST}"

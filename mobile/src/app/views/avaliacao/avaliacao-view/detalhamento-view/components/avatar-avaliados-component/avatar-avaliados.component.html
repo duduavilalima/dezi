@@ -1,0 +1,8 @@
+
+<div class="scrolling-wrapper">
+	<ion-col class="avatar" *ngFor="let preenchimento of preenchimentoList">
+		<img [src]="preenchimento.participante?.fotoAvaliado? preenchimento.participante?.fotoAvaliado : '/assets/imgs/anon.png'" [ngClass]="preenchimento.graduacao?.ponto || preenchimento.graduacao?.ponto === 0? '' : 'inactive'" />
+		<div class="border" [ngStyle]="{'color': preenchimento.graduacao?.cor}"></div>
+	</ion-col>
+</div>
+

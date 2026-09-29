@@ -1,0 +1,78 @@
+<md-dialog aria-label="dialog" style="width: 600px;">
+	<form>
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{ 'FUNCIONARIO.TITLE_ALTERAR_FOTO' | translate }}</h2>
+				<span flex></span>
+				<md-button
+					id="bt_fechar_popup_confirmacao_cancelar"
+					class="md-icon-button"
+					ng-click="cancel()"
+					style="padding: 0px 0px 0px 0px;"
+				>
+					<md-icon
+						style="color: rgba(255,255,255,0.87) !important"
+						md-font-icon="icon-close"
+						aria-label="Close dialog"
+					></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-progress-linear
+			ng-show="action"
+			style="position: fixed;"
+			md-mode="query"
+		/>
+
+		<md-dialog-content style="margin-top: -30px;">
+			<div class="md-dialog-content">
+				<div>
+					<canvas
+						width="500"
+						height="400"
+						id="canvas"
+						image-cropper
+						image="cropper.sourceImage"
+						cropped-image="cropper.croppedImage"
+						crop-width="200"
+						crop-height="200"
+						keep-aspect="true"
+						touch-radius="30"
+						crop-area-bounds="bounds"
+					></canvas>
+				</div>
+
+				<input
+					style="margin-left: -15px;"
+					type="file"
+					img-cropper-fileread
+					image="cropper.sourceImage"
+				>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" flex style="margin-top: -40px;">
+
+			<div flex layout-align="start center">
+				<md-button
+					id="btn_cancelar_cancelar_nregistro"
+					class="md-raised md-default text-capitalize"
+					ng-click="cancel()"
+				>
+					{{ 'FORM.CANCEL' | translate }}
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+				<md-button
+					id="btn_confirmar_cancelar_nregistro"
+					class="md-raised md-default text-capitalize"
+					ng-click="confirmar()"
+				>
+					{{ 'FORM.SAVE' | translate }}
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

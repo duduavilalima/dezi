@@ -1,0 +1,107 @@
+<md-dialog aria-label="dialog" style="width: 900px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;" ng-show="object != null">
+			<div class="md-dialog-content">
+
+				<!-- TRABALHAR AQUI -->
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+							<div layout="column" layout-gt-md="row" flex="100">
+
+								<md-input-container flex="70">
+									<label id="lbl_graduacao" for="graduacao">Graduação</label>
+									<input id="graduacao" name="graduacao" type="text" ng-model="object.label"
+										   ng-maxlength="40" md-maxlength="40" required ng-required="true"
+										   ng-disabled="object.modeloGraduacaoComp.naoGraduar && object.ponto == 0">
+									<div ng-messages="basicForm.graduacao.$error" ng-show="basicForm.graduacao.$touched">
+										<div ng-message="required">
+											<span>Campo obrigatório.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+
+								<md-input-container flex="30">
+									<label id="pontuacao" for="pontuacao">Pontuação</label>
+									<input id="pontuacao_nao_graduar" name="pontuacao_nao_graduar" type="text"
+										   ng-model="object.ponto" ng-disabled="true"
+										   ng-if="object.modeloGraduacaoComp.naoGraduar && object.ponto == 0">
+                                    <input id="pontuacao_edit" name="pontuacao" type="number" ng-model="object.ponto" ng-max="1000" ng-min="1" max="1000" min="1" ng-if="object.ponto != 0" ng-required="true" required>
+									<!--<md-select id="pontuacao" name="pontuacao" ng-model="object.ponto" ng-required="true" required ng-if="object.ponto != 0">-->
+										<!--<md-option  ng-repeat="item in pontuacaoList" ng-value="{{item.value}}">-->
+											<!--{{item.label}}-->
+										<!--</md-option>-->
+									<!--</md-select>-->
+									<div ng-messages="basicForm.pontuacao.$error">
+										<div ng-message="required">
+											<span>Campo obrigatório.</span>
+										</div>
+                                        <div ng-message="max">
+                                            <span>Valor máximo é 1000.</span>
+                                        </div>
+                                        <div ng-message="min">
+                                            <span>Valor mínimo é 1</span>
+                                        </div>
+									</div>
+								</md-input-container>
+
+							</div>
+
+
+
+
+							<!--TEXTAREAS-->
+
+							<div layout="column" layout-gt-md="row" flex="100" style="margin-top: 15px">
+
+								<md-input-container flex="100">
+									<label id="lbl_descricao" for="descricao">Descrição</label>
+									<textarea id="descricao" name="descricao" type="text" ng-model="object.hint"
+											  ng-enabled="true" required
+											  ng-disabled="object.modeloGraduacaoComp.naoGraduar && object.ponto == 0"></textarea>
+									<div ng-messages="basicForm.descricao.$error" ng-show="basicForm.descricao.$touched">
+										<div ng-message="required">
+											<span>Campo obrigatório.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+				</form>
+
+
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions flex layout="row">
+			<div flex layout-align="start center">
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="cancel()" ng-if="object.ponto != 0">
+					Cancelar
+				</md-button>
+			</div>
+
+			<div flex="auto" ng-if="object.ponto == 0">
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_fechar" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Fechar
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="save()" ng-disabled="basicForm.$invalid || action" ng-if="object.ponto != 0">
+					Salvar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

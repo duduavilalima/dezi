@@ -1,0 +1,53 @@
+<md-dialog aria-label="Avaliados">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{'DIALOG.AVALIADOS.TITLE' | translate}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()"
+					style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+						aria-label="Fechar" />
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content style="padding: 0px;">
+			<div class="p-8">
+				<div flex-gt-sm flex>
+					<md-content>
+						<div ng-if="avaliados.length === 0">
+							{{'DIALOG.AVALIADOS.NAOTEM' | translate}}
+						</div>
+						<md-list ng-if="avaliados">
+							<md-list-item ng-repeat="item in avaliados | orderBy : 'avaliado.nome'">
+								<div layout="row" flex>
+									<div layout="column">
+										<img ng-if="item.croppedImage" ng-src="{{item.croppedImage}}"
+											class="md-avatar" alt="{{item.avaliado.nome}}" />
+										<img ng-if="!item.croppedImage" ng-src="../img/avatars/anon.png"
+											class="md-avatar" alt="{{item.avaliado.nome}}" />
+									</div>
+									<div class="md-list-item-text" layout="column">
+										<p>{{ item.nome }}</p>
+									</div>
+									<div flex></div>
+
+									<div class="md-list-item-text justify-content-end" layout="column" style="margin-left: 32px;">
+										<p>{{ item.percentual }}</p>
+									</div>
+								</div>
+							</md-list-item>
+						</md-list>
+					</md-content>
+				</div>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" class="white-bg" layout-align="center center">
+			<md-button style="float: left" class="md-raised md-default text-capitalize" ng-click="cancel()">
+				{{'DIALOG.FECHAR' | translate}}
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

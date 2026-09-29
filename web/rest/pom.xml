@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dezi</groupId>
+		<artifactId>parent</artifactId>
+		<version>3.17.1</version>
+	</parent>
+
+	<artifactId>rest</artifactId>
+	<packaging>war</packaging>
+
+	<name>Dezi - REST Server</name>
+
+	<properties>
+		<!-- Contexto da aplicação -->
+		<server.context>/</server.context>
+		<application.context></application.context>
+
+		<!-- Configurações de deploy do Cargo -->
+		<deploy.env>local</deploy.env>
+		<deploy.container>tomcat8x</deploy.container>
+		<deploy.server.id>${deploy.container}-${deploy.env}</deploy.server.id>
+
+		<!-- Versões de bibliotecas -->
+		<servlet.version>3.1.0</servlet.version>
+		<jetty.version>9.4.11.v20180605</jetty.version>
+
+		<spring-security.version>4.0.4.RELEASE</spring-security.version>
+
+	</properties>
+
+	<profiles>
+		<profile>
+			<!-- Compila todas as classes do projeto no target do frontend e roda o Jetty -->
+			<id>debug.jetty</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<configuration>
+							<httpConnector>
+								<!--host>localhost</host-->
+								<port>8080</port>
+							</httpConnector>
+							<dumpOnStart>false</dumpOnStart>
+							<webApp>
+								<!-- <contextPath>/</contextPath> -->
+								<contextPath>${server.context}${application.context}</contextPath>
+								<jettyEnvXml>${project.build.directory}/classes/jetty-env.xml</jettyEnvXml>
+								<!-- <jettyEnvXml>${project.basedir}/target/classes/jetty-env.xml</jettyEnvXml> -->
+								<baseAppFirst>false</baseAppFirst>
+							</webApp>
+							<systemPropertiesFile>
+								${project.basedir}/src/main/resources/spring/conf/debug.properties
+							</systemPropertiesFile>
+							<reload>manual</reload>
+							<stopKey></stopKey>
+							<stopPort></stopPort>
+						</configuration>
+						<executions>
+							<execution>
+								<id>jetty-run</id>
+								<phase>test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>deploy.docker</id>
+			<properties>
+				<deploy.env>docker</deploy.env>
+				<deploy.server.id>${deploy.container}-${deploy.env}</deploy.server.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>build.docker</id>
+			<build>
+				<directory>${project.root}/build/target</directory>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<finalName>dezi-${project.artifactId}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<overwrite>true</overwrite>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<container>
+						<containerId>${deploy.container}</containerId>
+						<type>remote</type>
+					</container>
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.server.settings>${deploy.server.id}</cargo.server.settings>
+						</properties>
+					</configuration>
+					<deployables>
+						<deployable>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<type>war</type>
+							<properties>
+								<context>${server.context}</context>
+							</properties>
+						</deployable>
+					</deployables>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Usando o plugin para marcar o spring.profiles.active como system property porque -->
+				<!-- quando está rodando no Jetty o filter do Maven no web.xml não funciona -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>set-system-properties</goal>
+						</goals>
+						<configuration>
+							<properties>
+								<property>
+									<name>spring.profiles.active</name>
+									<value>${profile.active}</value>
+								</property>
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Servlet API -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-servlets</artifactId>
+				<version>${jetty.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>dezi</groupId>
+			<artifactId>services.client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>dezi</groupId>
+			<artifactId>services</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.fasolti.commons</groupId>
+			<artifactId>commons-rest</artifactId>
+		</dependency>
+
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.fasolti.commons</groupId>
+			<artifactId>commons-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+
+		<!-- Rabbitmq -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+		</dependency>
+	</dependencies>
+</project>

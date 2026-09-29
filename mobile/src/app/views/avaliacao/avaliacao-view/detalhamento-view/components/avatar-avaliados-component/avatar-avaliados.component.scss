@@ -1,0 +1,32 @@
+app-avatar-avaliados {
+	/* Classe do scroll horizontal */
+	.scrolling-wrapper {
+		overflow-x: scroll;
+		white-space: nowrap;
+		display: block;
+		height: 100px;
+		/* Classe do avatar */
+		.avatar {
+			padding: 0;
+			display: table-cell;
+			width: 0px;
+			/* Imagem propriamente dita */
+			img {
+				border-radius: 50%;
+				width: 60px;
+				height: 60px;
+				box-shadow: 0px 0px 3px grey;
+				margin: 8px;
+			} & .inactive {
+				 opacity: 0.4;
+			}
+			/* Cor da graduação abaixo do avatar */
+			.border {
+				width: 80px;
+				// margin-left: 5px;
+				border-bottom: 8px solid;
+				color: color($colors, bgActivity)
+			}
+		}
+	}
+}

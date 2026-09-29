@@ -1,0 +1,189 @@
+<div id="dashboard" class="page-layout simple fullwidth" >
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span class="parent">
+					<a href ng-click="$ctrl.transitionToCampanhas()">{{ 'MENSAGEM.CAMPANHAS' | translate }}</a>
+				</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">
+					<a href ng-click="$ctrl.transitionToCampanha()">{{ 'MENSAGEM.CAMPANHA' | translate }}</a>
+				</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">
+					<a href ng-click="$ctrl.transitionToCampanha()">{{ 'MENSAGEM.AVALIACAO' | translate }}</a>
+				</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">
+					{{ 'MENSAGEM.NOVAMENSAGEM' | translate }}
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-70" ng-if="$ctrl.object != null">
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div class="content">
+						<div class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+							<h1 class="md-accent-fg">
+								<div id="title_participantes" flex class="md-accent-fg"><h1>{{ 'MENSAGEM.DESTINATARIOS' | translate }}</h1></div>
+							</h1>
+						</div>
+						<form name="basicForm" class="md-inline-form" novalidate>
+							<div class="border-bottom p-16" layout="row" flex layout-sm="column" layout-xs="column">
+
+								<md-input-container flex flex-xs="100">
+									<label id="lbl_filtro" for="filtro">{{ 'MENSAGEM.LABELFILTRAR' | translate }}</label>
+									<input id="filtro" name="filtro" type="text" ng-model="$ctrl.filtro" ng-change="$ctrl.onChangeFiltro()">
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex flex-xs="100">
+									<label>{{ 'FUNCIONARIO.PERFIL' | translate }}</label>
+									<md-select id="perfil" name="perfil"  ng-model="$ctrl.mensagem.perfil" ng-change="$ctrl.onChangePerfil()">
+										<md-option ng-repeat="item in $ctrl.perfis" ng-value="item">
+											{{'PERFIL.' + item | translate}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+
+							</div>
+
+
+							<div class="border-bottom">
+								<md-table-container>
+									<table id="table-list" md-table md-progress="$ctrl.listAvaliacoesPromise">
+										<thead md-head>
+										<tr md-row class="grey-500-bg">
+											<th md-column>
+												<div>
+													<md-checkbox style="margin-bottom: -20px;" ng-click="$ctrl.toggleSelectedAll()" ng-model="$ctrl.mensagem.checkAll" class="font-size-5" aria-label="Checkbox tabela"></md-checkbox>
+												</div>
+											</th>
+											<th md-column width="50%">
+												<span>{{ 'PARTICIPANTES.NOME' | translate }}</span>
+											</th>
+											<th md-column>
+												<span>{{ 'MENSAGEM.PONTOFOCAL' | translate }}</span>
+											</th>
+											<th md-column>
+												<span>{{ 'AVALIADORES.GESTOR' | translate }}</span>
+											</th>
+											<th md-column>
+												<span>{{ 'AVALIADORES.SUBORDINADO' | translate }}</span>
+											</th>
+											<th md-column>
+												<span>{{ 'AVALIADORES.PAR' | translate }}</span>
+											</th>
+											<th md-column width="15%">
+												<span>{{ 'AVALIADORES.CARGO' | translate }}</span>
+											</th>
+											<th md-column width="15%">
+												<span class="column-title">{{ 'FUNCIONARIO.DEPARTAMENTO' | translate }}</span>
+											</th>
+											<th md-column>
+												<div layout="column"><span class="text-center">{{ 'MENSAGEM.NOTIFICAREMAIL' | translate }}</span>
+													<center><md-checkbox ng-model="$ctrl.mensagem.checkAllEmail" ng-click="$ctrl.toggleSelectedAllEmail()" class="font-size-14 white-fg" aria-label="Checkbox email"></md-checkbox></center>
+												</div>
+											</th>
+										</tr>
+										</thead>
+										<tbody md-body ng-if="$ctrl.listFuncionariosMensagem == null">
+										<tr md-row align="center">
+											<td md-cell colspan="9">
+												<div layout="column" layout-align="center center" ng-show="$ctrl.listFuncionariosMensagem == null">
+													<md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1"></md-progress-circular>
+												</div>
+											</td>
+										</tr>
+										</tbody>
+										<tbody md-body ng-if="$ctrl.listFuncionariosMensagem.length == 0">
+										<tr md-row align="center">
+											<td md-cell colspan="9">
+												<div layout="column" layout-align="center center" ng-show="$ctrl.listFuncionariosMensagem.length == 0">
+													{{ 'MENSAGEM.NAOHAFUNCIONARIOSPERFIL' | translate }}
+												</div>
+											</td>
+										</tr>
+										</tbody>
+										<tbody md-body ng-if="$ctrl.listFuncionariosMensagem.length > 0">
+										<tr md-row ng-repeat="item in $ctrl.listFuncionariosMensagem | MessageFilter: filtro | orderBy: 'nome'" class="text-left">
+											<td md-cell style="padding-bottom: 0px; padding-top: 0px;">
+												<md-checkbox ng-model="item.check" ng-change="$ctrl.verificarItensSelecionadosParticipantes()" class="font-size-14" aria-label="Checkbox tabela"></md-checkbox>
+											</td>
+											<td md-cell>{{ item.nome}}</td>
+											<td md-cell ng-if="item.tipoPerfis.pontoFocal == false">
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.pontoFocal == true">
+												<md-icon md-font-icon="icon-brightness-1" ng-class="{'pontoFocal': item.tipoPerfis.pontoFocal == true && item.tipoPerfis.autoAvaliacao == true}"></md-icon>
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.gestor == false">
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.gestor == true">
+												<md-icon md-font-icon="icon-brightness-1" ng-class="{'pontoFocal': item.tipoPerfis.gestor == true}"></md-icon>
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.subordinado == false">
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.subordinado == true">
+												<md-icon md-font-icon="icon-brightness-1" ng-class="{'pontoFocal': item.tipoPerfis.subordinado == true}"></md-icon>
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.par == false">
+											</td>
+											<td md-cell ng-if="item.tipoPerfis.par == true">
+												<md-icon md-font-icon="icon-brightness-1" ng-class="{'pontoFocal': item.tipoPerfis.par == true }"></md-icon>
+											</td>
+											<td md-cell>{{ item.cargo.nome }}</td>
+											<td md-cell hide-xs>{{ item.departamento.nome }}</td>
+											<td md-cell style="padding-bottom: 0px; padding-top: 0px;">
+												<div class="text-center">
+													<md-checkbox style="margin-bottom: -20px;" ng-model="item.checkEmail" ng-change="$ctrl.verificarItensSelecionadosEmail()" class="font-size-14" aria-label="Checkbox email"></md-checkbox>
+												</div>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+
+							<div flex layout="row" class="p-16">
+								<md-input-container flex="100" class="mt-20">
+									<label id="lbl_assunto" for="assunto">{{ 'MENSAGEM.TITULO' | translate}}</label>
+									<input id="assunto" name="assunto" type="text" ng-model="$ctrl.mensagem.titulo" ng-required="true" required ng-maxlength="255" md-maxlength="255">
+									<div ng-messages="basicForm.assunto.$error" ng-show="basicForm.assunto.$touched">
+										<div ng-message="required">
+											<span>{{ 'FUNCIONARIO.CAMPOOBRIGATORIO' | translate }}</span>
+										</div>
+										<div ng-message="maxlength">
+											<span>{{ 'MENSAGEM.MAXIMO255' | translate }}</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+
+							<text-angular ta-disabled="$ctrl.mensagem.titulo == null" id="mensagem" name="mensagem" style="color: black; border: 2px solid #9EB44D;" ng-required="true" ng-model="$ctrl.mensagem.texto" ng-style="{border: basicForm.mensagem.$error.required && basicForm.mensagem.$touched ? '2px solid red' : '2px solid #9EB44D'}"></text-angular>
+
+							<div ng-messages="basicForm.mensagem.$error" ng-show="basicForm.mensagem.$touched">
+								<div style="color: red" ng-message="required">
+									<span>{{ 'FUNCIONARIO.CAMPOOBRIGATORIO' | translate }}</span>
+								</div>
+							</div>
+						</form>
+					</div>
+					<md-divider></md-divider>
+					<!-- BOTÕES -->
+					<div layout="row" class="content">
+						<div flex layout-align="start center">
+							<md-button aria-label="cancelar" style="float: left" class="md-raised md-default  text-capitalize" ng-click="$ctrl.cancelar()">{{ 'RESUMO.BTNCANCELAR' | translate }}</md-button>
+						</div>
+						<div layout-align="end center">
+							<md-button aria-label="confirmar" ng-disabled="basicForm.$invalid || $ctrl.isNenhumSelecionado()" style="float: right" class="md-raised md-accent text-capitalize" ng-click="$ctrl.enviarMensagem()">{{ 'MENSAGEM.ENVIAR' | translate }}</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

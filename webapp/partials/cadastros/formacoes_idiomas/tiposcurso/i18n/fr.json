@@ -1,0 +1,28 @@
+{
+  "TIPOS":{
+    "CADASTOS":"Cadastres",
+    "FORMACAO":"Formation et Langues",
+    "TIPOSCURSO": "Catégories d'études",
+    "PESQUISAR":"Recherche",
+    "BTNNOVO":"Nouveau Type de cours",
+    "SITUACAO": "Situation",
+    "REQUER": "Exige l’achèvement de la gradation",
+    "REQUEROUTRO": "Nécessite la réalisation d’une spécialisation",
+    "DESCRICAO": "Description",
+    "BTNIMPORTAR":"Importer",
+    "TIPODECURSO": "Tipo de curso",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 20 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZA": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar"
+  }
+}

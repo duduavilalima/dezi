@@ -1,0 +1,125 @@
+<div id="preenchimento" class="page-layout simple fullwidth doc-page">
+    <!-- HEADER -->
+    <div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between" id="consenso_avaliacao">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+                <span hide show-gt-xs class="parent">
+					<a ng-if="$ctrl.stage === 'av2'" ui-sref="main.preenchimento.avaliacoes">{{'PREENCHIMENTO.TITLE' | translate}}</a>
+					<a ng-if="$ctrl.stage === 'av1'" ui-sref="main.preenchimento.avaliacoes">{{'PREENCHIMENTO.TITLE' | translate}}</a>
+					<a ng-if="$ctrl.stage === 'av3'" ui-sref="main.preenchimento.consensos">{{'PREENCHIMENTO.CONSENSOS' | translate}}</a>
+				</span>
+                <md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                <span class="parent" ng-if="$ctrl.stage !== 'av3'">{{'PREENCHIMENTO.AVALIACAO' | translate}}</span>
+	            <span class="parent" ng-if="$ctrl.stage === 'av3'">{{'PREENCHIMENTO.CONSENSO' | translate}}</span>
+            </div>
+        </div>
+		<!-- <div layout-align="end center" class="margin-input" style="margin-top: -8px;">
+			<md-button ng-click="$ctrl.ajuda() " class="md-fab md-mini amber-400-bg" style="background-color:#ffffff" aria-label="Ajuda">
+				<md-icon md-font-icon="icon-compass-outline"></md-icon>
+				<md-tooltip class="h4" hide-xs hide-sm>Dezi tour</md-tooltip>
+			</md-button>
+		</div> -->
+    </div>
+	<div flex="100" layout-gt-sm="row" layout="column" layout-wrap class="pl-16 pr-16 mt-50">
+		<div id="campo1" flex-gt-sm="100" flex layout="column">
+			<div flex-xs flex-gt-xs="100" class="p-16">
+				<div class="white-bg style_card">
+					<div  layout="row" flex="100" layout-xs="column">
+						<div class="md-whiteframe-5dp" flex-xs="100">
+							<div style="position:relative;">
+								<img ng-show="$ctrl.cropper.croppedImage == null" id="image_user_view" src="../../../img/avatars/anon.png">
+								<div ng-show="$ctrl.cropper.croppedImage != null">
+									<img ng-src="{{$ctrl.cropper.croppedImage}}" hide-xs />
+									<img ng-src="{{$ctrl.cropper.croppedImage}}" width="100%" hide show-xs />
+								</div>
+							</div>
+						</div>
+						<div layout="column" flex="90" class="p-16">
+							<div flex="100" layout="row" id="nome-usuario" class="md-body-1 pb-8">
+								<div id="nome" class="md-headline">{{:: $ctrl.participante.avaliado.nome }}</div>
+							</div>
+							<div flex="100" layout-gt-sm="row" layout-sm="row" layout-xs="column" layout="column" id="dados-usuario1">
+								<div class="pl-16" layout-align="start center" flex>
+									<label><b>Matrícula </b><br/>{{:: $ctrl.participante.avaliado.matricula }}</label>
+								</div>
+								<div class="pl-16" layout-align="center center" flex>
+									<label><b>Setor </b><br/>{{:: $ctrl.participante.avaliado.departamento.nome}}</label>
+								</div>
+
+								<div class="pl-16" layout-align="end center" flex>
+									<label><b>Email </b><br/>{{:: $ctrl.participante.avaliado.emailFuncional }}</label>
+								</div>
+							</div>
+						</div>
+
+						<md-button style="height: 70px; text-align: left; padding: 0; margin: 0;" ng-click="$ctrl.acaoApontamentoFuncional($event)" ng-if="$ctrl.stage !== 'av1'" id="bt-apontamento-funcional" name="bt-apontamento-funcional"
+								   class=" md-accent" aria-label="Apontamento funcional">
+							<md-icon md-font-icon="icon-cellphone-android" style="font-size: 70px"></md-icon>
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div flex="100" layout-gt-sm="row" layout="column" layout-wrap class="pl-16 pr-16 top_10">
+		<div id="campo2" flex-gt-sm="100" flex layout="row">
+			<div flex-xs flex-gt-xs="100" class="p-16">
+				<div class="md-primary-bg style_card" id="prazos">
+					<div flex layout="row" layout-xs="column" layout-sm="column">
+						<div flex layout="column" ng-repeat="(stage, stageData) in $ctrl.stages" fill-width class="ph-10 pv-30" ng-class="{ selecionado: $ctrl.stage == stage, separacao: stageData.tipo == 2 }">
+							<div layout="row" class="h-40 altura_div_av">
+								<div>
+									<md-icon ng-if="$ctrl.progresso[stage] == $ctrl.progresso.total" md-font-icon="icon-check"></md-icon>
+								</div>
+								<div class="space-10">{{ stageData.nome }}
+									&nbsp;até&nbsp;{{ stageData.prazo | date: 'dd/MM/yyyy' }}
+								</div>
+							</div>
+							<div ng-if="$ctrl.stage == 'av3'" flex>
+								<div class="{{ stage }}"></div>
+							</div>
+							<div flex ng-if="stageData.tipo == 1" layout="row" layout-xs="column">
+								<div layout="column" flex>
+									AUTOAVALIAÇÃO - {{ $ctrl.progresso.av1p }}%
+									<md-progress-linear md-mode="determinate" value="{{ $ctrl.progresso.av1p }}"/>
+								</div>
+							</div>
+							<div flex ng-if="stageData.tipo == 2" layout="row" layout-xs="column">
+								<div layout="column" flex>
+									AVALIAÇÃO - {{ $ctrl.progresso.av2p }}%
+									<md-progress-linear md-mode="determinate" value="{{ $ctrl.progresso.av2p }}"/>
+								</div>
+							</div>
+							<div flex ng-if="stageData.tipo == 3" layout="row" layout-xs="column">
+								<div layout="column" flex>
+									CONSENSO - {{ $ctrl.participante.consensoLiberado === true ? $ctrl.progresso.av3p : 0 }}%
+									<md-progress-linear md-mode="determinate" value="{{ $ctrl.participante.consensoLiberado === true ? $ctrl.progresso.av3p : 0 }}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="p-16 top_25">
+		<div  layout="column" flex="100" layout-align="top center" class="p-16 fixedCard">
+			<div style="width: 100%">
+				<div id="campo4" class="white-bg style_card p-16" style="width: 100%" id="lista_competencias">
+
+					<ad-avaliacao style="width: 100%"
+								  stage="$ctrl.stage"
+								  competencias="$ctrl.competencias"
+								  pdi="$ctrl.participante.pdi"
+								  comentario-final-avaliado="$ctrl.participante.comentarioFinalAvaliado"
+								  comentario-final-avaliador="$ctrl.participante.comentarioFinalAvaliador",
+								  consenso-liberado="$ctrl.participante.consensoLiberado"
+								  progresso="$ctrl.progresso"
+								  on-save="$ctrl.verifyAvaliacaoStage(competencia, final, event)" />
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

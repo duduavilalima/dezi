@@ -1,0 +1,449 @@
+<md-content id="content_resumo" class="content tab-content-resumo" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="margin-default">
+		<div class="white-bg style_card">
+			<div layout="column" layout-gt-xs="row" class="p-16" layout-xs="column" flex="100">
+				<md-input-container flex="30">
+					<label for="resumo_campanha1" translate>RESUMO.CAMPANHA</label>
+					<input id="resumo_campanha1" name="campanha" type="text" ng-model="$ctrl.object.campanha.descricao" ng-disabled="true">
+				</md-input-container>
+				<span class="width-20"></span>
+				<md-input-container flex="40">
+					<label for="av_gestor1" translate>RESUMO.AVALIACAO</label>
+					<input
+						id="av_gestor1"
+						name="av_gestor"
+						type="text"
+						ng-model="$ctrl.object.descricaoAbreviada"
+						required ng-maxlength="100"
+						ng-minlength="2"
+						md-maxlength="100"
+						ng-required="true"
+						focus-me="true"
+					>
+					<div ng-messages="basicForm.av_gestor.$error" ng-show="basicForm.av_gestor.$touched">
+						<div ng-message="required">
+							<span translate>RESUMO.CAMPOOBRIGATORIO</span>
+						</div>
+						<div ng-message="maxlength">
+							<span translate>RESUMO.MAXIMO</span>
+						</div>
+						<div ng-message="minlength">
+							<span translate>RESUMO.MINIMO</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<span class="width-20"></span>
+				<div layout="row" flex="30">
+					<md-input-container flex>
+						<label translate>RESUMO.SITUACAO</label>
+						<input id="situacao" name="situacao" type="text" value="{{ 'SITUACAO.'+ $ctrl.object.status | translate }}" ng-disabled="true">
+					</md-input-container>
+					<!-- <div layout-align="end center">
+						<md-button ng-click="$ctrl.ajudaResumo('edit') " class="md-fab md-mini amber-400-bg">
+							<md-icon md-font-icon="icon-help"/>
+							<md-tooltip class="h4">AJUDA</md-tooltip>
+						</md-button>
+					</div> -->
+				</div>
+			</div>
+
+			<div layout="row" flex class="p-16 m40">
+				<md-input-container id="descricao_resumo_edit" class="md-block" flex>
+					<label for="descricao_resumo_edit_input" translate>RESUMO.DESCRICAO</label>
+					<textarea
+						ng-model="$ctrl.object.descricao"
+						name="textarea1"
+						id="descricao_resumo_edit_input"
+						md-maxlength="2000"
+						md-select-on-focus
+						ng-required="true"
+						ng-maxlength="2000"
+					>
+					</textarea>
+					<div ng-messages="basicForm.textarea1.$error" ng-show="basicForm.textarea1.$touched">
+						<div ng-message="required">
+							<span translate>RESUMO.CAMPOOBRIGATORIO</span>
+						</div>
+						<div ng-message="maxlength">
+							<span translate>RESUMO.MAXIMO2</span>
+						</div>
+						<div ng-message="minlength">
+							<span translate>RESUMO.MINIMO2</span>
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+			<div layout="column" flex layout-xs="column" class="p-16 m50">
+				<v-accordion id="accordionDeziA" class="vAccordion--default" multiple control="accordionDeziA" flex>
+					<!-- add expanded attribute to open the section -->
+					<v-pane id="agentes_datas_limites" expanded="true">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div id="avaliadore" class="md-accent-fg">
+								<h3>Agentes e Datas Limites</h3></div>
+						</v-pane-header>
+						<v-pane-content>
+							<div layout="row" layout-xs="column" class="h-accordion">
+								<div layout="column" flex="80" flex-xs="100">
+									<div layout="row" layout-xs="column" id="perfis">
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												id="autoavaliacao_edit"
+												ng-model="$ctrl.object.autoavaliacao"
+												ng-change="$ctrl.changeAgentes('autoavaliacao')"
+												class="font-size-14 ml-5"
+												ng-disabled="$ctrl.object.status === 'LIBERADA'"
+											>
+												{{'RESUMO.AUTOAVALIACAO' | translate }}
+											</md-checkbox>
+										</div>
+										<span class="width-20"></span>
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												ng-model="$ctrl.object.gestores"
+												ng-change="$ctrl.changeAgentes('gestores')"
+												class="font-size-14"
+												ng-disabled="$ctrl.object.status === 'LIBERADA'"
+											>
+												{{'RESUMO.GESTORES' | translate }}
+											</md-checkbox>
+										</div>
+										<span class="width-20"></span>
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												ng-model="$ctrl.object.subordinados"
+												ng-change="$ctrl.changeAgentes('subordinados')"
+												class="font-size-14"
+												ng-disabled="$ctrl.object.status === 'LIBERADA'"
+											>
+												{{'RESUMO.SUBORDINADOS' | translate }}
+											</md-checkbox>
+										</div>
+										<span class="width-20"></span>
+										<div layout="row" layout-xs="row">
+											<md-checkbox
+												ng-model="$ctrl.object.pares"
+												ng-change="$ctrl.changeAgentes('pares')"
+												ng-disabled="$ctrl.object.status === 'LIBERADA'"
+												class="font-size-14"
+											>
+												{{'RESUMO.PARES'  | translate }}
+											</md-checkbox>
+										</div>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex="30" flex-xs="100"	flex-sm="100">
+											<label id="lbl_dataAv2" for="dataAv2" translate="RESUMO.DATALIMITE"></label>
+											<md-datepicker
+												id="dataAv2"
+												name="dataAv2"
+												ng-model="$ctrl.object.dataLimite"
+												md-open-on-focus
+												md-hide-icons="calendar"
+												md-min-date="$ctrl.dataAtual"
+												required
+											></md-datepicker>
+											<div class="validation-messages" ng-messages="basicForm.dataAv2.$error || basicForm.dataAv2.$touched">
+												<div ng-message="required || valid || mindate || maxdate">{{'CAMPANHASLISTAR.OBRIGATORIO' | translate }}</div>
+											</div>
+										</md-input-container>
+									</div>
+								</div>
+								<div layout="column" flex>
+									<div layout="row">
+										<md-checkbox
+											id="consenso_edit"
+											ng-model="$ctrl.object.consenso"
+											ng-change="$ctrl.changeAgentes('consenso')"
+											class="font-size-14 ml-5"
+											ng-disabled="$ctrl.object.status === 'LIBERADA'"
+											debounceInterval
+										>
+											Consenso
+										</md-checkbox>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+											<label id="lbl_dataAv3" for="dataAv3" translate>RESUMO.DATALIMITE</label>
+											<md-datepicker
+												id="dataAv3"
+												name="dataAv3"
+												ng-model="$ctrl.object.limiteAv3"
+												md-open-on-focus
+												md-min-date="$ctrl.object.dataLimite"
+												md-hide-icons="calendar"
+												ng-required="$ctrl.object.preencheAv3"
+												ng-disabled="!$ctrl.object.preencheAv3"
+											></md-datepicker>
+											<div class="validation-messages" ng-messages="basicForm.dataAv3.$error || basicForm.dataAv3.$touched">
+												<div ng-message="required || valid || mindate || maxdate">{{'CAMPANHASLISTAR.OBRIGATORIO' | translate }}</div>
+											</div>
+										</md-input-container>
+									</div>
+								</div>
+							</div>
+						</v-pane-content>
+					</v-pane>
+				</v-accordion>
+				<v-accordion id="accordionDeziB" class="vAccordion--default" multiple control="accordionDeziB" flex>
+					<v-pane id="tipo_vs_peso" expanded="true">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div id="agentes" class="md-accent-fg">
+								<h3>Tipo vs Peso</h3>
+							</div>
+						</v-pane-header>
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<div class="h-50" layout="row">
+									<div layout="row" flex layout-align="end center">
+										<md-button
+											id="adicionar_agentes_edit"
+											ng-click="$ctrl.adicionarTipoCompetencia()"
+											ng-disabled="$ctrl.desabilitarBotaoAdicionar() || $ctrl.object.status === 'LIBERADA'"
+											class="md-fab md-mini"
+											aria-label="Adicionar"
+										>
+											<md-icon md-font-icon="icon-plus"></md-icon>
+											<md-tooltip class="h4">Adicionar Tipo de competência</md-tooltip>
+										</md-button>
+									</div>
+								</div>
+								<md-table-container class="table_pesquisa">
+									<table id="table-list" md-table md-progress="promise">
+										<thead md-head md-order="query.order">
+										<tr md-row>
+											<th md-column><span translate>RESUMO.TIPOCOMPETENCIA</span>
+											</th>
+											<th md-column><span translate>RESUMO.AGENTES</span>
+											</th>
+											<th md-column><span translate>RESUMO.TOTAL</span>
+											</th>
+											<th md-column><span translate>RESUMO.OPCOES</span>
+											</th>
+										</tr>
+										</thead>
+										<tbody md-body>
+										<tr md-row ng-repeat="tiposCompetencia in $ctrl.object.tiposCompetencia" class="text-left">
+											<td md-cell>{{ tiposCompetencia.nome }}</td>
+											<td md-cell>
+												<div layout="row" class="mb-5 mt-5">
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.autoavaliacao"
+															ng-change="tiposCompetencia.percentualAutoavaliacao = 0"
+															ng-disabled="!$ctrl.object.autoavaliacao || $ctrl.object.status === 'LIBERADA'"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.AUTOAVALIACAO' | translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="number"
+																style="width: 70%;"
+																name="autoavaliacao"
+																ng-model="tiposCompetencia.percentualAutoavaliacao"
+																ng-disabled="!tiposCompetencia.autoavaliacao || $ctrl.object.status === 'LIBERADA'"
+																min="0"
+																max="100"
+															>
+																&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-60"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.gestor"
+															ng-change="tiposCompetencia.percentualGestor = 0"
+															ng-disabled="!$ctrl.object.gestores || $ctrl.object.status === 'LIBERADA'"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															<span ng-show="!$ctrl.object.consenso" translate>RESUMO.GESTORES</span>
+															<span ng-show="$ctrl.object.consenso" translate>RESUMO.CONSENSO</span>
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="number"
+																style="width: 70%;"
+																name="gestor"
+																ng-model="tiposCompetencia.percentualGestor"
+																ng-disabled="!tiposCompetencia.gestor || $ctrl.object.status === 'LIBERADA'"
+																min="0"
+																max="100"
+															>
+																&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-60"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.subordinados"
+															ng-change="tiposCompetencia.percentualSubordinados = 0"
+															ng-disabled="!$ctrl.object.subordinados || $ctrl.object.status === 'LIBERADA'"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.SUBORDINADOS'|translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="number"
+																style="width: 70%;"
+																name="subordinados"
+																ng-model="tiposCompetencia.percentualSubordinados"
+																ng-disabled="!tiposCompetencia.subordinados || $ctrl.object.status === 'LIBERADA'"
+																min="0"
+																max="100"
+															>
+																&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-60"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="tiposCompetencia.pares"
+															ng-change="tiposCompetencia.percentualPares = 0"
+															ng-disabled="!$ctrl.object.pares || $ctrl.object.status === 'LIBERADA'"
+															class="font-size-14"
+															aria-label="Checkbox tabela"
+														>
+															{{'RESUMO.PARES'|translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input
+																type="number"
+																name="pares"
+																style="width: 70%;"
+																ng-model="tiposCompetencia.percentualPares"
+																ng-disabled="!tiposCompetencia.pares || $ctrl.object.status === 'LIBERADA'"
+																min="0"
+																max="100"
+															>&nbsp;<span>%</span>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td md-cell>
+												<div layout="row" class="mt-25" ng-class="{'red-fg': $ctrl.totalSomaPercentuais(tiposCompetencia) != 100 && $ctrl.totalSomaPercentuais(tiposCompetencia) != 0}">
+													<input
+														type="text"
+														style="width: 15%"
+														ng-class="{'red-fg': $ctrl.totalSomaPercentuais(tiposCompetencia) != 100 && $ctrl.totalSomaPercentuais(tiposCompetencia) != 0}"
+														name="total"
+														ng-disabled="$ctrl.totalSomaPercentuais(tiposCompetencia) === 0"
+														value="{{$ctrl.totalSomaPercentuais(tiposCompetencia)}}"
+														max="100"
+														readonly
+													>
+													<span>%</span>
+												</div>
+											</td>
+											<td md-cell>
+												<md-button
+													ng-click="$ctrl.removerTipoCompetencia(tiposCompetencia)"
+													ng-disabled="$ctrl.object.status === 'LIBERADA'"
+													ng-hide="$ctrl.object.status === 'LIBERADA'"
+													aria-label="excluir"
+													class="md-icon-button"
+												>
+												<md-icon md-font-icon="icon-trash"/>
+												</md-button>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+						</v-pane-content>
+					</v-pane>
+				</v-accordion>
+				<v-accordion id="accordionDeziB" class="vAccordion--default" multiple control="accordionDeziB" flex>
+					<v-pane ng-if="$ctrl.object.campanha.dimensao">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div id="dimensoes" class="md-accent-fg">
+								<h3>Dimensões</h3>
+							</div>
+						</v-pane-header>
+
+
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<div class="h-50" layout="row">
+									<div layout="row" flex layout-align="end center">
+										<md-button
+											id="adicionar_dimensao"
+											ng-click="$ctrl.AdicionarDimensao()"
+											ng-disabled="$ctrl.desabilitarBotaoAdicionar() || $ctrl.object.status === 'LIBERADA'"
+											class="md-fab md-mini"
+											aria-label="Adicionar Dimensão"
+										>
+											<md-icon md-font-icon="icon-plus"></md-icon>
+											<md-tooltip class="h4">Adicionar Dimensão</md-tooltip>
+										</md-button>
+									</div>
+								</div>
+								<md-table-container class="table_pesquisa">
+									<table id="table" md-table md-progress="promise">
+										<thead md-head md-order="query.order">
+										<tr md-row>
+											<th md-column width="90%"><span>Dimensão</span></th>
+											<th md-column width="10%"><span>Opções</span></th>
+										</tr>
+										</thead>
+
+										<tbody md-body>
+										<tr md-row ng-repeat="item in $ctrl.object.listaDimensao" class="text-left">
+											<td md-cell>{{ item.dimensao.nome }}</td>
+											<td md-cell>
+												<md-button
+													ng-click="$ctrl.removerDimensao(item)"
+													aria-label="excluir"
+													ng-disabled="$ctrl.desabilitarBotaoAdicionar() || $ctrl.object.status === 'LIBERADA'"
+													class="md-icon-button">
+													<md-icon md-font-icon="icon-trash"></md-icon>
+												</md-button>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+						</v-pane-content>
+					</v-pane>
+
+				</v-accordion>
+			</div>
+
+			<md-divider></md-divider>
+			<!-- BOTÕES -->
+			<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+				<md-button
+					ng-click="$ctrl.back()"
+					class="md-raised md-accent-fg text-none"
+					aria-label="Cancelar"
+					translate translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR"
+				>
+					{{'CARGO.CANCELAR'|translate}}
+				</md-button>
+
+				<md-button
+					id="salvar_resumo"
+					ng-click="$ctrl.save()"
+					class="md-raised md-accent text-none"
+					ng-disabled="basicForm.$invalid"
+					aria-label="Salvar e próximo"
+					translate translate-attr-aria-label="CAMPANHASLISTAR.SALVAR"
+				>
+					{{'CAMPANHASLISTAR.SALVAR'|translate}}
+				</md-button>
+			</div>
+		</div>
+	</div>
+</md-content>

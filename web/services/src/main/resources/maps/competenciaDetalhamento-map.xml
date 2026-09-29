@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>br.com.fasolti.avd.domain.CompetenciaDetalhamento</class-a>
+		<class-b>br.com.fasolti.avd.transfer.CompetenciaDetalhamentoTO</class-b>
+
+		<field-exclude>
+			<a>competenciaDetalhamentosCalibrahint</a>
+			<b>competenciaDetalhamentosCalibrahint</b>
+		</field-exclude>
+
+	</mapping>
+</mappings>

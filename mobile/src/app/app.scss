@@ -1,0 +1,168 @@
+// http://ionicframework.com/docs/theming/
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+/* Background color */
+ion-item {
+	background-color: transparent !important;
+  }
+
+/* Avatar */
+ion-avatar {
+	padding: 4px;
+	img {
+		zoom: 1.5;
+		box-shadow: 0px 0px 3px grey;
+	}
+}
+
+.bg-transparent {
+	background-color: rgba(0, 0, 0, .5)
+}
+
+
+ion-toast.error .toast-wrapper {
+	background-color: red;
+	color: white;
+}
+
+/* Keyboard behavior issue */
+ion-col { position: initial !important; }
+
+
+/* Menu style */
+.platform-android {
+	.menu-inner {
+		width: 260px;
+	}
+}
+
+.menu.content.content-md, .menu.content.content-ios {
+	.scroll-content {
+		margin-top: 130px;
+		.label {
+			font-size: 17px;
+		}
+		.list-md {
+			margin: -1px 0 8px;
+		}
+		.list-ios {
+			margin: -1px 0 8px;
+		  }
+	}
+}
+
+.menu-header {
+	padding: 0;
+	/* ion-avatar {
+		margin-bottom: 16px;
+	} */
+	.menu-div {
+		margin-left: 4px;
+	}
+	img {
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		box-shadow: 0px 0px 3px grey;
+		margin: 8px;
+	}
+
+	p {
+		color: color($colors, bgTextMenu);
+	}
+	.menu-title {
+		font-weight: 700;
+		font-size: 15px;
+		margin:  0 0 4px 8px;
+	}
+	.menu-subtitle {
+		font-size: 15px;
+		margin: 0 0 4px 8px;
+	}
+}
+
+.menu {
+	.scroll-content,
+	.item {
+		background-color: color($colors, bgMenu);
+	}
+	button {
+		&.selected {
+			background: color($colors, primary);
+			color: color($colors, textBranco);
+		}
+		padding: 8px;
+		padding-left: 24px;
+		color: color($colors, bgTextMenu);
+		font-weight: 500;
+		ion-icon {
+			margin-right: 32px;
+		}
+	}
+}
+
+/* Utils */
+.m-auto {
+	margin: auto;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.width-100 {
+	width: 100%;
+}
+
+.margin-top-push-8 {
+	margin-top: -8px;
+}
+
+.margin-bottom-push-8 {
+	margin-bottom: -8px;
+}
+
+.margin-bottom-push-16 {
+	margin-bottom: -16px;
+}
+
+.p-bottom-0 {
+	padding-bottom: 0;
+}
+
+.p-0 {
+	padding: 0;
+}
+
+.white {
+	background-color: color($colors, textBranco);
+}
+
+span.separator {
+	border-top: 2px solid color($colors, separator);
+	width: 100%;
+	height: 1px;
+	display: block;
+	&.grey {
+		border-top: 1px solid color($colors, divisaoHorizontal);
+	}
+}
+
+/* Usado no modal */
+.bg-transparent {
+	background-color: rgba(0, 0, 0, .5)
+}

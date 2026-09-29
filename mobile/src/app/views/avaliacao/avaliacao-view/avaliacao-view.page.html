@@ -1,0 +1,36 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title> {{ avaliacao?.descricaoAbreviada }}</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid>
+		<ion-row class="white">
+			<ion-col>
+				<app-tipo-competencia-slides
+					[tipoCompetenciaList]="avaliacao?.avaliacaoTipoCompetenciaList"
+					[activeId]="selectedTipoId"
+					(selectedTipo)="onLoadTipo($event)"
+				>
+				</app-tipo-competencia-slides>
+			</ion-col>
+		</ion-row>
+		<span class="separator grey"></span>
+		<ion-row class="white">
+			<app-tipo-competencia-info class="width-100" [avTipoCompetencia]="avaliacaoTipoCompetencia"></app-tipo-competencia-info>
+		</ion-row>
+		<span class="separator grey"></span>
+		<ion-row class="white">
+			<ion-col>
+				<!-- TODO: Colocar um scroll apenas na lista -->
+				<app-competencia-progress
+					class="width-100"
+					[listaCompetencias]="avaliacaoTipoCompetencia?.listaCompetencias"
+					(selectedCompetencia)="onLoadCompetencia($event)"
+				>
+				</app-competencia-progress>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

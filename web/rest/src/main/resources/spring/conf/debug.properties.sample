@@ -1,0 +1,10 @@
+# Usuário que estará automaticamente logado
+debug.user.empresaId=100
+debug.user.login=admin
+
+# Base de dados para debug
+debug.db.host=localhost
+debug.db.port=5432
+debug.db.name=dezi-dev
+debug.db.username=deziuser
+debug.db.password=deziuser

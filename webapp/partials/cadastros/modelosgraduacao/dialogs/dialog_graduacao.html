@@ -1,0 +1,114 @@
+<md-dialog aria-label="dialog" style="width: 900px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'$ctrl.save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{$ctrl.title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$ctrl.cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content ng-if="!$ctrl.object">
+		</md-dialog-content>
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;" ng-if="$ctrl.object">
+			<div class="md-dialog-content" layout-padding>
+				<div layout="column" layout-gt-md="row" flex="100">
+
+					<md-input-container flex="70">
+						<label id="lbl_graduacao" for="graduacao">Graduação</label>
+						<input id="graduacao"
+							name="graduacao"
+							type="text"
+							ng-model="$ctrl.object.label"
+							ng-maxlength="40"
+							md-maxlength="40"
+							ng-required="$ctrl.canSave"
+							ng-disabled="!$ctrl.canSave"
+						>
+						<div ng-messages="basicForm.graduacao.$error" ng-show="basicForm.graduacao.$touched">
+							<div ng-message="required">
+								<span>Campo obrigatório.</span>
+							</div>
+						</div>
+					</md-input-container>
+
+
+					<md-input-container flex="30">
+						<label id="pontuacao" for="pontuacao">Pontuação</label>
+						<input id="pontuacao_edit"
+							name="pontuacao"
+							type="number"
+							ng-model="$ctrl.object.ponto"
+							ng-max="$ctrl.object.ponto === 0 ? 0 : 1000"
+							ng-min="$ctrl.object.ponto === 0 ? 0 : 1"
+							max="{{ $ctrl.object.ponto === 0 ? 0 : 1000 }}"
+							min="{{ $ctrl.object.ponto === 0 ? 0 : 1 }}"
+							ng-disabled="!$ctrl.canSave || $ctrl.object.ponto === 0"
+							ng-required="$ctrl.canSave"
+						>
+						<div ng-messages="basicForm.pontuacao.$error">
+							<div ng-message="required">
+								<span>Campo obrigatório.</span>
+							</div>
+							<div ng-message="max">
+								<span>Valor máximo é 1000.</span>
+							</div>
+							<div ng-message="min">
+								<span>Valor mínimo é 1</span>
+							</div>
+						</div>
+					</md-input-container>
+
+				</div>
+
+				<div layout="column" layout-gt-md="row" flex="100" style="margin-top: 15px">
+					<md-input-container flex="100">
+						<label id="lbl_descricao" for="descricao">Descrição</label>
+						<textarea id="descricao"
+							name="descricao"
+							type="text"
+							ng-model="$ctrl.object.hint"
+							ng-enabled="true"
+							ng-required="$ctrl.canSave"
+							ng-disabled="!$ctrl.canSave"
+						></textarea>
+						<div ng-messages="basicForm.descricao.$error" ng-show="basicForm.descricao.$touched">
+							<div ng-message="required">
+								<span>Campo obrigatório.</span>
+							</div>
+						</div>
+					</md-input-container>
+				</div>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions flex layout="row">
+			<div flex layout-align="start center" ng-if="$ctrl.canSave">
+				<md-button
+					id="btn_cancelar_cancelar_nregistro"
+					class="md-raised md-default text-capitalize"
+					ng-click="$ctrl.cancel()"
+				>Cancelar</md-button>
+			</div>
+
+			<div layout-align="center center" ng-if="!$ctrl.canSave">
+				<md-button
+					id="btn_fechar_fechar_nregistro"
+					class="md-raised md-default text-capitalize"
+					ng-click="$ctrl.cancel()"
+				>Fechar</md-button>
+			</div>
+
+			<div layout-align="end center" ng-if="$ctrl.canSave">
+				<md-button id="btn_confirmar_cancelar_nregistro"
+					class="md-raised md-default text-capitalize"
+					ng-click="$ctrl.save()"
+					ng-disabled="basicForm.$invalid"
+				>Salvar</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

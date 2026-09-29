@@ -1,0 +1,52 @@
+<ion-row class="text-center">
+	<ion-row class="width-100">
+		<ion-col class="m-auto">
+			<p>
+				<b>{{ avTipoCompetencia?.diasRestantes }}</b>
+				{{
+				avTipoCompetencia?.diasRestantes !== 1
+				? ("app.views.avaliacao-view.diasRestantes" | translate)
+				: ("app.views.avaliacao-view.diaRestante" | translate)
+				}}
+			</p>
+		</ion-col>
+	</ion-row>
+	<ion-row class="width-100">
+		<ion-col col-6>
+			<circle-progress [percent]="avTipoCompetencia?.porcentagemPreenchimentoPorCompetencia" [subtitle]="'app.views.avaliacao-view.concluido' | translate"
+			 [animation]="true" [responsive]="false">
+			</circle-progress>
+			<ion-row class="label">
+				<span>
+					<b>{{ avTipoCompetencia?.qtdCompletosPorCompetencia }}/{{ avTipoCompetencia?.listaCompetencias?.length}}</b> <br />
+					{{"app.views.avaliacao-view.competenciasCompletas" | translate }}
+				</span>
+			</ion-row>
+		</ion-col>
+		<ion-col col-6>
+			<circle-progress [percent]="avTipoCompetencia?.porcentagemPreenchimentoPorPreenchimento" [subtitle]="'app.views.avaliacao-view.concluido' | translate"
+			 [animation]="true" [responsive]="false">
+			</circle-progress>
+			<ion-row class="label">
+				<span>
+					<b>{{ avTipoCompetencia?.qtdCompletosPorPreenchimento }}/{{ avTipoCompetencia?.qtdTotalPorPreenchimento}}</b> <br />
+					{{"app.views.avaliacao-view.preenchimentosCompletos" | translate }}
+				</span>
+			</ion-row>
+		</ion-col>
+	</ion-row>
+	<!-- <ion-col class="info-tempo">
+		<p>
+			<b>{{ avTipoCompetencia?.diasRestantes }}</b>
+			{{
+			avTipoCompetencia?.diasRestantes !== 1
+			? ("app.views.avaliacao-view.diasRestantes" | translate)
+			: ("app.views.avaliacao-view.diaRestante" | translate)
+			}}
+		</p>
+		<p>
+			<b>{{ avTipoCompetencia?.qtdCompletos }}/{{ avTipoCompetencia?.listaCompetencias?.length }}</b> {{
+			"app.views.avaliacao-view.completos" | translate }}
+		</p>
+	</ion-col> -->
+</ion-row>

@@ -1,0 +1,48 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span>Parâmetros gerais</span></div>
+		</div>
+	</div>
+	<div flex md-background-bg class="md-background-bg">
+		<div flex>
+			<md-table-container>
+				<table id="table-list" md-table md-progress="promise">
+					<thead md-head md-order="query.order">
+					<tr md-row>
+						<th md-column width="25%">
+							<span>Empresa</span>
+						</th>
+						<th md-column width="25%">
+							<span>Contratante</span>
+						</th>
+						<th md-column width="20%">
+							<span>Situação</span>
+						</th>
+						<th md-column width="30%">
+							<span>Valor</span>
+						</th>
+					</tr>
+					</thead>
+
+					<tbody md-body>
+					<tr md-row ng-repeat="item in empresas | orderBy:'nome' " class="text-left">
+						<td md-cell>{{ ::item.nome }}</td>
+						<td md-cell>{{ ::item.contratante.nome }}</td>
+						<td md-cell>{{ 'SITUACAO.' + item.situacao | translate }}</td>
+						<td md-cell>
+							<input id="host" type="text" name="host" class="input_parametros" ng-model="item.host">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-align="end center" flex>
+			<md-button class="md-raised md-accent md-primary" style="text-transform: none;" ng-click="salvarParametros()">
+				Salvar
+			</md-button>
+		</div>
+	</div>
+</div>

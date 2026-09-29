@@ -1,0 +1,196 @@
+<md-dialog aria-label="dialog" style="width: 1200px;" class="white-bg">
+	<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+		<div class="md-toolbar-tools">
+			<h2> {{'DIALOG_ASSOCIAR_COMPETENCIA.TITULO' | translate}} </h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content  style="padding: 5px 5px 5px 5px;">
+		<div class="md-dialog-content"  style="padding: 0px 0px 0px 0px;">
+
+			<!-- TRABALHAR AQUI -->
+			<form name="basicForm" class="md-inline-form" layout-padding novalidate ui-keypress="{13:'save()'}">
+				<div layout="row" layout-wrap class="about-tab">
+
+					<!-- <div flex="100">
+						<md-autocomplete 
+						flex 
+						required
+						name="autocompleteCompetencia"
+						md-input-name="autocompleteCompetencia"
+						ng-model="object.competencia"
+						md-input-minlength="0"
+						md-no-cache="false"
+						md-selected-item="object.competencia"
+						md-search-text="searchTerm"
+						md-item-text="item.descricaoAbreviada"
+						md-items="item in querySearch(searchTerm)"
+						md-selected-item-change="changeCompetencia(object)"
+						md-floating-label="{{'DIALOG_ASSOCIAR_COMPETENCIA.LBL_COMPETENCIA' | translate}}">
+						<md-item-template>
+							<span md-highlight-text="searchTerm">{{item.descricaoAbreviada}}</span>
+						</md-item-template>
+						<div
+						ng-messages="basicForm.autocompleteCompetencia.$error"
+						ng-show="basicForm.autocompleteCompetencia.$touched"
+						role="alert"
+					>
+						<div ng-message="minlength" id="msg_min_colaborador">O nome informado não é suficiente.</div>
+						<div ng-message="maxlength" id="msg_max_colaborador">O nome informado é muito longo.</div>
+						<div ng-message="required" id="msg_required_competencia">Campo obrigatório</div>
+					</div>
+						</md-autocomplete>
+					</div> -->
+
+						<!-- <label id="competencia" for="competencia">{{'DIALOG_ASSOCIAR_COMPETENCIA.LBL_COMPETENCIA' | translate}}</label>
+							<md-select
+							id="competencia"
+							name="competencia"
+							ng-model="object.competencia.id" 
+							ng-model-options="{trackBy: '$value.id'}" 
+							ng-required="true" 
+							ng-change="changeCompetencia(object)">
+								<md-select-header>
+									<input id="searchTerm" 
+									ng-model="searchTerm" 
+									type="search" 
+									ng-keydown="onSearchChange($event)" 
+									placeholder="{{'DIALOG_ASSOCIAR_COMPETENCIA.LABEL_PESQUISA_COMP' | translate}}"/>
+								</md-select-header>
+								<md-optgroup label="Competencia">
+									<md-option ng-repeat="comp in listCalibragem | orderBy: 'descricaoAbreviada' | filter:{descricaoAbreviada: searchTerm}" ng-value="comp.id">
+										{{comp.descricaoAbreviada}}
+									</md-option>
+								</md-optgroup>
+								<div ng-messages="basicForm.competencia.$error" ng-show="basicForm.competencia.$touched">
+									<div ng-message="required">
+										<span>{{'DIALOG_ASSOCIAR_COMPETENCIA.CAMPOOBRIGATORIO' | translate}}.</span>
+									</div>
+								</div>
+							</md-select>
+						</div> -->
+					<div flex="100">
+						<!-- <label id="competencia" for="competencia-select">{{'DIALOG_ASSOCIAR_COMPETENCIA.LBL_COMPETENCIA' | translate}}</label> -->
+						<md-select id="competencia-select" ng-model="cargoCompetencia.competencia" ng-change="onChangeCompetencia()" required placeholder="Competência"
+							ng-model-options="{trackBy: '$value.id'}">
+							<md-option ng-repeat="comp in listaCompetenciaSelecionavel | orderBy: 'descricaoAbreviada'" ng-value="comp">{{comp.descricaoAbreviada}}</md-option>
+						</md-select>	
+					</div>
+
+					    <div style="width: 100%">
+							<md-tabs md-dynamic-height md-border-bottom style="width: 100%">
+								<md-tab  label="{{'COMPETENCIA.DESCRICAOGESTORES' | translate}}">
+									<div>
+										<md-input-container flex="100" style="margin-top: 25px; width: 100%">
+											<textarea aria-label="Texto gestores" id="des_gestores_edit" name="des_gestores" type="text" ng-model="cargoCompetencia.competencia.direcionamentoGestor" md-select-on-focus ng-disabled="true"></textarea>
+										</md-input-container>
+									</div>
+								</md-tab>
+								<md-tab label="{{'COMPETENCIA.DESCRICAONAOGESTORES' | translate}}">
+									<div>
+										<md-input-container flex="100" style="width: 100%">
+											<textarea aria-label="Texto não gestores" id="des_no_gestores_edit" name="des_no_gestores" type="text" ng-model="cargoCompetencia.competencia.direcionamentoNaoGestor" md-select-on-focus ng-disabled="true"></textarea>
+										</md-input-container>
+									</div>
+								</md-tab>
+							</md-tabs>
+						</div>
+
+
+
+						<md-input-container flex="100">
+							<label for="id_peso"> {{'DIALOG_ASSOCIAR_COMPETENCIA.LBL_PESO' | translate}} </label>
+							<input id="id_peso" name="id_peso" type="number" ng-model="cargoCompetencia.peso" ng-max="100"
+								   ng-min="1" max="100" min="1" required>
+							<div ng-messages="basicForm.id_peso.$error" ng-show="basicForm.id_peso.$touched">
+								<div ng-message="required">
+									<span>{{'DIALOG_ASSOCIAR_COMPETENCIA.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+								<div ng-message="max">
+									<span>{{'DIALOG_PESO.MSG_MAX_PESO' | translate}}.</span>
+								</div>
+								<div ng-message="min">
+									<span>{{'DIALOG_PESO.MSG_MIN_PESO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+				</div>
+
+				<div layout="column" layout-gt-md="row" >
+
+					<table id="table-list" class="dataTable row-border  hover text-center pl-16 pr-16" ng-show="true" flex="100" ms-responsive-table>
+						<thead>
+
+						<tr ng-show="true">
+							<th class="secondary-text" width="15%">
+								<div class="table-header text-left"><span class="column-title">{{'DIALOG_CALIBRAR.APLICAVEL' | translate}}</span></div>
+							</th>
+							<th class="secondary-text" width="55%">
+								<div class="table-header text-left"><span class="column-title">{{'DIALOG_CALIBRAR.COL_DETALHAMENTO' | translate}}</span></div>
+							</th>
+							<th class="secondary-text" width="10%"></th>
+							<th class="secondary-text" width="10%">
+								<div class="table-header text-left"><span class="column-title">{{'DIALOG_CALIBRAR.COL_PESO' | translate}}</span></div>
+							</th>
+						</tr>
+
+						</thead>
+						<tbody>
+						<tr ng-show="listDetalhamentosCargoComp.length > 0"
+							ng-repeat="item in listDetalhamentosCargoComp | orderBy: 'competenciaDetalhamento.ordem'"
+							class="text-left">
+
+							<td style="padding-bottom: 0px; padding-top: 0px;">
+								<div class="text-center">
+									<md-checkbox ng-model="item.aplicavelAoCargo" class="font-size-14" aria-label="Aplicável ao cargo" ></md-checkbox>
+								</div>
+							</td>
+							<td hide show-gt-xs>{{ ::item.competenciaDetalhamento.descricao }}</td>
+							<td hide-gt-xs>{{ ::item.competenciaDetalhamento.descricao | limitTo: 50}}...</td>
+							<td></td>
+							<td>
+								<md-input-container>
+									<input ng-required="item.aplicavelAoCargo" ng-disabled="!item.aplicavelAoCargo" name="peso_gabarito" type="number" ng-model="item.peso" aria-label="peso{{$index}}" ng-max="100" ng-min="1" max="100" min="1">
+									<div ng-messages="basicForm.peso_gabarito.$error" ng-show="basicForm.peso_gabarito.$touched">
+										<div ng-message="required">
+											<span>{{'DIALOG_CALIBRAR.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<span class="width-20"></span>
+
+				</div>
+
+			</form>
+		</div>
+	</md-dialog-content>
+
+
+	<md-dialog-actions>
+
+		<div flex layout-align="start center">
+
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="cancel()">
+				{{'DIALOG_ASSOCIAR_COMPETENCIA.CANCELAR' | translate}}
+			</md-button>
+		</div>
+
+
+		<div layout-align="end">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_cancelar_nregistro" ng-disabled="basicForm.$invalid" class="md-raised md-default text-capitalize" ng-click="save()">
+				{{'DIALOG_ASSOCIAR_COMPETENCIA.SALVAR' | translate}}
+			</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

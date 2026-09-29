@@ -1,0 +1,74 @@
+<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+    <div class="white-bg style_card mt-5 ml-10 mr-10">
+        <md-table-container>
+            <table id="table-list-todas-msg" md-table md-progress="promise">
+                <thead md-head md-order="$ctrl.queryTodos.order">
+                <tr md-row>
+                    <th md-column md-order-by="titulo" width="45%">
+                        <span>Título</span>
+                    </th>
+                    <th md-column ng-if="!avaliacaoEnvio" md-order-by="usuarioEnvio.nome" width="15%">
+                        <span>De</span>
+                    </th>
+                    <th md-column ng-if="avaliacaoEnvio" md-order-by="avaliacaoEnvio.descricaoAbreviada" width="15%">
+                        <span>De</span>
+                    </th>
+                    <th md-column md-order-by="usuarioDestino.nome" width="15%">
+                        <span>Para</span>
+                    </th>
+                    <th md-column md-order-by="dataHoraEnvio" width="10%">
+                        <span>Data Recebimento</span>
+                    </th>
+                    <th md-column md-order-by="dataHoraAbertura" width="12%">
+                        <span>Data Leitura</span>
+                    </th>
+                    <th md-column width="3%">
+                        <span>Opções</span>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody md-body ng-if="$ctrl.listTodos == null || $ctrl.listTodos.length == 0">
+                <td md-cell colspan="6"><div class="text-center p-16">Não há mensagens.</div></td>
+                </tbody>
+
+                <tbody md-body ng-if="$ctrl.listTodos != null && $ctrl.listTodos.length > 0">
+                <tr md-row ng-repeat="item in $ctrl.listTodos | orderBy: $ctrl.queryTodos.order | limitTo: tableControl.limit : ($ctrl.queryTodos.page -1) * tableControl.limit">
+                    <td md-cell ng-class="{'md-body-2' : item.isNew}">
+                        <md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+                        <a class="" href ng-click="$ctrl.acaoExibirMensagemEnviada($event, $index, item)">{{ ::item.titulo }}</a>
+                        <span ng-if="item.isNew" class="nova">nova</span>
+
+                    </td>
+                    <td md-cell ng-if="item.avaliacaoEnvio == null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.usuarioEnvio.nome }}</td>
+                    <td md-cell ng-if="item.avaliacaoEnvio != null" ng-class="{'md-body-2' : item.isNew}">{{ ::item.avaliacaoEnvio.descricaoAbreviada }}</td>
+                    <td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.usuarioDestino.nome }}</td>
+                    <td md-cell ng-class="{'md-body-2' : item.isNew}"> {{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td md-cell ng-class="{'md-body-2' : item.isNew}">{{ ::item.dataHoraAbertura | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td md-cell style="padding: 0">
+                        <md-menu id="menu-table" ng-if="item.isDestino">
+                            <md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="more">
+                                <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content class="p-0">
+                                <md-menu-item ng-if="false">
+                                    <md-button aria-label="Encaminhar" ng-click="$ctrl.acaoEncaminharMensagem($event, $index, item)">
+                                        <md-icon style="color: blue" md-font-icon="icon-send"></md-icon>Encaminhar
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-if="item.isDestino">
+                                    <md-button aria-label="responder" ng-click="$ctrl.acaoResponderMensagem($event, item)">
+                                        <md-icon style="color: green" md-font-icon="icon-send"></md-icon>Responder
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" md-page="$ctrl.queryTodos.page" md-total="{{$ctrl.listTodos.length}}" md-page-select
+                             md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+    </div>
+</div>

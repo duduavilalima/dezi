@@ -1,0 +1,42 @@
+
+							<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+								<div class="white-bg style_card mt-5 ml-10 mr-10">
+									<md-table-container>
+										<table id="table-list-envidas-msg" md-table md-progress="promise">
+											<thead md-head md-order="$ctrl.queryEnviados.order">
+											<tr md-row>
+												<th md-column md-order-by="titulo" width="45%">
+													<span>Título</span>
+												</th>
+												<th md-column md-order-by="usuarioDestino.nome" width="15%">
+													<span>Para</span>
+												</th>
+												<th md-column md-order-by="dataHoraEnvio" width="10%">
+													<span>Data Recebimento</span>
+												</th>
+												<th md-column md-order-by="dataHoraAbertura" width="10%">
+													<span>Data Leitura</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body ng-if="$ctrl.listEnviados == null || $ctrl.listEnviados.length == 0">
+											<td md-cell colspan="4"><div class="text-center p-16">Não há mensagens enviadas.</div></td>
+											</tbody>
+
+											<tbody md-body ng-if="$ctrl.listEnviados != null && $ctrl.listEnviados.length > 0">
+											<tr md-row ng-repeat="item in $ctrl.listEnviados | orderBy: $ctrl.queryEnviados.order | limitTo: tableControl.limit : ($ctrl.queryEnviados.page -1) * tableControl.limit" class="text-left">
+												<td md-cell>
+													<md-icon ng-if="item.mensagemOriginal != null" md-font-icon="icon-arrow-right" class="s16 separator"></md-icon>
+													<a class="link-table-search" href ng-click="$ctrl.acaoExibirMensagemEnviada($event, $index, item)">{{ ::item.titulo }}</a>
+												</td>
+												<td md-cell>{{ ::item.usuarioDestino.nome }}</td>
+												<td md-cell>{{ ::item.dataHoraEnvio | date: 'dd/MM/yyyy HH:mm' }}</td>
+												<td md-cell>{{ ::item.dataHoraAbertura | date: 'dd/MM/yyyy HH:mm' }}</td>
+											</tbody>
+										</table>
+									</md-table-container>
+									<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" md-page="$ctrl.queryEnviados.page" md-total="{{$ctrl.listEnviados.length}}" md-page-select
+														 md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+								</div>
+							</div>

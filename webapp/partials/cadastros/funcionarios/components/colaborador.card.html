@@ -1,0 +1,269 @@
+<form-card
+	name="{{ $ctrl.name }}"
+	card-title="FUNCIONARIO.DESCRICAO"
+	entity-name="FUNCIONARIO.FUNCIONARIO"
+	entity-resource="$ctrl.Resource"
+	object="$ctrl.object"
+	can-edit="$ctrl.canEdit"
+	show-detalhes="$ctrl.showDetalhes"
+	can-save="!$ctrl.readOnly"
+	use-dialog-situacao="true"
+	on-edit="$ctrl.onEdit($ctrl.object)"
+	on-save="$ctrl.onSave($ctrl.object)"
+	on-cancel="$ctrl.onCancel($ctrl.object)"
+	after-change-situacao="$ctrl.afterChangeSituacao()"
+>
+	<div
+		flex-gt-xs="100"
+		layout="column"
+		layout-align="center center"
+		layout-align-gt-md="start center"
+		class="p-32"
+	>
+		<div class="md-whiteframe-5dp">
+			<div ng-show="!$ctrl.cropper.croppedImage">
+				<img
+					width="200px"
+					id="image_user_edit"
+					ng-src="{{ $ctrl.anonImage }}"
+				>
+			</div>
+			<div ng-show="$ctrl.cropper.croppedImage">
+				<img
+					width="200px"
+					id="image_user_edit"
+					ng-src="{{ $ctrl.cropper.croppedImage }}"
+				>
+			</div>
+		</div>
+
+		<md-button
+			ng-click="$ctrl.showAlterarFoto($event, index, item)"
+			id="bt-image-user"
+			name="bt-image-user"
+			class="md-icon-button md-accent"
+			aria-label="Editar foto"
+		>
+			<md-icon md-font-icon="icon-pencil"></md-icon>
+		</md-button>
+	</div>
+
+	<labeled-text
+		flex-gt-xs="35"
+		name="matricula"
+		label="FUNCIONARIO.MATRICULA"
+		value="$ctrl.object.matricula"
+		required="true"
+		read-only="$ctrl.readOnly"
+		minlength="1"
+		maxlength="20"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-text
+		flex-gt-xs="50"
+		name="nome"
+		label="FUNCIONARIO.NOME"
+		value="$ctrl.object.nome"
+		required="true"
+		read-only="$ctrl.readOnly"
+		minlength="2"
+		maxlength="80"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-select-enum
+		flex-gt-xs="15"
+		name="situacao"
+		label="FUNCIONARIO.SITUACAO2"
+		value="$ctrl.object.situacao"
+		enum-info="$ctrl.SituacaoEnum"
+		required="true"
+		read-only="true"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<!-- TODO Verificar validação -->
+	<labeled-text
+		flex-gt-xs="60"
+		name="emailFuncional"
+		input-type="email"
+		label="FUNCIONARIO.EMAIL"
+		value="$ctrl.object.emailFuncional"
+		required="true"
+		read-only="$ctrl.readOnly"
+		minlength="2"
+		maxlength="80"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-select-enum
+		flex-gt-xs="20"
+		name="tipoSexo"
+		label="FUNCIONARIO.SEXO"
+		value="$ctrl.object.tipoSexo"
+		enum-info="$ctrl.TipoSexoEnum"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="nascimento"
+		label="FUNCIONARIO.NASCIMENTO"
+		value="$ctrl.object.nascimento"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<labeled-text
+		flex-gt-xs="60"
+		name="empresaNome"
+		label="FUNCIONARIO.EMPRESAPRINCIPAL"
+		value="$ctrl.object.empresa.nome"
+		read-only="true"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="admissao"
+		label="FUNCIONARIO.ADMISSAO"
+		value="$ctrl.object.admissao"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="desligamento"
+		label="FUNCIONARIO.DESLIGAMENTO"
+		value="$ctrl.object.desligamento"
+		min-date="$ctrl.object.admissao"
+		required="$ctrl.isDataDesligamentoRequired()"
+		read-only="$ctrl.readOnly || !$ctrl.isDataDesligamentoRequired()"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<labeled-select-enum
+		flex-gt-xs="60"
+		name="situacaoFuncional"
+		label="FUNCIONARIO.SITUACAO3"
+		value="$ctrl.object.situacaoFuncional"
+		enum-info="$ctrl.SituacaoFuncionarioEnum"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="dataInicioRecesso"
+		label="FUNCIONARIO.PERIODODE"
+		value="$ctrl.object.dataInicioRecesso"
+		required="$ctrl.isPeriodoRecessoRequired()"
+		read-only="$ctrl.readOnly || !$ctrl.isPeriodoRecessoRequired()"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="dataFimRecesso"
+		label="FUNCIONARIO.PERIODOATE"
+		value="$ctrl.object.dataFimRecesso"
+		min-date="$ctrl.object.dataInicioRecesso"
+		required="$ctrl.isPeriodoFinalRequired()"
+		read-only="$ctrl.readOnly || !$ctrl.isPeriodoFinalRequired()"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<labeled-select-enum
+		flex-gt-xs="33"
+		name="tipoPerfil"
+		label="FUNCIONARIO.PERFIL"
+		value="$ctrl.object.tipoPerfil"
+		enum-info="$ctrl.TipoPerfilEnum"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-select
+		flex-gt-xs="33"
+		name="unidade"
+		label="FUNCIONARIO.UNIDADE"
+		value="$ctrl.object.unidade"
+		list="$ctrl.unidades"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-select
+		flex-gt-xs="33"
+		name="departamento"
+		label="FUNCIONARIO.DEPARTAMENTO"
+		value="$ctrl.object.departamento"
+		list="$ctrl.departamentos"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<labeled-select
+		flex-gt-xs="80"
+		name="cargo"
+		label="FUNCIONARIO.CARGO"
+		value="$ctrl.object.cargo"
+		list="$ctrl.cargos"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-datepicker
+		flex-gt-xs="20"
+		name="dataCargo"
+		label="FUNCIONARIO.DTCARGO"
+		value="$ctrl.object.dataCargo"
+		required="$ctrl.object.cargo"
+		read-only="$ctrl.readOnly || !$ctrl.object.cargo"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<!-- -->
+
+	<labeled-select-boolean
+		flex-gt-xs="50"
+		name="pontoFocalRh"
+		label="FUNCIONARIO.PONTOFOCAL"
+		value="$ctrl.object.pontoFocalRh"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-select-boolean
+		flex-gt-xs="50"
+		name="preencheFormacaoEIdiomas"
+		label="FUNCIONARIO.REQUER"
+		value="$ctrl.object.preencheFormacaoEIdiomas"
+		required="true"
+		read-only="$ctrl.readOnly"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<div ng-transclude fill-width></div>
+</form-card>

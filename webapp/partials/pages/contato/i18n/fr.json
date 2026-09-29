@@ -1,0 +1,21 @@
+{
+  "CONTATO": {
+    "TITULO":"Contact",
+    "VALIDATION": "Obligatoire"
+  },
+  "DIALOG":{
+    "TITULO":"Appel ouvert",
+    "ASSUNTO":"Assujettir",
+    "CLASSIFICACAO":"Classification",
+    "MENSAGEM":"Message",
+    "CANCELAR":"Annuler",
+    "ENVIAR":"Appel ouvert",
+    "SUCCESS":"Appel ouvert avec succès!"
+  },
+  "CLASSIFICACAO": {
+    "DUVIDA":"Doute",
+    "CRITICA":"La critique",
+    "SUGESTAO":"Suggestion",
+    "RECLAMACAO":"Plainte"
+  }
+}

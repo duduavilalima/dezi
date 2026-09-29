@@ -1,0 +1,28 @@
+{
+  "TIPOS":{
+    "CADASTOS":"Cadastros",
+    "FORMACAO":"Formação e idiomas",
+    "TIPOSCURSO": "Tipos de curso",
+    "PESQUISAR":"Pesquisar",
+    "BTNNOVO":"Novo Tipo de Curso",
+    "SITUACAO": "Situação",
+    "REQUER": "Requer preenchimento da Graduação",
+    "REQUEROUTRO": "Requer preenchimento da Especialização",
+    "DESCRICAO": "Descrição",
+    "BTNIMPORTAR":"Importar",
+    "TIPODECURSO": "Tipo de curso",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 20 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZA": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar"
+  }
+}

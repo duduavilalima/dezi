@@ -1,0 +1,67 @@
+<div id="graduacoes" class="page-layout simple fullwidth doc-page">
+
+	<!-- HEADER -->
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span hide show-gt-xs class="parent">{{ ::subtitulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ ::titulo }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input">
+
+			<!-- INPUT SEARCH -->
+			<div hide show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'TIPOS.PESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+			<md-button hide-xs type="button" translate-attr-aria-label="TIPOS.BTNNOVO" class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize" style="text-transform: inherit;" aria-label="Novo" ng-click="displayNew()">
+				{{'TIPOS.BTNNOVO' | translate}}
+			</md-button>
+
+			<md-button hide show-xs type="button" class="md-fab md-mini md-accent"  aria-label="Criar" ng-click="displayNew()" value="Novo">
+				<md-icon md-font-icon="icon-plus" hide show-xs></md-icon>
+			</md-button>
+		</div>
+	</div>
+
+
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 mt-50">
+		<div class="white-bg style_card m-8">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<thead fix-head md-head md-order="query.order">
+					<tr md-row class="grey-200-bg">
+						<th md-column md-order-by="nome" width="50%">
+							<span>{{'TIPOS.TIPODECURSO' | translate}}</span>
+						</th>
+						<th md-column width="20%">
+							<span>{{'TIPOS.REQUER' | translate}}</span>
+						</th>
+						<th md-column width="20%">
+							<span>{{'TIPOS.REQUEROUTRO' | translate}}</span>
+						</th>
+						<th md-column md-order-by="situacao" width="10%">
+							<span>{{'TIPOS.SITUACAO' | translate}}</span>
+						</th>
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-repeat="item in listResult | tiposcursoFilter: filtro | orderBy: query.order | limitTo: tableControl.limit : (query.page -1) * tableControl.limit" class="text-left">
+						<td md-cell><a class="link-table-search" href ng-click="displayView(item)">{{ ::item.nome }}</a></td>
+						<td md-cell><span ng-class="{'green-bg': item.preencheGraduacao == true, 'red-bg' : item.preencheGraduacao != true}" class="estilo_situacao"><b>{{ item.preencheGraduacao ? 'Sim' : 'Não' }}</b></span></td>
+						<td md-cell><span ng-class="{'green-bg': item.preencheEspecializacao == true, 'red-bg' : item.preencheEspecializacao != true}" class="estilo_situacao"><b>{{ ::item.preencheEspecializacao ? 'Sim' : 'Não' }}</b></span></td>
+						<td md-cell><span ng-class="{'green-bg ml-5': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}" class="estilo_situacao"><b>{{ 'SITUACAO.' + item.situacao | translate }}</b></span></td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination md-limit="tableControl.limit" md-limit-options="tableControl.limit_options" paginate="logPagination" md-page="query.page" md-total="{{(listResult| tiposcursoFilter: filtro).length}}" md-page-select
+								 md-label="{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"></md-table-pagination>
+		</div>
+	</div>
+
+</div>

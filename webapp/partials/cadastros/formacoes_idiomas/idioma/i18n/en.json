@@ -1,0 +1,26 @@
+{
+  "IDIOMA":{
+    "CADASTOS":"Data",
+    "FORMACAO":"Education and languages",
+    "IDIOMA": "Language",
+    "IDIOMAS": "Languages",
+    "PESQUISAR":"Search",
+    "BTNNOVO":"New Language",
+    "SITUACAO": "Situation",
+    "IDIOMA2": "Language",
+    "CRIADOR": "Author",
+    "DATACRIACAO": "Creation Date",
+    "ATUALIZADOR": "Updater",
+    "DATAATUALIZACAO": "Update Date",
+    "SALVAR": "Save",
+    "VOLTAR": "Back",
+    "EDITAR": "Edit",
+    "CANCELAR": "Cancel",
+    "ATIVAR": "Activate",
+    "INATIVAR": "Inactivate",
+    "CAMPOOBRIGATORIO": "Required field",
+    "MAXIMO": "Maximum 15 characters",
+    "MINIMO": "Minimum 2 characters",
+    "DESCRICAO" : "Description"
+  }
+}

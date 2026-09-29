@@ -1,0 +1,41 @@
+<md-dialog aria-label="Adicionar Participante" style="width: 500px;">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Adicionar Participante</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content" ng-controller="AbaAnaliseCadastroCtrl">
+			<form ng-submit="$event.preventDefault()">
+				<md-autocomplete flex md-input-name="autocompleteField" focus-me="true" md-input-minlength="2" md-input-maxlength="18" md-no-cache="noCache" md-selected-item="selectedItem" md-search-text="searchText" md-items="item in querySearch(searchText)" md-item-text="item.display" md-floating-label="Participante">
+					<md-item-template>
+						<span md-highlight-text="searchText">{{item.display}}</span>
+					</md-item-template>
+					<md-not-found>
+						Não foi possível encontrar o participante
+					</md-not-found>
+				</md-autocomplete>
+			</form>
+		</div>
+	</md-dialog-content>
+
+	<md-dialog-actions class="white-bg">
+
+		<div flex layout-align="start center">
+
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes" ng-click="cancel()">
+				Cancelar
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<md-button aria-label="confirmar"  class="md-raised md-primary estilo_botoes"  ng-click="confirmar()">Confirmar</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

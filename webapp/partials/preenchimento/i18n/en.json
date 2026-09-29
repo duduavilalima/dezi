@@ -1,0 +1,49 @@
+{
+  "PREENCHIMENTO": {
+    "TITLE": "Fill",
+    "BTNFORMACAO": "Formation and languages",
+    "MINHASAVALIACOES": "My self evaluations",
+    "AUTOAVALIACOES": "Self evaluations",
+    "CONSENSO": "Consensus",
+    "LBLPESQUISAR": "Search",
+    "CAMPANHA": "Campaign",
+    "AVALIACAO": "Evaluation",
+    "HINT_AVALIACAO_GESTOR":"Evaluation to be completed by your manager",
+    "AVALIADOR": "Evaluator",
+    "DATAAV1": "Max date AV1",
+    "DATAAV2": "Max date AV2",
+    "DATAAV3": "Max date AV3",
+    "OPCOES": "Options",
+    "MEUSAVALIADOS": "My Evaluated and Revised",
+    "RESUMO": "Summary",
+    "AVALIACOES": "Evaluations",
+    "REVISAO": "Revision",
+    "AVALIADO": "Evaluated",
+    "REVISOR": "Reviewer",
+    "DATAREV": "Max date Rev",
+    "PREENCHIMENTOS": "Fills",
+    "AUTOAVALIACAO": "Self evaluation",
+    "LBLPAGINA": "{page: 'Page:', rowsPerPage: 'Rows per page:', of: 'of'}",
+    "PREENCHIMENTODASAVALIACOES":"Filling of ratings",
+    "NAOPREENCHIDA":"Not filled",
+    "PARCIALMENTEPREENCHIDA":"Partially filled",
+    "TOTALMENTEPREENCHIDA":"Totally filled",
+    "LBLCOMPETENCIAS":"Competences",
+    "LBLFUNCIONARIOS":"Employees",
+    "PREENCHIDOS":"Filled",
+    "PENDENTES":"Pending"
+  },
+  "LOGIN": {
+    "CONTA": "Log in to your account",
+    "EMAIL": "Login",
+    "VALIDATION": "Required",
+    "VALIDATION-EMAIL" : "E- mail must be a valid email address",
+    "SENHA": "Password",
+    "ESQUECER": "Forgot password?",
+    "BTNENTRAR": "Get in",
+    "EMPRESA":"Company"
+  },
+  "validation": {
+    "login-password-invalid" : "Login or password invalid."
+  }
+}

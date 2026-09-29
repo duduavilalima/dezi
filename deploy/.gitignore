@@ -1,0 +1,7 @@
+.env
+*.sample.backup
+/.compose.conf
+/conf/proxy/*.cfg
+/conf/proxy/*.pem
+/*.dmp.xz
+.vscode

@@ -1,0 +1,374 @@
+<md-content class="md-padding" style="background-color: rgb(245,245,245);" ng-controller="AbaAnaliseCadastroCtrl">
+	<div layout="column" layout-gt-md="row" flex="100">
+		<ms-widget flippable="false" layout="row" flex="100" style="height: 100px;">
+			<ms-widget-front class="p-16 white-bg">
+				<div layout="column" layout-gt-md="row" layout-xs="row" flex="100">
+					<md-input-container flex="30">
+						<label for="empresa_analise">{{'ANALISE.EMPRESA' | translate}}</label>
+						<input id="empresa_analise" name="empresa" type="text" ng-model="object.campanha.empresa.nome"
+							ng-disabled="true">
+					</md-input-container>
+					<span class="width-20"></span>
+					<span class="width-20"></span>
+					<md-input-container flex="30">
+						<label for="campanha_analise">{{'ANALISE.CAMPANHA' | translate}}</label>
+						<input id="campanha_analise" name="campanha" type="text" ng-model="object.campanha.descricao"
+							ng-disabled="true">
+					</md-input-container>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+	<div style="height: 7px">
+	</div>
+
+	<div class="widget-group" layout="column" layout-gt-xs="row" flex>
+		<ms-widget layout="column" flex="100" layout-wrap>
+			<ms-widget-front class="white-bg radius-10">
+				<div hide-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h1 class="md-accent-fg">{{'ANALISE.PERCENTUAL' | translate}}</h1>
+				</div>
+				<div hide-gt-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h2 style="margin-left: -10px;" class="md-accent-fg">{{'ANALISE.PERC' | translate}}</h2>
+				</div>
+				<div layout="column" layout-gt-xs="row" class="p-5" flex>
+
+					<ms-widget ng-repeat="fase in fases" flex="100" flippable="true" layout="column" layout-wrap flex>
+						<ms-widget-front class="white-bg">
+							<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+								<h2 class="simplified md-accent-fg">{{'ANALISE.' + fase + 'AV' | translate}}</h2>
+							</div>
+							<div class="pt-8 pb-32" layout="column" layout-align="center center"
+								style="margin-top: -10px;">
+								<!--FIXME Trocar por chart.js -->
+								<!-- <c3chart bindto-id="gauge-{{fase}}" ng-if="charts[fase].value >= 0">
+									<chart-column column-id="{{fase}}" column-values="{{charts[fase].value}}"
+										column-color="{{colors[fase]}}" column-type="gauge"></chart-column>
+									<chart-gauge min="0" max="100"></chart-gauge>
+								</c3chart> -->
+								<div layout="row" layout-sm="column" layout-align="space-around" ng-if="!charts[fase]">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+							</div>
+						</ms-widget-front>
+					</ms-widget>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+
+	<div class="widget-group" layout="row" flex="100" layout-wrap>
+		<ms-widget flippable="false" layout="row" flex="100" flex-gt-md="60">
+			<ms-widget-front class="white-bg">
+				<div layout="row" class="content">
+					<div flex layout-align="start center" style="margin-left: 20px;">
+						<h1 class="md-accent-fg">{{'ANALISE.PARTICIPANTES' | translate}}</h1>
+					</div>
+					<div layout-align="end center" style="margin-top: 20px; margin-right: 15px;">
+						<label id="lbl_search2" style="font-size: larger;">{{'ANALISE.PESQUISAR' | translate}}: </label>
+						<input style="border: solid 2px #E1E1E1; margin-left: 5px; height: 30px; margin-top: -5px;"
+							id="input_search2" type="text" name="input_search" ng-model="filtro_participantes">
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<div class="ph-16 pv-16 border-bottom" layout="row" layout-align="space-between center">
+					<div ng-if="object.preencheAv1" flex layout-align="center center" hide-sm hide-xs
+						style="margin-left: 70px; margin-top: 25px;">
+						<md-checkbox ng-model="pesquisarPorAutoavaliacao" ng-change="changeAutoavaliacao()"
+							class="p-8 font-size-14 check_gest" aria-label="Checkbox autoavaliação">
+							{{'ANALISE.AUTOAVALIACAO' | translate}}
+						</md-checkbox>
+					</div>
+					<div ng-if="object.preencheAv2" flex layout-align="center center" hide-sm hide-xs
+						style="margin-top: 25px;">
+						<md-checkbox ng-model="pesquisarPorAvaliacao" ng-change="changeAvaliacao()"
+							class="p-8 font-size-14 check_gest" aria-label="Checkbox avaliação">
+							{{'ANALISE.AVALIACAO' | translate}}
+						</md-checkbox>
+					</div>
+					<div ng-if="object.preencheAv3" flex layout-align="center center" hide-sm hide-xs
+						style="margin-top: 25px;">
+						<md-checkbox ng-model="pesquisarPorConsenso" ng-change="changeConsenso()"
+							class="p-8 font-size-14 check_gest" aria-label="Checkbox consenso">
+							{{'ANALISE.CONSENSO' | translate}}
+						</md-checkbox>
+					</div>
+					<div ng-if="object.preencheAv4" flex layout-align="center center" hide-sm hide-xs
+						style="margin-top: 25px;">
+						<md-checkbox ng-model="pesquisarPorRevisao" ng-change="changeRevisao()"
+							class="p-8 font-size-14 check_gest" aria-label="Checkbox revisao">
+							{{'ANALISE.REVISAO' | translate}}
+						</md-checkbox>
+					</div>
+				</div>
+				<div class="scroll_tables">
+					<table id="table-analise" class="dataTable row-border hover text-center">
+						<thead>
+							<tr>
+								<th class="secondary-text" width="10%">
+									<div class="table-header text-left"><span
+											class="column-title">{{'ANALISE.NOME' | translate}}</span></div>
+								</th>
+								<th class="secondary-text" width="7%" hide-xs>
+									<div class="table-header text-left"><span
+											class="column-title">{{'ANALISE.CARGO' | translate}}</span></div>
+								</th>
+								<th class="secondary-text" width="10%" hide-xs>
+									<div class="table-header text-left"><span
+											class="column-title">{{'ANALISE.DEPARTAMENTO' | translate}}</span></div>
+								</th>
+								<th class="secondary-text" width="7%">
+									<div class="table-header text-left"><span
+											class="column-title">{{'ANALISE.PREENCHIMENTO' | translate}}</span></div>
+								</th>
+								<th class="secondary-text" width="2%" ng-if="object.status !== 'CANCELADA'">
+									<div class="table-header text-left"><span
+											class="column-title">{{'ANALISE.OPCOES' | translate}}</span></div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in object.participantes | filter : filtro_participantes | orderBy: 'avaliado.nome'"
+								class="text-left">
+								<td>{{ item.avaliado.nome}}</td>
+								<td hide-xs>{{ item.avaliado.cargo.nome }}</td>
+								<td hide-xs>{{ item.avaliado.departamento.nome }}</td>
+								<td>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv1 != null && item.preenchidaAV1 == true"
+										class="preenchimento-verde">
+										<md-tooltip>Autoavaliação</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv1 != null && item.dataInicioAv1 != null && item.dataConclusaoAv1 == null"
+										class="preenchimento-azul">
+										<md-tooltip>Autoavaliação</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv1 != null && item.dataInicioAv1 == null && item.dataConclusaoAv1 == null"
+										class="preenchimento-vermelho">
+										<md-tooltip>Autoavaliação</md-tooltip>
+									</md-icon>
+
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv2 != null && item.preenchidaAV2 == true"
+										class="preenchimento-verde">
+										<md-tooltip>Avaliação</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv2 != null && item.dataInicioAv2 != null && item.dataConclusaoAv2 == null"
+										class="preenchimento-azul">
+										<md-tooltip>Avaliação</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv2 != null && item.dataInicioAv2 == null && item.dataConclusaoAv2 == null"
+										class="preenchimento-vermelho">
+										<md-tooltip>Avaliação</md-tooltip>
+									</md-icon>
+
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv3 != null && item.preenchidaAV3 == true"
+										class="preenchimento-verde">
+										<md-tooltip>Consenso</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv3 != null && item.dataInicioAv3 != null && item.dataConclusaoAv3 == null"
+										class="preenchimento-azul">
+										<md-tooltip>Consenso</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv3 != null && item.dataInicioAv3 == null && item.dataConclusaoAv3 == null"
+										class="preenchimento-vermelho">
+										<md-tooltip>Consenso</md-tooltip>
+									</md-icon>
+
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv4 != null && item.preenchidaAV4 == true"
+										class="preenchimento-verde">
+										<md-tooltip>Revisão</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv4 != null && item.dataInicioAv4 != null && item.dataConclusaoAv4 == null"
+										class="preenchimento-azul">
+										<md-tooltip>Revisão</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-brightness-1"
+										ng-if="object.limiteAv4 != null && item.dataInicioAv4 == null && item.dataConclusaoAv4 == null"
+										class="preenchimento-vermelho">
+										<md-tooltip>Revisão</md-tooltip>
+									</md-icon>
+								</td>
+								<td style="padding: 0" ng-if="object.status !== 'CANCELADA'">
+									<md-menu id="menu-table2">
+										<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+											<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+										</md-button>
+										<md-menu-content class="p-0">
+											<md-menu-item ng-if="object.preencheAv1">
+												<md-button aria-label="EnviarColaborador"
+													ng-click="acaoEnviarColaborador($event, item)"
+													translate-attr-aria-label="ANALISE.ENVIARCOLABORADOR">
+													<md-icon style="color: green" md-font-icon="icon-send"></md-icon>
+													{{'ANALISE.ENVIARCOLABORADOR' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item ng-if="object.preencheAv2">
+												<md-button aria-label="EnviarAvaliador"
+													ng-click="acaoEnviarAvaliador($event, item)"
+													translate-attr-aria-label="ANALISE.ENVIARAVALIADOR">
+													<md-icon style="color: blue" md-font-icon="icon-send"></md-icon>
+													{{'ANALISE.ENVIARAVALIADOR' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item ng-if="object.preencheAv4">
+												<md-button aria-label="EnviarRevisor"
+													ng-click="acaoEnviarRevisor($event, item)"
+													translate-attr-aria-label="ANALISE.ENVIARREVISOR">
+													<md-icon style="color: black" md-font-icon="icon-send"></md-icon>
+													{{'ANALISE.ENVIARREVISOR' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item>
+												<md-button aria-label="alterar avaliador"
+													ng-click="modificarColaboradorAbaAnalise($event, $index, item)"
+													translate-attr-aria-label="ANALISE.BTNALTERARAVALIADOR">
+													<md-icon style="color: black" md-font-icon="icon-tumblr-reblog">
+													</md-icon>
+													<span
+														ng-show="object.preencheAv4">{{'ANALISE.BTNALTERARAVALIADOR' | translate}}</span>
+													<span
+														ng-hide="object.preencheAv4">{{'ANALISE.BTNALTERARAVA' | translate}}</span>
+												</md-button>
+											</md-menu-item>
+											<md-menu-item>
+												<md-button aria-label="Alterar datas limites"
+													ng-click="modificarDatasLimitesAbaAnalise($event, $index, item)"
+													translate-attr-aria-label="ANALISE.BTNALTERARDATA">
+													<md-icon style="color: black" md-font-icon="icon-calendar-select">
+													</md-icon>
+													{{'ANALISE.BTNALTERARDATA' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item ng-if="object.preencheAv1 && object.status == 'LIBERADA'">
+												<md-button aria-label="imprimir autoavaliacao"
+													ng-click="acaoImprimirAuto(item.id)"
+													translate-attr-aria-label="ANALISE.AUTOAVALIACAO">
+													<md-icon style="color: black" md-font-icon="icon-printer"></md-icon>
+													{{'ANALISE.AUTOAVALIACAO' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item ng-if="object.preencheAv2 && object.status == 'LIBERADA'">
+												<md-button aria-label="imprimir avaliacao"
+													ng-click="acaoImprimirAva(item.id)"
+													translate-attr-aria-label="ANALISE.AVALIACAO">
+													<md-icon style="color: black" md-font-icon="icon-printer"></md-icon>
+													{{'ANALISE.AVALIACAO' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item ng-if="object.preencheAv3 && object.status == 'LIBERADA'">
+												<md-button aria-label="imprimir avaliacao de consenso"
+													ng-click="acaoImprimirConse(item.id)"
+													translate-attr-aria-label="ANALISE.AVCONSENSO">
+													<md-icon style="color: black" md-font-icon="icon-printer"></md-icon>
+													{{'ANALISE.AVCONSENSO' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item>
+												<md-button aria-label="Remover participante"
+													ng-click="removerParticipante($event, $index, item)"
+													translate-attr-aria-label="ANALISE.REMOVER">
+													<md-icon style="color: red"
+														md-font-icon="icon-close-circle-outline"></md-icon>
+													{{'ANALISE.REMOVER' | translate}}
+												</md-button>
+											</md-menu-item>
+											<md-menu-item>
+												<md-button aria-label="analisar colaborador"
+													ng-click="acaoAnalisarColaborador($event, item)"
+													translate-attr-aria-label="ANALISE.ANALISAR">
+													<md-icon style="color: black" md-font-icon="icon-chart-areaspline">
+													</md-icon>
+													{{'ANALISE.ANALISAR' | translate}}
+												</md-button>
+											</md-menu-item>
+										</md-menu-content>
+									</md-menu>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div layout="row" class="content">
+					<div layout-gt-xs="row" layout="column" flex layout-align="start center"
+						style="padding-left: 10px; padding-right: 10px;">
+						<div layout-align="start center">
+							<md-icon md-font-icon="icon-brightness-1"
+								style="color: rgba(255,132,132,1); margin-left: 10px; font-size: 18px;"></md-icon>
+							<span>Não preenchida</span>
+						</div>
+						<div layout-align="start center">
+							<md-icon md-font-icon="icon-brightness-1"
+								style="color: rgba(130,130,255,1); margin-left: 10px; font-size: 18px;"></md-icon>
+							<span>Parcialmente preenchida</span>
+						</div>
+						<div layout-align="start center">
+							<md-icon md-font-icon="icon-brightness-1"
+								style="color: rgba(123,202,123,1); margin-left: 10px; font-size: 18px;"></md-icon>
+							<span>Totalmente preenchida</span>
+						</div>
+					</div>
+					<div layout-align="end center">
+						<md-button ng-if="object.status !== 'CANCELADA'" ng-click="acaoAdicionarParticipante()"
+							class="m-0 ph-20 pv-10 md-button md-primary text-capitalize"
+							aria-label="adicionar participante"
+							translate-attr-aria-label="ANALISE.BTNADICIONARPARTICIPANTE">
+							<md-icon md-font-icon="icon-account-plus"></md-icon>
+							{{'ANALISE.BTNADICIONARPARTICIPANTE' | translate}}
+						</md-button>
+					</div>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+		<ms-widget flippable="false" layout="row" flex="100" flex-gt-md="40">
+			<ms-widget-front class="white-bg">
+				<div hide-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h1 class="md-accent-fg">{{'ANALISE.GAPCOMPETENCIAS' | translate}}</h1>
+				</div>
+				<div hide-gt-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h2 class="md-accent-fg">{{'ANALISE.GAPCOMPETENCIAS' | translate}}</h2>
+				</div>
+				<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="typeGraphic == null">
+					<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+				</div>
+				<div layout="column" layout-align="center center" class="pl-16 pr-16"
+					ng-show="typeGraphic != null && mensagem != ''">
+					<h3 class="black">{{mensagem}}</h3>
+				</div>
+				<canvas id="radar" class="chart chart-radar" chart-data="data" chart-labels="labels"
+					chart-options="options" ng-if="typeGraphic == 'radar' && mensagem == ''" chart-series="series"
+					chart-colours="colours" chart-legend="true" style="margin-top: 70px;"></canvas>
+
+				<!--FIXME Trocar por chart.js -->
+				<!-- <c3chart bindto-id="chart" transition-duration="500" ng-if="typeGraphic == 'bar' && mensagem == ''">
+				</c3chart> -->
+
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+
+	<ms-widget flippable="false" layout="row" flex="100">
+		<ms-widget-front class="white-bg">
+			<div layout="row" class="content">
+				<div flex layout-align="start center">
+					<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary text-capitalize"
+						aria-label="Voltar" translate-attr-aria-label="ANALISE.VOLTAR">
+						<md-icon ng-if="screenMode === 'VIEW'" md-font-icon="icon-arrow-left-bold-circle-outline">
+						</md-icon>
+						{{'ANALISE.VOLTAR' | translate}}
+					</md-button>
+				</div>
+				<div layout-align="end center">
+				</div>
+		</ms-widget-front>
+	</ms-widget>
+</md-content>

@@ -1,0 +1,353 @@
+<md-content id="content_resumo" class="content tab-content-resumo" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="margin-default">
+		<div class="white-bg style_card">
+			<div layout="column" layout-gt-xs="row" class="p-16" layout-xs="column" flex="100">
+				<md-input-container flex="30">
+					<label for="resumo_campanha">{{'RESUMO.CAMPANHA' | translate}}</label>
+					<input id="resumo_campanha" name="campanha" type="text" ng-model="object.campanha.descricao" ng-disabled="true">
+				</md-input-container>
+				<span class="width-20"></span>
+				<md-input-container id="av_gestor" flex="40">
+					<label for="av_gestor_input">{{'RESUMO.AVALIACAO' | translate}}</label>
+					<input id="av_gestor_input" name="av_gestor" type="text" ng-model="object.descricaoAbreviada" required
+						   ng-maxlength="100" ng-minlength="2" md-maxlength="100" ng-required="true" focus-me="true">
+					<div ng-messages="basicForm.av_gestor.$error" ng-show="basicForm.av_gestor.$touched">
+						<div ng-message="required">
+							<span>{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+						</div>
+						<div ng-message="maxlength">
+							<span>{{'RESUMO.MAXIMO' | translate}}.</span>
+						</div>
+						<div ng-message="minlength">
+							<span>{{'RESUMO.MINIMO' | translate}}.</span>
+						</div>
+					</div>
+				</md-input-container>
+				<span class="width-20"></span>
+				<div layout="row" flex="30">
+					<md-input-container id="situacao" flex>
+						<label for="situacao_input">{{'RESUMO.SITUACAO' | translate}}</label>
+						<input id="situacao_input" name="situacao" type="text" value="{{ 'SITUACAO.'+object.status | translate }}" ng-disabled="true">
+					</md-input-container>
+					<div layout-align="end center">
+						<md-button ng-click="ajudaResumo('new')" class="md-fab md-mini amber-400-bg" aria-label="Ajuda">
+							<md-icon md-font-icon="icon-help"></md-icon>
+						</md-button>
+					</div>
+				</div>
+			</div>
+			<div layout="row" flex class="p-16 m40">
+				<md-input-container id="descricao_resumo_new" class="md-block" flex>
+					<label for="descricao_resumo_new_input">{{'RESUMO.DESCRICAO' | translate}}</label>
+					<textarea ng-model="object.descricao" id="descricao_resumo_new_input" name="textarea1" md-maxlength="2000"
+							  md-select-on-focus ng-required="true" ng-maxlength="2000"></textarea>
+					<div ng-messages="basicForm.textarea1.$error" ng-show="basicForm.textarea1.$touched">
+						<div ng-message="required">
+							<span>{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+						</div>
+						<div ng-message="maxlength">
+							<span>{{'RESUMO.MAXIMO2' | translate}}.</span>
+						</div>
+						<div ng-message="minlength">
+							<span>{{'RESUMO.MINIMO2' | translate}}.</span>
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+
+			<div layout="column" flex layout-xs="column" class="p-16 m50">
+				<v-accordion class="vAccordion--default" multiple flex>
+
+					<!-- add expanded attribute to open the section -->
+					<v-pane id="agentes_datas_limites" expanded="true">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div class="md-accent-fg">
+								<h3>Agentes e Datas Limites</h3></div>
+						</v-pane-header>
+
+
+						<v-pane-content>
+							<div layout="row" layout-xs="column" class="h-accordion">
+								<div layout="column" flex="80" flex-xs="100">
+									<div layout="row" layout-xs="column" id="perfis">
+										<div layout="row" layout-xs="row">
+											<md-checkbox ng-model="object.autoavaliacao"
+														 ng-change="changeAutoavaliacao()"
+														 ng-disabled="object.status === 'LIBERADA'"
+														 class="font-size-14 ml-5">
+												{{'RESUMO.AUTOAVALIACAO' | translate}}
+											</md-checkbox>
+
+											<span class="width-20"></span>
+
+											<md-checkbox ng-model="object.gestores" ng-change="changeGestores()"
+														 ng-disabled="object.status === 'LIBERADA'"
+														 class="font-size-14">
+												{{'RESUMO.GESTORES' | translate}}
+											</md-checkbox>
+										</div>
+										<span class="width-20"></span>
+										<div layout="row" layout-xs="row">
+											<md-checkbox ng-model="object.subordinados" ng-change="changeSubordinados()"
+														 ng-disabled="object.status === 'LIBERADA'"
+														 class="font-size-14">
+												{{'RESUMO.SUBORDINADOS' | translate}}
+											</md-checkbox>
+
+											<span class="width-20"></span>
+
+											<md-checkbox ng-model="object.pares" ng-change="changePares()"
+														 ng-disabled="object.status === 'LIBERADA'"
+														 class="font-size-14">
+												{{'RESUMO.PARES' | translate}}
+											</md-checkbox>
+										</div>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex="30" flex-xs="100" flex-sm="100">
+											<label id="lbl_dataAv2" for="dataAv2">{{'RESUMO.DATALIMITE' |
+												translate}}</label>
+											<input id="dataAv2" name="dataAv2" tt-date-picker type="text"
+												   locale="user.configuracao.linguagem" ng-model="object.dataLimite"
+												   autocomplete="off"
+												   ng-required="true" required>
+											<div ng-messages="basicForm.dataAv2.$error"
+												 ng-show="basicForm.dataAv2.$touched">
+												<div ng-message="required">
+													<span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+												</div>
+											</div>
+										</md-input-container>
+									</div>
+								</div>
+								<div layout="column" flex>
+									<div layout="row" class="mt-10">
+										<md-checkbox id="consenso" ng-model="object.consenso"
+													 ng-change="changeConsenso()"
+													 ng-disabled="object.status === 'LIBERADA'"
+													 class="font-size-14 ml-5">
+											Consenso
+										</md-checkbox>
+									</div>
+									<div layout="row" flex>
+										<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+											<label id="lbl_dataAv3" for="dataAv3">{{'RESUMO.DATALIMITE' |
+												translate}}</label>
+											<input id="dataAv3" name="dataAv3" tt-date-picker min-date="getMaxDateAV3()"
+												   locale="user.configuracao.linguagem" type="text"
+												   ng-disabled="!object.preencheAv3" ng-model="object.limiteAv3"
+												   autocomplete="off"
+												   ng-required="object.preencheAv3">
+											<div ng-messages="basicForm.dataAv3.$error"
+												 ng-show="basicForm.dataAv3.$touched">
+												<div ng-message="required">
+													<span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+												</div>
+											</div>
+										</md-input-container>
+									</div>
+								</div>
+							</div>
+						</v-pane-content>
+					</v-pane>
+					<v-pane id="tipo_vs_peso">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div id="agentes" class="md-accent-fg">
+								<h3>Tipo vs Peso</h3>
+							</div>
+						</v-pane-header>
+
+
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<div class="h-50" layout="row">
+									<div layout="row" flex layout-align="end center">
+										<md-button id="adicionar_agentes" ng-click="adicionarTipoCompetencia($event)"
+												   ng-disabled="desabilitarBotaoAdicionar() || object.status === 'LIBERADA'"
+												   class="md-fab md-mini" aria-label="Adicionar">
+											<md-icon md-font-icon="icon-plus"></md-icon>
+											<md-tooltip class="h4">Adicionar Tipo de competência</md-tooltip>
+										</md-button>
+									</div>
+								</div>
+								<md-table-container class="table_pesquisa">
+									<table id="table-list" md-table md-progress="promise">
+										<thead md-head md-order="query.order">
+										<tr md-row class="grey-200-bg">
+											<th md-column><span>{{'RESUMO.TIPOCOMPETENCIA' | translate}}</span></th>
+											<th md-column><span>{{'RESUMO.AGENTES' | translate}}</span></th>
+											<th md-column><span>{{'RESUMO.TOTAL' | translate}}</span></th>
+											<th md-column><span>{{'RESUMO.OPCOES' | translate}}</span></th>
+										</tr>
+										</thead>
+
+										<tbody md-body>
+										<tr md-row ng-repeat="item in object.tiposCompetencia"
+											class="text-left">
+											<td md-cell>{{ item.nome }}</td>
+											<td md-cell>
+												<div layout="row" class="mb-5 mt-5">
+													<div layout="column">
+														<md-checkbox ng-model="item.autoavaliacao"
+																	 ng-change="changeCheckBoxTipoCompetencia(object, item)"
+																	 ng-disabled="!object.autoavaliacao || object.status === 'LIBERADA'"
+																	 class="font-size-14"
+																	 aria-label="Checkbox tabela">
+															Autoavaliação
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input type="number" style="width: 30%;"
+																   name="autoavaliacao"
+																   ng-model="item.percentualAutoavaliacao"
+																   ng-disabled="item.desabilitarCampo || !object.autoavaliacao || !item.autoavaliacao || object.status === 'LIBERADA'"
+																   max="100">&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox ng-model="item.gestor"
+																	 ng-change="changeCheckBoxTipoCompetencia(object, item)"
+																	 ng-disabled="!object.gestores || object.status === 'LIBERADA'"
+																	 class="font-size-14"
+																	 aria-label="Checkbox tabela">
+															<span ng-show="!object.consenso">{{'RESUMO.GESTORES' | translate}}</span>
+															<span ng-show="object.consenso">{{'RESUMO.CONSENSO' | translate}}</span>
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input type="number" style="width: 30%;" name="gestor"
+																   ng-model="item.percentualGestor"
+																   ng-disabled="item.desabilitarCampo || !object.gestores || !item.gestor || object.status === 'LIBERADA'"
+																   max="100">&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox
+															ng-model="item.subordinados"
+															ng-change="changeCheckBoxTipoCompetencia(object, item)"
+															ng-disabled="!object.subordinados || object.status === 'LIBERADA'"
+															class="font-size-14"
+															aria-label="Checkbox tabela">
+															{{'RESUMO.SUBORDINADOS' |
+															translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input type="number"
+																   name="subordinados" style="width: 30%;"
+																   ng-model="item.percentualSubordinados"
+																   ng-disabled="item.desabilitarCampo || !object.subordinados || !item.subordinados || object.status === 'LIBERADA'"
+																   max="100">&nbsp;<span>%</span>
+														</div>
+													</div>
+													<span class="width-20"></span>
+													<div layout="column">
+														<md-checkbox ng-model="item.pares"
+																	 ng-change="changeCheckBoxTipoCompetencia(object, item)"
+																	 ng-disabled="!object.pares || object.status === 'LIBERADA'"
+																	 class="font-size-14"
+																	 aria-label="Checkbox tabela">
+															{{'RESUMO.PARES' | translate}}
+														</md-checkbox>
+														<div layout="row" class="mt-10">
+															<input type="number" style="width: 30%;" name="pares"
+																   ng-model="item.percentualPares"
+																   ng-disabled="item.desabilitarCampo || !object.pares || !item.pares || object.status === 'LIBERADA'"
+																   max="100">&nbsp;<span>%</span>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td md-cell>
+												<div layout="row" class="mt-10">
+													<input type="text" style="width: 30%;" name="total"
+														   value="{{item.percentualAutoavaliacao + item.percentualGestor + item.percentualSubordinados + item.percentualPares}}"
+														   max="100"
+														   ng-disabled="true">&nbsp;<span>%</span>
+												</div>
+											</td>
+											<td md-cell>
+												<md-button ng-click="removerTipoCompetencia($event, $index, item)"
+														   ng-disabled="object.status === 'LIBERADA'"
+														   ng-hide="object.status === 'LIBERADA'"
+														   aria-label="excluir" class="md-icon-button">
+													<md-icon md-font-icon="icon-trash"></md-icon>
+												</md-button>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+						</v-pane-content>
+					</v-pane>
+
+					<v-pane ng-if="object.campanha.dimensao">
+
+						<!--FORMAÇÃO-->
+						<v-pane-header>
+							<div id="dimensoes" class="md-accent-fg">
+								<h3>Dimensões</h3>
+							</div>
+						</v-pane-header>
+
+
+						<v-pane-content>
+							<div layout="column" layout-xs="column">
+								<div class="h-50" layout="row">
+									<div layout="row" flex layout-align="end center">
+										<md-button id="adicionar_dimensao" ng-click="adicionarDimensao($event, 'new')"
+												   ng-disabled="desabilitarBotaoAdicionar() || object.status === 'LIBERADA'"
+												   class="md-fab md-mini" aria-label="Adicionar Dimensão">
+											<md-icon md-font-icon="icon-plus"></md-icon>
+											<md-tooltip class="h4">Adicionar Dimensão</md-tooltip>
+										</md-button>
+									</div>
+								</div>
+								<md-table-container class="table_pesquisa">
+									<table id="table-list-dimensao" md-table md-progress="promise">
+										<thead md-head md-order="query.order">
+										<tr md-row>
+											<th md-column width="90%"><span>Dimensão</span></th>
+											<th md-column width="10%"><span>Opções</span></th>
+										</tr>
+										</thead>
+
+										<tbody md-body>
+										<tr md-row ng-repeat="item in $ctrl.listDimensao" class="text-left">
+											<td md-cell>{{ item.dimensao.nome }}</td>
+											<td md-cell>
+												<md-button ng-click="removerDimensao($event, $index, item, 'new')"
+														   aria-label="Remover Dimensao" class="md-icon-button">
+													<md-icon md-font-icon="icon-trash"></md-icon>
+												</md-button>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</div>
+						</v-pane-content>
+					</v-pane>
+
+				</v-accordion>
+			</div>
+			<md-divider></md-divider>
+			<!-- BOTÕES -->
+			<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+				<md-button ng-click="back()" class="md-raised md-accent-fg text-none" aria-label="Cancelar" translate
+						   translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR">
+					{{'CARGO.CANCELAR' | translate}}
+				</md-button>
+
+				<md-button id="salvar_proximo" ng-click="proximo()" class="md-raised md-accent text-none" ng-disabled="basicForm.$invalid"
+						   aria-label="Salvar e próximo" translate translate-attr-aria-label="CAMPANHASLISTAR.SALVAR">
+					{{'CARGO.SALVAR' | translate}} e {{'RESUMO.BTPROXIMO' | translate}}
+				</md-button>
+			</div>
+		</div>
+	</div>
+</md-content>

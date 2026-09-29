@@ -1,0 +1,77 @@
+<md-dialog aria-label="Mensagem" style="width: 1200px;">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{ ::$dialog.title }}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="$dialog.cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+			<div class="md-dialog-content" style="padding: 0px 0px 0px 0px;padding: 0px;background-color: rgb(245,245,245);">
+
+				<!-- WIDGET GROUP -->
+				<div class="widget-group" layout="row" flex="100" layout-wrap>
+
+					<md-card class="white-bg" flex="100">
+						<md-card-content>
+							<table id="table-list-" width="100%" style="font-size: 12px;" class="simple row-border hover text-center" ms-responsive-table ng-show="$dialog.listaApontamentos != null">
+								<thead>
+									<tr ng-show="$dialog.listaApontamentos.length > 0">
+										<th class="secondary-text" width="60%">
+											<div class="table-header text-left"><span class="column-title">Registro crítico</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Avaliador</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Indicador</span></div>
+										</th>
+										<th class="secondary-text" width="10%" ng-show="$dialog.user.empresa.feedforward">
+											<div class="table-header text-left"><span class="column-title">Feedforward</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Data</span></div>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr ng-show="$dialog.listaApontamentos.length == 0">
+										<td colspan="4" class="text-center">Não há registros críticos cadastrados</td>
+									</tr>
+									<tr ng-show="$dialog.listaApontamentos.length > 0" ng-repeat="item in $dialog.listaApontamentos">
+										<td class="text-left">{{ ::item.registroCritico }}</td>
+										<td class="text-left">{{ ::item.avaliador.nome}}</td>
+										<td class="text-left">
+											<ng-rate-it ng-model = "item.graduacaoVisual/2" read-only = "true"
+														min = "0" max = "5" step = "Double"></ng-rate-it>
+										</td>
+										<td class="text-left" ng-show="$dialog.user.empresa.feedforward">{{ ::item.feedforward }}</td>
+										<td class="text-left">{{ ::item.dataApontamento | date : 'dd/MM/yyyy' }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</md-card-content>
+					</md-card>
+
+				</div>
+			</div>
+		</md-dialog-content>
+
+
+		<md-dialog-actions layout="row" class="content" style="background-color: rgba(255,255,255,1);">
+
+			<div flex layout-align="start center">
+			</div>
+
+			<div flex layout-align="center center">
+				<md-button style="margin-left: -45px;" ng-click="$dialog.cancel($event)" class="md-raised md-accent text-capitalize" aria-label="Inativar">
+					Fechar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

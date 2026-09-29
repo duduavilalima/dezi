@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  db:
+    image: docker.fasolti.com.br/pgsql:${PGSQL_VERSION}
+    restart: unless-stopped
+    volumes:
+      - pgsqlconf:/etc/postgresql
+      - pgsqldata:/var/lib/postgresql
+      - dblogs:/var/log
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "${DB_HOST_PORT}:5432"
+  rest:
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=$DB_ADMIN_USER
+      - POSTGRES_PASSWORD=$DB_ADMIN_USER
+      - DEZI_DB_HOST=$DB_HOST
+      - DEZI_DB_PORT=$DB_PORT
+      - DEZI_DB_NAME=$DB_NAME
+      - DEZI_DB_USERNAME=$DB_USER
+      - DEZI_DB_PASSWORD=$DB_PASS
+      # FIXME Usar variáveis de ambiente ao invés de propriedades de sistema
+      # Ver se o Tomcat 8 suporta. Ou migrar para o Spring Boot.
+      - >-
+        JAVA_OPTS=-Djava.awt.headless=true
+        -Dspring.profiles.active=${ENVIRONMENT}
+        ${JAVA_EXTRA_OPTS}
+        -Ddb.host=$DB_HOST
+        -Ddb.port=$DB_PORT
+        -Ddb.name=$DB_NAME
+        -Ddb.username=$DB_USER
+        -Ddb.password=$DB_PASS
+  queue:
+    depends_on:
+      - db
+    environment:
+      - DEZI_DB_HOST=$DB_HOST
+      - DEZI_DB_PORT=$DB_PORT
+      - DEZI_DB_NAME=$DB_NAME
+      - DEZI_DB_USERNAME=$DB_USER
+      - DEZI_DB_PASSWORD=$DB_PASS
+
+volumes:
+  dblogs:
+  pgsqldata:
+  pgsqlconf:

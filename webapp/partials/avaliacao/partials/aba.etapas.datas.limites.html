@@ -1,0 +1,146 @@
+<md-content id="content_resumo" class="content tab-content-resumo" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 m4">
+		<div class="white-bg style_card m-8">
+			<div hide-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center" id="title_planejamento">
+				<h1 class="md-accent-fg">
+					<span>Planejamento de Etapas e Datas Limites</span>
+				</h1>
+			</div>
+			<div layout="column" layout-gt-xs="row" class="p-8 m4" layout-xs="column" flex="100">
+				<div flex="100" layout="row" class="p-8" layout-xs="column">
+					<div flex flex-xs="100" layout="column" class="grey-300-bg" layout-xs="column">
+						<div flex layout="column" layout-align="center center">
+							<img src="partials/pages/avaliacao/partials/img/icones_galera-2.png" class="w-50">
+							<h3 class="text-center"><b>Avaliação</b></h3>
+						</div>
+						<md-divider></md-divider>
+						<div id="perfis" layout="row" class="mt-10 p-24 margin_check" layout-xs="column" layout-sm="column">
+							<md-checkbox ng-model="object.gestores" ng-change="changeGestores()" ng-disabled=true class="font-size-14">
+								{{'RESUMO.GESTORES' | translate}}
+							</md-checkbox>
+
+							<span class="width-20"></span>
+
+							<md-checkbox ng-model="object.subordinados" ng-change="changeSubordinados()" ng-disabled="object.status === 'LIBERADA'" class="font-size-14">
+								{{'RESUMO.SUBORDINADOS' | translate}}
+							</md-checkbox>
+
+							<span class="width-20"></span>
+
+							<md-checkbox ng-model="object.pares" ng-change="changePares()" ng-disabled="object.status === 'LIBERADA'" class="font-size-14">
+								{{'RESUMO.PARES' | translate}}
+							</md-checkbox>
+						</div>
+						<div flex>
+							<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+								<label id="lbl_dataAv2" for="dataAv2">{{'RESUMO.DATALIMITE' | translate}}</label>
+								<input id="dataAv2" name="dataAv2" tt-date-picker type="text" locale="user.configuracao.linguagem" ng-model="object.limiteAv2" ng-required="true" required>
+								<div ng-messages="basicForm.dataAv2.$error" ng-show="basicForm.dataAv2.$touched">
+									<div ng-message="required">
+										<span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+									</div>
+								</div>
+							</md-input-container>
+						</div>
+					</div>
+					<span hide show-xs class="height-10"></span>
+					<span class="width-10"></span>
+					<div flex flex-xs="100" class="grey-300-bg" layout="column" layout-xs="column">
+						<div flex layout="column" layout-align="center center">
+							<img src="partials/pages/avaliacao/partials/img/Vector-2.png" class="w-30">
+							<h3 class="text-center"><b>Autoavaliação</b></h3>
+						</div>
+						<md-divider></md-divider>
+						<div layout="row" class="mt-10 p-24" layout-xs="row">
+							<md-checkbox id="autoavaliacao" ng-model="object.preencheAv1" ng-change="preencheAv3()" ng-disabled="object.status === 'LIBERADA'" class="font-size-14 ml-5">
+								{{'RESUMO.AUTOAVALIACAO' | translate}}
+							</md-checkbox>
+						</div>
+						<div flex>
+							<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+								<label id="lbl_dataAv1" for="dataAv1">{{'RESUMO.DATALIMITE' | translate}}</label>
+								<input id="dataAv1" name="dataAv1" tt-date-picker min-date="object.limiteAv2" locale="user.configuracao.linguagem" type="text" ng-disabled="!object.preencheAv1" ng-model="object.limiteAv1" ng-required="object.preencheAv1">
+								<div ng-messages="basicForm.dataAv1.$error" ng-show="basicForm.dataAv1.$touched">
+									<div ng-message="required">
+										<span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+									</div>
+								</div>
+							</md-input-container>
+						</div>
+					</div>
+
+					<span hide show-xs class="height-10"></span>
+					<span class="width-10"></span>
+					<div flex flex-xs="100" class="grey-300-bg" layout="column" layout-xs="column">
+						<div flex layout="column" layout-align="center center">
+							<img src="partials/pages/avaliacao/partials/img/consenso-2.png" class="w-30 mt-15">
+							<h3 class="text-center">
+								<b>Consenso</b><br/>(somente com gerentes)
+							</h3>
+						</div>
+						<md-divider></md-divider>
+						<div layout="row" class="mt-10 p-24" layout-xs="row">
+							<md-checkbox id="consenso" ng-model="object.preencheAv3" ng-change="preencheAv1()" ng-disabled="object.status === 'LIBERADA'" class="font-size-14 ml-5">
+								Consenso
+							</md-checkbox>
+						</div>
+						<div flex>
+							<md-input-container flex class="ml-10" flex-xs="100" flex-sm="100">
+								<label id="lbl_dataAv3" for="dataAv3">{{'RESUMO.DATALIMITE' | translate}}</label>
+								<input id="dataAv3" name="dataAv3" tt-date-picker min-date="getMaxDateAV3()" locale="user.configuracao.linguagem" type="text" ng-disabled="!object.preencheAv3" ng-model="object.limiteAv3" ng-required="object.preencheAv3">
+								<div ng-messages="basicForm.dataAv3.$error" ng-show="basicForm.dataAv3.$touched">
+									<div ng-message="required">
+										<span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+									</div>
+								</div>
+							</md-input-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<!-- BOTÕES -->
+			<div layout="row" class="content" ng-if="screenMode !== 'VIEW'">
+				<div flex layout-align="start center">
+					<md-button id="cancelar_etapas" ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize avd-botao-cancelar" aria-label="Cancelar" translate translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR">
+						{{'CAMPANHASLISTAR.CANCELAR' | translate}}
+					</md-button>
+				</div>
+				<div layout-align="end center">
+					<md-button id="proximo_etapas" ng-click="proximo()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize avd-botao-proximo" aria-label="Salvar" translate translate-attr-aria-label="CAMPANHASLISTAR.SALVAR">
+						{{'RESUMO.BTPROXIMO' | translate}}
+					</md-button>
+				</div>
+			</div>
+
+			<div layout="row" class="content" ng-if="screenMode === 'VIEW'">
+				<!--Ação botão Voltar-->
+				<div flex layout-align="start center">
+					<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize avd-botao-voltar" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+						<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+						{{'CAMPANHASLISTAR.VOLTAR' | translate}}
+					</md-button>
+				</div>
+
+				<div flex layout-align="start center" ng-show="object.situacao == 'ATIVA'">
+					<md-button ng-click="inactivate($event, object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize avd-botao-inativar" aria-label="Inativar" translate translate-attr-aria-label="CAMPANHASLISTAR.INATIVAR">
+						{{'CAMPANHASLISTAR.INATIVAR' | translate}}
+					</md-button>
+				</div>
+
+				<div flex layout-align="start center" ng-show="object.status === 'INATIVA'">
+					<md-button ng-click="activate($event, object)" class="m-0 ph-20 pv-10 md-button md-primary text-capitalize avd-botao-ativar" aria-label="Ativar" translate translate-attr-aria-label="CAMPANHASLISTAR.ATIVAR">
+						{{'CAMPANHASLISTAR.ATIVAR' | translate}}
+					</md-button>
+				</div>
+
+				<!--Ação botão Editar-->
+				<div layout-align="end center">
+					<md-button ng-click="displayEdit(object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize avd-botao-editar" ng-hide="mode == 'EDIT'" aria-label="Editar" translate translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+						{{'CAMPANHASLISTAR.EDITAR' | translate}}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</div>
+</md-content>

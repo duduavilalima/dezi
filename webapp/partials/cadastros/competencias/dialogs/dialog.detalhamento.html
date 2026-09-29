@@ -1,0 +1,184 @@
+<md-dialog aria-label="dialog" style="width: 900px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'$dialog.save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{$dialog.title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" ng-show="$dialog.object != null">
+			<div class="md-dialog-content">
+
+				<div layout="column" layout-gt-md="row" flex="100">
+					<md-input-container flex class="md-block">
+						<label id="lbl_detalhamento_comp" for="detalhamento_comp">{{'DIALOG_COMPETENCIA.LBL_DETALHAMENTO_COMPETENCIA' | translate }}</label>
+						<textarea id="detalhamento_comp" required ng-required="true" name="detalhamento_comp" type="text" ng-model="$dialog.object.descricao"
+							md-select-on-focus>
+						</textarea>
+						<div ng-messages="basicForm.detalhamento_comp.$error" ng-show="basicForm.detalhamento_comp.$touched">
+							<div ng-message="required" style="position: relative;">
+								<span>{{ 'COMPETENCIA.CAMPOOBRIGATORIO' | translate }}.</span>
+							</div>
+						</div>
+					</md-input-container>
+				</div>
+
+				<div layout="column" layout-gt-md="row" flex="100">
+					<md-input-container flex="20">
+						<label id="lbl_modelo_graduacao_edit" for="lbl_tipo_competencia">{{'COMPETENCIA.MODELOGRADUACAO' | translate}}</label>
+						<md-select id="modelo_graduacao" name="modelo_graduacao"
+								   ng-model="$dialog.object.modeloGraduacao.id"
+								   ng-change="$dialog.changeModeloGraduacao($dialog.object.modeloGraduacao.id)" ng-required="true"
+								   required="true">
+							<md-option ng-repeat="item in $dialog.listModeloGraduacao | orderBy:'descricaoModelo'" ng-value="item.id">
+								{{item.descricaoModelo}}
+							</md-option>
+						</md-select>
+						<div ng-messages="basicForm.modelo_graduacao.$error" ng-show="basicForm.modelo_graduacao.$touched">
+							<div ng-message="required">
+								<span>{{'COMPETENCIA.CAMPOOBRIGATORIO' | translate}}.</span>
+							</div>
+						</div>
+					</md-input-container>
+				</div>
+
+
+				<div ng-if="$dialog.object.id == null">
+					<!--NOVO-->
+					<div layout="column" layout-align="center center" class="pl-14 pr-14" style="margin-bottom: -10px"
+						 ng-show="$dialog.object.competenciaDetalhamentosCalibrahint.length > 0">
+						<div id="title_dialog_new" class="md-accent-fg">
+							<h1>{{ 'COMPETENCIA.MODELOGRADUACAO' | translate }}</h1>
+						</div>
+					</div>
+
+					<table id="table-list_new" class="dataTable row-border  hover text-center pl-16 pr-16"
+						   ng-show="true">
+						<thead>
+							<tr>
+								<th class="secondary-text" width="10%">
+									<div class="table-header text-left"><span class="column-title">Graduação</span></div>
+								</th>
+								<th class="secondary-text" width="40%">
+									<div class="table-header text-center"><span class="column-title">Descrição</span></div>
+								</th>
+								<th class="secondary-text" width="5%">
+									<div class="table-header text-left"><span class="column-title">Comentário obrigatório</span></div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						<tr ng-show="$dialog.object.competenciaDetalhamentosCalibrahint.length > 0"
+							ng-repeat="item in $dialog.object.competenciaDetalhamentosCalibrahint | orderBy: 'graduacao.ordem'"
+							class="text-left">
+							<td>
+								{{item.graduacao.label}}
+							</td>
+							<td>
+								<!-- FIXME: ver se funciona passando apenas o id sem o $index -->
+								<textarea rows="5" id="txt_item_new_{{$index}}" required ng-required="true" name="textarea"
+										  class="textarea_graduacao_hint" ng-model="item.hint" ng-required="true"
+										  ng-maxlength="500" md-select-on-focus ng-disabled="item.graduacao.ponto == 0"></textarea>
+								<div ng-messages="basicForm.txt_item_new.$error" ng-show="basicForm.txt_item_new.$touched">
+									<div ng-message="required">
+										<span>{{ 'COMPETENCIA.CAMPOOBRIGATORIO' | translate }}.</span>
+									</div>
+								</div>
+
+							</td>
+							<td style="padding-bottom: 0px; padding-top: 0px;">
+								<div class="text-center">
+									<md-checkbox ng-model="item.comentarioObrigatorio" class="font-size-14" aria-label="Checkbox comentario"></md-checkbox>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+				</div>
+
+				<div ng-if="$dialog.object.id != null">
+					<!--EDICAO-->
+					<div layout="column" layout-align="center center" class="pl-14 pr-14"
+						 style="margin-bottom: -10px"
+						 ng-show="$dialog.object.competenciaDetalhamentosCalibrahint.length > 0">
+						<div id="title_dialog_edit" class="md-accent-fg">
+							<h1>{{ 'COMPETENCIA.MODELOGRADUACAO' | translate }}</h1></div>
+					</div>
+
+					<table id="table-list_edit" class="dataTable row-border  hover text-center pl-16 pr-16"
+						   ng-show="true">
+						<thead>
+							<tr>
+								<th class="secondary-text" width="10%">
+									<div class="table-header text-left"><span class="column-title">Graduação</span></div>
+								</th>
+								<th class="secondary-text" width="40%">
+									<div class="table-header text-center"><span class="column-title">Descrição</span></div>
+								</th>
+								<th class="secondary-text" width="5%">
+									<div class="table-header text-left"><span class="column-title">Comentário obrigatório</span></div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						<tr ng-show="$dialog.object.competenciaDetalhamentosCalibrahint.length > 0"
+							ng-repeat="item in $dialog.object.competenciaDetalhamentosCalibrahint | orderBy: 'graduacao.ordem'"
+							class="text-left">
+							<td>
+								{{item.graduacao.label}}
+							</td>
+							<td>
+								<!-- FIXME: ver se funciona passando apenas o id sem o $index -->
+								<textarea rows="5" id="txt_item_edit_{{$index}}" required ng-required="true" name="textarea"
+										  class="textarea_graduacao_hint" ng-model="item.hint" ng-required="true"
+										  ng-maxlength="500" ng-disabled="item.graduacao.ponto == 0"></textarea>
+								<div ng-messages="basicForm.txt_item_edit.$error"
+									 ng-show="basicForm.txt_item_edit.$touched">
+									<div ng-message="required">
+										<span>{{ 'COMPETENCIA.CAMPOOBRIGATORIO' | translate }}.</span>
+									</div>
+								</div>
+							</td>
+							<td style="padding-bottom: 0px; padding-top: 0px;">
+								<div class="text-center">
+									<md-checkbox ng-model="item.comentarioObrigatorio" class="font-size-14" aria-label="Checkbox comentario"></md-checkbox>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+				</div>
+
+			</div>
+		</md-dialog-content>
+
+
+		<md-dialog-actions layout="row">
+			<div flex layout-align="start center">
+
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize"
+						   ng-click="$dialog.cancel()">
+					{{ 'COMPETENCIA.CANCELAR' | translate }}
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize"
+						   ng-click="$dialog.save()" ng-disabled="basicForm.$invalid || action">
+					{{ 'COMPETENCIA.SALVAR' | translate }}
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

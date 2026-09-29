@@ -1,0 +1,76 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate>PDI.TITLE</span></div>
+		</div>
+
+		<div layout-align="end center" layout="row" class="margin-input">
+			<div show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'CAMPANHASLISTAR.LBLPESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+		</div>
+	</div>
+
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 mt-50">
+		<div class="white-bg style_card m-8">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="$ctrl.funcionarios">
+					<md-progress-linear ng-if="true" ng-hide="$ctrl.funcionarios.length > 0" md-mode="indeterminate">
+					</md-progress-linear>
+					<thead fix-head md-head md-order="$ctrl.query.order">
+						<tr md-row class="grey-200-bg">
+							<th md-column width="10%">
+							</th>
+							<th md-column md-order-by="nome" width="30%">
+								<span translate>PDI.COLABORADOR</span>
+							</th>
+							<th md-column md-order-by="departamento.nome" width="20%">
+								<span translate>PDI.SETOR</span>
+							</th>
+							<th md-column md-order-by="cargo.nome" width="20%">
+								<span translate>PDI.CARGO</span>
+							</th>
+							<th md-column md-order-by="situacaoFuncional" width="10%">
+								<span translate>PDI.SITUACAO</span>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody md-body>
+						<tr 
+							md-row
+							ng-repeat="item in $ctrl.funcionarios | pdiFilter: filtro | orderBy: $ctrl.query.order | limitTo: tableControl.limit : ($ctrl.query.page -1) * tableControl.limit"
+							class="text-left">
+							<td md-cell>
+								<a class="link-table-search" href ng-click="$ctrl.acaoList(item.id)">
+									<div flex="8">
+										<img md-menu-align-target class="avatar-PDI" ng-show="item.croppedImage == null" src="img/avatars/profile.jpg">
+										<img md-menu-align-target class="avatar-PDI" ng-show="item.croppedImage != null" ng-src="{{item.croppedImage}}" />
+									</div>
+								</a>
+							</td>
+							<td md-cell>
+								<a class="link-table-search" href ng-click="$ctrl.acaoList(item.id)">
+									{{ ::item.nome }}
+								</a>
+							</td>
+							<td md-cell>{{ ::item.departamento.nome }}</td>
+							<td md-cell>{{ ::item.cargo.nome }}</td>
+							<td md-cell><span ng-class="{'green-bg': item.situacaoFuncional == 'EM_ATIVIDADE', 'red-bg' : item.situacaoFuncional != 'EM_ATIVIDADE'}" class="estilo_situacao"><b>{{ 'SITUACAO.' +item.situacaoFuncional | translate }}</b></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination 
+				md-limit="tableControl.limit" 
+				md-limit-options="tableControl.limit_options"
+				paginate="logPagination" 
+				md-page="$ctrl.query.page" 
+				md-total="{{($ctrl.funcionarios|pdiFilter: filtro).length}}"
+				md-page-select 
+				md-label="{{'CAMPANHASLISTAR.LBLPAGINA' | translate}}"
+			/>
+		</div>
+	</div>
+</div>

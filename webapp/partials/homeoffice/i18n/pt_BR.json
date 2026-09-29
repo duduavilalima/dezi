@@ -1,0 +1,10 @@
+{
+    "HOME": {
+        "EMAIL": "E-mail",
+        "VALIDATION": "Campo obrigatório",
+        "E-MAIL": "E-mail inválido"
+    },
+    "validation": {
+        "duplicate_email": "Este e-mail já se encontra cadastrado"
+    }
+}

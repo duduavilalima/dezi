@@ -1,0 +1,49 @@
+<md-dialog>
+	<form name="loginForm" novalidate ui-keypress="{13:'myFunc($event)'}">
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{dialog.title}}</h2>
+			</div>
+		</md-toolbar>
+		<md-dialog-content class="white-bg" style="width:400px;">
+			<div flex>
+				<md-input-container class="md-block" flex>
+					<label id="lbl_input_login" for="input_login"><span translate="LOGIN.EMAIL">Login</span></label>
+					<input type="text" id="input_login" name="login" ng-model="dialog.matricula" ng-required="true" ng-disabled="true">
+					<div ng-messages="loginForm.login.$error" ng-show="loginForm.login.$touched" role="alert"
+						 multiple>
+						<div ng-message="required">
+							<span translate="LOGIN.VALIDATION">Obrigatório</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex>
+					<label id="lbl_input_password" for="input_password"><span translate="LOGIN.SENHA">Senha</span></label>
+					<input type="password" id="input_password" name="password" ng-model="dialog.password" ng-required="true" required>
+					<div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$touched" role="alert">
+						<div ng-message="required">
+							<span translate="LOGIN.VALIDATION">Obrigatório</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex>
+					<label id="lbl_input_empresa" for="input_empresa"><span translate="LOGIN.EMPRESA">Empresa</span></label>
+					<input type="empresa" id="input_empresa" name="empresa" ng-model="dialog.empresa.nome" ng-disabled="true">
+				</md-input-container>
+
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions class="white-bg" layout="row">
+			<md-button class="md-accent text-capitalize" ng-click="dialog.cancel()">
+				<span>Cancelar</span>
+			</md-button>
+			<span flex></span>
+			<md-button ng-click="dialog.login()" class="md-raised md-accent text-capitalize" ng-disabled="loginForm.$invalid || loginForm.$pristine || vm.loadingProgress">
+				<span>Confirmar</span>
+				<md-progress-circular id="toolbar-progress" ng-show="vm.loadingProgress" class="md-accent" md-mode="indeterminate" md-diameter="24" style="margin: auto;"></md-progress-circular>
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

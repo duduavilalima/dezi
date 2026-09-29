@@ -1,0 +1,48 @@
+<div class="page-layout simple fullwidth">
+<!-- 	<md-toolbar class="header md-toolbar-tools" layout="row">
+		<div class="breadcrumb" layout="row" layout-align="start center">
+			<span hide show-gt-xs>
+				<span>Cadastros</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+			</span>
+			<span translate>{{ $ctrl.location.data.entity }}</span>
+			<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+			<span translate>{{ $ctrl.location.data.formName }}</span>
+		</div>
+
+		<div flex></div>
+
+		<div layout="row" layout-align="end center">
+			<md-button
+				hide-xs
+				ng-if="$ctrl.canCreate"
+				class="md-raised md-accent text-capitalize"
+				ng-click="$ctrl.onCreate()"
+				translate="FORM.NEW"
+			/>
+			<md-button
+				hide
+				show-xs
+				ng-if="$ctrl.canCreate"
+				class="md-fab md-mini md-accent"
+				aria-label="."
+				translate-attr-aria-label="FORM.NEW"
+				ng-click="$ctrl.onCreate()"
+			>
+				<md-icon md-font-icon="icon-plus" />
+			</md-button>
+		</div>
+	</md-toolbar> -->
+
+	<div class="white-bg" layout="row" layout-align="start center">
+		<md-button
+			ng-click="$ctrl.handleBack()"
+			class="md-primary md-accent-fg text-capitalize"
+		>
+			<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline" />
+			<span translate>FORM.BACK</span>
+		</md-button>
+	</div>
+
+	<ng-transclude />
+</div>

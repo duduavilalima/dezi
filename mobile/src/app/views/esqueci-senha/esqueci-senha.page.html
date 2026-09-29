@@ -1,0 +1,40 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{ "app.views.esqueci-senha.title" | translate }}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid class="content">
+		<ion-row class="image-row">
+			<ion-col col-12>
+				<div class="image"></div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-12>
+				<h2>{{ "app.views.esqueci-senha.description" | translate }}</h2>
+				<h3>{{ "app.views.esqueci-senha.subdescription" | translate }}</h3>
+			</ion-col>
+		</ion-row>
+		<ion-row class="width-100">
+			<ion-col>
+				<form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+					<ion-item>
+						<ion-label color="primary" floating>
+							{{ "app.views.esqueci-senha.email" | translate }}*
+						</ion-label>
+						<ion-input type="email" formControlName="emailFuncional"></ion-input>
+					</ion-item>
+					<div>
+						<button ion-button class="btn-send" type="submit" [disabled]="form.invalid">
+							{{ "app.views.esqueci-senha.submit" | translate }}
+						</button>
+					</div>
+				</form>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

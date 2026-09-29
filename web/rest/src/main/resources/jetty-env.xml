@@ -1,0 +1,16 @@
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="ds" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/DeziDS</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                <Set name="driverClassName">org.postgresql.Driver</Set>
+                <Set name="url">jdbc:postgresql://<SystemProperty name="debug.db.host"/>:<SystemProperty name="debug.db.port"/>/<SystemProperty name="debug.db.name"/></Set>
+                <Set name="username"><SystemProperty name="debug.db.username"/></Set>
+                <Set name="password"><SystemProperty name="debug.db.password"/></Set>
+                <Set name="initialSize">3</Set>
+                <Set name="maxActive">10</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>

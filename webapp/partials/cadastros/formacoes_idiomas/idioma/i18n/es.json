@@ -1,0 +1,25 @@
+{
+  "IDIOMA":{
+    "CADASTOS":"Registros",
+    "FORMACAO":"Idiomas y formación",
+    "IDIOMA": "Idiomas",
+    "PESQUISAR":"Investigación",
+    "BTNNOVO":"Nuevo Idioma",
+    "SITUACAO": "Situación",
+    "IDIOMA2": "Idioma",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 15 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "DESCRICAO" : "Descripción"
+  }
+}

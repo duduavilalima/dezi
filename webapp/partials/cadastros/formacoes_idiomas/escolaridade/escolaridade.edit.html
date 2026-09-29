@@ -1,0 +1,53 @@
+<form-page
+	can-create="{{ $ctrl.canEdit }}"
+	on-create="$ctrl.handleCreate()"
+	on-back="$ctrl.back()"
+>
+	<form-card
+		name="formCargo"
+		card-title="ESCOLARIDADE.DESCRICAO"
+		on-save="$ctrl.save()"
+		on-cancel="$ctrl.cancel()"
+	>
+		<labeled-input
+			flex-gt-xs="25"
+			name="nome"
+			label="ESCOLARIDADE.ESCOLARIDADE2"
+			value="$ctrl.escolaridade.nome"
+			options="{
+				required: true,
+				min: 2,
+				max: 35
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+	<labeled-input
+			flex-gt-xs="25"
+			name="preencheTipoCurso"
+			type="select-boolean"
+			label="ESCOLARIDADE.REQUER"
+			value="$ctrl.escolaridade.preencheTipoCurso"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="25"
+			name="preencheOutrosCursos"
+			type="select-boolean"
+			label="ESCOLARIDADE.REQUEROUTRO"
+			value="$ctrl.escolaridade.preencheOutrosCursos"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="25"
+			name="situacao"
+			label="ESCOLARIDADE.SITUACAO"
+			value="'SITUACAO.' + $ctrl.escolaridade.situacao"
+			options="{ disabled: true, translate: true }"
+		/>
+	</form-card>
+</form-page>

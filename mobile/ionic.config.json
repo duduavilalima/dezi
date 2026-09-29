@@ -1,0 +1,8 @@
+{
+  "name": "Dezi Mobile",
+  "app_id": "f50cfd49",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

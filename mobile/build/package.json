@@ -1,0 +1,13 @@
+{
+  "name": "dezi-frontend",
+  "main": "index.html",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17",
+    "compression": "^1.7.4"
+  }
+}

@@ -1,0 +1,33 @@
+<md-dialog aria-label="Confirmar" style="width: 40%;">
+	<form novalidate ui-keypress="{13:'confirm()'}">
+		<md-toolbar ng-class="{'md-accent': !isAtivo, 'md-warn': isAtivo}">
+			<div class="md-toolbar-tools">
+				<h2 md-autofocus>
+					<span>{{ ::title }}</span>
+				</h2>
+				<span flex />
+				<md-button class="md-icon-button" ng-click="cancel()" aria-label="Fechar" >
+					<md-icon md-font-icon="icon-close" />
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content-body">
+				<p>{{ ::message }}</p>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions flex layout="row">
+			<md-button
+				class="md-raised md-default estilo_botoes md-button md-ink-ripple text-capitalize"
+				ng-click="cancel()"
+				translate="DIALOG.BUTTON_CANCEL"
+			/>
+			<div flex />
+			<md-button
+				class="md-raised md-accent text-capitalize"
+				ng-click="confirm()"
+				translate="DIALOG.BUTTON_CONFIRM"
+			/>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

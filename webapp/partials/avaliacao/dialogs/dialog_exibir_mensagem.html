@@ -1,0 +1,116 @@
+<md-dialog aria-label="Mensagem" style="width: 850px;">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg" layout="row" flex="100">
+			<div class="md-toolbar-tools">
+				<h2>{{ $dialog.title }}</h2>
+				<span flex></span>
+				<md-button
+					id="bt_fechar_popup_confirmacao_confirmar"
+					class="md-icon-button"
+					ng-click="$dialog.onFechar()"
+					style="padding: 0px 0px 0px 0px;">
+					<md-icon
+						style="color: rgba(255,255,255,0.87) !important"
+						md-font-icon="icon-close"
+						aria-label="Close dialog"
+					></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0" layout="row" flex="100" layout-wrap>
+
+			<div layout="row" flex="100" layout-wrap class="md-accent-fg" style="margin-left: 20px; margin-right: 20px;">
+				<h2 flex="100">{{ 'MENSAGEM.TITULO' | translate }}</h2>
+				<input flex="100" value="{{ $dialog.mensagem.titulo }}">
+			</div>
+
+			<div id="title_participantes" flex class="md-accent-fg" style="margin-left: 20px; margin-right: 20px;">
+				<h2>{{ 'MENSAGEM.DESTINATARIOS' | translate }}</h2>
+			</div>
+			<table
+				id="table-analise"
+				class="simple dataTable row-border hover text-center"
+				ms-responsive-table
+				style="width: 100%"
+			>
+				<thead>
+					<tr>
+						<th class="secondary-text" width="50%">
+							<div class="table-header text-left">
+								<span class="column-title">{{ 'PARTICIPANTES.NOME' | translate }}</span>
+							</div>
+						</th>
+						<th class="secondary-text" width="25%">
+							<div class="table-header text-left">
+								<span class="column-title">{{ 'AVALIADORES.CARGO' | translate }}</span>
+							</div>
+						</th>
+						<th class="secondary-text" width="25%" hide-xs>
+							<div class="table-header text-left">
+								<span class="column-title">{{ 'FUNCIONARIO.DEPARTAMENTO' | translate }}</span>
+							</div>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-if="!$dialog.mensagem" align="center">
+						<td colspan="3">
+							<div layout="column" layout-align="center center" ng-show="!$dialog.mensagem">
+								<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+							</div>
+						</td>
+					</tr>
+					<tr ng-if="$dialog.mensagem" class="text-left">
+						<td>{{ ::$dialog.mensagem.usuarioDestino.nome}}</td>
+						<td>{{ ::$dialog.mensagem.usuarioDestino.cargo.nome }}</td>
+						<td hide-xs>{{ $dialog.mensagem.usuarioDestino.departamento.nome }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div
+				ng-if="$dialog.mensagem && $dialog.mensagem.mensagemOriginal"
+				style="margin-left: 20px; margin-right: 20px;"
+				layout="row"
+				flex="100"
+			>
+				<div id="title_mensagem _anterior" flex="100" class="md-accent-fg">
+					<h2>{{ 'MENSAGEM.LABELMENSAGEMANTERIOR' | translate }}</h2>
+				</div>
+				<div
+					ta-bind="text"
+					class="p-8"
+					flex="100"
+					style="border: 1px solid rgba(0,0,0,0.40);"
+					ng-model="$dialog.mensagem.mensagemOriginal.texto"
+				></div>
+			</div>
+
+			<div
+				ng-if="$dialog.mensagem"
+				style="margin-left: 20px; margin-right: 20px;"
+				flex="100"
+			>
+				<div id="title_participantes_msg" flex="100" class="md-accent-fg">
+					<h2>{{ 'MENSAGEM.TEXTO' | translate }}</h2>
+				</div>
+				<div
+					ta-bind="text"
+					class="p-8"
+					flex="100"
+					style="border: 1px solid rgba(0,0,0,0.40);"
+					ng-model="$dialog.mensagem.texto"
+				></div>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" class="white-bg" layout-align="center center">
+			<md-button
+				aria-label="fechar"
+				class="md-raised md-default text-capitalize"
+				ng-click="$dialog.onFechar()"
+			>{{ 'COMMON.LABELFECHAR' | translate }}</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

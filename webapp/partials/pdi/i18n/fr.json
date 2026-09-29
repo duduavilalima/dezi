@@ -1,0 +1,32 @@
+{
+  "NAV": {
+    "PAINELDECONTROLE": "Accompagnement",
+    "CAMPANHAS":"Campagnes",
+    "PREENCHIMENTO":"Remplir",
+    "ESTATISTICAS":"Statistiques",
+    "CADASTROS":"Entrées",
+    "MODELOSDEGRADUACAO":"Échelles de Degrés",
+    "COMPETENCIAS":"Compétences",
+    "DEPARTAMENTOS":"Départements",
+    "CARGOS":"Positions",
+    "FUNCIONARIOS":"Les Employés",
+    "FORMACAOEIDIOMAS":"Formation et Langues",
+    "ESCOLARIDADE":"Education",
+    "TIPOSDECURSO":"Types de Cours",
+    "CURSOSDEGRADUACAO":"Cours de Premier Cycle",
+    "CURSOSDEESPECILIZACAO":"Cours de Spécialisation",
+    "IDIOMAS":"Langues",
+    "MENSAGEM": "Message de bienvenue",
+    "PARAMETROS": "Paramètres généraux",
+    "AVALIACOES":"Avaliações",
+    "AUTOAVALIACOES":"Évaluation",
+    "TIPODECOMPETENCIAS": "Type de compétences",
+    "RESULTADOS": "Résultats",
+    "DESEMPENHO": "Performance",
+    "ADMINISTRACAO": "Administration",
+    "HOST": "Hôte par les entreprises",
+    "UNIDADE": "Unité",
+    "CONSENSOS": "Consensus",
+    "RELATORIOS": "Rapports"
+  }
+}

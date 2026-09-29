@@ -1,0 +1,541 @@
+<div id="funcionarios" class="page-layout simple fullwidth doc-page">
+	<!-- HEADER -->
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title">
+				<span>{{ ::$ctrl.titulo }}</span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="mt-50" id="colaborador">
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+					{{'FUNCIONARIO.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8">
+				<div class="white-bg style_card m-10" flex layout="column">
+					<div layout="row" class="content h-50" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1 class="mt-10">{{'FUNCIONARIO.DESCRICAO' | translate }}</h1>
+						</div>
+					</div>
+					<md-divider></md-divider>
+					<div class="content">
+						<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+							<div layout="row" layout-wrap class="about-tab">
+								<!-- MODE VIEW -->
+								<div layout-padding flex>
+
+
+									<!--IMAGEM - FOTO-->
+									<div layout="column" layout-align="center center" layout-align-gt-md="start center" class="p-16">
+										<div class="md-whiteframe-5dp">
+											<img ng-show="!$ctrl.foto" id="image_user_edit" src="{{$ctrl.anonImage}}">
+											<div ng-show="$ctrl.foto">
+												<img ng-src="{{$ctrl.foto.base64}}" />
+											</div>
+										</div>
+									</div>
+
+
+									<!--DADOS PESSOAIS-->
+									<div layout="column" layout-gt-md="row" flex="100" layout-sm="row">
+
+										<md-input-container flex="35">
+											<label id="lbl_matricula" for="matricula">{{'FUNCIONARIO.MATRICULA' | translate}}</label>
+											<input id="matricula" name="matricula" type="text" value="{{::$ctrl.colaborador.matricula}}" ng-disabled="true">
+										</md-input-container>
+
+
+										<span class="width-20"></span>
+
+
+										<md-input-container flex="50">
+											<label id="lbl_nome" for="input_nome">{{'FUNCIONARIO.NOME' | translate}}</label>
+											<input id="input_nome" name="input_nome" type="text" value="{{::$ctrl.colaborador.nome}}" ng-disabled="true">
+										</md-input-container>
+
+
+										<span class="width-20"></span>
+
+
+										<md-input-container flex="15">
+											<label id="lbl_situacao" for="situacao">{{'FUNCIONARIO.SITUACAO2' | translate}}</label>
+											<input id="situacao" name="situacao" type="text" value="{{'SITUACAO.' + $ctrl.colaborador.situacao | translate}}" ng-disabled="true">
+										</md-input-container>
+									</div>
+
+
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -20px" layout-sm="row">
+
+										<md-input-container flex="60">
+											<label id="lbl_email" for="selecao_email">{{'FUNCIONARIO.EMAILFUNCIONAL' | translate}}</label>
+											<input id= "selecao_email" name="selecao_email" type="text" value="{{::$ctrl.colaborador.emailFuncional}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="28">
+											<label id="lbl_sexo" for="selecao_sexo">{{'FUNCIONARIO.SEXO' | translate}}</label>
+											<input id= "selecao_sexo" name="selecao_sexo" type="text" value="{{'TIPO.' +$ctrl.colaborador.tipoSexo | translate}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="12">
+											<label id="lbl_nascimento" for="nascimento">{{'FUNCIONARIO.NASCIMENTO' | translate}}</label>
+											<input id= "nascimento" name="nascimento" type="text" value="{{::$ctrl.colaborador.nascimento | date: 'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+
+									</div>
+									<!--3 LINHA-->
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -20px" layout-sm="row">
+
+										<md-input-container flex="30">
+											<label id="lbl_empresa" for="empresa">{{'FUNCIONARIO.EMPRESAPRINCIPAL' | translate}}</label>
+											<input id= "empresa" name="empresa" type="text" value="{{::$ctrl.colaborador.empresa.nome}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="15">
+											<label id="lbl_admissao" for="admissao">{{'FUNCIONARIO.ADMISSAO' | translate}}</label>
+											<input id="admissao" name="admissao" type="text" value="{{::$ctrl.colaborador.admissao | date: 'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="15">
+											<label id="lbl_desligamento" for="desligamento">{{'FUNCIONARIO.DESLIGAMENTO' | translate}}</label>
+											<input id="desligamento" name="desligamento" type="text" value="{{::$ctrl.colaborador.desligamento | date : 'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+									</div>
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -20px" layout-sm="row">
+
+										<md-input-container flex="20">
+											<label id="lbl_situacao_funcional" for="situacao_funcional">{{'FUNCIONARIO.SITUACAO3' | translate}}</label>
+											<input id="situacao_funcional" name="situacao_funcional" type="text" value="{{'SITUACAO.' + $ctrl.colaborador.situacaoFuncional | translate}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="20">
+											<label id="lbl_periodo_inicio" for="periodo_inicio">{{'FUNCIONARIO.PERIODODE' | translate}}</label>
+											<input id="periodo_inicio" name="periodo_inicio" type="text" value="{{::$ctrl.colaborador.dataInicioRecesso| date: 'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="20">
+											<label id="lbl_periodo_fim" for="periodo_fim">{{'FUNCIONARIO.PERIODOATE' | translate}}</label>
+											<input id="periodo_fim" name="periodo_fim" type="text" value="{{::$ctrl.colaborador.dataFimRecesso| date: 'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+									</div>
+
+
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -20px" layout-sm="row">
+
+										<md-input-container flex>
+											<label id="lbl_perfil" for="perfil">{{'FUNCIONARIO.PERFIL' | translate}}</label>
+											<input id="perfil" name="perfil" type="text" value="{{'PERFIL.' + $ctrl.colaborador.tipoPerfil | translate}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label id="lbl_unidade" for="unidade">{{'FUNCIONARIO.UNIDADE' | translate}}</label>
+											<input id="unidade" name="unidade" type="text" value="{{::$ctrl.colaborador.unidade.nome}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+
+										<md-input-container flex>
+											<label id="lbl_departamento" for="departamento">{{'FUNCIONARIO.DEPARTAMENTO' | translate}}</label>
+											<input id="departamento" name="departamento" type="text" value="{{::$ctrl.colaborador.departamento.nome}}" ng-disabled="true">
+										</md-input-container>
+
+									</div>
+
+
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -20px" layout-sm="row">
+
+										<md-input-container flex>
+											<label id="lbl_cargo" for="cargo">{{'FUNCIONARIO.CARGO' | translate}}</label>
+											<input id="cargo" name="cargo" type="text" value="{{::$ctrl.colaborador.cargo.nome}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label id="lbl_datacargo" for="datacargo">{{'FUNCIONARIO.DTCARGO' | translate}}</label>
+											<input id="datacargo" name="datacargo" type="text" value="{{::$ctrl.colaborador.dataCargo | date:'dd/MM/yyyy'}}" ng-disabled="true">
+										</md-input-container>
+
+										<!--<span class="width-20"></span>-->
+
+										<!--<md-input-container flex="25">-->
+										<!--<label id="lbl_revisor" for="revisor">{{'FUNCIONARIO.REVISOR' | translate}}</label>-->
+										<!--<input id="revisor" name="revisor" type="text" value="{{::object.revisor.nome}}" ng-disabled="true">-->
+										<!--</md-input-container>-->
+
+									</div>
+
+									<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -15px;" layout-sm="row">
+
+										<md-input-container flex="50">
+											<label id="lbl_pontofocal" for="pontofocal">{{'FUNCIONARIO.PONTOFOCAL' | translate}}</label>
+											<input id="pontofocal" name="pontofocal" type="text" value="{{$ctrl.colaborador.pontoFocalRh ? 'Sim' : 'Não'}}" ng-disabled="true">
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex="50">
+											<label id="lbl_requerPreenchimento" for="id_requerPreenchimento">{{'FUNCIONARIO.REQUER' | translate}}</label>
+											<input id="id_requerPreenchimento" name="requerPreenchimento" type="text" value="{{$ctrl.colaborador.preencheFormacaoEIdiomas ? 'Sim' : 'Não'}}" ng-disabled="true">
+										</md-input-container>
+
+									</div>
+								</div>
+
+							</div>
+						</form>
+						
+						<div class="content page-style white-bg" layout="column" flex style="margin-top: -40px; width: 100%">
+							<div layout="column" layout-align="center" class="pl-32 pr-32" style="margin-top: -15px; width: 100%">
+								<v-accordion class="vAccordion--default" multiple>
+
+									<!-- add expanded attribute to open the section -->
+									<!-- <v-pane> -->
+
+										<!--FORMAÇÃO-->
+										<!-- <v-pane-header>
+											<div id="formacao" class="md-accent-fg"><h3>{{'FUNCIONARIO.FORMACAO' | translate}}</h3></div>
+										</v-pane-header> -->
+
+
+										<!-- <v-pane-content> -->
+											<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+											<!-- <div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="funcionarioFormacaoList == null"> -->
+												<!-- <md-progress-circular md-mode="indeterminate"></md-progress-circular> -->
+											<!-- </div> -->
+
+
+											<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL
+
+											<table id="table-list-formacao" width="100%" class="dataTable row-border hover text-center pl-16 pr-16" ng-show="funcionarioFormacaoList != null">
+												<thead>
+												<tr ng-show="funcionarioFormacaoList.length == 0">
+													<th class="secondary-text" colspan="3"> </th>
+												</tr>
+												<tr ng-show="funcionarioFormacaoList.length > 0" class="grey-200-bg">
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.ESCOLARIDADE' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.TIPOCURSO' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.GRADUACAO' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.ESPECIALIZACAO' | translate}}</span></div>
+													</th>
+													<th class="secondary-text">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.OUTROS' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="10%">
+														<div class="table-header text-left"><span class="column-title">{{'FORMACAO.SITUACAO' | translate}}</span></div>
+													</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												<tr ng-show="funcionarioFormacaoList.length == 0">
+													<td colspan="3">{{'FORMACAO.EMPTY' | translate}}</td>
+												</tr>
+												<tr ng-show="funcionarioFormacaoList.length > 0" ng-repeat="item in funcionarioFormacaoList">
+
+													<td class="text-left">{{ ::item.escolaridade.nome}}</td>
+													<td class="text-left">{{ ::item.tipoCurso.nome}}</td>
+													<td class="text-left">{{ ::item.cursoGraduacao.nome }}</td>
+													<td class="text-left">{{ ::item.cursoEspecializacao.nome }}</td>
+													<td class="text-left">{{ ::item.outroCurso }}</td>
+													<td class="text-left">{{ 'SITUACAO.' +item.situacaoConclusao | translate }}</td>
+												</tr>
+												</tbody>
+											</table>
+
+											<md-divider></md-divider>
+
+											<div layout="row" class="content">
+												<div hide show-gt-xs flex layout-align="start center" style="margin-top: 15px;">
+												</div>
+												<div hide show-gt-xs flex layout-align="center center">
+												</div>
+												<div flex layout-align="end center">
+													<!-- BOTÃO NOVO FORMAÇÃO 
+													<md-button id="btn_novo_formacao"
+															   translate-attr-aria-label="FUNCIONARIO.BTNADICIONAR"
+															   ng-click="acaoNovoFormacao($event, null)"
+															   class="p-8 md-button md-accent text-capitalize"
+															   aria-label="novo formacao" style="float: right">
+														<md-icon md-font-icon="icon-checkbox-multiple-marked-outline"></md-icon>
+														{{'FUNCIONARIO.BTNADICIONAR' | translate}}
+													</md-button>
+												</div>
+											</div>
+
+										</v-pane-content>
+									</v-pane>
+
+									<v-pane>
+
+										<!--IDIOMAS
+										<v-pane-header>
+											<div id="idioma" class="md-accent-fg"><h3>{{'FUNCIONARIO.IDIOMAS' | translate}}</h3></div>
+										</v-pane-header>
+
+
+										<v-pane-content>
+											<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA 
+											<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="funcionarioFormacaoIdiomaList == null">
+												<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+											</div>
+
+
+											<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL
+
+											<table id="table-list-idiomas" class="dataTable row-border  hover text-center pl-16 pr-16" ng-show="funcionarioFormacaoIdiomaList != null">
+												<thead>
+												<tr ng-show="funcionarioFormacaoIdiomaList.length == 0">
+													<th class="secondary-text" colspan="3"> </th>
+												</tr>
+												<tr ng-show="funcionarioFormacaoIdiomaList.length > 0" class="grey-200-bg">
+													<th class="secondary-text" width="40%">
+														<div class="table-header text-left"><span class="column-title">{{'IDIOMAS.IDIOMA' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="20%">
+														<div class="table-header text-left"><span class="column-title">{{'IDIOMAS.FALA' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="20%">
+														<div class="table-header text-left"><span class="column-title">{{'IDIOMAS.ESCRITA' | translate}}</span></div>
+													</th>
+													<th class="secondary-text" width="20%">
+														<div class="table-header text-left"><span class="column-title">{{'IDIOMAS.LEITURA' | translate}}</span></div>
+													</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												<tr ng-show="funcionarioFormacaoIdiomaList.length == 0">
+													<td colspan="3">{{'IDIOMAS.EMPTY' | translate}}</td>
+												</tr>
+												<tr ng-show="funcionarioFormacaoIdiomaList.length > 0" ng-repeat="item in funcionarioFormacaoIdiomaList">
+													<td class="text-left">{{ ::item.idioma.nome }}</td>
+													<td class="text-left">
+														{{'SITUACAO.' + item.situacaoNivelFala | translate}}
+													</td>
+													<td class="text-left">
+														{{'SITUACAO.' + item.situacaoNivelEscrita | translate}}
+													</td>
+													<td class="text-left">
+														{{'SITUACAO.' + item.situacaoNivelLeitura | translate}}
+													</td>
+												</tr>
+												</tbody>
+											</table>
+
+											<md-divider></md-divider>
+
+											<div layout="row" class="content">
+												<div hide show-gt-xs flex layout-align="start center">
+
+												</div>
+												<div hide show-gt-xs flex layout-align="center center">
+
+												</div>
+												<div flex layout-align="end center">
+													<!-- BOTÃO NOVO FORMAÇÃO 
+													<md-button id="btn_novo_idioma"
+															   translate-attr-aria-label="FUNCIONARIO.BTNADICIONARIDIOMA"
+															   ng-click="acaoNovoIdioma($event)"
+															   class="p-8 md-button md-accent text-capitalize"
+															   aria-label="novo idioma" style="float: right">
+														<md-icon md-font-icon="icon-checkbox-multiple-marked-outline"></md-icon>
+														{{'FUNCIONARIO.BTNADICIONARIDIOMA' | translate}}
+													</md-button>
+												</div>
+											</div>
+
+										</v-pane-content>
+									</v-pane>
+
+
+									<v-pane ng-if="false">
+
+										<!--Empresa-
+										<v-pane-header>
+											<div id="empresas" class="md-accent-fg">
+												<h3>{{'FUNCIONARIO.EMPRESAS' | translate}}</h3></div>
+										</v-pane-header>
+
+
+										<v-pane-content>
+											<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -
+											<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="funcionarioEmpresaLista == null">
+												<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+											</div>
+
+
+											<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -
+
+											<table id="table-list-empresas" class="simple row-border hover text-center" ms-responsive-table ng-show="funcionarioEmpresaLista != null">
+												<thead>
+												<tr ng-show="funcionarioEmpresaLista.length == 0">
+													<th class="secondary-text" colspan="2"> </th>
+												</tr>
+												<tr ng-show="funcionarioEmpresaLista.length > 0" class="grey-200-bg">
+													<th class="secondary-text" width="90%">
+														<div class="table-header text-left"><span class="column-title">{{'EMPRESAS.NOME' | translate}}</span></div>
+													</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												<tr ng-show="funcionarioEmpresaLista.length == 0">
+													<td colspan="2" class="text-center">{{'EMPRESAS.EMPTY' | translate}}</td>
+												</tr>
+												<tr ng-show="funcionarioEmpresaLista.length > 0" ng-repeat="item in funcionarioEmpresaLista">
+													<td class="text-left">
+														<span>{{::item.empresa.nome}}</span>
+														<span ng-if="item.empresa.id === user.empresa.id" style="color: RED"><strong> / {{'EMPRESAS.SELECIONADA' | translate}}</strong></span>
+														<span ng-if="item.empresa.id === object.empresa.id" style="color: RED"><strong> / {{'EMPRESAS.PRINCIPAL' | translate}}</strong></span>
+													</td>
+												</tr>
+												</tbody>
+											</table>
+
+										</v-pane-content>
+									</v-pane> -->
+
+									<v-pane>
+										<!--Avaliaçoes-->
+										<v-pane-header>
+											<div id="avaliacoes" class="md-accent-fg">
+												<h3>{{'FUNCIONARIO.AVALIACOES' | translate}}</h3></div>
+										</v-pane-header>
+
+
+										<v-pane-content>
+											<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+											<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="$ctrl.avaliacoesList == null">
+												<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+											</div>
+
+											<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+
+											<table id="table-list-avaliacoes" class="simple row-border hover text-center" ms-responsive-table ng-show="$ctrl.avaliacoesList != null">
+												<thead>
+												<tr ng-show="$ctrl.avaliacoesList.length == 0">
+													<th class="secondary-text" colspan="2"> </th>
+												</tr>
+												<tr ng-show="$ctrl.avaliacoesList.length > 0" class="grey-200-bg">
+													<th class="secondary-text" width="35%">
+														<div class="table-header text-left"><span class="column-title">{{'FUNCIONARIO.AVALIACAO' | translate}}</span></div>
+													</th>
+
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-center"><span class="column-title">Data limite autoavaliação</span>
+														</div>
+													</th>
+
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-center"><span class="column-title">Data limite avaliação</span>
+														</div>
+													</th>
+
+													<th class="secondary-text" width="15%">
+														<div class="table-header text-center"><span class="column-title">Data limite consenso</span>
+														</div>
+													</th>
+
+													<th class="secondary-text" width="5%">
+														<div class="table-header text-center"><span
+															class="column-title">Situação</span></div>
+													</th>
+													<th hide class="secondary-text" width="5%">
+														<div class="table-header text-center"><span
+															class="column-title">Opções</span>
+														</div>
+													</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												<tr ng-show="$ctrl.avaliacoesList.length == 0">
+													<td colspan="2" class="text-center">{{'FUNCIONARIO.NAOHAAVALIACOES' | translate}}</td>
+												</tr>
+												<tr ng-show="$ctrl.avaliacoesList.length > 0" ng-repeat="item in $ctrl.avaliacoesList | orderBy : 'descricaoAbreviada'" ng-repeat="item in $ctrl.avaliacoesList" ng-if="item.status=='LIBERADA'">
+													<td class="text-left">
+														<span>{{::item.descricaoAbreviada}}</span>
+													</td>
+													<td class="text-center">
+														<span>{{::item.limiteAv1 | date: 'dd/MM/yyyy'}}</span>
+													</td>
+													<td class="text-center">
+														<span>{{::item.limiteAv2 | date: 'dd/MM/yyyy'}}</span>
+													</td>
+													<td class="text-center">
+														<span>{{::item.limiteAv3 | date: 'dd/MM/yyyy'}}</span>
+													</td>
+													<td class="text-center">
+														<span ng-class="{'green-bg white-fg': item.situacao == 'LIBERADA', 'amber-bg white-fg': item.situacao == 'AG_LIBERACAO', 'blue-bg white-fg': item.situacao == 'CONCLUIDA'}" class="estilo_situacao" style="{{ item.situacao === 'CANCELADA' ? 'color:black' : 'color:red' }}"><b>{{ 'SITUACAO.'+item.status | translate }}</b></span>
+													</td>
+													<!-- <td style="padding: 0" hide>
+														<md-menu id="menu-table">
+															<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+																<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+															</md-button>
+															<md-menu-content class="p-0">
+																<md-menu-item>
+																	<md-button aria-label="imprimir autoavaliacao " ng-click="acaoContrucao($event) ">
+																		<md-icon style="color: black " md-font-icon="icon-printer "></md-icon>
+																		Avaliação
+																	</md-button>
+																</md-menu-item>
+
+															</md-menu-content>
+														</md-menu>
+													</td> -->
+												</tr>
+												</tbody>
+											</table>
+										</v-pane-content>
+									</v-pane>
+
+
+								</v-accordion>
+
+								<div style="margin-bottom: 50px">
+
+								</div>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

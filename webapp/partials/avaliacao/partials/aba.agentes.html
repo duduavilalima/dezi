@@ -1,0 +1,107 @@
+<md-content id="content_resumo" class="content" style="background-color: rgb(245,245,245);">
+		<!-- CONTENT -->
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8 m4">
+		<div class="white-bg style_card m-8">
+			<div class="ph-16 h-50 border-bottom" layout="row">
+				<div layout="row" flex layout-align="start center">
+					<h1 class="md-accent-fg">Tipo vs Peso</h1>
+				</div>
+
+				<div layout="row" flex layout-align="end center">
+					<md-button id="adicionar_agentes" ng-click="adicionarTipoCompetencia($event)" ng-disabled="desabilitarBotaoAdicionar() || object.status === 'LIBERADA'" class="md-fab md-mini" aria-label="Adicionar">
+						<md-icon md-font-icon="icon-plus"></md-icon>
+						<!-- <md-tooltip class="h4" hide-xs hide-sm>Dezi tour</md-tooltip> -->
+					</md-button>
+				</div>
+			</div>
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<thead md-head md-order="query.order">
+					<tr md-row>
+						<th md-column><span>{{'RESUMO.TIPOCOMPETENCIA' | translate}}</span></th>
+						<th md-column><span>{{'RESUMO.AGENTES' | translate}}</span></th>
+						<th md-column><span>{{'RESUMO.TOTAL' | translate}}</span></th>
+						<th md-column><span>{{'RESUMO.OPCOES' | translate}}</span></th>
+					</tr>
+					</thead>
+
+					<tbody md-body>
+					<tr md-row ng-repeat="item in object.tiposCompetencia" class="text-left">
+						<td md-cell>{{ item.nomeCurto }}</td>
+						<td md-cell>
+							<div layout="row" class="mb-5 mt-5">
+								<div layout="column">
+									<md-checkbox ng-model="item.gestor" ng-change="changeCheckBoxTipoCompetencia(item)" ng-disabled="!object.gestores || object.status === 'LIBERADA'" class="font-size-14" aria-label="Checkbox tabela">
+										{{'RESUMO.GESTORES' | translate}}
+									</md-checkbox>
+									<div layout="row" class="mt-10">
+										<input type="number" style="width: 30%;" name="gestor" ng-model="item.percentualGestor" ng-disabled="!object.gestores || !item.gestor || object.status === 'LIBERADA'" max="100">&nbsp;<span>%</span>
+									</div>
+								</div>
+								<span class="width-20"></span>
+								<div layout="column">
+									<md-checkbox ng-model="item.subordinados" ng-change="changeCheckBoxTipoCompetencia(item)" ng-disabled="!object.subordinados || object.status === 'LIBERADA'" class="font-size-14" aria-label="Checkbox tabela">
+										{{'RESUMO.SUBORDINADOS' | translate}}
+									</md-checkbox>
+									<div layout="row" class="mt-10">
+										<input type="number" style="width: 30%;" name="subordinados" ng-model="item.percentualSubordinados" ng-disabled="!object.subordinados || !item.subordinados || object.status === 'LIBERADA'" max="100">&nbsp;<span>%</span>
+									</div>
+								</div>
+								<span class="width-20"></span>
+								<div layout="column">
+									<md-checkbox ng-model="item.pares" ng-change="changeCheckBoxTipoCompetencia(item)" ng-disabled="!object.pares || object.status === 'LIBERADA'" class="font-size-14" aria-label="Checkbox tabela">
+										{{'RESUMO.PARES' | translate}}
+									</md-checkbox>
+									<div layout="row" class="mt-10">
+										<input type="number" style="width: 30%;" name="pares" ng-model="item.percentualPares" ng-disabled="!object.pares || !item.pares || object.status === 'LIBERADA'" max="100">&nbsp;<span>%</span>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td md-cell><div layout="row" class="mt-25">
+							<input type="text" style="width: 30%;" name="total" value="{{item.percentualGestor + item.percentualSubordinados + item.percentualPares}}" max="100" ng-disabled="true">&nbsp;<span>%</span>
+						</div></td>
+						<td md-cell>
+							<md-button ng-click="removerTipoCompetencia($event, $index, item)" ng-disabled="object.status === 'LIBERADA'" ng-hide="object.status === 'LIBERADA'"
+									   aria-label="excluir" class="md-icon-button">
+								<md-icon md-font-icon="icon-trash"></md-icon>
+							</md-button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-divider></md-divider>
+			<!-- BOTÕES -->
+			<div layout="row" class="content" ng-if="screenMode !== 'VIEW'">
+				<div flex layout-align="start center">
+					<md-button id="cancelar_agentes" ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Cancelar" translate translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR">
+						{{'CAMPANHASLISTAR.CANCELAR' | translate}}
+					</md-button>
+				</div>
+				<div layout-align="end center">
+					<md-button id="salvar_agentes" ng-click="salvarAvaliacao()" class="m-0 ph-20 pv-10 md-button md-primary md-accent text-capitalize" ng-disabled="object.tiposCompetencia == 0" aria-label="Próximo" translate translate-attr-aria-label="RESUMO.BTPROXIMO">
+						{{'CAMPANHASLISTAR.SALVAR' | translate}}
+					</md-button>
+				</div>
+			</div>
+
+			<div layout="row" class="content" ng-if="screenMode === 'VIEW'">
+				<!--Ação botão Voltar-->
+				<div flex layout-align="start center">
+					<md-button id="voltar_agentes" ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+						<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+						{{'CAMPANHASLISTAR.VOLTAR' | translate}}
+					</md-button>
+				</div>
+
+				<!--Ação botão Editar-->
+				<div layout-align="end center">
+					<md-button id="editar_agentes" ng-click="displayEdit(object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" ng-hide="mode == 'EDIT'" aria-label="Editar" translate translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+						{{'CAMPANHASLISTAR.EDITAR' | translate}}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</div>
+</md-content>

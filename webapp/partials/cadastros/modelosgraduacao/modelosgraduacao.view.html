@@ -1,0 +1,257 @@
+<div id="dashboard" class="page-layout simple fullwidth"><div flex>
+
+	<div><div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+
+		<div class="white-bg style_card m-8" flex layout="column">
+			<div layout="row" class="content" layout-xs="column">
+				<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+					<h1>{{'MODELOS.DESCRICAO' | translate }}</h1>
+				</div>
+
+				<div layout-align="end center" layout-align-xs="center center" layout="row">
+					<md-switch
+					ng-model="$ctrl.mdswitch.situacao"
+					aria-label="Botão situação"
+					ng-change="$ctrl.onChangeSituacao($ctrl.object, 'modeloGraduacao')">
+			 		{{'SITUACAO.' + $ctrl.object.situacao | translate }}
+		 			</md-switch>
+
+					<span class="width-20"></span>
+
+					<md-button
+						ng-click="$ctrl.goEdit(object)"
+						class="md-fab md-mini md-accent-bg"
+						aria-label="Editar"
+						ng-if="$ctrl.canEdit"
+						translate
+						translate-attr-aria-label="MODELOS.EDITAR"
+					>
+						<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+						<md-tooltip class="h4">{{'MODELOS.EDITAR' | translate}}</md-tooltip>
+					</md-button>
+
+					<md-button
+						ng-click="$ctrl.showDetalhes($event)"
+						ng-if="$ctrl.admin"
+						class="md-icon-button"
+						aria-label="Detalhes"
+						translate
+						translate-attr-aria-label="DIALOG.DETALHES"
+					>
+						<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+						<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+
+			<md-divider></md-divider>
+
+			<div class="content">
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+					<!-- MODE VIEW -->
+					<div layout="column" flex>
+						<div layout="column" layout-gt-sm="row" flex>
+
+							<md-input-container flex="50">
+								<label id="lbl_modelo" for="lbl_modelo">{{'MODELOS.MODELO' | translate}}</label>
+								<input id="modelo" name="modelo" type="text" ng-model="$ctrl.object.descricaoModelo"
+										ng-disabled="true">
+							</md-input-container>
+
+
+							<span class="width-20"></span>
+
+							<md-input-container flex="15">
+								<label id="lbl_qtdgraduacoes" for="qtdgraduacoes">{{'MODELOS.QTDGRADUACAO' | translate}}</label>
+								<input id="qtdgraduacoes" name="qtdgraduacoes" type="text"
+										ng-model="$ctrl.object.qtdGraduacoes" ng-disabled="true">
+							</md-input-container>
+
+							<span class="width-20"></span>
+
+							<md-input-container flex="15" ng-if="false" ng-disabled="true">
+								<label id="lbl_dimensoes" for="dimensoes">{{'MODELOS.DIMENSAO' | translate}}</label>
+								<input id="dimensoes" name="dimensoes" type="text" ng-model="$ctrl.object.dimensao.dimensao"
+										ng-disabled="true">
+							</md-input-container>
+
+							<span class="width-20"></span>
+
+							<md-input-container flex="10">
+								<label id="lbl_nao_graduar_exibir" for="nao_graduar">{{'MODELOS.NAOGRADUAR' | translate}}</label>
+								<input id="nao_graduar" name="nao_graduar" type="text" value="{{$ctrl.object.naoGraduar ? 'Sim' : 'Não'}}" ng-disabled="true">
+							</md-input-container>
+
+							<span class="width-20"></span>
+
+							<md-input-container flex="10">
+								<label id="lbl_situacao" for="situacao">{{'MODELOS.SITUACAO' | translate}}</label>
+								<input id="situacao" name="situacao" type="text" value="{{'SITUACAO.' + $ctrl.object.situacao | translate}}"
+										ng-disabled="true">
+							</md-input-container>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m20">
+		<div class="white-bg style_card m-8" flex layout="column">
+
+			<div class="content">
+				<div layout="row" class="content" layout-xs="column">
+
+					<!--Ação botão Voltar-->
+					<div flex layout-align="center center" class="pl-16 pr-16">
+						<div id="title_graduacoes" class="md-accent-fg">
+							<h1>{{'MODELOS.GRADUACOES' | translate}}</h1>
+						</div>
+					</div>
+
+					<!--Ação botão Editar-->
+					<div layout-align="end center">
+						<md-button
+							id="btn_novo_graduacao"
+							ng-click="$ctrl.onNovaGraduacao($event)"
+							ng-show="$ctrl.graduacoes && $ctrl.graduacoes.length <= 10"
+							ng-if="$ctrl.canEdit"
+							class="p-8 md-button md-accent text-capitalize"
+							aria-label="nova graduacao"
+							style="float: right"
+							translate-attr-aria-label="MODELOS.NOVAGRADUACAO"
+						>
+							<md-icon md-font-icon="icon-plus"></md-icon>
+							{{'MODELOS.NOVAGRADUACAO' | translate}}
+						</md-button>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+
+				<div>
+					<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+					<md-table-container>
+						<table md-table id="table-list">
+							<thead md-head>
+								<tr md-row ng-show="$ctrl.graduacoes && $ctrl.graduacoes.length == 0">
+									<th md-column colspan="3"></th>
+								</tr>
+								<tr class="grey-200-bg" md-row>
+									<th md-column width="30%">
+										<span class="column-title">{{'MODELOS.GRADUACAO' | translate}}</span>
+									</th>
+									<th md-column width="40%">
+										<span class="column-title">{{'MODELOS.DESCRICAO' | translate}}</span>
+									</th>
+									<th md-column width="10%">
+										<span class="column-title">{{'MODELOS.PONTUACAO' | translate}}</span>
+									</th>
+									<th md-column width="10%">
+										<span class="column-title">{{'MODELOS.SITUACAO' | translate}}</span>
+									</th>
+									<th md-column width="5%">
+										<span class="column-title">{{'MODELOS.OPCOES' | translate}}</span>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody md-body ng-if="!$ctrl.graduacoes">
+								<tr md-row align="center" ng-if="!$ctrl.graduacoes">
+									<td md-cell colspan="5">
+										<div layout="column" layout-align="center center">
+											<md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1"></md-progress-circular>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+
+							<tbody md-body ng-if="$ctrl.graduacoes && $ctrl.graduacoes.length === 0">
+								<tr md-row>
+									<td md-cell colspan="3" class="text-center">{{'MODELOS.NAOMODELOS' | translate}}</td>
+								</tr>
+								<tr>
+									<td md-cell colspan="3" class="text-center text-bold md-warn-fg">{{'MODELOS.ATIVACAO_MODELOS' | translate}}</td>
+								</tr>
+							</tbody>
+
+							<tbody md-body ng-if="$ctrl.graduacoes && $ctrl.graduacoes.length > 0">
+								<tr ng-repeat="item in $ctrl.graduacoes | orderBy: 'ordem'">
+									<td md-cell>
+										<b><a href ng-if="$ctrl.canEdit" ng-click="$ctrl.onEditarGraduacao(item, $event, $index)">
+											{{::item.label}}
+										</a></b>
+										<b><a href ng-if="!$ctrl.canEdit" ng-click="$ctrl.onVisualizarGraduacao(item, $event, $index)">
+											{{::item.label}}
+										</a></b>
+									</td>
+									<td md-cell>
+										{{ ::item.hint }}
+									</td>
+									<td md-cell>
+										{{ ::item.ponto }}
+									</td>
+									<td md-cell>
+										<span class="estilo_situacao" ng-class="{'green-bg white-fg': $ctrl.isAtivo(item), 'red-bg white-fg': $ctrl.isInativo(item)}">
+											<b>{{'SITUACAO.' + item.situacao | translate}}</b>
+										</span>
+									</td>
+									<td md-cell>
+										<md-menu ng-if="$ctrl.canEdit">
+											<md-button
+												class="md-icon-button"
+												ng-click="$mdMenu.open($event)"
+												aria-label="more"
+											>
+												<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+											</md-button>
+											<md-menu-content class="p-0">
+												<!-- GRADUAÇÕES BOTÃO SUBIR MENU -->
+												<md-menu-item>
+													<md-button id="btn_subir_detalhamento" translate-attr-aria-label="MODELOS.SUBIR" ng-disabled="$first || $last || item.ordem == null || item.situacao == 'INATIVA' || item.label == 'Não posso avaliar'" aria-label="Subir" ng-click="$ctrl.onMoveGraduacaoUp(item, $index)">
+														<md-icon style="color: blue" md-font-icon="icon-arrow-up-bold-circle-outline"></md-icon>{{'MODELOS.SUBIR' | translate}}</md-button>
+												</md-menu-item>
+												<!-- GRADUAÇÕES BOTÃO DESCER MENU -->
+												<md-menu-item>
+													<md-button id="btn_descer_detalhamento" ng-disabled="$last || item.ordem == null || $ctrl.inativarBtnDescer($index, $ctrl.graduacoes)" translate-attr-aria-label="MODELOS.DESCER" aria-label="Descer" ng-click="$ctrl.onMoveGraduacaoDown(item, $index)">
+														<md-icon style="color: blue" md-font-icon="icon-arrow-down-bold-circle-outline"></md-icon> {{'MODELOS.DESCER' | translate}} </md-button>
+												</md-menu-item>
+												<!-- GRADUAÇÕES BOTÃO ATIVAR MENU -->
+												<md-menu-item>
+													<md-button id="btn_ativar_graduacao" aria-label="Situacao" translate-attr-aria-label="{{item.situacao === 'ATIVA'? MODELOS.INATIVAR : MODELOS.ATIVAR}}" ng-click="$ctrl.onChangeSituacao(item, 'graduacao')">
+															<md-icon ng-if="item.situacao === 'ATIVA'" style="color: red" md-font-icon="icon-cancel"></md-icon>
+															<md-icon ng-if="item.situacao !== 'ATIVA'" style="color: green" md-font-icon="icon-check"></md-icon>
+															{{(item.situacao === 'ATIVA'? 'MODELOS.INATIVAR' : 'MODELOS.ATIVAR') | translate}}
+													</md-button>
+												</md-menu-item>
+
+												<!-- GRADUAÇÕES BOTÃO INATIVAR MENU -->
+												<md-menu-item ng-show="$last" ng-if="false">
+													<md-button id="btn_remover_graduacao" aria-label="Remover" translate-attr-aria-label="MODELOS.REMOVER" ng-click="$ctrl.onRemoverGraduacao($event, $index, item)">
+														<md-icon style="color: red" md-font-icon="icon-cancel"></md-icon>{{'MODELOS.REMOVER' | translate}}
+													</md-button>
+												</md-menu-item>
+											</md-menu-content>
+										</md-menu>
+
+										<md-menu ng-if="!$ctrl.canEdit">
+											<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" aria-label="more">
+												<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+											</md-button>
+											<md-menu-content class="p-0">
+											</md-menu-content>
+										</md-menu>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</md-table-container>
+
+				</div>
+			</div>
+
+		</div>
+	</div></div>
+</div></div>

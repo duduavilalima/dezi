@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>br.com.fasolti.avd.domain.Competencia</class-a>
+		<class-b>br.com.fasolti.avd.transfer.mobile.CompetenciaMobileTO</class-b>
+
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+
+	</mapping>
+
+	<mapping>
+		<class-a>br.com.fasolti.avd.transfer.simple.CompetenciaSimpleTO</class-a>
+		<class-b>br.com.fasolti.avd.transfer.mobile.CompetenciaMobileTO</class-b>
+
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+
+	</mapping>
+
+</mappings>

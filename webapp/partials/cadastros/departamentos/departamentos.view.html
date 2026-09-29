@@ -1,0 +1,271 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div flex layout="row" layout-xs="column" flex-xs="100" flex-sm="100" class="margin-default div-cards">
+		<div layout="column" flex="65" flex-xs="100" flex-sm="100">
+			<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+						<h1 class="mt-10">{{'DEPARTAMENTO.DESCRICAO' | translate }}</h1>
+					</div>
+					<div layout-align="end center" layout-align-xs="center center" layout="row">
+						<md-switch ng-model="$ctrl.mdswitch.situacao" aria-label="Botão situação" ng-if="$ctrl.displayBtnNovo"
+									ng-change="$ctrl.onChangeSituacao($ctrl.object)">
+							{{'SITUACAO.' + $ctrl.object.situacao | translate }}
+						</md-switch>
+						<span class="width-20"></span>
+						<md-button ng-click="$ctrl.displayEdit($ctrl.object)" ng-if="$ctrl.displayBtnNovo" class="md-fab md-mini md-accent-bg" aria-label="Editar" translate
+									translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+							<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+							<md-tooltip class="h4">{{'DEPARTAMENTO.EDITAR' | translate}}</md-tooltip>
+						</md-button>
+						<md-button ng-click="$ctrl.relacionarDepartamentosGestor()" ng-if="$ctrl.admin" class="md-fab md-mini md-accent-bg" aria-label="Relacionar">
+							<md-icon md-font-icon="icon-thumb-up" class="white-fg"></md-icon>
+							<md-tooltip class="h4">Ajustar relacionamento departamento/gestor</md-tooltip>
+						</md-button>
+						<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin" class="md-icon-button"
+									aria-label="Editar" translate
+									translate-attr-aria-label="DIMENSAO.DETALHES">
+							<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+							<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+						</md-button>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+					<div layout="column" layout-gt-sm="row" flex layout-sm="row">
+
+						<md-input-container flex="70" flex-xs>
+							<label for="nome_view">{{'DEPARTAMENTO.DEPARTAMENTO' | translate}}</label>
+							<input id="nome_view" name="nome" type="text" value="{{::$ctrl.object.nome}}" ng-disabled="true">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="30" flex-xs>
+							<label for="situacao_view">{{'DEPARTAMENTO.SITUACAO' | translate}}</label>
+							<input id="situacao_view" name="situacao" type="text" value="{{ 'SITUACAO.' + $ctrl.object.situacao | translate }}" ng-disabled="true">
+						</md-input-container>
+
+					</div>
+
+					<div layout="column" layout-gt-sm="row" flex layout-sm="row" class="m_negativa-15">
+
+						<md-input-container flex>
+							<label for="id_cliente_view">{{'DEPARTAMENTO.ID' | translate}}</label>
+							<input id="id_cliente_view" name="id_cliente" type="text" value="{{::$ctrl.object.idDepartamentoCliente}}" ng-disabled="true">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex>
+							<label for="hierarquia_dpto">{{'DEPARTAMENTO.PAI' | translate}}</label>
+							<input id="hierarquia_dpto" name="hierarquia_dpto" type="text" value="{{::$ctrl.object.departamentoPai.nome}}" ng-disabled="true">
+						</md-input-container>
+
+					</div>
+
+					<div class="top_25">
+
+						<v-accordion class="vAccordion--default">
+
+							<v-pane>
+								<v-pane-header>
+									<div id="funcionarios" class="md-accent-fg">
+										<h3>Colaboradores atrelados a este setor</h3></div>
+								</v-pane-header>
+
+
+								<v-pane-content>
+
+									<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+									<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="$ctrl.listaFuncionarios == null">
+										<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+									</div>
+
+
+									<md-table-container class="table_setor">
+										<table id="table-list-funcionarios" md-table md-progress="promise">
+											<thead md-head md-order="$ctrl.query.order">
+											<tr md-row class="grey-200-bg">
+												<th md-column width="20%">
+													<span>{{'FUNCIONARIO.NOME' | translate}}</span>
+												</th>
+												<th md-column width="20%">
+													<span>{{'FUNCIONARIO.DEPARTAMENTO' | translate}}</span>
+												</th>
+												<th md-column width="20%">
+													<span>{{'FUNCIONARIO.CARGO' | translate}}</span>
+												</th>
+												<th md-column width="10%">
+													<span>{{'FUNCIONARIO.DTADMI' | translate}}</span>
+												</th>
+												<th md-column width="10%">
+													<span>{{'FUNCIONARIO.DTCARGOLIST' | translate}}</span>
+												</th>
+												<th md-column width="10%">
+													<span>{{'FUNCIONARIO.SITUACAO' | translate}}</span>
+												</th>
+												<th md-column width="10%">
+													<span>{{'FUNCIONARIO.SITUACAO3' | translate}}</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body>
+											<tr md-row ng-repeat="item in $ctrl.listaFuncionarios | orderBy: 'nome'" class="text-left">
+												<td md-cell>
+													<a class="link-table-search" href
+														ng-click="$ctrl.displayViewFuncionario(item)"
+														ng-if="$ctrl.displayBtnNovo">{{ ::item.nome }}</a>
+													<a class="link-table-search" href ng-click=""
+														ng-if="!$ctrl.displayBtnNovo">{{ ::item.nome }}</a>
+												</td>
+												<td md-cell>{{ ::item.departamento.nome }}</td>
+												<td md-cell>{{::item.cargo.nome}}</td>
+												<td md-cell>{{::item.admissao  | date : 'dd/MM/yyyy'}}</td>
+												<td md-cell>{{::item.dataCargo | date : 'dd/MM/yyyy'}}</td>
+												<td md-cell><span ng-class="{'green-bg': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}" class="estilo_situacao font-size-10"><b>{{ 'SITUACAO.' + item.situacao | translate }}</b></span></td>
+												<td md-cell><span ng-class="{'green-bg': item.situacaoFuncional == 'EM_ATIVIDADE', 'red-bg' : situacaoFuncional != 'EM_ATIVIDADE'}" class="estilo_situacao font-size-10 quebra_situacao"><b>{{ 'SITUACAO.' + item.situacaoFuncional | translate }}</b></span></td>
+											</tr>
+											</tbody>
+										</table>
+									</md-table-container>
+
+									<md-divider></md-divider>
+
+								</v-pane-content>
+							</v-pane>
+
+							<div flex layout="row" layout-xs="column" layout-sm="column">
+								<v-pane flex>
+									<v-pane-header>
+										<div id="competenciaCargos" class="md-accent-fg">
+											<h3>Cargos Associados</h3></div>
+									</v-pane-header>
+
+
+									<v-pane-content>
+
+										<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+										<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-if="$ctrl.listaCargoCompetencia == null">
+											<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+										</div>
+
+										<ms-widget layout="column" flex="100" layout-wrap>
+											<ms-widget-front class="white-bg radius-10">
+												<md-table-container>
+													<div id="competenciaCargo">
+														<md-table-container>
+															<table md-table md-progress="promise">
+																<thead ng-if="!options.decapitate" md-head>
+
+																<tr md-row class="grey-200-bg">
+																	<th class="secondary-text" width="3%"></th>
+																	<th md-column><span>Cargos</span></th>
+																	<th md-column><span>Identific. do cargo no sistema de RH</span></th>
+																	<th md-column><span>Situação</span></th>
+																</tr>
+																</thead>
+																<tbody md-body>
+																<tr md-row ng-repeat-start="item in $ctrl.listaCargoCompetencia">
+																	<td md-cell>
+																		<button ng-if="item.expanded" ng-click="item.expanded = false;">
+																			<md-icon md-font-icon="icon-menu-up"></md-icon>
+																		</button>
+																		<button ng-if="!item.expanded" ng-click="item.expanded = true;">
+																			<md-icon md-font-icon="icon-menu-down"></md-icon>
+																		</button>
+																	</td>
+																	<td md-cell>
+																		<a class="link-table-search" href
+																			ng-if="$ctrl.displayBtnNovo"
+																			ng-click="$ctrl.displayViewCargo(item.cargo)">{{
+																			::item.cargo.nome}}</a>
+																		<a class="link-table-search" href
+																			ng-if="!$ctrl.displayBtnNovo" ng-click="">{{
+																			::item.cargo.nome}}</a>
+																	</td>
+																	<td md-cell>{{ ::item.cargo.idCargoCliente}}</td>
+																	<td md-cell><span ng-class="{'green-bg': item.cargo.situacao == 'ATIVA', 'red-bg' : item.cargo.situacao != 'ATIVA'}" class="estilo_situacao"><b>{{ 'SITUACAO.' + item.cargo.situacao | translate }}</b></span></td>
+																</tr>
+																<tr md-row ng-if="item.expanded" ng-repeat-end="">
+																	<td md-cell colspan="5" class="borda_avaliador" style="padding: 0px;">
+																		<div>
+																			<div>
+																				<md-table-container>
+																					<table class="simple row-border hover" ms-responsive-table>
+																						<thead>
+																						<tr class="grey-200-bg">
+																							<th style="width: 480px;">Competências</th>
+																							<th style="width: 580px;">Tipo da competência</th>
+																							<th>Situação</th>
+																						</tr>
+																						</thead>
+																						<tbody>
+																						<tr ng-repeat="competenciaItem in item.competencias"
+																							ng-class="{'grey-300-bg': item.selected}" class="text-left">
+																							<td>
+																								<a class="link-table-search"
+																									href
+																									ng-if="$ctrl.displayBtnNovo"
+																									ng-click="$ctrl.displayViewCompetencia(competenciaItem)">{{
+																									::competenciaItem.descricaoAbreviada}}</a>
+																								<a class="link-table-search"
+																									href
+																									ng-if="!$ctrl.displayBtnNovo"
+																									ng-click="">{{
+																									::competenciaItem.descricaoAbreviada}}</a>
+																							</td>
+																							<td>{{ ::competenciaItem.tipo.descricao }}</td>
+																							<td><span ng-class="{'green-bg': competenciaItem.situacao === 'ATIVA', 'red-bg' : competenciaItem.situacao !== 'ATIVA'}" class="estilo_situacao"><b>{{ 'SITUACAO.' + competenciaItem.situacao | translate }}</b></span></td>
+																						</tr>
+																						</tbody>
+																					</table>
+																				</md-table-container>
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+														</md-table-container>
+													</div>
+													<md-divider></md-divider>
+												</md-table-container>
+											</ms-widget-front>
+										</ms-widget>
+									</v-pane-content>
+								</v-pane>
+							</div>
+						</v-accordion>
+
+					</div>
+				</form>
+			</div>
+		</div>
+		<span class="width-15" hide-xs></span>
+		<span class="height-15" hide show-xs></span>
+		<div flex="35" layout="column" class="white-bg style_card w100 mx-h-600" flex-xs="100" flex-sm="100">
+			<div layout="row" class="content h50" layout-xs="column">
+				<div flex layout-align="center center" class="pl-16 pr-16">
+					<div id="title_hierarquia" class="md-accent-fg">
+						<h1 class="mt-10">{{'DEPARTAMENTO.HIERARQUIA_SETORES' | translate }}</h1>
+					</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<div class="content overflow" style="padding: 20px;" >
+				<treecontrol
+				class="tree-classic"
+				tree-model="$ctrl.dataForTheTree"
+				options="$ctrl.treeOptions"
+				expanded-nodes="$ctrl.expandedNodes"
+			>
+				<a href ng-click="$ctrl.displayView(node)" class="md-accent-fg">
+					<b ng-class="{'node_tree': $ctrl.object.id === node.id}">{{ node.nome }}</b>
+				</a>
+			</treecontrol>
+			</div>
+		</div>
+	</div>
+</div>
+

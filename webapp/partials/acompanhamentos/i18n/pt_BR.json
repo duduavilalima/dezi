@@ -1,0 +1,77 @@
+{
+  "DASHBOARD": {
+    "TITLE":"Acompanhamentos",
+    "BTNFILTRAR":"Gerar gráfico",
+    "SELECTLABELCAMPANHA":"Campanha",
+    "SELECTLABELAVALIACAO":"Avaliação",
+    "GRAFICOTITLEHISTPREENCH":"Histórico de preenchimentos",
+    "GRAFICOTITLEHISTPREENCH_SM":"Hist. de preenchimentos",
+    "LABELPERIODO":"Período",
+    "TITLEPERCPREENCH":"Percentual de preenchimento",
+    "TITLEPERCPREENCH_SM":"Perc. de preenchimento",
+    "WIDGETAUTOAVALIACAO":"Autoavaliações",
+    "WIDGETAVALIACOES":"Avaliações",
+    "WIDGETCONSENSO":"Consensos",
+    "WIDGETREVISAO":"Revisão",
+    "DATADE": "Data de",
+    "DATAATE": "Data até",
+    "PERIODODE": "Período de",
+    "PERIODOATE": "Período até",
+    "VOLTAR": "Voltar",
+    "DESCRICAO": "Descrição",
+    "PREENCHIMENTOS": "Preenchimentos",
+    "AVALIADO": "Nº de avaliados",
+    "%": "% do preenchimento",
+    "QTD": "Qtd de detalhamentos",
+    "NOTIFICAR": "Notificar todos",
+    "AVALIADOR": "Avaliador",
+    "UNIDADE": "Unidade",
+    "SETOR": "Setor",
+    "LIMPAR": "Limpar",
+    "COLABORADOR": "Colaborador",
+    "AVALIACAO": "Avaliação",
+    "SITUACAO": "Situação",
+    "OPCOES": "Opções",
+    "OPCAO_AVALIADOS": "Exibir avaliados",
+    "OPCAO_ENVIARMSG": "Enviar mensagem",
+    "NAOTEM": "Não há preenchimentos para esta pesquisa"
+  },
+  "PREENCHIMENTO": {
+    "TODOS": "Todos",
+    "NAO_APLICAVEL": "-",
+    "NAO_PREENCH": "Não Preenchida",
+    "PARCIALMENTE_PREENCH": "Parcial",
+    "TOTALMENTE_PREENCH": "Preenchida"
+  },
+  "DIALOG": {
+    "FECHAR": "Fechar",
+    "AVALIADOS": {
+      "TITLE": "Avaliados",
+      "NAOTEM": "Este avaliador não possui avaliados para consenso."
+    },
+    "PREENCH": {
+      "TITLE": "Avaliações",
+      "AUTOAVALIACAO": "Autoavaliação",
+      "AVALIACAO": "Avaliação",
+      "CONSENSO": "Consenso",
+      "GESTOR": "Gestor",
+      "SUBORDINADOS": "Subordinados",
+      "PARES": "Pares"
+    },
+    "ENVIAR_MSG": {
+      "TITLE": "Nova mensagem",
+      "DE": "De",
+      "PARA": "Para",
+      "NOTIFICAR": "Notificar via e-mail",
+      "TITULO": "Título",
+      "REQUIRED": "Campo obrigatório.",
+      "MAX_255": "Máximo de 255 caracteres.",
+      "MENSAGEM": "Mensagem *",
+      "CANCELAR": "Cancelar",
+      "ENVIAR": "Enviar"
+    }
+  },
+  "validation": {
+    "not-allowed": "Operação não permitida"
+  }
+}

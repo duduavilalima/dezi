@@ -1,0 +1,50 @@
+{
+  "PREENCHIMENTO":{
+    "TITLE":"L'établissement",
+    "BTNFORMACAO":"Formation et langues",
+    "MINHASAVALIACOES":"Mes commentaires",
+    "AUTOAVALIACOES":"Auto-évaluations",
+    "CONSENSO":"Consensus",
+    "LBLPESQUISAR":"Recherche",
+    "CAMPANHA":"Campagnes",
+    "AVALIACAO":"Évaluation",
+    "HINT_AVALIACAO_GESTOR":"L'évaluation doit être remplie par votre gestionnaire",
+    "AVALIADOR":"L'évaluateur",
+    "DATAAV1":"Date limite AV1",
+    "DATAAV2":"Date limite AV2",
+    "DATAAV3":"Date limite AV3",
+    "OPCOES":"Options",
+    "MEUSAVALIADOS": "Mon évalué et révisé",
+    "RESUMO": "Synthèse",
+    "AVALIACOES": "Commentaires",
+    "REVISAO": "Révision",
+    "AVALIADO": "Évalué",
+    "REVISOR": "Réviseur",
+    "DATAREV": "Date limite de l’examinateur",
+    "PREENCHIMENTOS": "L'établissements",
+    "AUTOAVALIACAO": "Auto-évaluation",
+    "LBLPAGINA": "{page: 'Page:', rowsPerPage: 'Lignes par page:', of: 'de'}",
+    "PREENCHIMENTODASAVALIACOES":"Remplissage des notes",
+    "NAOPREENCHIDA":"Non rempli",
+    "PARCIALMENTEPREENCHIDA":"Partiellement rempli",
+    "TOTALMENTEPREENCHIDA":"Pleinement rempli",
+    "LBLCOMPETENCIAS":"Compétence",
+    "LBLFUNCIONARIOS":"Employés",
+    "TIPODECOMPETENCIAS":"Genre de compétences",
+    "PREENCHIDOS":"Rempli",
+    "PENDENTES":"Imminent"
+  },
+  "LOGIN": {
+    "CONTA": "Connectez-vous à votre compte",
+    "EMAIL": "Login",
+    "VALIDATION": "Obligatoire",
+    "VALIDATION-EMAIL" : "E -mail doit être une adresse e-mail valide",
+    "SENHA": "Mot de passe",
+    "ESQUECER": "Vous avez oublié votre mot de passe?",
+    "BTNENTRAR": "Entrer",
+    "EMPRESA":"Entreprise"
+  },
+  "validation": {
+    "login-password-invalid" : "Vous devez vous identifier ou mot de passe invalide."
+  }
+}

@@ -1,0 +1,67 @@
+<md-dialog aria-label="Avaliações">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{'DIALOG.PREENCH.TITLE' | translate}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()"
+					style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+						aria-label="Fechar" />
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<!-- <md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+			<div class="md-dialog-content p-16">
+				<md-table-container class="table_pesquisa">
+					<table id="table-list" md-table md-progress="$ctrl.listResult">
+						<tbody md-body>
+							<tr md-row ng-if="item.totalAuto > 0">
+								<td md-cell class="text-left">{{'DIALOG.PREENCH.AUTOAVALIACAO' | translate}}</td>
+								<td md-cell class="text-right">{{ item.percAuto }}</td>
+							</tr>
+					</table>
+				</md-table-container>
+			</div>
+		</md-dialog-content> -->
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+			<div class="md-dialog-content p-16">
+				<div flex-gt-sm flex>
+					<div layout="row" ng-if="item.totalAuto > 0">
+						<span class="md-list-item-text">{{'DIALOG.PREENCH.AUTOAVALIACAO' | translate}}</span>
+						<span flex></span>
+						<span>{{ item.percAuto }}</span>
+					</div>
+					<div layout="row" ng-if="item.totalGestor > 0">
+						<span class="md-list-item-text">{{'DIALOG.PREENCH.GESTOR' | translate}}</span>
+						<span flex></span>
+						<span class="md-list-item-text">{{ item.percGestor }}</span>
+					</div>
+					<div layout="row" ng-if="item.totalSubordinados > 0">
+						<span>{{'DIALOG.PREENCH.SUBORDINADOS' | translate}}</span>
+						<span flex></span>
+						<span>{{ item.percSubordinados }}</span>
+					</div>
+					<div layout="row" ng-if="item.totalPares > 0">
+						<span>{{'DIALOG.PREENCH.PARES' | translate}}</span>
+						<span flex></span>
+						<span>{{ item.percPares }}</span>
+					</div>
+					<!-- <div layout="row" ng-if="item.totalConsenso > 0">
+						<span>{{'DIALOG.PREENCH.CONSENSO' | translate}}</span>
+						<span flex></span>
+						<span>{{ item.percConsenso }}</span>
+					</div> -->
+				</div>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" class="white-bg" layout-align="center center">
+			<md-button style="float: left" class="md-raised md-default text-capitalize" ng-click="cancel()">
+				{{'DIALOG.FECHAR' | translate}}
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org" 
+	    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Avaliação de Desempenho</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body
+	style="color: rgb(55, 71, 79); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; text-align: justify;">
+	<table align="center" border="0" cellpadding="0" cellspacing="0"
+		width="800">
+		<tr>
+			<td align="center" bgcolor="#9EB44D" style="padding: 40px 0 30px 0;">
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+				<div style="margin: 0 auto;">
+					<h3 style="font-size: 20px; font-weight: bold;">Prezado Sr(a).
+						<span th:text="${nomeusuario}"></span></h3>
+					<p>
+						Foi solicitada a redefinição de senha no sistema Avaliação de
+						Desempenho (DEZI). <br>
+						<br> Segue abaixo a nova senha de acesso. <br>
+						<br> <strong>Senha: </strong><span th:text="${senha}"></span><br>
+						<br> Você poderá modificar a senha a qualquer momento no menu
+						superior direito "Redefinir senha". <br>
+						<br>
+						<a th:href="${link}">Acesse o sistema Avaliação de Desempenho</a><br>
+						<br>Atenciosamente, <br> 
+						<strong>A administração</strong>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" bgcolor="#9EB44D" style="padding: 40px 0 30px 0;">
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+>

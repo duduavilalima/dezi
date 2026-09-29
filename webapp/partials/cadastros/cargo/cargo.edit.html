@@ -1,0 +1,53 @@
+<form-card
+	name="formCargo"
+	card-title="CARGO.DESCRICAO"
+	on-save="$ctrl.save()"
+	on-cancel="$ctrl.cancel()"
+>
+	<labeled-input
+		flex-gt-xs="50"
+		name="nome"
+		label="CARGO.CARGO"
+		value="$ctrl.cargo.nome"
+		options="{
+			required: true,
+			min: 2,
+			max: 50
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="situacao"
+		label="CARGO.SITUACAO"
+		value="'SITUACAO.'+ $ctrl.cargo.situacao"
+		options="{ disabled: true, translate: true }"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="departamento"
+		type="select"
+		label="CARGO.DEPARTAMENTO"
+		value="$ctrl.cargo.departamento"
+		options="{ required: true }"
+		select-options="{
+			list: $ctrl.departamentos,
+			label: 'nome'
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+
+	<labeled-input
+		flex-gt-xs="50"
+		name="idCargoCliente"
+		label="CARGO.IDRH"
+		value="$ctrl.cargo.idCargoCliente"
+		options="{
+			required: true,
+			max: 10
+		}"
+		on-change="$ctrl.handleChange(name, value)"
+	/>
+</form-card>

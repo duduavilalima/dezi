@@ -1,0 +1,21 @@
+{
+  "CONTATO": {
+    "TITULO":"Contact",
+    "VALIDATION": "Required"
+  },
+  "DIALOG":{
+    "TITULO":"Open call",
+    "ASSUNTO":"Subject",
+    "CLASSIFICACAO":"Classification",
+    "MENSAGEM":"Message",
+    "CANCELAR":"Cancel",
+    "ENVIAR":"Open call",
+    "SUCCESS":"Open call successfully!"
+  },
+  "CLASSIFICACAO": {
+    "DUVIDA":"Doubt",
+    "CRITICA":"Criticism",
+    "SUGESTAO":"Suggestion",
+    "RECLAMACAO":"Complaint"
+  }
+}

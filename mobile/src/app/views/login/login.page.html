@@ -1,0 +1,105 @@
+<ion-content>
+	<form #form="ngForm" (ngSubmit)="login(form)" (keyup.enter)="!form.invalid && login(form)">
+		<ion-grid>
+			<ion-row class="dezi-logo">
+				<ion-col>
+					<div text-center class="dezi-fundo-div"></div>
+					<div text-center class="dezi-logo-div"></div>
+				</ion-col>
+			</ion-row>
+			<ion-row color="primary" justify-content-center padding-horizontal class="form-contents">
+				<ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+					<div text-center *ngIf="empresas.length === 1 && empresa">
+						<h4 color="primary">{{ empresa.nome }}</h4>
+					</div>
+					<div text-center>
+						<h5 color="primary">{{ "app.views.login.messages.welcome" | translate }}</h5>
+					</div>
+					<div padding>
+						<ion-item>
+							<ion-label color="primary" stacked>
+								{{ "app.views.login.fields.username.label" | translate }}
+							</ion-label>
+							<ion-input
+								name="matricula"
+								type="text"
+								autocapitalize="none"
+								autocorrect="off"
+								placeholder="{{ 'app.views.login.fields.username.placeholder' | translate }}"
+								[(ngModel)]="matricula"
+								required
+							>
+							</ion-input>
+						</ion-item>
+						<ion-item>
+							<ion-label color="primary" stacked>
+								{{ "app.views.login.fields.password.label" | translate }}
+							</ion-label>
+							<ion-input
+								name="senha"
+								type="password"
+								placeholder="{{ 'app.views.login.fields.password.placeholder' | translate }}"
+								[(ngModel)]="senha"
+								required
+							>
+							</ion-input>
+						</ion-item>
+						<ion-item *ngIf="empresas.length > 1">
+							<ion-label color="primary" stacked>
+								{{ "app.views.login.fields.empresa.label" | translate }}
+							</ion-label>
+							<ion-select
+								name="empresa"
+								required
+								[disabled]="empresas.length <= 1"
+								[cancelText]="'app.system.cancel' | translate"
+								[compareWith]="compareById"
+								[(ngModel)]="empresa"
+							>
+								{{ "app.views.login.fields.empresa.placeholder" | translate }}
+								<ion-option *ngFor="let e of empresas" [value]="e">
+									{{ e.nome }}
+								</ion-option>
+							</ion-select>
+						</ion-item>
+					</div>
+					<div padding>
+						<ion-row>
+							<ion-col col-12>
+								<button
+									class="login"
+									ion-button
+									size="large"
+									type="submit"
+									[disabled]="form.invalid"
+									expand="block"
+								>
+									{{ "app.views.login.actions.submit.label" | translate }}
+								</button>
+							</ion-col>
+						</ion-row>
+						<ion-row text-center>
+							<ion-col col-12>
+								<a (click)="goToForgotPassword()" class="ion-margin-top">{{
+									"app.views.login.actions.forgot-password.label" | translate
+								}}</a>
+							</ion-col>
+						</ion-row>
+						<ion-row text-center>
+							<ion-col col-12 style="color: grey">
+								<span>Dezi v{{ version }} <span *ngIf="!production">({{ environment }}, git:{{ gitRef }}@{{ gitCommit }})</span></span>
+							</ion-col>
+						</ion-row>
+						<!-- <ion-row text-center>
+							<ion-col col-12>
+								<a href="#" class="ion-margin-top">{{
+									"app.views.login.actions.register.label" | translate
+								}}</a>
+							</ion-col>
+						</ion-row> -->
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</form>
+</ion-content>

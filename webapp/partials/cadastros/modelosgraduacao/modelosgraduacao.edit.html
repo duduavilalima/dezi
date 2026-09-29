@@ -1,0 +1,168 @@
+<!-- FIXME Usar o form-card -->
+<!-- <form-card
+	name="formModelo"
+	card-title="MODELOS.DESCRICAO"
+	object="$ctrl.object"
+	on-save="$ctrl.save"
+	on-cancel="$ctrl.cancel"
+>
+	<labeled-input
+		flex-gt-xs="40"
+		flex-gt-sm="55"
+		name="descricaoModelo"
+		label="MODELOS.MODELO"
+		value="$ctrl.object.descricaoModelo"
+		options="{
+			required: true,
+			min: 2,
+			max: 80
+		}"
+		on-change="$ctrl.handleChange"
+	/>
+
+	<labeled-input
+		flex-gt-xs="20"
+		flex-gt-sm="15"
+		name="qtdGraduacoes"
+		label="MODELOS.QTD"
+		value="$ctrl.object.qtdGraduacoes"
+		options="{
+			required: true,
+			disabled: true
+		}"
+		on-change="$ctrl.handleChange"
+	/>
+
+	<labeled-input
+		flex-gt-xs="20"
+		flex-gt-sm="15"
+		name="naoGraduar"
+		label="MODELOS.NAOGRADUAR"
+		type="select-boolean"
+		value="$ctrl.object.naoGraduar"
+		options="{
+			required: true
+		}"
+		on-change="$ctrl.handleChange"
+	/>
+
+	<labeled-input
+		flex-gt-xs="20"
+		flex-gt-sm="15"
+		name="situacao"
+		label="MODELOS.SITUACAO"
+		value="$ctrl.object.situacao"
+		options="{
+			required: true,
+			disabled: true
+		}"
+		on-change="$ctrl.handleChange"
+	/>
+
+</form-card> -->
+
+
+<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+	<div class="white-bg style_card m-8" flex layout="column">
+		<div layout="row" class="content" layout-xs="column">
+			<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+				<h1>{{'MODELOS.DESCRICAO' | translate }}</h1>
+			</div>
+		</div>
+
+		<md-divider layout-padding></md-divider>
+
+		<form name="basicForm" class="md-inline-form" layout="column" novalidate>
+			<div layout="row" layout-padding>
+				<md-input-container flex="40">
+					<label id="lbl_modelo_edit" for="modelo_edit">{{'MODELOS.MODELO' | translate}}</label>
+					<input id="modelo_edit"
+						name="modelo_edit"
+						type="text"
+						ng-model="$ctrl.object.descricaoModelo"
+						required ng-required="true"
+						focus-me="true"
+						ng-minlength="2"
+						ng-maxlength="80"
+						md-maxlength="80"
+						maxlength="80"
+					>
+				</md-input-container>
+
+
+				<!-- <span class="width-20"></span> -->
+
+				<md-input-container flex="20">
+					<label id="lbl_qtdgraduacoes_edit" for="qtdgraduacoes">{{'MODELOS.QTDGRADUACAO' | translate}}</label>
+					<input id="qtdgraduacoes_edit"
+						name="qtdgraduacoes"
+						type="text"
+						ng-model="$ctrl.object.qtdGraduacoes"
+						ng-disabled="true" disabled
+					>
+				</md-input-container>
+
+				<!-- <span class="width-20"></span> -->
+
+				<md-input-container flex="20">
+					<label id="lbl_nao_graduar" for="nao_graduar">{{'MODELOS.NAOGRADUAR' | translate}}</label>
+					<md-select
+						id="nao_graduar"
+						name="nao_graduar"
+						ng-model="$ctrl.object.naoGraduar"
+						ng-disabled="true" disabled
+						ng-required="true" required
+					>
+						<md-option
+							ng-repeat="item in $ctrl.booleanList"
+							ng-value="{{item.value}}"
+							value="{{item.value}}"
+							ng-selected="item.value === $ctrl.object.naoGraduar"
+						>
+							{{item.trLabel | translate}}
+						</md-option>
+					</md-select>
+
+					<div ng-messages="basicForm.nao_graduar.$error" ng-show="basicForm.nao_graduar.$touched">
+						<div ng-message="required">
+							<span>{{'MODELOS.CAMPOOBRIGATORIO' | translate}}.</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<!-- <span class="width-20"></span> -->
+
+
+				<md-input-container flex="20">
+					<label id="lbl_situacao_edit" for="situacao_edit">{{'MODELOS.SITUACAO' | translate}}</label>
+					<input id="situacao_edit" name="situacao_edit" type="text"
+							value="{{'SITUACAO.' + $ctrl.object.situacao | translate}}" ng-disabled="true">
+				</md-input-container>
+
+			</div>
+
+			<md-divider></md-divider>
+
+			<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+				<md-button
+					ng-click="$ctrl.onCancel()"
+					class="md-raised md-accent-fg text-capitalize"
+					aria-label="Cancelar"
+					translate translate-attr-aria-label="FORM.CANCEL"
+				>
+					{{'FORM.CANCEL' | translate}}
+				</md-button>
+				<md-button
+					ng-click="$ctrl.onSave()"
+					class="md-raised md-accent text-capitalize"
+					ng-disabled="basicForm.$invalid"
+					aria-label="Salvar"
+					translate translate-attr-aria-label="FORM.SAVE"
+				>
+					{{'FORM.SAVE' | translate}}
+				</md-button>
+			</div>
+		</form>
+
+	</div>
+</div>

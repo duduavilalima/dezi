@@ -1,0 +1,32 @@
+{
+  "NAV": {
+    "PAINELDECONTROLE": "Follow-up",
+    "CAMPANHAS":"Campaigns",
+    "PREENCHIMENTO":"Submissions",
+    "ESTATISTICAS":"Statistics",
+    "CADASTROS":"Entries",
+    "MODELOSDEGRADUACAO":"Degree Scales",
+    "COMPETENCIAS":"Skills",
+    "DEPARTAMENTOS":"Departments",
+    "CARGOS":"Positions",
+    "FUNCIONARIOS":"Employees",
+    "FORMACAOEIDIOMAS":"Training and Languages",
+    "ESCOLARIDADE":"Education",
+    "TIPOSDECURSO":"Course types",
+    "CURSOSDEGRADUACAO":"Undergraduate courses",
+    "CURSOSDEESPECILIZACAO":"Specialization courses",
+    "IDIOMAS":"Languages",
+    "MENSAGEM": "Welcome message",
+    "PARAMETROS": "General parameters",
+    "AVALIACOES":"Evaluations",
+    "AUTOAVALIACOES":"Self-evaluations",
+    "TIPODECOMPETENCIAS": "Skill type",
+    "RESULTADOS": "Results",
+    "DESEMPENHO": "Performance",
+    "ADMINISTRACAO": "Administration",
+    "HOST": "Host by companies",
+    "CONSENSOS" : "Consensus",
+    "RELATORIOS": "Reports",
+    "UNIDADE" : "Unit"
+  }
+}

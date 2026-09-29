@@ -1,0 +1,35 @@
+<div layout="row" layout-xs="column" layout-wrap class="p-8 m-4">
+
+	<div ng-repeat="(chartName, chart) in $ctrl.charts" flex="33" flex-md="50" flex-xs="100">
+
+		<div layout="column" class="white-bg style_card m-8" >
+			<div class="content">
+				<div layout="row" layout-align="space-between center" layout-sm="column" class="p-16">
+					<h1 flex class="md-accent-fg mv-0" translate>
+						{{ chartName }}
+					</h1>
+					<span class="estilo_contador">
+						{{ chart.preenchidas }} / {{ chart.total }}
+						<md-tooltip class="h4">Preenchidas / Total</md-tooltip>
+					</span>
+				</div>
+			</div>
+
+			<md-divider></md-divider>
+
+			<div layout="row" class="p-16" layout-align="center center" ng-if="chart.total > 0" ng-click="$ctrl.avaliacaoPreenchimento(chartName)">
+				<canvas
+					style="cursor: pointer;"
+					class="chart chart-doughnut"
+					chart-data="chart.data"
+					chart-labels="chart.labels"
+					chart-colors="$ctrl.chartColors"
+					chart-options="$ctrl.chartOptions"
+
+				/>
+			</div>
+		</div>
+
+	</div>
+
+</div>

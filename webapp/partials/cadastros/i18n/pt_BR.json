@@ -1,0 +1,57 @@
+{
+  "CADASTRO": {
+    "MODE": {
+      "EDIT": "Edição",
+      "VIEW": "Exibição",
+      "NEW": "Novo",
+      "TIPOCOMP": "Tipo de Competência",
+      "LIST": "Listagem"
+    },
+    "DETALHES": "Mostrar detalhes",
+    "PESQUISAR": "Pesquisar",
+    "CRIAR": "Criar",
+    "EDITAR": "Editar",
+    "CONSULTAR": "Consultar",
+    "TIPOCOMPETENCIA": {
+      "TITULO": "Tipos de Competência"
+    },
+    "CARGO": {
+      "TITULO": "Cargos"
+    },
+    "FUNCIONARIO": {
+      "TITULO": "Colaboradores"
+    },
+    "DEPARTAMENTO": {
+      "TITULO": "Setores"
+    }
+  },
+  "SITUACAO": {
+    "TITULO": "Situação d{{article}} {{type}}",
+    "ATIVA": "Ativa",
+    "INATIVA": "Inativa",
+    "ATIVO": "Ativo",
+    "INATIVO": "Inativo",
+    "MSG_ATIVAR": "Deseja ativar {{article}} {{type}} '{{name}}'?",
+    "MSG_DESATIVAR": "Deseja desativar {{article}} {{type}} '{{name}}'?"
+  },
+  "FORM": {
+    "CANCEL": "Cancelar",
+    "SAVE": "Salvar",
+    "BACK": "Voltar",
+    "YES": "Sim",
+    "NO": "Não",
+    "MSG_DESATIVAR": "Deseja desativar {{article}} {{type}} '{{name}}'?",
+    "EM_APROVACAO": "Em aprovação",
+    "APROVADO": "Aprovado",
+    "EM_ANDAMENTO": "Em andamento",
+    "FINALIZADO": "Finalizado",
+    "TABLE_PAGE": "{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}"
+  },
+  "DIALOG": {
+    "MSG_ATIVADO": "Deseja ativar o (a) {{entity}}: {{name}} ?",
+    "MSG_INATIVADO": "Deseja inativar o (a) {{entity}}: {{name}} ?",
+    "MSG_NOTIFICACAO_ATIVAR": "{{entity}} ativado (a) com sucesso!",
+    "MSG_NOTIFICACAO_INATIVAR": "{{entity}} inativado (a) com sucesso!"
+
+  }
+}

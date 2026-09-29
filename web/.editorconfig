@@ -1,0 +1,32 @@
+# http://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+tab_width = 4
+indent_size = 4
+max_line_length = 140
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.java]
+ij_java_align_multiline_parameters = true
+ij_java_call_parameters_new_line_after_left_paren = true
+ij_java_call_parameters_right_paren_on_new_line = false
+ij_java_method_parameters_new_line_after_left_paren = true
+ij_java_method_parameters_right_paren_on_new_line = false
+ij_continuation_indent_size = 8
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.json]
+# Padrão usado pelo bower e pelo npm
+indent_style = space
+indent_size = 2
+
+[*.yml]
+indent_style = space
+indent_size = 2

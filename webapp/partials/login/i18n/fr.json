@@ -1,0 +1,27 @@
+{
+  "LOGIN": {
+    "CONTA": "Connectez-vous à votre compte",
+    "EMAIL": "Login",
+    "VALIDATION": "Obligatoire",
+    "VALIDATION-EMAIL" : "E -mail doit être une adresse e-mail valide",
+    "SENHA": "Mot de passe",
+    "ESQUECER": "Vous avez oublié votre mot de passe?",
+    "BTNENTRAR": "Entrer",
+    "EMPRESA":"Entreprise",
+    "INSERIR_MATRICULA":"(Insérez ici votre inscription)"
+  },
+  "ESQUECEUSENHA": {
+    "REDEFINA": "Votre mot de passe",
+    "ENVIADO": "Vous recevrez un email avec un nouveau mot de passe",
+    "ENDERECO": "E-mail",
+    "EMAILINVALIDO": "Le courriel est pas valide",
+    "BTNREDEFINA": "Réinitialiser le mot de passe",
+    "BTNVOLTAR": "Retour à l'écran de connexion",
+    "TITLESUCCESS": "Mot de passe reset",
+    "MESSAGESUCCESS": "Votre mot de passe a été réinitialisé avec succès! Bientôt , vous recevrez votre nouveau mot de passe par email .",
+    "MATRICULA":"Login"
+  },
+  "ERROR": {
+    "LOGINERROR":"Connectez-vous et / ou mot de passe incorrect"
+  }
+}

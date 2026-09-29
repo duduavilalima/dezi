@@ -1,0 +1,306 @@
+<md-content class="md-padding" style="background-color: rgb(245,245,245);"
+	ng-controller="AbaAcompanhamentoCadastroCtrl">
+	<div class="widget-group" layout="row" flex="100" layout-wrap>
+		<ms-widget flippable="false" layout="row" flex="100" style="height: 100px;">
+			<ms-widget-front class="p-16 white-bg">
+				<div layout="column" layout-gt-xs="row" layout-xs="row" flex="100">
+					<md-input-container flex="30">
+						<label for="empresa2">Empresa</label>
+						<input id="empresa2" name="empresa" type="text" class="text-capitalize"
+							ng-model="object.empresa.nome" ng-disabled="true" />
+					</md-input-container>
+					<span class="width-20"></span>
+					<span class="width-20"></span>
+					<md-input-container flex="30">
+						<label for="campanha2">Campanha</label>
+						<input id="campanha2" name="campanha" type="text" class="text-capitalize"
+							ng-model="object.campanha.nome" ng-disabled="true" />
+					</md-input-container>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+	<div class="widget-group" layout="column" layout-gt-xs="row" flex>
+		<ms-widget layout="column" flex="100" layout-wrap>
+			<ms-widget-front class="white-bg radius-10">
+				<div hide-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h1 class="md-accent-fg">Percentual de preenchimento</h1>
+				</div>
+				<div hide-gt-xs class="ph-16 h-50 border-bottom" layout="row" layout-align="center center">
+					<h2 style="margin-left: -10px;" class="md-accent-fg">Perc. de preenchimento</h2>
+				</div>
+				<div layout="column" layout-gt-xs="row" class="p-5" flex>
+					<ms-widget flippable="true" layout="column" layout-wrap flex>
+						<ms-widget-front class="white-bg">
+							<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+								<h2 class="simplified md-accent-fg">Autoavaliações</h2>
+							</div>
+							<div class="pt-8 pb-32" layout="column" layout-align="center center"
+								style="margin-top: -10px;">
+								<!--FIXME Trocar por chart.js -->
+								<!-- <c3chart bindto-id="gauge-plot7-chart" ng-if="autoavaliacao != null">
+									<chart-column column-id="AV1" column-values="{{autoavaliacao}}" column-color="green"
+										column-type="gauge"></chart-column>
+									<chart-gauge min="0" max="100" width="45"></chart-gauge>
+								</c3chart> -->
+								<div layout="row" layout-sm="column" layout-align="space-around"
+									ng-if="autoavaliacao == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+							</div>
+						</ms-widget-front>
+					</ms-widget>
+					<ms-widget flippable="true" layout="column" layout-wrap flex>
+						<ms-widget-front class="white-bg">
+							<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+								<h2 class="simplified md-accent-fg">Avaliações</h2>
+							</div>
+							<div class="pt-8 pb-32" layout="column" layout-align="center center"
+								style="margin-top: -10px;">
+								<!--FIXME Trocar por chart.js -->
+								<!-- <c3chart bindto-id="gauge-plot3-chart" ng-if="avaliacao != null">
+									<chart-column column-id="AV2" column-values="{{avaliacao}}" column-type="gauge">
+									</chart-column>
+									<chart-gauge min="0" max="100" width="45"></chart-gauge>
+								</c3chart> -->
+								<div layout="row" layout-sm="column" layout-align="space-around"
+									ng-if="avaliacao == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+							</div>
+						</ms-widget-front>
+					</ms-widget>
+					<ms-widget flippable="true" layout="column" layout-wrap flex>
+						<ms-widget-front class="white-bg">
+							<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+								<h2 class="simplified md-accent-fg">Consenso</h2>
+							</div>
+							<div class="pt-8 pb-32" layout="column" layout-align="center center"
+								style="margin-top: -10px;">
+								<!--FIXME Trocar por chart.js -->
+								<!-- <c3chart bindto-id="gauge-plot4-chart" ng-if="consenso != null">
+									<chart-column column-id="AV3" column-values="{{consenso}}" column-color="red"
+										column-type="gauge"></chart-column>
+									<chart-gauge min="0" max="100" width="45"></chart-gauge>
+								</c3chart> -->
+								<div layout="row" layout-sm="column" layout-align="space-around"
+									ng-if="consenso == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+							</div>
+						</ms-widget-front>
+					</ms-widget>
+					<ms-widget flippable="true" layout="column" layout-wrap flex>
+						<ms-widget-front class="white-bg">
+							<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+								<h2 class="simplified md-accent-fg">Revisão</h2>
+							</div>
+							<div class="pt-8 pb-32" layout="column" layout-align="center center"
+								style="margin-top: -10px;">
+								<!--FIXME Trocar por chart.js -->
+								<!-- <c3chart bindto-id="gauge-plot5-chart" ng-if="revisao != null">
+									<chart-column column-id="Revisão" column-values="{{revisao}}" column-color="black"
+										column-type="gauge"></chart-column>
+									<chart-gauge min="0" max="100" width="45"></chart-gauge>
+								</c3chart> -->
+								<div layout="row" layout-sm="column" layout-align="space-around"
+									ng-if="revisao == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+							</div>
+						</ms-widget-front>
+					</ms-widget>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+	<div style="height: 7px">
+	</div>
+	<div class="widget-group" layout="row" flex="100" layout-wrap>
+		<ms-widget layout="row" flex="100">
+			<ms-widget-front class="white-bg">
+				<div class="p-24 mb-8 border-bottom" layout="row" layout-align="space-between center">
+					<div layout="row" flex>
+						<div id="title_colaborador" flex class="md-accent-fg titulo_av">
+							<h1 style="margin-top: 23px;">Colaboradores</h1>
+						</div>
+					</div>
+					<div flex layout-align="center center" hide-sm hide-xs style="margin-left: 70px; margin-top: 25px;">
+						<md-checkbox ng-model="av1_acomp" class="p-8 font-size-14 check_gest"
+							aria-label="Checkbox autoavaliação">
+							Autoavaliação
+						</md-checkbox>
+					</div>
+					<div flex layout-align="center center" hide-sm hide-xs style="margin-top: 25px;">
+						<md-checkbox ng-model="av2_acomp" class="p-8 font-size-14 check_gest"
+							aria-label="Checkbox avaliação">
+							Avaliação
+						</md-checkbox>
+					</div>
+					<div flex layout-align="center center" hide-sm hide-xs style="margin-top: 25px;">
+						<md-checkbox ng-model="av3_acomp" class="p-8 font-size-14 check_gest"
+							aria-label="Checkbox consenso">
+							Consenso
+						</md-checkbox>
+					</div>
+					<div flex layout-align="center center" hide-sm hide-xs style="margin-top: 25px;">
+						<md-checkbox ng-model="av4_acomp" class="p-8 font-size-14 check_gest"
+							aria-label="Checkbox revisao">
+							Revisão
+						</md-checkbox>
+					</div>
+					<div class="pesquisa_av" layout="row" hide-xs>
+						<label id="lbl_search2" style="font-size: larger;">Pesquisar: </label>
+						<input style="border: solid 2px #E1E1E1; margin-left: 5px; height: 30px; margin-top: -5px;"
+							id="input_search2" type="text" name="input_search" ng-model="filtro2">
+					</div>
+				</div>
+				<div class="scroll_tables">
+					<table id="table_acompanhamentos_1" class="dataTable row-border  hover text-center"
+						style="display: table" role="grid">
+						<thead>
+							<tr>
+								<th class="secondary-text" width="10%" hide-sm hide-xs>
+									<div class="table-header text-left"><span class="column-title">Matricula</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="20%">
+									<div class="table-header text-left"><span class="column-title">Nome</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="5%" hide-sm hide-xs>
+									<div class="table-header text-left"><span class="column-title">Gestor</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="10%" hide-xs>
+									<div class="table-header text-left"><span class="column-title">Cargo</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="10%" hide-sm hide-xs>
+									<div class="table-header text-left"><span class="column-title">Setor</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="10%" hide-xs>
+									<div class="table-header text-left"><span class="column-title">Avaliador</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="7%">
+									<div class="table-header text-left"><span class="column-title">Preenchimento</span>
+									</div>
+								</th>
+								<th class="secondary-text" width="5%">
+									<div class="table-header text-left"><span class="column-title">Opções</span>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in listColaboradoresAcompanhamento | filter : filtro2"
+								class="text-left">
+								<td hide-sm hide-xs>{{ ::item.matricula }}</td>
+								<td>{{ ::item.nome}}</td>
+								<td hide-sm hide-xs>{{ ::item.gestor }}</td>
+								<td hide-xs>{{ ::item.cargo }}</td>
+								<td hide-sm hide-xs>{{ ::item.departamento }}</td>
+								<td hide-xs>{{ ::item.avaliador}}</td>
+								<td>
+									<md-icon md-font-icon="icon-check" style="color: green">
+										<md-tooltip>AV1</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-close" style="color: red">
+										<md-tooltip>AV2</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-check" style="color: green">
+										<md-tooltip>Consenso</md-tooltip>
+									</md-icon>
+									<md-icon md-font-icon="icon-close" style="color: red">
+										<md-tooltip>Revisão</md-tooltip>
+									</md-icon>
+								</td>
+								<td style="padding: 0">
+									<md-menu id="menu-table">
+										<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+											<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+										</md-button>
+										<md-menu-content class="p-0">
+											<md-menu-item>
+												<md-button aria-label="alterar avaliador"
+													ng-click="acaoAlterarColaborador($event, $index, item)" ">
+											<md-icon style=" color: black " md-font-icon=" icon-tumblr-reblog "></md-icon>
+											Alterar avaliador
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" alterar data de liberacao " ng-click=" acaoAlterarDatasLiberacao($event, $index,
+													item) ">
+												<md-icon style=" color: black " md-font-icon=" icon-calendar-select "></md-icon>
+												Alterar data de liberação
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" imprimir autoavaliacao " ng-click=" acaoContrucao($event) ">
+												<md-icon style=" color: black " md-font-icon=" icon-printer "></md-icon>
+												Autoavaliação
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" imprimir avaliacao " ng-click=" acaoContrucao($event) ">
+												<md-icon style=" color: black " md-font-icon=" icon-printer "></md-icon>
+												Avaliação
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" imprimir avaliacao de consenso " ng-click=" acaoContrucao($event) ">
+												<md-icon style=" color: black " md-font-icon=" icon-printer "></md-icon>
+												Avaliação de consenso
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" EnviarAvaliador " ng-click=" acaoEnviarAvaliador($event) ">
+												<md-icon style=" color: blue " md-font-icon=" icon-send "></md-icon>
+												Enviar mensagem ao avaliador
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" EnviarColaborador " ng-click=" acaoEnviarColaborador($event) ">
+												<md-icon style=" color: green " md-font-icon=" icon-send "></md-icon>
+												Enviar mensagem ao colaborador
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" EnviarRevisor " ng-click=" acaoEnviarRevisor($event) ">
+												<md-icon style=" color: black " md-font-icon=" icon-send "></md-icon>
+												Enviar mensagem ao revisor
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button aria-label=" excluir " ng-click=" acaoRemoverColaboradorAcompanhamento($event, $index, item) ">
+												<md-icon style=" color: red " md-font-icon=" icon-close-circle-outline "></md-icon>
+												Excluir
+											</md-button>
+										</md-menu-item>
+									</md-menu-content>
+								</md-menu>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<md-divider></md-divider>
+
+				<div layout=" row " class=" content ">
+					<div flex layout-align=" start center ">
+					</div>
+					<div layout-align=" end center ">
+						<md-button ng-click=" acaoAdicionarParticipante() " class=" m-0 ph-20 pv-10 md-button md-primary
+													text-capitalize "  aria-label=" adicionar participante ">
+							<md-icon md-font-icon=" icon-account-plus "></md-icon>
+							Adicionar participante
+						</md-button>
+					</div>
+				</div>
+			</ms-widget-front>
+		</ms-widget>
+	</div>
+</md-content>

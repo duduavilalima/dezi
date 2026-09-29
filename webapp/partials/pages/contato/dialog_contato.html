@@ -1,0 +1,76 @@
+<md-dialog id="dialog_contato" style="width:1000px; height: 500px;" aria-label="Contato" class="white-bg" ng-controller="ContatoController">
+	<form name="basicForm" novalidate ui-keypress="{13:'confirmar()'}">
+
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2><span translate="CHAMADO.TITULO">Abrir Chamado</span></h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" class="white-bg">
+			<md-progress-linear md-mode="query" ng-show="action" style="position: fixed;"></md-progress-linear>
+
+			<div class="md-dialog-content">
+				<div layout="column" layout-gt-md="row" flex="100" class="alterar_empresa">
+					<md-input-container flex>
+						<label for="id_assunto"><span translate="CHAMADO.ASSUNTO">Assunto</span></label>
+						<input id="id_assunto" name="assunto" type="text" class="text-capitalize" ng-model="object.assunto" ng-disabled="action" required ng-required="true">
+						<div ng-messages="basicForm.assunto.$error" ng-show="basicForm.assunto.$touched">
+							<div ng-message="required">
+								<span translate="CONTATO.VALIDATION">Obrigatório</span>
+							</div>
+						</div>
+					</md-input-container>
+				</div>
+
+				<div layout="column" layout-gt-md="row" flex="100" class="alterar_empresa" style="margin-top: -30px;">
+					<md-input-container flex>
+						<label for="id_classificacao"><span translate="CHAMADO.CLASSIFICACAO">Classificação</span></label>
+						<md-select id="id_classificacao" name="classificacao" ng-model="object.classificacao.index" ng-disabled="action" md-no-asterisk ng-required="true" required>
+							<md-option ng-repeat="item in listaClassificacao" ng-value="{{item.index}}">
+								{{item.valor}}
+							</md-option>
+						</md-select>
+						<div ng-messages="basicForm.classificacao.$error" ng-show="basicForm.classificacao.$touched">
+							<div ng-message="required">
+								<span translate="CONTATO.VALIDATION">Obrigatório</span>
+							</div>
+						</div>
+					</md-input-container>
+				</div>
+
+				<div class="ph-16 pv-16" layout="column" layout-align="space-between start" style="margin-top: -20px;">
+					<div style="margin-bottom: 10px;"><span style="color: rgba(0,0,0,0.7);font-size: 1.3rem;" translate="CHAMADO.MENSAGEM">Mensagem *</span></div>
+					<textarea rows="6" name="textarea_anterior" ng-model="object.mensagem" ng-disabled="action" style="border: 1px solid #9EB44D" ng-style="{border: basicForm.textarea_anterior.$error.required && basicForm.textarea_anterior.$touched ? '1px solid red' : '1px solid #9EB44D'};"
+							  class="textarea_graduacao_hint" ng-maxlength="2000" ng-required="true" required>
+					</textarea>
+					<div ng-messages="basicForm.textarea_anterior.$error" ng-show="basicForm.textarea_anterior.$touched">
+						<div style="color: red" ng-message="required">
+							<span>Campo obrigatório.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</md-dialog-content>
+
+
+		<md-dialog-actions layout="row" flex class="white-bg">
+			<div flex layout-align="start center">
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar" aria-label="Cancelar" ng-disabled="action" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					<span translate="CHAMADO.CANCELAR">Cancelar</span>
+				</md-button>
+			</div>
+			<div layout-align="end center">
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_enviar" aria-label="Enviar" ng-disabled="basicForm.$invalid || action" class="md-raised md-accent text-capitalize" ng-click="enviar()">
+					<span translate="CHAMADO.ENVIAR">Abrir chamado</span>
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

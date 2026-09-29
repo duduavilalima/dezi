@@ -1,0 +1,3 @@
+<Context reloadable="false">
+    <ResourceLink name="jdbc/DeziDS" type="javax.sql.DataSource" global="jdbc/DeziDS"/>
+</Context>

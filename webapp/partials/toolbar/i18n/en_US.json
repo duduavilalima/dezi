@@ -1,0 +1,16 @@
+{
+  "TOOLBAR": {
+    "BRAZIL": "Portuguese",
+    "ENGLISH": "English",
+    "SPANISH": "Spanish",
+    "FRENCH" : "French",
+    "TROCAR_IDIOMA": "Change Language",
+    "TROCAR_EMPRESA": "Change Company",
+    "TROCAR_SENHA": "Redefine password",
+    "MENSAGENS":"Mensagens",
+    "PERFIL":"Profile",
+    "EMPRESA":"Company",
+    "ABRIRCHAMADO":"Open call",
+    "LOGOUT":"Logout"
+  }
+}

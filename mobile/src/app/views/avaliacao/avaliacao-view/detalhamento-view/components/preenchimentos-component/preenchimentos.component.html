@@ -1,0 +1,42 @@
+<ion-scroll [scrollY]="true" [ngStyle]="{ height: 'calc(' + height + 'px  * 0.5)' }">
+	<ion-list>
+		<ion-item *ngFor="let preenchimento of preenchimentoList">
+			<ion-grid>
+				<ion-row>
+					<ion-col col-12>
+						<ion-row>
+							<ion-col col-auto class="avatar p-0">
+								<img [src]="
+										preenchimento.participante?.fotoAvaliado
+											? preenchimento.participante?.fotoAvaliado
+											: '/assets/imgs/anon.png'
+									" />
+							</ion-col>
+							<ion-col class="m-0 p-0 text-center">
+								<ion-row>
+									<ion-col col-12 class="nome-avaliado">
+										{{ preenchimento.participante?.nomeAvaliado }}
+									</ion-col>
+									<ion-col col-12 class="range">
+										<ion-item no-lines>
+											<ion-range [disabled]="preenchimento.participante?.consensoLiberado" [ngModel]="preenchimento.graduacao?.ordem"
+											 (ionChange)="onChangeGraduacao($event, preenchimento)" [min]="0" [max]="graduacaoList.length" step="1"
+											 snaps="true" color="primary">
+											</ion-range>
+										</ion-item>
+										<app-label [graduacao]="preenchimento.graduacao"></app-label>
+									</ion-col>
+								</ion-row>
+							</ion-col>
+						</ion-row>
+						<ion-item no-lines class="observacao">
+							<ion-input [disabled]="preenchimento.participante?.consensoLiberado" name="observacao" type="text" [(ngModel)]="preenchimento.observacao"
+							 placeholder="Comente registrando as evidências para sua escolha">
+							</ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+</ion-scroll>

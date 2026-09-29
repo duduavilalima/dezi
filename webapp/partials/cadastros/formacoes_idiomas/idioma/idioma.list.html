@@ -1,0 +1,35 @@
+<div id="graduacoes" class="page-layout simple fullwidth doc-page">
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8">
+		<div class="white-bg style_card m-8">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="promise">
+					<thead fix-head md-head md-order="$ctrl.tableConf.order">
+					<tr md-row class="grey-200-bg">
+						<th md-column md-order-by="nome" width="50%">
+							<span translate>IDIOMA.IDIOMA</span>
+						</th>
+						<th md-column md-order-by="situacao" width="10%">
+							<span translate>IDIOMA.SITUACAO</span>
+						</th>
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-repeat="item in $ctrl.listIdiomas | idiomasFilter: listFilter | orderBy: $ctrl.tableConf.order | limitTo: tableControl.limit : ($ctrl.tableConf.page -1) * tableControl.limit" class="text-left">
+						<td md-cell><a class="link-table-search" href ng-click="$ctrl.displayView(item)">{{ ::item.nome }}</a></td>
+						<td md-cell><span ng-class="{ 'green-bg ml-5': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA' }" class="estilo_situacao"><b>{{'SITUACAO.' +item.situacao | translate }}</b></span></td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination
+				md-limit="$ctrl.tableConf.limit"
+				md-limit-options="tableControl.limit_options"
+				md-page="$ctrl.tableConf.page"
+				md-total="{{ ($ctrl.listIdiomas| idiomasFilter: listFilter).length }}"
+				md-page-select
+				md-label="{{ 'FUNCIONARIO.LBLPAGINA' | translate }}"
+			/>
+		</div>
+	</div>
+
+</div>

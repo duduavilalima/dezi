@@ -1,0 +1,54 @@
+<md-dialog id="dialog_titulo_popup_alterar_empresa" style="width:600px; height: 350px;" aria-label="Alterar Empresa" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'confirmar()'}">
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-progress-linear md-mode="query" ng-show="action" style="position: fixed;"></md-progress-linear>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" class="white-bg">
+			<div class="md-dialog-content">
+				<div layout="column" layout-gt-md="row" flex="100" class="alterar_empresa">
+					<md-input-container flex>
+						<label for="empresa">Empresa</label>
+						<input id="empresa" name="empresa" type="text" class="text-capitalize" ng-model="object.empresa.nome" ng-disabled="true">
+					</md-input-container>
+				</div>
+
+				<div layout="column" layout-gt-md="row" flex="100" class="alterar_empresa">
+					<md-input-container flex>
+						<label for="empresa">Selecionar empresa</label>
+						<md-select id="empresa" name="empresas" ng-model="object.selecionarEmpresa.id" ng-disabled="action" required ng-required="true">
+							<md-option ng-repeat="item in listEmpresas" ng-value="{{item.empresa.id}}">
+								{{item.empresa.nome}}
+							</md-option>
+						</md-select>
+						<div ng-messages="basicForm.empresas.$error" ng-show="basicForm.empresas.$touched">
+							<div ng-message="required"> <span>Obrigatório</span> </div>
+						</div>
+					</md-input-container>
+				</div>
+			</div>
+		</md-dialog-content>
+
+
+		<md-dialog-actions layout="row" flex class="white-bg">
+			<div flex layout-align="start center">
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar_cancelar_nregistro" aria-label="Cancelar" ng-disabled="action" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Cancelar
+				</md-button>
+			</div>
+			<div layout-align="end center">
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" aria-label="Confirmar" ng-disabled="basicForm.$invalid || action" class="md-raised md-primary text-capitalize" ng-click="confirmar()">
+					Confirmar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

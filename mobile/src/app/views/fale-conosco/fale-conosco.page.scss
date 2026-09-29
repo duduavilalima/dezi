@@ -1,0 +1,59 @@
+app-fale-conosco {
+	.content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		//Alinhamento horizontal centralizado
+		/* height: 100%;
+		margin: auto; */
+
+	}
+	.form-expand {
+		width: 100%;
+		form {
+			width: 100%;
+			padding: 8px;
+			ion-item {
+				padding: 0;
+			}
+		}
+	}
+
+	.btn-send {
+		padding: 22px 32px;
+		margin-top: 24px;
+	}
+
+	.image-row {
+		width: 100%;
+    	display: -moz-box;
+    	-moz-box-pack: center;
+    	-moz-box-align: center;
+    	display: -webkit-box;
+    	-webkit-box-pack: center;
+    	-webkit-box-align: center;
+		.image {
+			width: 257px;
+			height: 146px;
+			@media only screen and (min-width: 320px) and (max-width: 480px) {
+				background-image: url('/assets/imgs/drawable-mdpi/logo_dezi.png');
+			}
+			@media only screen and (min-width: 480px) and (max-width: 720px) {
+				background-image: url('/assets/imgs/drawable-hdpi/logo_dezi.png');
+			}
+			@media only screen and (min-width: 720px) and (max-width: 960px) {
+				background-image: url('/assets/imgs/drawable-xhdpi/logo_dezi.png');
+			}
+			@media only screen and (min-width: 960px) and (max-width: 1440px) {
+				background-image: url('/assets/imgs/drawable-xxhdpi/logo_dezi.png');
+			}
+			@media only screen and (min-width: 1440px) {
+				background-image: url('/assets/imgs/drawable-xxxhdpi/logo_dezi.png');
+			}
+				background-repeat: no-repeat;
+				background-size: contain;
+		}
+	}
+}

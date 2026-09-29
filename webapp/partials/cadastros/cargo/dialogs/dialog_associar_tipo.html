@@ -1,0 +1,95 @@
+<md-dialog aria-label="Dialog Associar Tipo de Competência" style="width: 1000px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>Associar Tipo de Competência</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;">
+			<div class="md-dialog-content">
+
+				<!-- TRABALHAR AQUI -->
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+					<div layout="column" layout-gt-md="row" flex="100">
+						<md-input-container flex="35">
+							<label id="lbl_tipo" for="tipo">{{'CARGO.TIPO' | translate}}</label>
+							<md-select id="tipo_comp" name="tipo_comp" ng-model="object.tipoCompetencia"
+								   required ng-required="true" placeholder="{{'CARGO.TIPO' | translate}}" ng-change="onChangeSubTipo()">
+								<md-option ng-repeat="item in listDeTipos | orderBy:['nome']" ng-value="item">
+									{{item.nome}}
+								</md-option>
+							</md-select>
+							<div ng-messages="basicForm.tipo_comp.$error"
+								 ng-show="basicForm.tipo_comp.$touched">
+								<div ng-message="required">
+									<span>{{'CARGO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20" ng-if="comboSubTipo"></span>
+						<md-input-container flex="35" ng-if="comboSubTipo">
+							<label id="lbl_sub_tipo" for="subtipo">{{'CARGO.SUBTIPO' | translate}}</label>
+							<md-select id="sub_comp" name="sub_comp" ng-model="object.subTipoCompetencia"
+									   required ng-required="true" placeholder="{{'CARGO.SUBTIPO' | translate}}">
+								<md-option ng-repeat="item in listDeSubTipos" ng-value="item">
+									{{item.nome}}
+								</md-option>
+							</md-select>
+							<div ng-messages="basicForm.sub_comp.$error"
+								 ng-show="basicForm.sub_comp.$touched">
+								<div ng-message="required">
+									<span>{{'CARGO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="10">
+							<label id="lbl_peso" for="peso">{{'CARGO.PESO' | translate}}</label>
+							<input id="peso" name="peso" type="number" ng-model="object.peso"
+								   required ng-required="true">
+							<div ng-messages="basicForm.peso.$error"
+								 ng-show="basicForm.peso.$touched">
+								<div ng-message="required">
+									<span>{{'CARGO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="20">
+							<label id="lbl_situacao_edit" for="situacao_edit">{{'CARGO.SITUACAO' | translate}}</label>
+							<input id="situacao_edit" name="situacao_edit" type="text"
+								   ng-value="'SITUACAO.' + object.situacao | translate" ng-disabled="true">
+						</md-input-container>
+
+					</div>
+				</form>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions flex layout="row">
+			<div flex layout-align="start center">
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Cancelar
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="save()" ng-disabled="basicForm.$invalid || action">
+					Salvar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

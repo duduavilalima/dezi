@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "img/*": [ "./img/*" ],
+      "style/*": [ "./style/*" ],
+      "font/*": [ "./font/*" ],
+      "fuse/*": [ "./lib/fuse/*" ],
+      "services/*": [ "./services/*" ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

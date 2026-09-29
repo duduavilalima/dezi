@@ -1,0 +1,79 @@
+<md-dialog id="dialog_titulo_popup_alterar_colaborador" style="width:700px;"  aria-label="Alterar Colaborador">
+	<md-toolbar class="{{$dialog.toolBarClassDialog}}">
+		<div class="md-toolbar-tools">
+			<h2>{{$dialog.title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancel()" style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content class="ph-20 pt-30 pb-0">
+		<form name="basicForm" novalidate>
+			<!-- WIDGET GROUP -->
+			<div layout="row" flex="100">
+
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+					<div layout="column" layout-gt-md="row" flex="100">
+						<md-input-container flex="35">
+							<label id="lbl_tipo" for="tipo">Tipo da competência</label>
+							<md-select id="tipo_comp" name="tipo_comp" ng-model="$dialog.object.tipoCompetencia"
+									   required ng-required="true" ng-change="$dialog.onChangeSubTipo()">
+								<md-option ng-repeat="item in $dialog.listDeTipos | orderBy:['nome']" ng-value="item">
+									{{item.nome}}
+								</md-option>
+							</md-select>
+							<div ng-messages="basicForm.tipo_comp.$error"
+								 ng-show="basicForm.tipo_comp.$touched">
+								<div ng-message="required">
+									<span>{{'CARGO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20" ng-if="$dialog.comboSubTipo"></span>
+
+						<md-input-container flex="35" ng-if="$dialog.comboSubTipo">
+							<label id="lbl_sub_tipo" for="subtipo">Subtipo</label>
+							<md-select id="sub_comp" name="sub_comp" ng-model="$dialog.object.subTipoCompetencia"
+									   required ng-required="true">
+								<md-option ng-repeat="item in $dialog.listDeSubTipos" ng-value="item">
+									{{item.nome}}
+								</md-option>
+							</md-select>
+							<div ng-messages="basicForm.sub_comp.$error"
+								 ng-show="basicForm.sub_comp.$touched">
+								<div ng-message="required">
+									<span>{{'CARGO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+					</div>
+				</form>
+
+			</div>
+		</form>
+	</md-dialog-content>
+
+
+	<md-dialog-actions layout="row" flex class="white-bg">
+
+		<div flex layout-align="start center">
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes" ng-click="$dialog.cancel()">
+				Cancelar
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_cancelar_nregistro" ng-disabled="basicForm.$invalid" class="md-raised md-accent estilo_botoes {{basicForm.$invalid ? '' : toolBarClassDialog}}" ng-click="$dialog.confirmar()">
+				Confirmar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+
+</md-dialog>

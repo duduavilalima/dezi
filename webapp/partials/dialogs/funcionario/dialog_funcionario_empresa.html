@@ -1,0 +1,58 @@
+<md-dialog aria-label="dialog" style="width: 500px;height: 250px" class="white-bg">
+	<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+		<div class="md-toolbar-tools">
+			<h2>{{title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()"
+					   style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+						 aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+		<div class="md-dialog-content" style="padding: 0px 0px 0px 0px;padding: 0px;">
+
+			<!-- TRABALHAR AQUI -->
+			<form name="basicForm" class="md-inline-form" layout-padding novalidate ui-keypress="{13:'save()'}">
+					<div layout="column" layout-gt-md="row" flex="100">
+
+						<md-input-container flex>
+							<label id="lbl_empresa" for="selecao_empresa">{{'FUNCIONARIO.EMPRESA' | translate}}</label>
+							<md-select id="selecao_empresa" name="selecao_empresa" ng-model="object.empresa.id" ng-required="true" required>
+								<md-option ng-repeat="item in listaEmpresas" ng-value="{{item.id}}"> {{item.nome}} </md-option>
+							</md-select>
+							<div ng-messages="basicForm.selecao_empresa.$error" ng-show="basicForm.selecao_empresa.$touched">
+								<div ng-message="required">
+									<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+					</div>
+			</form>
+		</div>
+	</md-dialog-content>
+
+
+	<md-dialog-actions layout="row" flex>
+
+		<div flex layout-align="start center">
+
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize"
+					   ng-click="cancel()">
+				{{'FUNCIONARIO.CANCELAR' | translate}}
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize"
+					   ng-click="save()" ng-disabled="basicForm.$invalid">
+				{{'FUNCIONARIO.SALVAR' | translate}}
+			</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

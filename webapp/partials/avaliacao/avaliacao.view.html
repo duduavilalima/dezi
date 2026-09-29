@@ -1,0 +1,36 @@
+<div id="avaliacao" class="page-layout simple fullwidth doc-page" layout="column">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="start center">
+		<div layout="column" layout-align="space-between">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span class="parent"><a href ng-click="$ctrl.backToList()">{{ 'NAV.'+ $ctrl.modulo | uppercase | translate }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="$ctrl.back()">{{ 'CAMPANHA.'+ $ctrl.subtitulo | uppercase | translate }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ 'CAMPANHA.' + $ctrl.titulo | uppercase | translate }}</span>
+			</div>
+		</div>
+	</div>
+	<div layout="column" class="mt-50">
+		<div>
+			<md-content>
+				<form name="basicForm" novalidate  ng-if="$ctrl.object !== undefined">
+					<md-tabs
+						md-dynamic-height
+						md-border-bottom
+						md-selected="$ctrl.selectedIndexTab"
+					>
+						<md-tab
+							ng-repeat="tab in $ctrl.model.tabs"
+							md-on-select="$ctrl.onTabSelected(tab)"
+							label="{{ tab.title | translate }}"
+							ng-disabled="!tab.status"
+						></md-tab>
+					</md-tabs>
+				</form>
+				</md-content>
+				</div>
+				<ui-view/>
+		</div>
+	</div>
+</div>
+

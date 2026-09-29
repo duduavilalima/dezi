@@ -1,0 +1,143 @@
+<md-dialog aria-label="dialog" style="width: 900px;" class="white-bg">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>{{title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()"
+						   style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+							 aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" ng-show="object != null">
+			<div class="md-dialog-content" style="padding: 0px 0px 0px 0px;padding: 0px;">
+
+				<!-- TRABALHAR AQUI -->
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate ui-keypress="{13:'save()'}">
+							<div layout="column" layout-gt-md="row" flex="100">
+
+
+								<md-input-container flex="50">
+									<label id="lbl_escolaridade" for="lbl_escolaridade">{{'FUNCIONARIO.ESCOLARIDADE' | translate}}</label>
+									<md-select id="selecao_escolaridade" focus-me="true" name="selecao_escolaridade" ng-model="object.escolaridade.id" ng-change="changeEscolaridade()" ng-required="true" required>
+										<md-option ng-repeat="item in escolaridadeList | orderBy: 'nome'" ng-value="{{item.id}}">{{item.nome}}</md-option>
+									</md-select>
+									<div ng-messages="basicForm.selecao_escolaridade.$error" ng-show="basicForm.selecao_escolaridade.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="50">
+									<label id="lbl_tipocurso" for="lbl_tipocurso">{{'FUNCIONARIO.TIPOCURSO' | translate}}</label>
+									<md-select id="selecao_tipocurso" focus-me="object.escolaridade.preencheTipoCurso" name="selecao_tipocurso" ng-model="object.tipoCurso.id"
+											   ng-required="object.escolaridade.preencheTipoCurso" ng-disabled="!object.escolaridade.preencheTipoCurso" ng-change="changeTipoCurso()">
+										<md-option ng-repeat="item in tiposCursoList | orderBy: 'nome'" ng-value="{{item.id}}"> {{item.nome}} </md-option>
+									</md-select>
+									<div ng-messages="basicForm.selecao_tipocurso.$error" ng-show="basicForm.selecao_tipocurso.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+
+							<div layout="column" layout-gt-md="row" flex="100">
+								<md-input-container flex="50">
+									<label id="lbl_graduacao" for="lbl_graduacao">{{'FUNCIONARIO.CURSOGRA' | translate}}</label>
+									<md-select id="selecao_graduacao" name="selecao_graduacao" focus-me="object.tipoCurso.preencheGraduacao" ng-model="object.cursoGraduacao.id" md-no-asterisk
+											   ng-disabled="object.tipoCurso === null || !object.tipoCurso.preencheGraduacao" ng-change="changeGraduacao()">
+										<md-option ng-repeat="item in cursosGraduacaoList | orderBy: 'nome'" ng-value="{{item.id}}"> {{item.nome}} </md-option>
+									</md-select>
+									<div ng-messages="basicForm.selecao_graduacao.$error"
+										 ng-show="basicForm.selecao_graduacao.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="50">
+									<label id="lbl_especializacao" for="lbl_especializacao">{{'FUNCIONARIO.CURSOESP' | translate}}</label>
+									<md-select id="selecao_especializacao" name="selecao_especializacao" focus-me="object.tipoCurso.preencheEspecializacao" ng-model="object.cursoEspecializacao.id" md-no-asterisk
+											   ng-disabled="object.tipoCurso == null || !object.tipoCurso.preencheEspecializacao" ng-change="changeEspecializacao()">
+										<md-option ng-repeat="item in cursosEspecializacaoList | orderBy: 'nome'" ng-value="{{item.id}}"> {{item.nome}} </md-option>
+									</md-select>
+									<div ng-messages="basicForm.selecao_especializacao.$error"
+										 ng-show="basicForm.selecao_especializacao.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+
+							<div layout="column" layout-gt-md="row" flex="100">
+								<md-input-container flex="100">
+									<label id="lbl_outroscursos" for="outroscursos">{{'FUNCIONARIO.CURSOOUT' | translate}}</label>
+									<input id="outroscursos" name="outroscursos" type="text" ng-model="object.outroCurso" ng-maxlength="100" ng-minlength="3" md-maxlength="100"
+										      focus-me="(object.escolaridade.preencheOutrosCursos != null && object.escolaridade.preencheOutrosCursos) || (object.cursoGraduacao.preencheOutrosCursos != null && object.cursoGraduacao.preencheOutrosCursos) || (object.cursoEspecializacao.preencheOutrosCursos != null && object.cursoEspecializacao.preencheOutrosCursos)"
+										   ng-required="(object.escolaridade.preencheOutrosCursos != null && object.escolaridade.preencheOutrosCursos) || (object.cursoGraduacao.preencheOutrosCursos != null && object.cursoGraduacao.preencheOutrosCursos) || (object.cursoEspecializacao.preencheOutrosCursos != null && object.cursoEspecializacao.preencheOutrosCursos)"
+										   ng-disabled="!(object.escolaridade.preencheOutrosCursos != null && object.escolaridade.preencheOutrosCursos) && !(object.cursoGraduacao.preencheOutrosCursos != null && object.cursoGraduacao.preencheOutrosCursos) && !(object.cursoEspecializacao.preencheOutrosCursos != null && object.cursoEspecializacao.preencheOutrosCursos)"
+										   ng-blur="habilitarCampoSituacao()"/>
+									<div ng-messages="basicForm.outroscursos.$error" ng-show="basicForm.outroscursos.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+										<div ng-message="maxlength">
+											<span>{{'FUNCIONARIO.MAXIMO100' | translate}}.</span>
+										</div>
+										<div ng-message="minlength">
+											<span>{{'FUNCIONARIO.MINIMO3' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+
+
+							<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -30px;">
+								<md-input-container flex="100">
+									<label id="lbl_situacao" for="lbl_situacao">{{'FUNCIONARIO.SITUACAO2' | translate}}</label>
+									<md-select id="situacao_formacao" focus-me="habilitarSituacao" name="situacao_formacao" type="text" ng-model="object.situacaoConclusao" required>
+										<md-option ng-repeat="item in situacoesList" ng-value="item"> {{'SITUACAO.' +item | translate }} </md-option>
+									</md-select>
+									<div ng-messages="basicForm.situacao_formacao.$error" ng-show="basicForm.situacao_formacao.$touched">
+										<div ng-message="required">
+											<span>{{'FUNCIONARIO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+							</div>
+				</form>
+			</div>
+		</md-dialog-content>
+
+
+		<md-dialog-actions layout="row" flex>
+
+			<div flex layout-align="start center">
+
+				<!--BOTÃO CANCELAR-->
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize"
+						   ng-click="cancel()">
+					{{'FUNCIONARIO.CANCELAR' | translate}}
+				</md-button>
+			</div>
+
+			<div layout-align="end center">
+
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-accent text-capitalize" ng-click="save()" ng-disabled="basicForm.$invalid">
+					{{'FUNCIONARIO.SALVAR' | translate}}
+				</md-button>
+			</div>
+		</md-dialog-actions>
+</md-dialog>

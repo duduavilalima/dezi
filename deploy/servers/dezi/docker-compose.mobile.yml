@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  mobile:
+    image: docker.fasolti.com.br/dezi-mobile:${DEZI_VERSION_MOBILE}
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT
+      - ENVIRONMENT_NAME
+      - NODE_ENV=${ENVIRONMENT}
+      - DEZI_MOBILE_IAPI_URLBASE=http://rest:8080
+    volumes:
+      - mobilelogs:/var/log
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
+volumes:
+  mobilelogs:

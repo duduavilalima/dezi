@@ -1,0 +1,127 @@
+<md-dialog aria-label="Mensagem" style="width: 1160px;" ng-controller="MensagensController">
+	<form name="basicForm" novalidate ui-keypress="{13:'confirmar()'}">
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{ title }}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" ng-show="object != null">
+			<div class="md-dialog-content" style="padding: 0px 0px 0px 0px;padding: 0px;background-color: rgb(245,245,245);">
+
+				<ms-widget flippable="false" layout="row" flex="100">
+
+					<!-- Front -->
+					<ms-widget-front class="p-16 white-bg">
+
+						<div id="title_mensagens" flex class="md-accent-fg" style="margin-left: 20px;"><h1>Destinatários</h1>
+						</div>
+
+						<div class="ph-16 pv-16 border-bottom" layout="row" layout-align="space-between center" style="margin-top: -20px;">
+
+
+							<md-input-container flex="100">
+								<label for="cargo">Cargo</label>
+								<md-select id="cargo" name="cargo" ng-model="object.cargo">
+									<md-option  ng-repeat="item in listCargos" ng-value="{{item}}" value="{{item}}">
+										{{item.cargo}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+
+						</div>
+
+						<div>
+
+							<table id="table-analise" class="simple dataTable row-border  hover text-center" ms-responsive-table>
+								<thead>
+								<tr>
+									<th class="secondary-text" width="5%">
+										<div class="table-header text-left"><span class="column-title" style="margin-left: -20px;">Selecionar todos</span>
+											<md-checkbox ng-model="check" class="font-size-5" aria-label="Checkbox tabela">
+											</md-checkbox>
+										</div>
+									</th>
+									<th class="secondary-text" width="20%">
+										<div class="table-header text-left"><span class="column-title">Nome</span></div>
+									</th>
+									<th class="secondary-text" width="15%">
+										<div class="table-header text-left"><span class="column-title">Cargo</span></div>
+									</th>
+									<th class="secondary-text" width="15%" hide-xs>
+										<div class="table-header text-left"><span class="column-title">Setor</span></div>
+									</th>
+									<th class="secondary-text" width="15%">
+										<div class="table-header text-center"><span class="column-title">Notificar via e-mail</span>
+											<md-checkbox ng-model="checkEmail" class="font-size-14" aria-label="Checkbox email">
+											</md-checkbox>
+										</div>
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat="item in listColaboradores | filter : object.cargo.cargo : object.dept.departamento" class="text-left">
+									<td style="padding-bottom: 0px; padding-top: 0px;"><md-checkbox ng-model="check" class="font-size-14" aria-label="Checkbox tabela"></md-checkbox></td>
+									<td>{{ ::item.nome}}</td>
+									<td>{{ ::item.cargo }}</td>
+									<td hide-xs>{{ ::item.departamento }}</td>
+									<td style="padding-bottom: 0px; padding-top: 0px;">
+										<div class="text-center">
+											<md-checkbox ng-model="checkEmail" class="font-size-14" aria-label="Checkbox email"></md-checkbox>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+
+						<div id="title_mensagens" flex class="md-accent-fg">
+
+							<div id="title_mensagem _anterior" flex class="md-accent-fg"><h1>Mensagem anterior</h1>
+							</div>
+
+							<div ta-bind="text" class="p-8" style="border: 1px solid rgba(0,0,0,0.40);" ng-model="object.mensagemOriginal.texto"></div>
+
+							<div id="title_resposta" flex class="md-accent-fg"><h1>Sua mensagem</h1>
+							</div>
+
+							<!--Plugin de formatação da mensagem-->
+							<text-angular style="color: black; border: 2px solid #3f51b5;" ng-model="object.texto"></text-angular>
+
+						</div>
+
+					</ms-widget-front>
+					<!-- / Front -->
+
+				</ms-widget>
+
+			</div>
+
+		</md-dialog-content>
+
+		<md-dialog-actions class="white-bg">
+
+			<div flex layout-align="start center">
+
+				<!--BOTÃO CANCELAR-->
+				<md-button aria-label="Voltar" id="btn_cancelar_cancelar_nregistro" style="float: left" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Voltar
+				</md-button>
+				<!--BOTÃO RESPONDER-->
+				<md-button aria-label="Responder" id="btn_cancelar_cancelar_nregistro" style="float: right" class="md-raised md-accent text-capitalize" ng-click="acaoResponderMensagem()">
+					Responder
+				</md-button>
+
+				<!--BOTÃO ENCAMINHAR-->
+				<md-button aria-label="Encaminhar" id="btn_cancelar_cancelar_nregistro" style="float: right" class="md-raised md-accent text-capitalize" ng-click="acaoEncaminharMensagem()">
+					Encaminhar
+				</md-button>
+			</div>
+
+		</md-dialog-actions>
+	</form>
+</md-dialog>

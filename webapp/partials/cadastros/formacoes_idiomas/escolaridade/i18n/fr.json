@@ -1,0 +1,26 @@
+{
+  "ESCOLARIDADES":{
+    "CADASTOS":"Registres",
+    "FORMACAO":"Formation et Langues",
+    "ESCOLARIDADE": "Escolarité",
+    "PESQUISAR":"Recherche",
+    "BTNNOVO":"Nouvelle éducation",
+    "SITUACAO": "Situation",
+    "REQUER": "Exige la fin du cours",
+    "REQUEROUTRO": "Nécessite la réalisation d’autres cours",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 35 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "ESCOLARIDADE2": "Escolaridade",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZA": "Data de Atualização",
+    "SALVAR": "Enregistrer",
+    "VOLTAR": "Précédent",
+    "EDITAR": "Edit",
+    "CANCELAR": "Annuler",
+    "ATIVAR": "Activer",
+    "INATIVAR": "Inactiver"
+  }
+}

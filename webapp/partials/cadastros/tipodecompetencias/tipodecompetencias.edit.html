@@ -1,0 +1,310 @@
+<!-- FIXME Usar o form-card -->
+<div flex>
+	<div
+		flex-xs flex-gt-xs="100" flex="100"
+		layout="row" layout-sm="column" layout-xs="column"
+		class="margin-default"
+		ng-if="!$ctrl.viewMode"
+	>
+		<div class="white-bg style_card" flex flex-xs="100" flex-sm="100" layout="column">
+			<div layout="row" class="content h50" layout-xs="column">
+				<div id="title_descricao_new" flex class="md-accent-fg pl-16 pr-16">
+					<h1 class="mt-10">{{'TIPODECOMPETENCIAS.DESCRICAO' | translate }}</h1>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<div class="content">
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+
+					<!-- MODE EDIT/NEW -->
+					<div layout="column" layout-gt-xs="row" layout-xs="column" layout-sm="row" flex="100">
+						<md-input-container flex="40">
+							<label id="lbl_nome_edit" for="nome_edit">{{'TIPODECOMPETENCIAS.NOME' | translate}}</label>
+							<input id="nome_edit" name="nome_edit"
+								type="text"
+								ng-model="$ctrl.object.nome"
+								required ng-required="true"
+								focus-me="true"
+								ng-minlength="2"
+								ng-maxlength="80" maxlength="80"
+							>
+							<div ng-messages="basicForm.nome_edit.$error"
+									ng-show="basicForm.nome_edit.$touched">
+								<div ng-message="required">
+									<span>{{'TIPODECOMPETENCIAS.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+								<div ng-message="maxlength">
+									<span>{{'TIPODECOMPETENCIAS.MAXIMO' | translate}}.</span>
+								</div>
+								<div ng-message="minlength">
+									<span>{{'TIPODECOMPETENCIAS.MINIMO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="40">
+							<label id="lbl_descricao_edit" for="descricao_edit">{{'TIPODECOMPETENCIAS.DESCRICAO' | translate}}</label>
+							<input id="descricao_edit" name="descricao_edit"
+								type="text"
+								ng-model="$ctrl.object.descricao"
+								required ng-required="true"
+								ng-minlength="2"
+								ng-maxlength="80" maxlength="80"
+							>
+							<div ng-messages="basicForm.descricao_edit.$error"
+									ng-show="basicForm.descricao_edit.$touched">
+								<div ng-message="required">
+									<span>{{'TIPODECOMPETENCIAS.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+								<div ng-message="maxlength">
+									<span>{{'TIPODECOMPETENCIAS.MAXIMO' | translate}}.</span>
+								</div>
+								<div ng-message="minlength">
+									<span>{{'TIPODECOMPETENCIAS.MINIMO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="20">
+							<label id="lbl_situacao_edit" for="situacao_edit">{{'TIPODECOMPETENCIAS.SITUACAO' | translate}}</label>
+							<input id="situacao_edit" name="situacao_edit"
+								type="text"
+								value="{{'SITUACAO.' + $ctrl.object.situacao | translate }}"
+								ng-disabled="true"
+							>
+						</md-input-container>
+					</div>
+				</form>
+				<md-divider></md-divider>
+				<!-- BOTÕES -->
+				<div layout="row" class="content" ng-if="!$ctrl.viewMode" layout-align="end center" layout-align-xs="center center">
+					<md-button ng-click="$ctrl.back()" class="md-raised md-accent-fg text-none" aria-label="Cancelar" translate translate-attr-aria-label="TIPODECOMPETENCIAS.CANCELAR">
+						{{'TIPODECOMPETENCIAS.CANCELAR' | translate}}
+					</md-button>
+
+					<md-button ng-click="$ctrl.save()" class="md-raised md-accent text-none" ng-disabled="basicForm.$invalid" aria-label="Salvar" translate translate-attr-aria-label="TIPODECOMPETENCIAS.SALVAR">
+						{{'TIPODECOMPETENCIAS.SALVAR' | translate}}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div flex layout="row" layout-xs="column" flex-xs="100" flex-sm="100"
+		class="margin-default div-cards"
+		ng-if="$ctrl.viewMode"
+	>
+		<div layout="column" flex="65" flex-xs="100" flex-sm="100">
+			<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+						<h1 class="mt-10">{{'TIPODECOMPETENCIAS.DESCRICAO' | translate }}</h1>
+					</div>
+					<div layout-align="end center" layout-align-xs="center center" layout="row">
+						<md-switch
+							ng-model="$ctrl.mdswitch.situacao"
+							ng-if="$ctrl.canEdit"
+							aria-label="Botão situação"
+							ng-change="$ctrl.onChangeSituacao($ctrl.object, 'tipoCompetencia')"
+						>
+							{{ 'SITUACAO.' + $ctrl.object.situacao | translate }}
+						</md-switch>
+						<span class="width-20"></span>
+						<md-button
+							ng-click="$ctrl.displayEdit()"
+							ng-if="$ctrl.canEdit"
+							class="md-fab md-mini md-accent-bg"
+							aria-label="Editar"
+							translate translate-attr-aria-label="TIPODECOMPETENCIAS.EDITAR"
+						>
+							<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+							<md-tooltip class="h4">{{'TIPODECOMPETENCIAS.EDITAR' | translate}}</md-tooltip>
+						</md-button>
+						<md-button
+							ng-click="$ctrl.showDetalhes($ctrl.object, $event)"
+							ng-if="$ctrl.admin"
+							class="md-icon-button"
+							aria-label="Editar"
+							translate translate-attr-aria-label="DIALOG.DETALHES"
+						>
+							<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+							<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+						</md-button>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+					<div layout="column" layout-gt-sm="row" flex layout-xs="column" layout-sm="row">
+
+						<md-input-container flex="40">
+							<label id="lbl_nome" for="lbl_nome">{{'TIPODECOMPETENCIAS.NOME' | translate}}</label>
+							<input id="nome" name="nome"
+								type="text"
+								ng-model="$ctrl.object.nome"
+								ng-disabled="true"
+							>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="40">
+							<label id="lbl_descricao" for="descricao">{{'TIPODECOMPETENCIAS.DESCRICAO' | translate}}</label>
+							<input id="descricao" name="descricao"
+								type="text"
+								ng-model="$ctrl.object.descricao"
+								ng-disabled="true"
+							>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="20">
+							<label id="lbl_situacao" for="situacao">{{'TIPODECOMPETENCIAS.SITUACAO' | translate}}</label>
+							<input id="situacao" name="situacao"
+								type="text"
+								value="{{'SITUACAO.' + $ctrl.object.situacao | translate }}"
+								ng-disabled="true"
+							>
+						</md-input-container>
+
+					</div>
+				</form>
+			</div>
+			<div flex class="white-bg mt-15 mx-h-350" flex-xs="100" flex-sm="100">
+				<div class="white-bg content style_card" style="padding-bottom: 1px">
+					<div layout="row" class="content h50" layout-xs="column">
+						<div flex layout-align="center center" class="pl-16 pr-16">
+							<div id="title_detalhamentos" class="md-accent-fg">
+								<h1 class="mt-10">{{'TIPODECOMPETENCIAS.SUBTIPOS' | translate }}</h1>
+							</div>
+						</div>
+						<div layout-align="end center" >
+							<md-button id="btn_novo_detalhamento"
+								ng-if="$ctrl.canEdit"
+								translate translate-attr-aria-label="TIPODECOMPETENCIAS.NOVOSUBTIPO"
+								ng-click="$ctrl.showNewSubtipo($event)"
+								class="mt-10 md-button md-accent text-capitalize"
+								aria-label="novo subtipo"
+								style="float: right"
+								ng-disabled="$ctrl.bloquearSubtipo"
+							>
+								<md-icon md-font-icon="icon-plus"></md-icon>
+								{{ 'TIPODECOMPETENCIAS.NOVOSUBTIPO' | translate}}
+							</md-button>
+						</div>
+					</div>
+					<md-divider></md-divider>
+
+					<div
+						layout="column" layout-align="center center"
+						class="pl-16 pr-16" class="margin-bottom: 16px"
+						ng-show="!$ctrl.listFilhos"
+						ng-if="$ctrl.viewMode"
+					>
+						<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+					</div>
+					<!-- MODE VIEW -->
+					<div
+						ng-show="$ctrl.listFilhos"
+						ng-if="$ctrl.viewMode"
+						class="white-bg style_card m-8 overflow"
+					>
+						<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+						<md-table-container style="max-height: 299px;">
+							<table md-table id="table-list" md-progress="$ctrl.listFilhos">
+								<thead md-head>
+								<tr md-row  class="grey-200-bg">
+									<th md-column width="80%">
+										<div class="table-header text-left"><span class="column-title">{{'TIPODECOMPETENCIAS.SUBTIPO' | translate}}</span></div>
+									</th>
+									<th md-column width="10%">
+										<div class="table-header"><span class="column-title">{{'TIPODECOMPETENCIAS.DESCRICAO' | translate}}</span></div>
+									</th>
+									<th md-column width="10%">
+										<div class="table-header"><span class="column-title">{{'TIPODECOMPETENCIAS.NUMEROFILHOS' | translate}}</span></div>
+									</th>
+									<th md-column width="10%" class="text_align_center">
+										<div class="table-header text-center"><span class="column-title">{{'TIPODECOMPETENCIAS.SITUACAO' | translate}}</span></div>
+									</th>
+									<th md-column width="5%">
+										<div class="table-header text-center"><span class="column-title">{{'TIPODECOMPETENCIAS.OPCOES' | translate}}</span></div>
+									</th>
+								</tr>
+								</thead>
+								<tbody md-body>
+									<tr md-row ng-show="$ctrl.listFilhos.length === 0">
+										<td md-cell style="text-align: center;" colspan="5">
+											<b>{{ 'TIPODECOMPETENCIAS.SEMSUBTIPOS' | translate }}</b>
+										</td>
+									</tr>
+									<tr md-row ng-show="$ctrl.listFilhos.length > 0" ng-repeat="item in $ctrl.listFilhos">
+										<td md-cell>
+											<a href ng-if="$ctrl.canEdit" ng-click="$ctrl.showEditSubtipo(item, $event)">
+												<b>{{::item.nome }}</b>
+											</a>
+											<a href ng-if="!$ctrl.canEdit" ng-click="">
+												<b>{{ ::item.nome }}</b>
+											</a>
+										</td>
+										<td md-cell hide show-gt-xs>{{ ::item.descricao | limitTo: 300}}</td>
+										<td md-cell hide-gt-xs>{{ ::item.descricao | limitTo: 50}}</td>
+										<td md-cell>{{ ::item.numeroFilhos }}</td>
+										<td md-cell class="text_align_center">
+											<span ng-class="{'green-bg': $ctrl.isAtivo(item), 'red-bg' : $ctrl.isInativo(item) }" class="estilo_situacao">
+												<b>{{'SITUACAO.' + item.situacao | translate}}</b>
+											</span>
+										</td>
+										<td md-cell>
+											<md-button
+												id="btn_change_subtipo"
+												class="md-icon-button"
+												aria-label="Situacao"
+												translate-attr-aria-label="{{item.situacao === 'ATIVA'? MODELOS.INATIVAR : MODELOS.ATIVAR}}"
+												ng-click="$ctrl.onChangeSituacao(item, 'subtipoCompetencia')"
+											>
+												<md-icon ng-if="item.situacao === 'ATIVA'" style="color: red" md-font-icon="icon-cancel"></md-icon>
+												<md-icon ng-if="item.situacao !== 'ATIVA'" style="color: green" md-font-icon="icon-check"></md-icon>
+												<md-tooltip class="h4">
+														{{(item.situacao === 'ATIVA'? 'TIPODECOMPETENCIAS.INATIVAR' : 'TIPODECOMPETENCIAS.ATIVAR') | translate}}
+												</md-tooltip>
+											</md-button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</md-table-container>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<span class="width-15"></span>
+		<span class="height-15" hide show-xs></span>
+		<div flex="35" layout="column" class="white-bg style_card mx-h-600" flex-xs="100" flex-sm="100">
+			<div layout="row" class="content h50" layout-xs="column">
+				<div flex layout-align="center center" class="pl-16 pr-16">
+					<div id="title_hierarquia" class="md-accent-fg">
+						<h1 class="mt-10">{{'TIPODECOMPETENCIAS.HIERARQUIA' | translate }}</h1>
+					</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<div class="content overflow" style="padding: 20px;" >
+				<treecontrol
+					class="tree-classic"
+					tree-model="$ctrl.dataForTheTree"
+					options="$ctrl.treeOptions"
+					expanded-nodes="$ctrl.expandedNodes"
+				>
+					<a href ng-click="$ctrl.displayView(node)" class="md-accent-fg">
+						<b ng-class="{'node_tree': $ctrl.object.id === node.id}">{{ node.nome }}</b>
+					</a>
+				</treecontrol>
+			</div>
+		</div>
+	</div>
+</div>

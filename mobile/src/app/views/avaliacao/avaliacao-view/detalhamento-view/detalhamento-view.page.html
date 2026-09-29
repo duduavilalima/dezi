@@ -1,0 +1,25 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title> {{ descricaoTipoCompetencia }}</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content overflow-scroll="true">
+	<ion-grid>
+		<ion-row>
+			<app-descricao-competencia
+				class="width-100 margin-bottom-push-16"
+				[descricaoCompetencia]="competencia?.descricaoAbreviada"
+				[direcionamentoCompetencia]="competencia?.direcionamentoGestor"
+			>
+			</app-descricao-competencia>
+		</ion-row>
+		<ion-row>
+			<app-detalhamentos-slide
+				class="width-100"
+				[detalhamentoList]="competencia?.listaDetalhamentos"
+				(updatedDetalhamentoList)="onUpdateDetalhamentos($event)"
+			></app-detalhamentos-slide>
+		</ion-row>
+	</ion-grid>
+</ion-content>

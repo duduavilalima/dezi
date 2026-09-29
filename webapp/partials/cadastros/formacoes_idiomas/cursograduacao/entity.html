@@ -1,0 +1,186 @@
+<div id="dashboard" class="page-layout simple fullwidth" ng-controller="CursoGraduacaoCadastroCtrl">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="back()">{{ ::titulo }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ screenMode === 'VIEW' ? 'Exibição' : (screenMode === 'EDIT' ? 'Edição' : 'Novo') }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input">
+
+			<!-- BOTÃO NOVO -->
+			<md-button hide-xs type="button" translate-attr-aria-label="GRADUACAO.BTNNOVO" ng-if="screenMode === 'VIEW'" class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize" aria-label="Novo" ng-click="displayNew()">
+				{{'GRADUACAO.BTNNOVO' | translate}}
+			</md-button>
+
+			<md-button hide show-xs type="button" translate-attr-aria-label="GRADUACAO.BTNNOVO" ng-if="screenMode === 'VIEW'" class="md-fab md-mini md-accent"  aria-label="Criar" ng-click="displayNew()" value="Novo">
+				<md-icon md-font-icon="icon-plus" hide show-xs></md-icon>
+			</md-button>
+
+		</div>
+	</div>
+
+
+	<div class="mt-50">
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+					{{'GRADUACAO.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div layout="row" class="content" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1>{{'GRADUACAO.DESCRICAO' | translate }}</h1>
+						</div>
+						<div layout-align="end center" layout-align-xs="center center" layout="row" ng-if="screenMode === 'VIEW'">
+							<md-switch ng-model="mdswitch.situacao" aria-label="Botão situação" ng-change="onChangeSituacao(mdswitch.situacao)">
+								{{'SITUACAO.' +object.situacao | translate }}
+							</md-switch>
+							<span class="width-20"></span>
+							<!--<md-button class="md-raised green-bg white-fg botoes_dashboard text-none" ng-if="object.situacao === 'INATIVA'" ng-click="activate($event, object)">Ativar</md-button>
+							<md-button class="md-raised red-bg white-fg botoes_dashboard text-none" ng-if="object.situacao === 'ATIVA'" ng-click="inactivate($event, object)">Inativar</md-button>-->
+							<md-button ng-click="displayEdit(object)" class="md-fab md-mini md-accent-bg" aria-label="Editar" translate translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+								<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+								<md-tooltip class="h4">{{'GRADUACAO.EDITAR' | translate}}</md-tooltip>
+							</md-button>
+							<md-button ng-click="detalhes($event)" class="md-icon-button" aria-label="Editar" translate
+									   translate-attr-aria-label="DIMENSAO.DETALHES">
+								<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+								<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+							</md-button>
+						</div>
+					</div>
+					<md-divider></md-divider>
+					<div class="content">
+						<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+							<div layout="column" layout-gt-xs="row" layout-sm="column" layout-xs="column" flex="100" ng-if="screenMode !== 'VIEW'">
+								<md-input-container flex="40">
+									<label for="nome_edit">{{'GRADUACAO.CURSODEGRADUACAO' | translate}}</label>
+									<input id="nome_edit" name="nome" type="text"
+										   ng-model="object.nome" required ng-maxlength="80" ng-minlength="2"
+										   md-maxlength="80" ng-required="true" focus-me="true">
+									<div ng-messages="basicForm.nome.$error" ng-show="basicForm.nome.$touched">
+										<div ng-message="required">
+											<span>{{'GRADUACAO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+										<div ng-message="maxlength">
+											<span>{{'GRADUACAO.MAXIMO' | translate}}.</span>
+										</div>
+										<div ng-message="minlength">
+											<span>{{'GRADUACAO.MINIMO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="30">
+									<label for="requer_preenche_edit">{{'GRADUACAO.REQUER' | translate}}</label>
+									<md-select id="requer_preenche_edit" name="requer_preenche"  ng-model="object.preencheOutrosCursos" ng-required="true" required placeholder="{{'GRADUACAO.REQUER' | translate}}">
+										<md-option  ng-repeat="item in booleanList" ng-value="{{item.value}}" value="{{item.value}}">
+											{{item.label}}
+										</md-option>
+									</md-select>
+									<div ng-messages="basicForm.requer_preenche.$error" ng-show="basicForm.requer_preenche.$touched">
+										<div ng-message="required">
+											<span>{{'GRADUACAO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="20">
+									<label for="situacao_edit">{{'GRADUACAO.SITUACAO' | translate}}</label>
+									<input id="situacao_edit" name="situacao" type="text" value="{{'SITUACAO.' + object.situacao | translate}}" ng-disabled="true">
+								</md-input-container>
+							</div>
+
+
+
+
+							<!-- MODE VIEW -->
+							<div layout="column" flex ng-if="screenMode === 'VIEW'">
+								<div layout="column" layout-gt-sm="row" flex>
+
+									<md-input-container flex="40">
+										<label for="nome_view">{{'GRADUACAO.CURSODEGRADUACAO' | translate}}</label>
+										<input id="nome_view" name="nome" type="text" value="{{::object.nome}}" ng-disabled="true">
+									</md-input-container>
+
+
+									<span class="width-20"></span>
+
+
+									<md-input-container flex="30">
+										<label for="requer_view">{{'GRADUACAO.REQUER' | translate}}</label>
+										<input id="requer_view" name="requer" type="text" value="{{object.preencheOutrosCursos ? 'Sim' : 'Não'}}" ng-disabled="true">
+									</md-input-container>
+
+
+									<span class="width-20"></span>
+
+
+									<md-input-container flex="30">
+										<label for="situacao_view">{{'GRADUACAO.SITUACAO' | translate}}</label>
+										<input id="situacao_view" name="situacao" type="text" value="{{'SITUACAO.' + object.situacao | translate}}" ng-disabled="true">
+									</md-input-container>
+								</div>
+
+							</div>
+						</form>
+
+					</div>
+					<md-divider></md-divider>
+					<!-- BOTÕES -->
+					<div layout="row" class="content" ng-if="screenMode !== 'VIEW'" layout-align="end center" layout-align-xs="center center">
+						<md-button ng-click="back()" class="md-raised md-accent-fg text-capitalize" aria-label="Cancelar" translate translate-attr-aria-label="CAMPANHASLISTAR.CANCELAR">
+							{{'GRADUACAO.CANCELAR' | translate}}
+						</md-button>
+						<md-button ng-click="save()" class="md-raised md-accent text-capitalize" ng-disabled="basicForm.$invalid" aria-label="Salvar" translate translate-attr-aria-label="CAMPANHASLISTAR.SALVAR">
+							{{'GRADUACAO.SALVAR' | translate}}
+						</md-button>
+					</div>
+
+					<!--<div layout="row" class="content" ng-if="screenMode === 'VIEW'">
+						&lt;!&ndash;Ação botão Voltar&ndash;&gt;
+						<div flex layout-align="start center">
+							<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+								<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+								{{'CAMPANHASLISTAR.VOLTAR' | translate}}
+							</md-button>
+						</div>
+
+						<div flex layout-align="start center" ng-show="object.situacao == 'ATIVA'">
+							<md-button ng-click="inactivate($event, object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Inativar" translate translate-attr-aria-label="CAMPANHASLISTAR.INATIVAR">
+								{{'CAMPANHASLISTAR.INATIVAR' | translate}}
+							</md-button>
+						</div>
+
+						<div flex layout-align="start center" ng-show="object.situacao === 'INATIVA'">
+							<md-button ng-click="activate($event, object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" aria-label="Ativar" translate translate-attr-aria-label="CAMPANHASLISTAR.ATIVAR">
+								{{'CAMPANHASLISTAR.ATIVAR' | translate}}
+							</md-button>
+						</div>
+
+						&lt;!&ndash;Ação botão Editar&ndash;&gt;
+						<div layout-align="end center">
+							<md-button ng-click="displayEdit(object)" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize" ng-hide="mode == 'EDIT'" aria-label="Editar" translate translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+								{{'CAMPANHASLISTAR.EDITAR' | translate}}
+							</md-button>
+						</div>
+					</div>-->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

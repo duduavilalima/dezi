@@ -1,0 +1,104 @@
+<div layout="row" layout-align="start center" class="h-50">
+	<div layout="row" layout-align="start center" flex>
+		<md-button id="navigation-toggle" class="md-icon-button" ng-click="toggleSidenav('navigation')" hide-gt-sm aria-label="Toggle navigation">
+			<md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+		</md-button>
+
+		<div style="margin-left: 10px;margin-right: 10px">
+			<a href id="small-bt" ng-click="smallAction($event)" style="font-size: 60%;">A-</a>
+			<a href id="medium-bt" ng-click="mediumAction($event)" style="margin-left: 10px;margin-right: 10px; font-size: 80%;">A</a>
+			<a href id="large-bt" ng-click="largeAction($event)">A+</a>
+		</div>
+
+		<div class="toolbar-separator"></div>
+
+		<md-progress-circular id="toolbar-progress" ng-if="$root.loadingProgress" style="margin-left: 10px;" class="md-accent" md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+
+		<div>
+			<span class="h4" style="margin-left: 4px" ng-show="txtVerificarMensagens"> Verificando mensagens... </span>
+		</div>
+	</div>
+
+
+	<div layout="row" layout-align="start center" class="grey-100-bg h-50">
+		<div class="toolbar-separator"></div>
+
+		<div layout="row" layout-align="end center">
+			<div class="p-8 font-user-name" hide show-gt-xs>
+				<strong>{{ 'TOOLBAR.EMPRESA' | translate }}:</strong> {{ user.empresa.nome }}
+			</div>
+		</div>
+
+		<div class="toolbar-separator"></div>
+
+		<md-menu-bar id="user-menu">
+			<md-menu md-position-mode="left bottom">
+				<md-button class="user-button" ng-click="$mdMenu.open()" aria-label="User settings">
+					<div layout="row" layout-align="space-between center">
+						<div class="avatar-wrapper">
+							<img md-menu-align-target class="avatar" ng-show="cropper.croppedImage == null" src="img/avatars/profile.jpg">
+							<img md-menu-align-target class="avatar" ng-show="cropper.croppedImage != null" ng-src="{{cropper.croppedImage}}" />
+							<div class="white-fg contador_mensagem_bandagem" ng-show="mensagensNaoLidas > 0">{{mensagensNaoLidas}}</div>
+						</div>
+						<span class="username font-user-name md-accent-fg" hide-xs>{{ user.nome }}</span>
+						<md-icon md-font-icon="icon-chevron-down" class="icon s16" hide-xs></md-icon>
+					</div>
+				</md-button>
+
+				<md-menu-content width="3">
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-account" class="icon"></md-icon>
+						<md-button id="bt_perfil" translate translate-attr-aria-label="TOOLBAR.PERFIL" ng-click="perfil()"><span translate="TOOLBAR.PERFIL">Perfil</span></md-button>
+					</md-menu-item>
+
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-email" class="icon"></md-icon>
+						<md-button id="bt_mensagem" translate translate-attr-aria-label="TOOLBAR.MENSAGENS" ng-click="mensagens()"><span translate="TOOLBAR.MENSAGENS">Mensagens</span></md-button>
+						<span class="white-fg contador_mensagem" ng-show="mensagensNaoLidas > 0">{{mensagensNaoLidas}}</span>
+					</md-menu-item>
+
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-lock" class="icon"></md-icon>
+						<md-button id="bt_trocar_senha" translate translate-attr-aria-label="TOOLBAR.TROCAR_SENHA" ng-click="acaoTrocarSenha($event)"><span translate="TOOLBAR.TROCAR_SENHA">Trocar Senha</span></md-button>
+					</md-menu-item>
+
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-earth" class="icon"></md-icon>
+						<md-menu id="idiomas">
+							<md-button ng-click="$mdMenu.open()" class="status" aria-label="Trocar Idioma" translate translate-attr-aria-label="TOOLBAR.TROCAR_IDIOMA">
+								<span style="margin-left: 0px;font-size: 13px;" class="estilo_bandeiras" translate="TOOLBAR.TROCAR_IDIOMA">Trocar Idioma</span>
+							</md-button>
+							<md-menu-content width="3" id="language-menu-content">
+								<md-menu-item ng-repeat="(iso, lang) in languages">
+									<md-button ng-click="changeLanguage(lang)" aria-label="{{lang.title}}" translate translate-attr-aria-label="{{lang.title}}">
+										<span layout="row" layout-align="start center">
+											<img class="flag" ng-show="lang.flag === 'br'" src="img/flags/br.png"></img>
+											<img class="flag" ng-show="lang.flag === 'es'" src="img/flags/es.png"></img>
+											<img class="flag" ng-show="lang.flag === 'fr'" src="img/flags/fr.png"></img>
+											<img class="flag" ng-show="lang.flag === 'tr'" src="img/flags/tr.png"></img>
+											<img class="flag" ng-show="lang.flag === 'us'" src="img/flags/us.png"></img>
+											<span translate="{{lang.translation}}">{{lang.title}}</span>
+											<md-icon md-font-icon="icon-check" style="color: green" ng-show="lang.code === selectedLanguage.code" class="icon"></md-icon>
+										</span>
+									</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</md-menu-item>
+
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-comment-text-outline" class="icon"></md-icon>
+						<md-button id="navigation-contato" ng-click="contatoDialog($event)" translate translate-attr-aria-label="TOOLBAR.ABRIRCHAMADO"><span translate="TOOLBAR.ABRIRCHAMADO">Trocar Empresa</span></md-button>
+					</md-menu-item>
+
+					<md-menu-divider></md-menu-divider>
+
+					<md-menu-item class="md-indent">
+						<md-icon md-font-icon="icon-logout" class="icon"></md-icon>
+						<md-button id="bt_logout" ng-click="logout()" translate translate-attr-aria-label="TOOLBAR.LOGOUT"><span translate="TOOLBAR.LOGOUT">Logout</span></md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+		</md-menu-bar>
+	</div>
+</div>

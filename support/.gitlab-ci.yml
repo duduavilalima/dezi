@@ -1,0 +1,20 @@
+stages:
+  - build
+
+build-production-sources:
+  stage: build
+  only:
+    - /^v[0-9]+(\.[0-9]+){2,}$/
+    - /^v[0-9]+(\.[0-9]+){2,}[-.](release|final).*$/i
+  artifacts:
+    expire_in: 3 months
+    paths:
+      - target/dezi-file-import.jar
+      - target/application.properties
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - build/m2/repository
+  script:
+    - cd build
+    - ./build.sh

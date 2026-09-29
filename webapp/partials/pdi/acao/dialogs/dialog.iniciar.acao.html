@@ -1,0 +1,82 @@
+<md-dialog id="dialog_titulo_popup_adicionar_acao" style="width:700px;" aria-label="Ações para PDI">
+	<md-toolbar class="md-accent">
+		<div class="md-toolbar-tools">
+			<h2>Iniciar ação</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancelAcao()"
+				style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+					aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="background-color: rgb(245,245,245);" class="p-16">
+		<form name="basicForm" novalidate>
+			<!-- WIDGET GROUP -->
+			<div class="widget-group" layout="row" flex="100">
+				<div flex-xs flex-gt-xs="100" flex="100" layout="row">
+					<div class="white-bg style_card" flex layout="column">
+						<div class="content">
+							<div layout="column" flex="100" class="pl-16 pt-8 pr-16">
+								<span translate="PDI.TEXT_INICIAR_ACAO">Para iniciar esta ação, é necessário preencher os campos abaixo:</span>
+								<md-input-container class="mt-30" flex="100">
+									<label id="lbl_data_inicial" for="data_inicial">Data início</label>
+									<md-datepicker
+										id="data_inicial"
+										name="data_inicial"
+										ng-model="$dialog.acaoSelected.dataInicio"
+										md-placeholder="Entre com a Data"
+										md-open-on-focus
+										md-hide-icons="calendar"
+										md-min-date="$dialog.dataMinimaPrevista"
+										required
+									></md-datepicker>
+									<div class="validation-messages" ng-messages="basicForm.data_inicial.$error">
+										<div ng-message="valid">O valor inserido não é uma data!</div>
+										<div ng-message="mindate">A data é muito cedo! </div>
+										<div ng-message="maxdate">A data é tarde demais!</div>
+									</div>
+									<div ng-messages="basicForm.data_inicial.$error" ng-show="basicForm.data_inicial.$touched">
+										<div ng-message="required">
+											<span class="h5" translate="RESUMO.CAMPOOBRIGATORIO"></span>
+										</div>
+									</div>
+
+								</md-input-container>
+								<md-input-container flex="100">
+									<label id="lbl_acao" for="descricao_resumo_view_input" for="lbl_acao">Observações</label>
+									<textarea
+										ng-model="$dialog.acaoSelected.observacaoInicial"
+										name="textarea1"
+										id="descricao_resumo_view_input"
+									>
+									</textarea>
+								</md-input-container>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / WIDGET GROUP -->
+		</form>
+	</md-dialog-content>
+
+	<md-dialog-actions layout="row" flex class="white-bg">
+		<div flex layout-align="start center">
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes"
+				ng-click="$dialog.cancelAcao()">
+				Cancelar
+			</md-button>
+		</div>
+		<div layout-align="end center">
+
+				<!--BOTÃO SALVAR-->
+				<md-button id="btn_confirmar_cancelar_nregistro" ng-disabled="basicForm.$invalid"
+						   class="md-raised md-accent estilo_botoes md-accent" ng-click="$dialog.saveAcao()">
+					Salvar
+				</md-button>
+			</div>
+	</md-dialog-actions>
+
+</md-dialog>

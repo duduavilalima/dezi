@@ -1,0 +1,179 @@
+<md-dialog id="dialog_titulo_popup_adicionar_acao" style="width:750px;" aria-label="Adicionar Ação para desenvolvimento">
+	<md-toolbar class="md-accent">
+		<div class="md-toolbar-tools">
+			<h2>{{::title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()"
+					   style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+						 aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="background-color: rgb(245,245,245);" class="p-16">
+		<form name="basicForm" novalidate>
+			<div class="widget-group" layout="row" flex="100">
+				<div flex-xs flex-gt-xs="100" flex="100" layout="row">
+					<div class="white-bg style_card" flex layout="column">
+						<div class="content">
+							<form name="form" novalidate>
+
+								<div layout="row" flex="100" class="pl-16 pt-8 pr-16">
+									<labeled-input
+										class="mt-24"
+										flex="50"
+										name="campanha"
+										type="select"
+										label="FUNCIONARIO.CAMPANHA"
+										value="object.campanha"
+										select-options="{
+											list: listCampanhas,
+											label: 'descricao',
+										}"
+										options="{
+											disabled: !showCampanhas
+										}"
+										on-change="handleChangeCampanha(name, value)"
+									/>
+									<labeled-input
+										class="mt-24"
+										flex="50"
+										name="avaliacao"
+										type="select"
+										label="FUNCIONARIO.AVALIACAO"
+										value="object.avaliacao"
+										select-options="{
+											list: listAvaliacoes,
+											label: 'descricaoAbreviada',
+										}"
+										options="{
+											required: isAvaliacaoRequired,
+											disabled: !showAvaliacoes
+										}"
+										on-change="handleChange(name, value)"
+									/>
+								</div>
+
+								<div layout="row" flex="100" class="pl-16 pr-16">
+									<labeled-input
+										class="mt-18"
+										flex="50"
+										name="acaoParaDesenvolvimento"
+										label="PDI.TEXT_ACAODEV"
+										value="object.acaoParaDesenvolvimento"
+										options="{
+											required: true,
+											min: 2,
+											max: 500
+										}"
+										on-change="handleChange(name, value)"
+									/>
+
+									<md-input-container class="mt-12 datePickerPDI" flex="25">
+
+										<label id="lbl_data_inicial_prevista" for="data_inicial_prevista">Data prevista inicial</label>
+										<md-datepicker
+											id="data_inicial_prevista"
+											name="data_inicial_prevista"
+											ng-model="object.dataPrevistaInicio"
+											md-min-date="dataAtual"
+											md-open-on-focus
+											md-hide-icons="calendar"
+											required
+										></md-datepicker>
+										<div class="validation-messages" ng-messages="basicForm.data_inicial_prevista.$error">
+											<div ng-message="valid"><span class="h5">O valor inserido não é uma data!</span></div>
+										</div>
+										<div ng-messages="basicForm.data_inicial_prevista.$error" ng-show="basicForm.data_inicial_prevista.$touched">
+											<div ng-message="required">
+												<span class="h5" translate="RESUMO.CAMPOOBRIGATORIO"></span>
+											</div>
+										</div>
+									</md-input-container>
+
+									<md-input-container class="mt-12 datePickerPDI" flex="25">
+										<label id="lbl_data_final_prevista" for="data_final_prevista">Data prevista final</label>
+										<md-datepicker
+											id="data_final_prevista"
+											name="data_final_prevista"
+											ng-model="object.dataPrevistaFim"
+											md-min-date="dataMinimaPrevista"
+											md-open-on-focus
+											md-hide-icons="calendar"
+											required
+										></md-datepicker>
+										<div class="validation-messages" ng-messages="basicForm.data_final_prevista.$error">
+											<div ng-message="valid">O valor inserido não é uma data!</div>
+										</div>
+										<div ng-messages="basicForm.data_final_prevista.$error" ng-show="basicForm.data_final_prevista.$touched">
+											<div ng-message="required">
+												<span class="h5" translate="RESUMO.CAMPOOBRIGATORIO"></span>
+											</div>
+										</div>
+									</md-input-container>
+								</div>
+
+								<div layout="column" flex="100" class="pl-16 pr-16">
+									<md-chips
+										ng-model="object.chipsCompetencias"
+										md-autocomplete-snap
+										md-transform-chip="selectedItemCompetenciaChange($chip)"
+										md-require-match="true"
+										md-on-remove="onRemoveChip($chip)"
+									>
+										<md-autocomplete
+											md-selected-item="selectedItemCompetencia"
+											md-search-text="searchTextCompetencia"
+											md-items="item in querySearchCompetencia(searchTextCompetencia)"
+											md-item-text="item.descricaoAbreviada"
+											placeholder="Competência"
+										>
+											<span md-highlight-text="searchTextCompetencia">{{item.descricaoAbreviada}}</span>
+										</md-autocomplete>
+										<md-chip-template>
+											<span>
+											  <strong>{{$chip.descricaoAbreviada}}</strong>
+											</span>
+										</md-chip-template>
+									</md-chips>
+
+									<md-input-container class="mt-30 mb-24 pb-8" flex="100">
+										<label id="lbl_detalhamento" for="selecao_detalhamento">Detalhamento</label>
+										<md-select id="selecao_detalhamento" name="detalhamento" ng-model-options="{trackBy: '$value.id'}" ng-model="object.competenciaDetalhamento" ng-disabled="isDisabledDetalhamento">
+											<md-option ng-repeat="item in listDetalhamentos" ng-value="item" value="{{item}}">
+												{{item.descricao}}
+											</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</md-dialog-content>
+
+
+	<md-dialog-actions layout="row" flex class="white-bg">
+
+		<div flex layout-align="start center">
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes"
+					   ng-click="cancel()">
+				Cancelar
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_cancelar_nregistro" ng-disabled="basicForm.$invalid"
+					   class="md-raised md-accent estilo_botoes md-accent" ng-click="saveAcao()">
+				Salvar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+
+</md-dialog>

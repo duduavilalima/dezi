@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org" 
+	    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Avaliação de Desempenho</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body
+	style="color: rgb(55, 71, 79); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; text-align: justify;">
+	<table align="center" border="0" cellpadding="0" cellspacing="0"
+		width="800">
+		<tr>
+			<td align="center" bgcolor="#275498" style="padding: 40px 0 30px 0;">
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#ffffff" style="padding: 30px 30px 30px 30px;">
+				<div style="margin: 0 auto;">
+					<p>
+						<strong>Chamado - Sistema de Avaliação de Desempenho</strong>
+					</p>
+					<p>
+						<strong>Id: </strong><span th:text="${id}"></span> | <strong>Matrícula: </strong><span th:text="${matricula}"></span>
+						| <strong>Usuário: </strong><span th:text="${usuario}"></span>
+					</p>
+					<p>
+						<strong>Empresa: </strong><span th:text="${empresa}"></span>
+					</p>
+					<p>
+						<strong>Contato: </strong><span th:text="${contato}"></span>
+					</p>
+					<p>
+						<strong>Assunto: </strong><span th:text="${assunto}"></span>
+					</p>
+					<p>
+						<strong>Classificação: </strong><span th:text="${classificacao}"></span>
+					</p>
+					<p>
+						<strong>Mensagem: </strong><span th:text="${mensagem}"></span>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" bgcolor="#275498" style="padding: 40px 0 30px 0;">
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<div class="page-layout simple fullwidth">
+	<!-- HEADER -->
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::$ctrl.modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ ::$ctrl.titulo }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input">
+
+			<!-- INPUT SEARCH -->
+			<div hide show-gt-xs id="filter_list" class="breadcrumb filter-list">
+				<label id="lbl_search" class="label-filter-list">{{'COMPETENCIA.PESQUISAR' | translate}}: </label>
+				<input id="input_search" type="text" name="input_search" ng-model="filtro" class="input-filter-list">
+			</div>
+
+			<!-- BOTÃO NOVO -->
+			<md-button hide-xs id="btn_novo" type="button"
+					   class="font-size-13 md-raised md-accent m-0 mr-5 text-capitalize"
+					   translate-attr-aria-label="COMPETENCIA.BTNNOVO" aria-label="Novo" ng-click="$ctrl.displayNew()">
+				{{'COMPETENCIA.BTNNOVO' | translate}}
+			</md-button>
+
+			<md-button hide show-xs type="button" class="md-fab md-mini md-accent"  aria-label="Criar" ng-click="$ctrl.displayNew()" value="Novo">
+				<md-icon md-font-icon="icon-plus" hide show-xs></md-icon>
+			</md-button>
+
+		</div>
+	</div>
+
+
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-8">
+		<div class="white-bg style_card m-8">
+			<md-table-container class="table_pesquisa">
+				<table id="table-list" md-table md-progress="$ctrl.listResult">
+					<thead fix-head md-head md-order="$ctrl.query.order">
+					<tr md-row class="grey-200-bg">
+						<th md-column md-order-by="descricaoAbreviada" width="60%">
+							<span>{{'COMPETENCIA.COMPETENCIA' | translate}}</span>
+						</th>
+						<th md-column md-order-by="tipo.descricao" width="30%">
+							<span>{{'COMPETENCIA.TIPOCOMPETENCIA' | translate}}</span>
+						</th>
+						<th md-column md-order-by="situacao.nomeCurto" width="10%">
+							<span>{{'COMPETENCIA.SITUACAO' | translate}}</span>
+						</th>
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-repeat="item in $ctrl.listResult | competenciasFilter: filtro | orderBy: $ctrl.query.order | limitTo: tableControl.limit : ($ctrl.query.page -1) * tableControl.limit" class="text-left">
+						<td md-cell><a class="link-table-search" href ng-click="$ctrl.displayView(item)">{{ item.descricaoAbreviada }}</a></td>
+						<td md-cell>{{ ::item.tipo.nome }}</td>
+						<td md-cell>
+							<span ng-class="{'green-bg ml-5': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA	'}" class="estilo_situacao">
+								<b>{{ 'SITUACAO.' +item.situacao | translate }}</b>
+							</span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+			<md-table-pagination 
+				md-limit="tableControl.limit" 
+				md-limit-options="tableControl.limit_options" 
+				paginate="logPagination" md-page="$ctrl.query.page" 
+				md-total="{{($ctrl.listResult|competenciasFilter: filtro).length}}" 
+				md-page-select
+				md-label="{{'COMPETENCIA.LBLPAGINA' | translate}}">
+			</md-table-pagination>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  rest:
+    logging:
+      driver: fluentd
+      options:
+        tag: "docker.{{.ID}}" 
+  web:
+    logging:
+      driver: fluentd
+      options:
+        tag: "docker.{{.ID}}" 

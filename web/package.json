@@ -1,0 +1,17 @@
+{
+  "name": "dezi-backend",
+  "version": "3.17.1",
+  "private": true,
+  "scripts": {
+    "release": "standard-version"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "node set-pom-version.js",
+      "postcommit": "git add pom.xml domain/pom.xml rest/pom.xml services/pom.xml services.client/pom.xml && git commit --amend --no-edit"
+    }
+  },
+  "devDependencies": {
+    "standard-version": "^7.0.1"
+  }
+}

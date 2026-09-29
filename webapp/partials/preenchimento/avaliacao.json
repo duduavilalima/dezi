@@ -1,0 +1,63 @@
+{
+	"competencias": [
+		{
+			"id": 235,
+			"seq": 1,
+			"title": "Processos",
+			"description": "A capacidade de trabalhar direcionado a processos e seus indicadores. As medidas sozinhas não mostram absolutamente nada, elas precisam estar agrupadas estrategicamente em um sistema de indicadores de desempenho organizacional para que os gestores da alta administração possam agir de maneira eficiente, e assim, conseguir atingir os objetivos traçados. A definição e utilização dos indicadores pode ser bastante significativa para o sucesso de uma empresa, já que eles podem ser usados como ferramentas da estratégia em diferentes níveis e departamentos organizacionais. Sendo assim, é imprescindível que a empresa utilize diversos indicadores na busca pela informação, pois o uso de apenas um único indicador não representará o contexto amplo necessário para fomentar uma tomada de decisão eficaz.",
+			"items": [
+				{
+					"id": 123, "seq": 1, "title": "Conhecimento dos processos da sua unidade que permite tomar decisões e direcionar os acontecimentos",
+					"ratings": { "av1": 2, "av2": 3 },
+					"comments": { "av1": "Nada a declarar", "av2": "Fusce imperdiet, urna id lobortis cursus, nunc neque feugiat erat, sit amet tincidunt ligula nisi quis ipsum."}
+				},
+				{
+					"id": 432, "seq": 2, "title": "Capacidade de mudança e adaptação dos processos conforme a necessidade do negócio",
+					"ratings": { "av1": 4, "av2": 4 },
+					"comments": { "av1": "To bem na fita!", "av2": "Nam nec vestibulum enim, non efficitur tellus. Sed dolor nulla, sagittis ac ante ac, tincidunt consectetur risus."}
+				}
+			],
+			"options": {
+				"1": "Regular",
+				"2": "Bom",
+				"3": "Muito Bom",
+				"4": "Acima da Expectativa"
+			}
+		},
+		{
+			"id": 862,
+			"seq": 2,
+			"title": "Gestão de Metas",
+			"description": "Duis sed rutrum est, in mattis felis. Vestibulum id urna non nisi dignissim elementum. Nam nec vestibulum enim, non efficitur tellus. Sed dolor nulla, sagittis ac ante ac, tincidunt consectetur risus. Vestibulum maximus, leo vel sagittis molestie, leo nibh hendrerit quam, sit amet pharetra ante lacus a enim. Fusce imperdiet, urna id lobortis cursus, nunc neque feugiat erat, sit amet tincidunt ligula nisi quis ipsum. Phasellus nisi libero, tincidunt non mauris eu, iaculis vehicula lorem. Praesent velit diam, congue vehicula gravida in, feugiat et massa.",
+			"items": [
+				{ "id": 234, "seq": 1, "title": "Sed nibh lectus, sollicitudin ac enim in, auctor vehicula mauris" },
+				{ "id": 345, "seq": 2, "title": "Quisque eu metus non orci facilisis ultricies. Suspendisse ultrices dui eget enim porta cursus" },
+				{ "id": 456, "seq": 3, "title": "Phasellus faucibus nisl a metus fermentum ultricies" },
+				{ "id": 567, "seq": 4, "title": "Pellentesque ultricies eleifend tellus, eget suscipit turpis vehicula ac" }
+			],
+			"options": {
+				"1": "Regular",
+				"2": "Bom",
+				"3": "Muito Bom",
+				"4": "Acima da Expectativa"
+			}
+		},
+		{
+			"id": 436,
+			"seq": 3,
+			"title": "Liderança",
+			"description": "Ut et dui ipsum. Integer at iaculis nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer vitae lacus aliquet, fermentum nisi et, ullamcorper metus. In pharetra feugiat maximus. Etiam maximus purus dui, id pharetra sem finibus et. Curabitur feugiat rhoncus egestas. Sed ultrices tortor at est venenatis venenatis.",
+			"items": [
+				{ "id": 678, "seq": 1, "title": "Sed maximus nunc ut sapien commodo, tristique condimentum est maximus" },
+				{ "id": 789, "seq": 2, "title": "Quisque metus libero, volutpat sit amet venenatis ac, efficitur eu est" },
+				{ "id": 890, "seq": 3, "title": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas" }
+			],
+			"options": {
+				"1": "Regular",
+				"2": "Bom",
+				"3": "Muito Bom",
+				"4": "Acima da Expectativa"
+			}
+		}
+	]
+}

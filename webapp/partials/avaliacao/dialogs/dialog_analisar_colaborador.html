@@ -1,0 +1,70 @@
+<md-dialog id="dialog_titulo_popup_alterar_colaborador" style="width:1000px;" aria-label="Alterar Colaborador">
+	<md-toolbar style="background-color: #2C5079;color: #FFFFFF;">
+		<div class="md-toolbar-tools">
+			<h2>{{title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()"
+				style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+					aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="margin-top: 5px;">
+		<div class="widget-group" layout="row" flex="100" layout-wrap>
+			<ms-widget flippable="true" layout="column" flex="100" flex-gt-md="50">
+				<ms-widget-front class="white-bg">
+					<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+						<h2 class="simplified black-fg">{{object.avaliado.nome}}</h2>
+					</div>
+					<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="typeGraphic == null">
+						<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+					</div>
+					<div layout="column" layout-align="center center" class="pl-16 pr-16"
+						ng-show="typeGraphic != null && mensagem != ''">
+						<h3 class="black">{{mensagem}}</h3>
+					</div>
+					<canvas id="radar2" class="chart chart-radar" chart-data="gapColaborador" chart-labels="labels"
+						chart-options="options" chart-series="series" chart-colours="colours" chart-legend="true"
+						ng-if="typeGraphic == 'radar' && mensagem == ''"></canvas>
+					<!--FIXME Trocar por chart.js -->
+					<!-- <c3chart bindto-id="chart-colaborador" transition-duration="500"
+						ng-if="typeGraphic == 'bar' && mensagem == ''">
+					</c3chart> -->
+				</ms-widget-front>
+			</ms-widget>
+
+			<ms-widget flippable="true" layout="column" flex="100" flex-gt-md="50">
+				<ms-widget-front class="white-bg">
+					<div class="ph-8 pv-16 h-55" layout="row" layout-align="center center">
+						<h2 class="simplified black-fg">{{object.avaliado.cargo.nome}}</h2>
+					</div>
+					<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="typeGraphic == null">
+						<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+					</div>
+					<div layout="column" layout-align="center center" class="pl-16 pr-16"
+						ng-show="typeGraphic != null && mensagem != ''">
+						<h3 class="black">{{mensagem}}</h3>
+					</div>
+					<canvas id="radar" class="chart chart-radar" chart-data="gapCargo" chart-labels="labels"
+						chart-options="options" chart-series="series" chart-colours="colours" chart-legend="true"
+						ng-if="typeGraphic == 'radar' && mensagem == ''"></canvas>
+					<!--FIXME Trocar por chart.js -->
+					<!-- <c3chart bindto-id="chart-cargo" transition-duration="500"
+						ng-if="typeGraphic == 'bar' && mensagem == ''">
+					</c3chart> -->
+				</ms-widget-front>
+			</ms-widget>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row" class="white-bg" flex style="margin-top: -10px;">
+		<div flex layout-align="start center">
+		</div>
+		<div flex layout-align="center center">
+			<md-button style="margin-left: -50px;" id="btn_cancelar_cancelar_nregistro"
+				class="md-raised md-default text-capitalize" ng-click="cancel()">
+				Fechar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,30 @@
+<div id="mensageria" class="page-layout simple fullwidth doc-page">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="title"><span>Mensagens</span></div>
+        </div>
+	</div>
+    <!-- CONTENT -->
+    <div flex md-background-bg class="md-background-bg zoomable" layout="column">
+        <div ng-cloak>
+			<md-content>
+				<form name="basicForm" novalidate>
+					<md-tabs
+						md-dynamic-height
+						md-border-bottom
+						md-selected="$ctrl.state.selectedIndexTab"
+					>
+						<md-tab
+							ng-repeat="tab in $ctrl.tabs"
+							md-on-select="$ctrl.onTabSelected(tab)"
+							label="{{ tab.title | translate }}"
+						></md-tab>
+					</md-tabs>
+				</form>
+			</md-content>
+		</div>
+    </div>
+	<ui-view/>
+</div>

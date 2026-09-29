@@ -1,0 +1,78 @@
+<md-dialog id="dialog_titulo_popup_alterar_datas" aria-label="Alterar Datas Limites" style="width: 750px; height: 280px;" class="white-bg">
+  <form name="basicForm">
+    <md-toolbar class="cor_title white-fg">
+      <div class="md-toolbar-tools">
+        <h2 md-autofocus id="titulo_popup_confirmacao_confirmar">{{title}}</h2>
+        <span flex></span>
+        <md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+          <md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content" role="document" tabindex="-1" id="dialog_54">
+
+      <div class="md-dialog-content-body ng-scope" layout-gt-md="row" layout-sm="colum" layout-xs="column" flex="100">
+
+		  <md-input-container flex>
+			  <label id="lbl_dataAv1" for="dataAv1">{{'RESUMO.AUTOAVALIACAOAV' | translate}}</label>
+			  <input id="dataAv1" name="dataAv1" tt-date-picker locale="user.configuracao.linguagem.trim()" type="text" ng-model="object.limiteAv1" ng-disabled="!avaliacao.preencheAv1" ng-required="object.preencheAv1">
+			  <div ng-messages="basicForm.dataAv1.$error" ng-show="basicForm.dataAv1.$touched">
+				  <div ng-message="required">
+					  <span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+				  </div>
+			  </div>
+		  </md-input-container>
+
+        <span class="width-10"></span>
+
+		  <md-input-container flex>
+			  <label id="lbl_dataAv2" for="dataAv2">{{'RESUMO.AVALIACAOAV' | translate}}</label>
+			  <input id="dataAv2" name="dataAv2" tt-date-picker locale="user.configuracao.linguagem.trim()" type="text" ng-model="object.limiteAv2" ng-disabled="!avaliacao.preencheAv2" ng-required="true" required>
+			  <div ng-messages="basicForm.dataAv2.$error" ng-show="basicForm.dataAv2.$touched">
+				  <div ng-message="required">
+					  <span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+				  </div>
+			  </div>
+		  </md-input-container>
+
+		  <span class="width-10"></span>
+
+		  <md-input-container flex>
+			  <label id="lbl_dataAv3" for="dataAv3">{{'RESUMO.CONSENSOAV' | translate}}</label>
+			  <input id="dataAv3" name="dataAv3" tt-date-picker locale="user.configuracao.linguagem.trim()" type="text" ng-disabled="!avaliacao.preencheAv3" ng-model="object.limiteAv3" ng-required="object.preencheAv3">
+			  <div ng-messages="basicForm.dataAv3.$error" ng-show="basicForm.dataAv3.$touched">
+				  <div ng-message="required">
+					  <span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+				  </div>
+			  </div>
+		  </md-input-container>
+
+		  <span class="width-10" ng-if="avaliacao.preencheAv4"></span>
+
+		  <md-input-container flex ng-if="avaliacao.preencheAv4">
+			  <label id="lbl_dataAv4" for="dataAv4">{{'RESUMO.REVISAOAV' | translate}}</label>
+			  <input id="dataAv4" name="dataAv4" tt-date-picker locale="user.configuracao.linguagem.trim()" type="text" ng-disabled="!avaliacao.preencheAv4" ng-model="object.limiteAv4" ng-required="object.preencheAv4">
+			  <div ng-messages="basicForm.dataAv4.$error" ng-show="basicForm.dataAv4.$touched">
+				  <div ng-message="required">
+					  <span class="h5">{{'RESUMO.CAMPOOBRIGATORIO' | translate}}.</span>
+				  </div>
+			  </div>
+		  </md-input-container>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions style="background-color: rgba(255,255,255,1);">
+		<div flex layout-align="start center">
+			  <md-button id="btn_cancelar_cancelar_nregistro"  class="md-raised md-default estilo_botoes" ng-click="cancel()">
+				Cancelar
+			  </md-button>
+			</div>
+			<div layout-align="end center">
+			  <md-button id="btn_confirmar_confirmar_nregistro" ng-disabled="basicForm.$invalid" class="md-raised md-accent estilo_botoes" ng-click="confirm()">
+				Confirmar
+			  </md-button>
+			</div>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

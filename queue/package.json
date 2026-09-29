@@ -1,0 +1,21 @@
+{
+  "name": "br.com.fasolti.queue",
+  "version": "3.1.0",
+  "description": "Consumer em SpringBoot , utilizando AMQP conectando no RABBTIMQ",
+  "main": "",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "author": "Denis Oliveira",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "standard-version": "^7.0.1"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "node set-pom-version.js",
+      "postcommit": "git add pom.xml && git commit --amend --no-edit"
+    }
+  },
+  "dependencies": {}
+}

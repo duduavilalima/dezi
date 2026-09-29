@@ -1,0 +1,74 @@
+<md-dialog id="dialog_titulo_popup_adicionar_dimensao" style="width:700px;" aria-label="Adicionar Dimensao">
+	<md-toolbar class="md-accent">
+		<div class="md-toolbar-tools">
+			<h2>Adicionar Dimensão</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancelDimensao()"
+					   style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+						 aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="background-color: rgb(245,245,245);" class="p-16">
+		<form name="basicForm" novalidate>
+			<!-- WIDGET GROUP -->
+			<div class="widget-group" layout="row" flex="100">
+				<div flex-xs flex-gt-xs="100" flex="100" layout="row">
+					<div class="white-bg style_card" flex layout="column">
+						<div class="content">
+							<form name="form" novalidate>
+
+								<div layout="column" flex="100" class="pl-16 pt-8 pr-16">
+									<md-input-container flex="100">
+										<label id="lbl_dimensao" for="lbl_dimensao">Dimensão</label>
+
+										<md-select id="selecao_dimensao" name="dimensao" ng-model="$dialog.dimensaoSelected"
+												   ng-required="true" required>
+											<md-option ng-repeat="item in $dialog.list" ng-value="item"
+													   value="{{item}}">
+												{{item.nome}}
+											</md-option>
+										</md-select>
+
+										<div ng-messages="basicForm.dimensao.$error"
+											 ng-show="basicForm.dimensao.$touched">
+											<div ng-message="required">
+												<span>Campo obrigatório.</span>
+											</div>
+										</div>
+									</md-input-container>
+								</div>
+
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- / WIDGET GROUP -->
+		</form>
+	</md-dialog-content>
+
+
+	<md-dialog-actions layout="row" flex class="white-bg">
+
+		<div flex layout-align="start center">
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes"
+					   ng-click="$dialog.cancelDimensao()">
+				Cancelar
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_cancelar_nregistro" ng-disabled="basicForm.$invalid"
+					   class="md-raised md-accent estilo_botoes md-accent" ng-click="$dialog.saveDimensao()">
+				Confirmar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+
+</md-dialog>

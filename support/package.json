@@ -1,0 +1,23 @@
+{
+  "name": "br.com.fasolti.dezi.dfi",
+  "version": "3.0.0",
+  "description": "Importação xlsx em SpringBoot",
+  "private": true,
+  "repository": {
+    "url": "http://git.fasolti.com.br/avd/support"
+  },
+  "scripts": {
+    "release": "standard-version"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "node set-pom-version.js",
+      "postcommit": "git add pom.xml && git commit --amend --no-edit"
+    }
+  },
+  "author": "Denis Oliveira",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "standard-version": "^8.0.0"
+  }
+}

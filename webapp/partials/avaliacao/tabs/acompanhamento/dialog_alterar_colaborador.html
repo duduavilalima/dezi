@@ -1,0 +1,265 @@
+<md-dialog id="dialog_titulo_popup_alterar_colaborador" style="width:1300px;"  aria-label="Alterar Colaborador">
+	<md-toolbar class="red-bg">
+		<div class="md-toolbar-tools">
+			<h2>{{title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="background-color: rgb(245,245,245);">
+		<form name="basicForm" novalidate>
+			<div class="widget-group" layout="row" flex="100">
+				<ms-widget flex="100">
+					<ms-widget-front class="p-16 white-bg">
+						<div layout="row" layout-align="space-between">
+							<div layout="column" layout-gt-md="row" flex="100">
+								<div id="title_colaborador" class="md-accent-fg" ><h2>Avaliado</h2></div>
+							</div>
+						</div>
+						<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -15px;">
+							<div layout="column" layout-align="center center" layout-align-gt-md="start center" class="p-16">
+								<div class="md-whiteframe-5dp" ng-show="cropperColaborador.croppedImage == null">
+									<img id="image_user_default_colabarador" style="height: 100px; width: 100px;" src="/img/avatars/anon.png">
+								</div>
+								<div class="md-whiteframe-5dp" ng-show="cropperColaborador.croppedImage != null">
+									<img id="image_userColaborador" style="height: 100px; width: 100px;" ng-src="{{cropperColaborador.croppedImage}}"/>
+								</div>
+							</div>
+							<div layout="column" flex="50">
+								<md-input-container style="margin-top: 35px; padding-bottom: 35px;" ng-if="action != 'adicionar'">
+									<label id="lbl_matriculaColaborador_add" for="lbl_matriculaColaborador">Matricula</label>
+									<input id="matriculaColaborador_add" name="matriculaColaborador" type="text" class="text-capitalize" ng-model="object.avaliado.matricula" ng-disabled="true">
+								</md-input-container>
+								<md-input-container style="margin-top: 35px;" ng-if="action == 'adicionar'">
+									<label id="lbl_matriculaColaborador" for="lbl_matriculaColaborador">Matricula</label>
+									<input id="matriculaColaborador" name="matriculaColaborador" type="text" class="text-capitalize" ng-model="object.avaliado.matricula" ng-disabled="true">
+								</md-input-container>
+								<md-input-container style="margin-top: -15px;" ng-if="action == 'alterar'">
+									<label id="lbl_nomeColaborador" for="lbl_nomeColaborador">Nome</label>
+									<input id="nomeColaborador" name="nomeColaborador" type="text" class="text-capitalize" ng-model="object.avaliado.nome" ng-disabled="true">
+								</md-input-container>
+								<md-autocomplete
+									id="autocomplete_avaliado"
+									focus-me="true"
+									focus-me-id="input_avaliado"
+									name="autocompleteAvaliado"
+									ng-if="action == 'adicionar'"
+									value="{{ object.avaliado.nome }}"
+									md-input-name="autocompleteAvaliado"
+									md-selected-item="selectedItemAvaliado"
+									md-no-cache="false"
+									md-selected-item-change="selectedItemAvaliadoChange(item, 'avaliado')"
+									md-items="item in querySearchAvaliado(searchTextAvaliado)"
+									md-search-text="searchTextAvaliado"
+									md-min-length="2"
+									md-item-text="item.nome"
+									md-floating-label="Nome"
+									md-menu-class="autocomplete-custom-template"
+									md-delay="250"
+									md-input-id="input_avaliado"
+									ng-required="true"
+									required
+								>
+									<md-item-template>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>NOME: </strong><span>{{item.nome}} </span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>CARGO:</strong> <span>{{item.cargo.nome}}</span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>SETOR: </strong><span>{{item.departamento.nome}}</span>
+											</span>
+										</span>
+									</md-item-template>
+									<div
+										ng-messages="basicForm.autocompleteAvaliado.$error"
+										ng-show="basicForm.autocompleteAvaliado.$touched"
+										role="alert"
+									>
+										<div ng-message="required" id="msg_req_avaliado">Obrigatório.</div>
+										<div ng-message="minlength" id="msg_min_avaliado">O nome informado não é suficiente.</div>
+										<div ng-message="maxlength" id="msg_max_avaliado">O nome informado é muito longo.</div>
+									</div>
+								</md-autocomplete>
+							</div>
+						</div>
+					</ms-widget-front>
+				</ms-widget>
+				<ms-widget flex="100">
+					<ms-widget-front class="p-16 white-bg">
+						<div layout="row" layout-align="space-between">
+							<div layout="column" layout-gt-md="row" flex="100">
+								<div id="title_avaliador" class="md-accent-fg" ><h2>Avaliador</h2></div>
+							</div>
+						</div>
+
+						<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -15px;">
+							<div layout="column" layout-align="center center" layout-align-gt-md="start center" class="p-16">
+								<div class="md-whiteframe-5dp" ng-show="cropperAvaliador.croppedImage == null">
+									<img id="image_user_default" style="height: 100px; width: 100px;" src="/img/avatars/anon.png">
+								</div>
+
+								<div class="md-whiteframe-5dp" ng-show="cropperAvaliador.croppedImage != null">
+									<img id="image_userAvaliador" style="height: 100px; width: 100px;" ng-src="{{cropperAvaliador.croppedImage}}"/>
+								</div>
+							</div>
+
+							<div layout="column" flex="50">
+								<md-input-container style="margin-top: 35px;">
+									<label id="lbl_matriculaAvaliador" for="lbl_matriculaAvaliador">Matricula</label>
+									<input id="matriculaAvaliador" name="matriculaColaborador" type="text" class="text-capitalize" ng-model="object.avaliador.matricula" ng-disabled="true">
+								</md-input-container>
+								<md-autocomplete
+									id="autocomplete_avaliador"
+									name="autocompleteAvaliador"
+									value="{{ object.avaliador.nome }}"
+									md-input-name="autocompleteAvaliador"
+									md-selected-item="selectedItemAvaliador"
+									md-no-cache="false"
+									md-selected-item-change="selectedItemAvaliadorChange(item, 'avaliador')"
+									md-items="item in querySearchAvaliador(searchTextAvaliador)"
+									md-search-text="searchTextAvaliador"
+									md-min-length="2"
+									md-item-text="item.nome"
+									md-floating-label="Nome"
+									md-menu-class="autocomplete-custom-template"
+									md-delay="250"
+									md-input-id="input_avaliador"
+									ng-required="true"
+									required
+								>
+									<md-item-template>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>NOME: </strong><span>{{item.nome}} </span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>CARGO:</strong> <span>{{item.cargo.nome}}</span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>SETOR: </strong><span>{{item.departamento.nome}}</span>
+											</span>
+										</span>
+									</md-item-template>
+									<div
+										ng-messages="basicForm.autocompleteAvaliador.$error"
+										ng-show="basicForm.autocompleteAvaliador.$touched"
+										role="alert"
+									>
+										<div ng-message="required" id="msg_req_avaliador">Obrigatório.</div>
+										<div ng-message="minlength" id="msg_min_avaliador">O nome informado não é suficiente.</div>
+										<div ng-message="maxlength" id="msg_max_avaliador">O nome informado é muito longo.</div>
+									</div>
+								</md-autocomplete>
+							</div>
+						</div>
+					</ms-widget-front>
+				</ms-widget>
+				<ms-widget flex="100" ng-if="object.avaliacao.preencheAv4 === true">
+					<ms-widget-front class="p-16 white-bg">
+						<div layout="row" layout-align="space-between">
+							<div layout="column" layout-gt-md="row" flex="100">
+								<div id="title_revisor" class="md-accent-fg" ><h2>Revisor</h2></div>
+							</div>
+						</div>
+						<div layout="column" layout-gt-md="row" flex="100" style="margin-top: -15px;">
+							<div layout="column" layout-align="center center" layout-align-gt-md="start center" class="p-16">
+								<div class="md-whiteframe-5dp" ng-show="cropperRevisor.croppedImage == null">
+									<img id="image_user_default_revisor" style="height: 100px; width: 100px;" src="/img/avatars/anon.png">
+								</div>
+								<div class="md-whiteframe-5dp" ng-show="cropperRevisor.croppedImage != null">
+									<img id="image_userRevisor" style="height: 100px; width: 100px;" ng-src="{{cropperRevisor.croppedImage}}"/>
+								</div>
+							</div>
+							<div layout="column" flex="50">
+								<md-input-container style="margin-top: 35px;">
+									<label id="lbl_matriculaRevisor" for="lbl_matriculaRevisor">Matricula</label>
+									<input id="matriculaRevisor" name="matriculaRevisor" type="text" class="text-capitalize" ng-model="object.revisor.matricula" ng-disabled="true">
+								</md-input-container>
+								<md-autocomplete
+									id="autocomplete_revisor" flex
+									name="autocompleteRevisor"
+									value="{{ object.revisor.nome }}"
+									md-input-name="autocompleteRevisor"
+									md-selected-item="selectedItemRevisor"
+									md-no-cache="false"
+									md-selected-item-change="selectedItemRevisorChange(item, 'revisor')"
+									md-items="item in querySearchRevisor(searchTextRevisor)"
+									md-search-text="searchTextRevisor"
+									md-min-length="2"
+									md-item-text="item.nome"
+									md-floating-label="Nome"
+									md-menu-class="autocomplete-custom-template"
+									md-delay="250"
+									md-input-id="input_revisor"
+									ng-required="true"
+									required
+								>
+									<md-item-template>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>NOME: </strong><span>{{item.nome}} </span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>CARGO:</strong> <span>{{item.cargo.nome}}</span>
+											</span>
+										</span>
+										<span class="item-metadata">
+											<span class="item-metastat">
+												<strong>SETOR: </strong><span>{{item.departamento.nome}}</span>
+											</span>
+										</span>
+									</md-item-template>
+									<div
+										ng-messages="basicForm.autocompleteRevisor.$error"
+										ng-show="basicForm.autocompleteRevisor.$touched"
+										role="alert"
+									>
+										<div ng-message="required" id="msg_req_revisor">Obrigatório.</div>
+										<div ng-message="minlength" id="msg_min_revisor">O nome informado não é suficiente.</div>
+										<div ng-message="maxlength" id="msg_max_revisor">O nome informado é muito longo.</div>
+									</div>
+								</md-autocomplete>
+							</div>
+						</div>
+					</ms-widget-front>
+				</ms-widget>
+			</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row" flex class="white-bg">
+		<div flex layout-align="start center">
+			<md-button
+				id="btn_cancelar_cancelar_nregistro"
+				class="md-raised md-default estilo_botoes"
+				ng-click="cancel()"
+			>
+				Cancelar
+			</md-button>
+		</div>
+		<div layout-align="end center">
+			<md-button
+				id="btn_confirmar_cancelar_nregistro"
+				ng-disabled="basicForm.$invalid"
+				class="md-raised md-primary estilo_botoes {{basicForm.$invalid ? '' : 'red-bg'}}"
+				ng-click="confirmar()"
+			>
+				Salvar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

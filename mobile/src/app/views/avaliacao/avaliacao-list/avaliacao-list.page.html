@@ -1,0 +1,16 @@
+<ion-header>
+	<ion-toolbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title> {{ "app.views.avaliacao-list.title" | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="white">
+	<ion-list>
+		<ion-item *ngFor="let avaliacao of avaliacoes" (click)="onClickAvaliacao(avaliacao)">
+			{{ avaliacao.descricaoAbreviada }}
+		</ion-item>
+	</ion-list>
+</ion-content>

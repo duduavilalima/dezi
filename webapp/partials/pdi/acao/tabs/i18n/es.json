@@ -1,0 +1,32 @@
+{
+  "NAV": {
+    "PAINELDECONTROLE": "Seguimiento",
+    "CAMPANHAS":"Campañas",
+    "PREENCHIMENTO":"Llenar",
+    "ESTATISTICAS":"Estadísticas",
+    "CADASTROS":"Las Entradas",
+    "MODELOSDEGRADUACAO":"Escalas de Grado",
+    "COMPETENCIAS":"Habilidades",
+    "DEPARTAMENTOS":"Departamentos",
+    "CARGOS":"Posiciones",
+    "FUNCIONARIOS":"Empleados",
+    "FORMACAOEIDIOMAS":"Formación e Idiomas",
+    "ESCOLARIDADE":"Educación",
+    "TIPOSDECURSO":"Tipos de Curso",
+    "CURSOSDEGRADUACAO":"Cursos de Graduación",
+    "CURSOSDEESPECILIZACAO":"Los Cursos de Especialización",
+    "IDIOMAS":"Idiomas",
+    "MENSAGEM": "Mensaje de bienvenida",
+    "PARAMETROS": "Parámetros generales",
+    "AVALIACOES":"Evaluación",
+    "AUTOAVALIACOES":"Autoevaluaciones",
+    "TIPODECOMPETENCIAS": "Tipo de habilidades",
+    "RESULTADOS": "Resultados",
+    "DESEMPENHO": "Rendimiento",
+    "ADMINISTRACAO": "Administración",
+    "HOST": "Host por empresas",
+    "UNIDADE" : "Unidad",
+    "CONSENSOS" : "Consensos",
+    "RELATORIOS": "Informes"
+  }
+}

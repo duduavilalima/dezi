@@ -1,0 +1,32 @@
+<ion-slides (ionSlideDidChange)="onChangeAvaliado()" centeredSlides slidesPerView="1">
+	<ion-item text-center no-lines *ngFor="let avaliado of avaliados">
+		<ion-slide class="inactive text" [ngClass]="activeId === avaliado.id ? 'active' : ''">
+			<ion-grid>
+				<ion-row class="m-auto">
+					<ion-col>
+						<ion-avatar>
+							<img [src]="avaliado.fotoBase64" />
+						</ion-avatar>
+					</ion-col>
+				</ion-row>
+				<ion-row class="m-auto white-space">
+					<p class="nome">
+						{{ avaliado.nome }}
+					</p>
+				</ion-row>
+				<ion-row class="m-auto white-space">
+					<p class="cargo">
+						{{ avaliado.cargo.nome }}
+					</p>
+				</ion-row>
+			</ion-grid>
+		</ion-slide>
+	</ion-item>
+
+</ion-slides>
+		<button clear ion-button icon-only class="btn-prev" [disabled]="isDisabledPrev || avaliados?.length === 1" (click)="prevSlide()">
+			<ion-icon name="arrow-back"></ion-icon>
+		</button>
+		<button clear ion-button icon-only class="btn-next" [disabled]="isDisabledNext || avaliados?.length === 1" (click)="nextSlide()">
+			<ion-icon name="arrow-forward"></ion-icon>
+		</button>

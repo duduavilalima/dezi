@@ -1,0 +1,66 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate>PDI.TITLE</span></div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-0 mt-50">
+		<div class="white-bg style_card m-8">
+			<div layout="row" layout-wrap="" style="align-items: center">
+				<div flex="8">
+					<img md-menu-align-target class="avatar-PDI" ng-show="$ctrl.model.croppedImg == null" src="img/avatars/profile.jpg">
+					<img md-menu-align-target class="avatar-PDI" ng-show="$ctrl.model.croppedImg != null" ng-src="{{$ctrl.model.croppedImg}}" />
+				</div>
+				<div flex="92" style="width: 60%;">
+					<div layout="row" layout-wrap="">
+						<div flex="100" class="mb-6"><span class="md-title">{{$ctrl.model.funcionario.nome}}</span></div>
+						<div flex="33"><span><b>Setor:</b> {{$ctrl.model.funcionario.departamento.nome}}</span></div>
+						<div flex="33"><span><b>Cargo:</b> {{$ctrl.model.funcionario.cargo.nome}}</span></div>
+						<div flex="33"><span><b>Situação Funcional:</b> {{ 'SITUACAO.' +$ctrl.model.funcionario.situacaoFuncional | translate }}</span></div>
+					</div>		
+				</div>
+			</div>
+		</div>
+		<div layout="row" class="content" layout-xs="column">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="md-button md-primary md-accent-fg text-capitalize">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"/>
+					<span translate>CARGO.VOLTAR</span>
+				</md-button>
+			</div>
+			<div 
+			layout-align="end center" 
+			layout-align-xs="center center" 
+			layout="row">
+				<md-button ng-click="$ctrl.Anotacoes()"  class="md-button md-primary md-accent-fg text-capitalize">
+					<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"/>
+					<span translate="PDI.BOTAO_NOTE">Anotações</span>
+					<md-tooltip class="h4"><span translate="PDI.TOOLTIP_NOTE">Ações do Consenso</span></md-tooltip>
+				</md-button>
+			</div>
+			<div 
+			layout-align="end center" 
+			layout-align-xs="center center" 
+			layout="row">
+				<md-button ng-click="$ctrl.AdicionarAcao()" class="md-button md-primary md-accent-fg text-capitalize">
+					<md-icon md-font-icon="icon-plus" class="md-accent-fg"/>
+					<span translate>PDI.BOTAO_NOVAACAO</span>
+					<md-tooltip class="h4"><span translate="PDI.TOOLTIP_NOVAACAO">Adicionar Ação de desenvolvimento</span></md-tooltip>
+				</md-button>
+			</div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column">
+		<div class="white-bg style_card m-8">
+			<md-tabs md-dynamic-height md-border-bottom md-selected="$ctrl.state.selectedIndexTab">
+				<md-tab 
+					ng-repeat="tab in $ctrl.tabs | orderBy:predicate:reversed"
+					md-on-select="$ctrl.onTabSelected(tab)"
+					label="{{ tab.title | translate }}"
+					>
+				</md-tab>
+			</md-tabs>
+		</div>
+	</div>
+	<ui-view/>
+</div>

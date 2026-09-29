@@ -1,0 +1,3 @@
+<span *ngFor="let page of pageAsArray">
+	<a class="pages" (click)="onChangePage(page)" [ngClass]="pageAsArray[activePage] === page ? 'active' : ''"></a>
+</span>

@@ -1,0 +1,50 @@
+{
+  "PREENCHIMENTO": {
+    "TITLE": "llenar",
+    "BTNFORMACAO": "Idiomas y formación",
+    "MINHASAVALIACOES": "Mi comentarios",
+    "AUTOAVALIACOES": "Autoevaluaciones",
+    "CONSENSO": "Consenso",
+    "LBLPESQUISAR": "Investigación",
+    "CAMPANHA": "Campaña",
+    "AVALIACAO": "Evaluación",
+    "HINT_AVALIACAO_GESTOR":"La evaluación debe ser completada por el gestor",
+    "AVALIADOR": "Tasador",
+    "DATAAV1": "Fecha limite AV1",
+    "DATAAV2": "Fecha limite AV2",
+    "DATAAV3": "Fecha limite AV3",
+    "OPCOES": "Opciones",
+    "MEUSAVALIADOS": "Mi evaluación y revisión",
+    "RESUMO": "Resumen",
+    "AVALIACOES": "Críticas",
+    "REVISAO": "Informe",
+    "AVALIADO": "Evaluados",
+    "REVISOR": "Revisor",
+    "DATAREV": "Fecha limite Rev",
+    "PREENCHIMENTOS": "Rellenos",
+    "AUTOAVALIACAO": "Autoevaluaciones",
+    "LBLPAGINA": "{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}",
+    "PREENCHIMENTODASAVALIACOES":"El llenado de las calificaciones",
+    "NAOPREENCHIDA":"Sin llenar",
+    "PARCIALMENTEPREENCHIDA":"Parcialmente lleno",
+    "TOTALMENTEPREENCHIDA":"Completamente lleno",
+    "LBLCOMPETENCIAS":"Competencias",
+    "LBLFUNCIONARIOS":"Empleado",
+    "TIPODECOMPETENCIAS":"Tipo de competencias",
+    "PREENCHIDOS":"Lleno",
+    "PENDENTES":"Pendientes"
+  },
+  "LOGIN": {
+    "CONTA": "Ingrese a su cuenta",
+    "EMAIL": "Login",
+    "VALIDATION": "Obligatorio",
+    "VALIDATION-EMAIL": "Obe electrónico debe ser una dirección de correo electrónico válidorigatório",
+    "SENHA": "contraseña",
+    "ESQUECER": "Olvido la contraseña?",
+    "BTNENTRAR": "Entrar",
+    "EMPRESA":"Negocios"
+  },
+  "validation": {
+    "login-password-invalid" : "Usuario o contraseña no válido."
+  }
+}

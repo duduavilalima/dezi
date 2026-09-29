@@ -1,0 +1,27 @@
+{
+  "LOGIN": {
+    "CONTA": "Ingrese a su cuenta",
+    "EMAIL": "Login",
+    "VALIDATION": "Obligatorio",
+    "VALIDATION-EMAIL": "Obe electrónico debe ser una dirección de correo electrónico válidorigatório",
+    "SENHA": "contraseña",
+    "ESQUECER": "Olvido la contraseña?",
+    "BTNENTRAR": "Entrar",
+    "EMPRESA":"Negocios",
+    "INSERIR_MATRICULA":"(inserte aquí su registro)"
+  },
+  "ESQUECEUSENHA": {
+    "REDEFINA": "Restablecer su contraseña",
+    "ENVIADO": "Se le enviará un correo electrónico con una nueva contraseña",
+    "ENDERECO": "E -mail",
+    "EMAILINVALIDO": "El correo electrónico introducida no es válida",
+    "BTNREDEFINA": "Restablecimiento de contraseña",
+    "BTNVOLTAR": "Volver a la pantalla de inicio de sesión",
+    "TITLESUCCESS": "Restablecimiento de contraseña",
+    "MESSAGESUCCESS": "La contraseña se ha restablecido correctamente! Pronto , usted recibirá su nueva contraseña por correo electrónico .",
+    "MATRICULA":"Login"
+  },
+  "ERROR": {
+    "LOGINERROR":"Login y / o contraseña inválida"
+  }
+}

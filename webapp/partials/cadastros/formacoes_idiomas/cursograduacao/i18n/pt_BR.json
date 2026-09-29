@@ -1,0 +1,29 @@
+{
+  "GRADUACAO":{
+    "CADASTROS":"Cadastros",
+    "FORMACAO":"Formação e idiomas",
+    "GRADU": "Cursos de graduação",
+    "CURSO": "Curso de graduação",
+    "PESQUISAR":"Pesquisar",
+    "BTNNOVO":"Novo Curso de Graduação",
+    "SITUACAO": "Situação",
+    "REQUER": "Requer preenchimento de Outros cursos",
+    "CURSODEGRADUACAO": "Curso de graduação",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 80 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "SIM": "Sim",
+    "NAO": "Não",
+    "DESCRICAO" : "Descrição"
+  }
+}

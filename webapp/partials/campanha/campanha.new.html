@@ -1,0 +1,128 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">
+					<a href ng-click="$ctrl.back()">{{ 'CAMPANHA.'+ $ctrl.modulo | uppercase | translate }}s</a>
+				</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"/>
+				<span class="parent">{{ 'CAMPANHA.'+ $ctrl.titulo | uppercase | translate }}</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"/>
+				<span class="parent" translate>CAMPANHASLISTAR.NOVO</span>
+			</div>
+		</div>
+	</div>
+	<div class="mt-50">
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"/>
+					{{'CAMPANHASLISTAR.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div layout="row" class="content" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1 translate>CAMPANHASLISTAR.DESCRICOES</h1>
+						</div>
+					</div>
+					<md-divider/>
+					<div class="content">
+						<form name="form" novalidate class="p-16">
+							<div layout="column" layout-gt-xs="row" layout-xs="column" flex="100">
+								<md-input-container flex="25">
+									<label id="lbl_empresa_edit" for="empresa_edit" translate>CAMPANHASLISTAR.TITLEEMPRESA</label>
+									<input id="empresa_edit" name="empresa_edit" type="text" ng-model="$ctrl.object.empresa.nome" ng-disabled="true">
+								</md-input-container>
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="25">
+									<label id="lbl_campanha_edit" for="campanha_edit" translate>CAMPANHASLISTAR.CAMPANHA</label>
+									<input 
+										id="campanha_edit" 
+										name="campanha_edit" 
+										type="text"
+										ng-model="$ctrl.object.descricao" 
+										required 
+										ng-maxlength="100" 
+										ng-minlength="5"
+										md-maxlength="100" 
+										ng-required="true" 
+										focus-me="true"
+									>
+									<div ng-messages="form.campanha_edit.$error" ng-show="form.campanha_edit.$touched">
+											<div ng-message="required">
+												<span translate>CAMPANHASLISTAR.OBRIGATORIO</span>
+											</div>
+											<div ng-message="maxlength">
+												<span translate>CAMPANHASLISTAR.MAXIMO</span>
+											</div>
+											<div ng-message="minlength">
+												<span translate>CAMPANHASLISTAR.MINIMO</span>
+											</div>
+										</div>
+								</md-input-container>
+
+								<!-- <span class="width-20"></span> -->
+
+								<!-- <md-input-container flex="25">
+									<label for="dimensao_edit" translate>CAMPANHASLISTAR.DIMENSAO</label>
+									<md-select 
+										id="dimensao_edit" 
+										name="dimensao_edit" 
+										ng-model="$ctrl.object.dimensao"
+										ng-required="true" 
+										required
+									>
+										<md-option ng-repeat="item in booleanList" ng-value="{{item.value}}"
+											value="{{item.value}}">
+											{{item.label}}
+										</md-option>
+									</md-select>
+									<div ng-messages="form.pontofocal_edit.$error" ng-show="form.pontofocal_edit.$touched">
+										<div ng-message="required">
+											<span translate>FUNCIONARIO.CAMPOOBRIGATORIO}</span>
+										</div>
+									</div>
+								</md-input-container> -->
+
+								<span class="width-20"></span>
+
+								<md-input-container flex="25">
+									<label id="lbl_situacao" for="situacao_edit" translate>CAMPANHASLISTAR.SITUACAO</label>
+									<input 
+										id="situacao_edit" 
+										name="situacao_edit" 
+										type="text"
+										value="{{ 'SITUACAO.' + $ctrl.object.status | translate }}" 
+										ng-disabled="true"
+									/>
+								</md-input-container>
+							</div>
+						</form>
+					</div>
+					<md-divider/>
+
+					<div layout="row" class="content" layout-align="end center" layout-align-xs="center center">
+						<md-button 
+							ng-click="$ctrl.back()" 
+							class="md-raised md-accent-fg text-capitalize"
+							aria-label="Cancelar" 
+							translate="CAMPANHASLISTAR.CANCELAR"
+						/>
+						<md-button 
+							ng-click="$ctrl.save()" 
+							class="md-raised md-accent text-capitalize"
+							ng-disabled="form.$invalid"
+							translate="CAMPANHASLISTAR.SALVAR"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

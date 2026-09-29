@@ -1,0 +1,106 @@
+<md-dialog id="dialog_titulo_popup_confirmacao_confirmar" aria-label="Imprimir" style="width: 1300px;margin: 0px" class="white-bg">
+	<form name="DialogRemocaoTributoForm">
+		<md-toolbar style="color: rgba(255, 255, 255, 1);" class="md-accent-bg">
+			<div class="md-toolbar-tools">
+				<h2 md-autofocus id="titulo_popup_confirmacao_confirmar">{{title}}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="margin: 0px;padding: 10px;" class="md-dialog-content" role="document" tabindex="-1" id="dialog_54">
+			<div>
+				<img src="{{img}}" style="width: 100%">
+			</div>
+
+
+
+			<table id="table-list-competencia" width="100%" class="simple row-border hover text-center" ms-responsive-table ng-show="listCompetencia != null">
+				<thead>
+				<tr ng-show="listCompetencia.length == 0">
+					<th class="secondary-text" colspan="3"> </th>
+				</tr>
+				<tr ng-show="listCompetencia.length > 0">
+					<th class="secondary-text" width="80%">
+						<div class="table-header text-left"></div>
+					</th>
+					<th class="secondary-text" width="10%">
+						<div class="table-header text-center"></div>
+					</th>
+					<th class="secondary-text" width="10%">
+						<div class="table-header text-center"></div>
+					</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				<tr ng-show="listAssociations.length == 0">
+					<td colspan="3" class="text-center">{{'COMPETENCIA.NAODETALHAMENTO' | translate}}</td>
+				</tr>
+				<tr ng-show="listAssociations.length > 0" ng-repeat="item in listAssociations">
+					<td hide show-gt-xs class="text-left"><a href ng-click="displayEditAssociation($event,$index,item)">{{ ::item.descricao | limitTo: 300}}</a></td>
+					<td hide-gt-xs class="text-left"><strong><a href ng-click="displayEditAssociation($event,$index,item)">{{ ::item.descricao | limitTo: 50}}</a></strong></td>
+					<td class="text-center">
+						<span style="{{::item.situacao == 'ATIVA' ? 'color: green;' : 'color: red'}}">{{'SITUACAO.' +item.situacao | translate }}</span>
+					</td>
+					<td style="padding: 0">
+						<md-menu>
+							<md-button class="md-icon-button" ng-click="$mdMenu.open()" aria-label="more">
+								<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+							</md-button>
+							<md-menu-content class="p-0">
+
+
+								<!-- DETALHAMENTOS BOTÃO SUBIR MENU -->
+								<md-menu-item>
+									<md-button id="btn_subir_detalhamento" ng-disabled="$first" translate-attr-aria-label="COMPETENCIA.SUBIR" aria-label="Subir" ng-click="moveUp(item, $index)">
+										<md-icon style="color: blue" md-font-icon="icon-arrow-up-bold-circle-outline"></md-icon>{{'COMPETENCIA.SUBIR' | translate}}
+									</md-button>
+								</md-menu-item>
+
+
+								<!-- DETALHAMENTOS BOTÃO DESCER MENU -->
+								<md-menu-item>
+									<md-button id="btn_descer_detalhamento" ng-disabled="$last" translate-attr-aria-label="COMPETENCIA.DESCER" aria-label="Descer" ng-click="moveDown(item, $index)">
+										<md-icon style="color: blue" md-font-icon="icon-arrow-down-bold-circle-outline"></md-icon>{{'COMPETENCIA.DESCER' | translate}}
+									</md-button>
+								</md-menu-item>
+
+								<!-- DETALHAMENTOS BOTÃO ATIVAR MENU -->
+								<md-menu-item ng-show="item.situacao =='INATIVA'">
+									<md-button id="btn_ativar_detalhamento" aria-label="Ativar" translate-attr-aria-label="COMPETENCIA.ATIVAR" ng-click="activateDetalhamento($event, item, true)">
+										<md-icon style="color: green" md-font-icon="icon-check"></md-icon>{{'COMPETENCIA.ATIVAR' | translate}}
+									</md-button>
+								</md-menu-item>
+
+								<!-- DETALHAMENTOS BOTÃO INATIVAR MENU -->
+								<md-menu-item ng-show="item.situacao ==='ATIVA'">
+									<md-button id="btn_inativar_detalhamento" aria-label="Inativar" translate-attr-aria-label="COMPETENCIA.INATIVAR" ng-click="inactivateDetalhamento($event, item, true)">
+										<md-icon style="color: red" md-font-icon="icon-cancel"></md-icon>{{'COMPETENCIA.INATIVAR' | translate}}
+									</md-button>
+								</md-menu-item>
+
+
+							</md-menu-content>
+						</md-menu>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+		</md-dialog-content>
+		<md-dialog-actions layout="row" class="content" style="background-color: rgba(255,255,255,1);">
+
+			<div flex layout-align="start center">
+			</div>
+
+
+			<div flex layout-align="center center">
+				<md-button style="margin-left: -30px;" ng-click="cancel($event)" class="md-raised md-primary text-capitalize" aria-label="Inativar">
+					Fechar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

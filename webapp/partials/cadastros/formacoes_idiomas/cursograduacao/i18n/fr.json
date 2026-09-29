@@ -1,0 +1,28 @@
+{
+  "GRADUACAO":{
+    "CADASTOS":"Registres",
+    "FORMACAO":"Formation et Langues",
+    "GRADU": "Cours de premier cycle",
+    "PESQUISAR":"Recherche",
+    "BTNNOVO":"De nouveaux cours de premier cycle",
+    "SITUACAO": "Situation",
+    "REQUER": "Nécessite la réalisation d’autres cours",
+    "CURSODEGRADUACAO": "Curso de graduação",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 80 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "SIM": "Sim",
+    "NAO": "Não",
+    "DESCRICAO" : "Description"
+  }
+}

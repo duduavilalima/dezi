@@ -1,0 +1,28 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>{{ "app.views.novo-feedforward.title" | translate }}</ion-title>
+
+		<ion-buttons end>
+			<button type="submit" (click)="onSubmitForm()" class="button-send" ion-button [disabled]="form.invalid">
+				{{ "app.components.send.button.label" | translate | uppercase }}
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content *ngIf="partiallyLoaded">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<h3>{{ tipoCompetencia.nomeCurto }}</h3>
+			</ion-col>
+		</ion-row>
+		<form [formGroup]="form">
+			<app-info-avaliado [avaliado]="avaliado"></app-info-avaliado>
+			<app-competencia-combo [parentForm]="form" [competenciaList]="competencias"></app-competencia-combo>
+			<app-textarea [isApontamento]="false" [parentForm]="form"></app-textarea>
+			<!-- <app-separator></app-separator> -->
+			<app-rating [parentForm]="form"></app-rating>
+		</form>
+	</ion-grid>
+</ion-content>

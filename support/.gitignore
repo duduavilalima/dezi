@@ -1,0 +1,39 @@
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+*.xlsx
+*.xlsx#
+*.log
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.attach_*
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### NODE ###
+/node_modules
+
+/target
+node_modules
+/build/m2/

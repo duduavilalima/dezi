@@ -1,0 +1,152 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate>PDI.TITLE</span></div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-0 mt-50">
+		<div id="dadosFunc" class="white-bg style_card m-8">
+			<div layout="row" layout-wrap="" style="align-items: center" class="print-dados-func">
+				<div flex="5">
+					<img md-menu-align-target class="avatar-PDI" ng-show="$ctrl.model.croppedImg == null"
+						src="img/avatars/profile.jpg">
+					<img md-menu-align-target class="avatar-PDI" ng-show="$ctrl.model.croppedImg != null"
+						ng-src="{{$ctrl.model.croppedImg}}" />
+				</div>
+				<div flex="85" class="ml-10">
+					<div layout="row" layout-wrap="">
+						<div flex="33"><span><b>Colaborador:</b> {{$ctrl.model.funcionario.nome}}</span></div>
+						<div flex="33"><span><b>Setor:</b> {{$ctrl.model.funcionario.departamento.nome}}</span></div>
+						<div flex="33"><span><b>Cargo:</b> {{$ctrl.model.funcionario.cargo.nome}}</span></div>
+						<!-- <div flex="100" class="mt-10"><span><b>Período de desenvolvimento:</b> 01/05/2019 até 31/05/2019 ???</span></div> -->
+					</div>
+				</div>
+				<div flex="5">
+					<div layout-align="end center" layout-align-xs="center center" layout="row" >
+						<md-button ng-click="$ctrl.print()" style="border-radius: 0% !important"  class="md-icon-button md-primary md-accent-fg text-capitalize">
+							<md-icon md-font-icon="icon-printer" class="md-accent-fg" style="font-size: 2.4em"/>
+							<md-tooltip class="h4"><span>Imprimir</span></md-tooltip>
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div layout="row" class="content" layout-xs="column">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.acaoList()" class="md-button md-primary md-accent-fg text-capitalize">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"/>
+					<span translate>CARGO.VOLTAR</span>
+				</md-button>
+			</div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column">
+		<div class="white-bg style_card m-8">
+			<md-table-container>
+				<table id="table-list" md-table md-progress="$ctrl.model.listRelatorios" class="print-lista">
+					<body md-body>
+						<tr md-row ng-show="$ctrl.model.listRelatorios == underfined || $ctrl.model.listRelatorios.length == 0" class="text-left" style="vertical-align: middle">
+							<td>
+								<div layout="row" layout-wrap="" layout-align="center center" class="p-20 m-20 cel_no_border" translate="PDI.NAOHA">
+									Não há Ação para desenvolvimento.
+								</div>
+							</td>
+						</tr>
+						<tr md-row ng-show="$ctrl.model.listRelatorios.length != 0"
+							ng-repeat="item in $ctrl.model.listRelatorios | pdiFilter: filtro | orderBy: $ctrl.query.order | limitTo: tableControl.limit : ($ctrl.query.page -1) * tableControl.limit"
+							class="text-left">
+							<td md-cell style="border-top: 0px rgba(0, 0, 0, 0.12) solid !important; padding: 0px !important; padding-bottom: 8px !important;">
+								<md-table-container class="table_pesquisa">
+									<table md-table>
+										<tbody md-body>
+											<tr class="text-left" style="vertical-align: middle">
+												<td>
+													<div layout="row" layout-wrap="" class="pt-8 pl-5 pr-5 mt-5 ml-5 mr-5 mb-2 cel_no_border">
+														<div layout="row" layout-wrap="" flex=95>
+															<div flex="30" class="pr-8 pb-8">
+																<b><span translate="PDI.TEXT_ACAODEV">Ação para desenvolvimento</span></b><br />
+																<span>{{::item.acaoParaDesenvolvimento}}</span>
+															</div>
+															<div flex="15" class="pr-8 pb-8">
+																<b><span translate="PDI.TEXT_DATAPREVINI">Data prevista inicial</span></b><br />
+																<span>{{::item.dataPrevistaInicio | date : 'dd/MM/yyyy'}}</span>
+															</div>
+															<div flex="15" class="pr-8 pb-8">
+																<b><span translate="PDI.TEXT_DATAPREVFIM">Data prevista fim</span></b><br />
+																<span>{{::item.dataPrevistaFim | date : 'dd/MM/yyyy'}}</span>
+															</div>
+															<div flex="15" class="pr-8 pb-8">
+																<div ng-if="item.dataInicio">
+																	<b><span translate="PDI.TEXT_DATAINI">Data de inicio</span></b><br />
+																	<span>{{::item.dataInicio | date : 'dd/MM/yyyy'}}</span>
+																</div>
+															</div>
+															<div flex="15" class="pr-8 pb-8">
+																<div ng-if="item.dataFim">
+																	<b><span translate="PDI.TEXT_DATAFIM">Data de termino</span></b><br />
+																	<span>{{::item.dataFim | date : 'dd/MM/yyyy'}}</span>
+																</div>
+															</div>
+
+															<div flex="30" class="pb-8">
+																<div ng-if="item.participante.avaliacao.campanha.descricao != null">
+																	<b><span>Campanha</span>: </b>{{::item.participante.avaliacao.campanha.descricao}}
+																</div>
+															</div>
+															<div flex="65"  class="pb-8">
+																<div ng-if="item.participante.avaliacao.descricaoAbreviada != null">
+																	<b><span>Avaliação</span>: </b>{{::item.participante.avaliacao.descricaoAbreviada}}
+																</div>
+															</div>
+
+															<div flex="60">
+																<div ng-if="item.pdiAcaoCompetencias.length  > 0" >
+																	<b><span translate="PDI.TEXT_COMP">Competência</span>: </b>
+																	<span ng-repeat="itemComp in item.pdiAcaoCompetencias">
+																		{{::itemComp.competencia.descricaoAbreviada}}
+																		<span ng-if="item.pdiAcaoCompetencias.length > 1">, </span>
+																	</span>
+																</div>
+															</div>
+															<div flex="40"></div>
+
+															<div flex="100">
+																<div ng-repeat="itemCompDet in item.pdiAcaoCompetencias"
+																	ng-if="item.pdiAcaoCompetencias.length === 1">
+																	<b><span translate="PDI.TEXT_DET">Detalhamento</span>: </b>
+																	{{::itemCompDet.competenciaDetalhamento.descricao}}
+																</div>
+															</div>
+															<div ng-if="item.observacaoInicial" flex="100" class="mb-8">
+																<b><span  translate="PDI.TEXT_OBS_INICIAL">Observação Inicial</span>: </b>
+																{{::item.observacaoInicial}}
+															</div>
+															<div ng-if="item.observacaoFinal" flex="100" class="mb-8">
+															<b><span  translate="PDI.TEXT_OBS_FINAL">Observação Final</span>: </b>
+																{{::item.observacaoFinal}}
+															</div>
+															<div flex="100" class="pb-8">
+																<div style="float: right" ng-if="!item.atualizador">
+																	<b><span translate="PDI.TEXT_CRIACAO">Criado por</span>: </b>
+																	{{::item.criador.split('%')[1]}} - {{::item.dataCriacao | date:"dd/MM/yyyy ' - ' HH:mm'H'"}}
+																</div>
+																<div style="float: right" ng-if="item.atualizador">
+																	<b><span translate="PDI.TEXT_ATUAL">Atualizado por</span>: </b>
+																	{{::item.atualizador.split('%')[1]}} - {{::item.dataAtualizacao | date:"dd/MM/yyyy ' - ' HH:mm'H'"}}
+																</div>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</td>
+						</tr>
+						</tbody>
+				</table>
+			</md-table-container>
+		</div>
+	</div>
+</div>

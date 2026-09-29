@@ -1,0 +1,30 @@
+<md-input-container
+	fill-width
+	ng-form="{{ $ctrl.name }}"
+	ng-keyup="$ctrl._onReset($event)"
+	class="date-picker"
+>
+	<label for="input">
+		<span translate ng-if="$ctrl.translateLabel">{{ $ctrl.label }}</span>
+		<span ng-if="!$ctrl.translateLabel">{{ $ctrl.label }}</span>
+	</label>
+
+	<md-datepicker
+		name="input"
+		fill-width
+		ng-model="$ctrl.value"
+		ng-change="$ctrl._onChange($ctrl.value)"
+		ng-required="$ctrl.required"
+		ng-disabled="$ctrl.readOnly"
+		ng-min-date="$ctrl.minDate"
+		ng-max-date="$ctrl.maxDate"
+		md-open-on-focus
+		md-hide-icons="calendar"
+	></md-datepicker>
+
+	<div ng-messages="$ctrl._getFormErrors()">
+		<div ng-repeat="(message, value) in $ctrl.messages" ng-message="{{:: message }}">
+			<span translate translate-values="$ctrl.translateValues">{{ value }}</span>
+		</div>
+	</div>
+</md-input-container>

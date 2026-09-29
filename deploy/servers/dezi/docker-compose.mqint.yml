@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  mq:
+    image: docker.fasolti.com.br/rabbitmq:${RABBITMQ_VERSION}
+    restart: unless-stopped
+    ports:
+      - ${MQ_PORT}:5672
+      - ${MQ_MANAGEMENT_PORT}:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=$MQ_USER
+      - RABBITMQ_DEFAULT_PASS=$MQ_PASS
+    volumes:
+      - mqdata:/var/lib/rabbitmq
+      - mqlogs:/var/log
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+  queue:
+    environment:
+      - DEZI_QUEUE_HOST=$MQ_HOST
+      - DEZI_QUEUE_PORT=5672
+      - DEZI_QUEUE_USERNAME=$MQ_USER
+      - DEZI_QUEUE_PASSWORD=$MQ_PASS
+    depends_on:
+      - mq
+  rest:
+    environment:
+      - DEZI_QUEUE_HOST=$MQ_HOST
+      - DEZI_QUEUE_PORT=5672
+      - DEZI_QUEUE_USERNAME=$MQ_USER
+      - DEZI_QUEUE_PASSWORD=$MQ_PASS
+    depends_on:
+      - mq
+  web:
+    environment:
+      - DEZI_QUEUE_HOST=$MQ_HOST
+      - DEZI_QUEUE_PORT=5672
+      - DEZI_QUEUE_USERNAME=$MQ_USER
+      - DEZI_QUEUE_PASSWORD=$MQ_PASS
+
+volumes:
+  mqlogs:
+  mqdata:

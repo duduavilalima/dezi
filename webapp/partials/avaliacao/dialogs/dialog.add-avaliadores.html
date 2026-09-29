@@ -1,0 +1,103 @@
+<md-dialog aria-label="Mensagem" style="width: 850px;">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{ title }}</h2>
+				<span flex></span>
+				<md-button
+					id="bt_fechar_popup_confirmacao_confirmar"
+					class="md-icon-button"
+					ng-click="cancel()"
+					style="padding: 0px 0px 0px 0px;"
+				>
+					<md-icon
+						style="color: rgba(255,255,255,0.87) !important"
+						md-font-icon="icon-close"
+						aria-label="Close dialog"
+					/>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;">
+			<div class="md-dialog-content"
+				 style="padding: 0px 0px 0px 0px;padding: 0px;background-color: rgb(245,245,245);">
+				<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-16">
+					<div class="white-bg style_card mt-5 ml-10 mr-10 p-16" flex layout="column">
+						<div class="content">
+							<form name="form" novalidate>
+								<div layout="column" layout-xs="column" flex="100">
+									<md-chips
+										ng-model="chipsAvaliador"
+										md-autocomplete-snap
+										md-transform-chip="selectedItemAvaliadorChange($chip, 'avaliador')"
+										md-require-match="true"
+									>
+										<md-autocomplete
+											md-selected-item="selectedItemAvaliador"
+											md-search-text="searchTextAvaliador"
+											md-items="item in querySearchAvaliador(searchTextAvaliador)"
+											md-item-text="item.nome"
+											placeholder="Avaliador"
+										>
+											<span md-highlight-text="searchTextAvaliador">{{item.nome}}</span>
+										</md-autocomplete>
+										<md-chip-template>
+											<span>
+											  <strong>{{$chip.nome}}</strong>
+											</span>
+										</md-chip-template>
+									</md-chips>
+								</div>
+								<div layout="column" layout-gt-xs="row" layout-xs="column" flex="100" class="mt-20">
+									<md-input-container flex>
+										<label id="lbl_tipo_agente" for="lbl_tipo_agente">Perfil do avaliador</label>
+										<md-select
+											id="selecao_tipo_agente"
+											name="selecao_tipo_agente"
+											ng-model="perfilAgente"
+											ng-required="true"
+											required
+										>
+											<md-option ng-repeat="item in tiposDeAgentes" ng-value="item">
+												{{'PERFIL.' +item | translate}}
+											</md-option>
+										</md-select>
+										<div
+											ng-messages="dialogForm.selecao_tipo_agente.$error"
+											ng-show="dialogForm.selecao_tipo_agente.$touched"
+										>
+											<div ng-message="required">
+												<span>Campo obrigatório.</span>
+											</div>
+										</div>
+									</md-input-container>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row" class="white-bg">
+			<div flex layout-align="start center">
+				<md-button
+					id="btn_cancelar_cancelar_nregistro"
+					class="md-raised md-default estilo_botoes"
+					ng-click="cancel()"
+				>
+					Cancelar
+				</md-button>
+			</div>
+			<div layout-align="end center">
+				<md-button
+					id="btn_confirmar_salvar"
+					ng-disabled="basicForm.$invalid"
+					class="md-raised md-primary estilo_botoes {{basicForm.$invalid ? '' : 'green-bg'}}"
+					ng-click="confirmar()"
+				>
+					Salvar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

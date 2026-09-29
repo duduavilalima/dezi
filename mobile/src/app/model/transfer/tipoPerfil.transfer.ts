@@ -1,0 +1,10 @@
+
+export type TipoPerfilTO = keyof typeof ETipoPerfilTO;
+
+export enum ETipoPerfilTO {
+	ADMINISTRADOR = "ADMINISTRADOR",
+	FUNCIONARIO = "FUNCIONARIO",
+	CONSULTOR_RH = "CONSULTOR_RH",
+	GESTOR_RH = "GESTOR_RH",
+	GESTOR_AREA = "GESTOR_AREA",
+}

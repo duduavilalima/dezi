@@ -1,0 +1,60 @@
+<md-dialog aria-label="Dialog adicionar subunidade" style="width: 1000px;" class="white-bg">
+	<form name="basicForm" novalidate ui-keypress="{13:'save()'}">
+		<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+			<div class="md-toolbar-tools">
+				<h2>Subunidade</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="padding: 0px 0px 0px 0px;">
+			<div class="md-dialog-content">
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+					<div layout="column" layout-gt-md="row" flex="100">
+						<md-input-container flex="30">
+							<label id="lbl_nome_edit" for="nome_edit">{{'UNIDADES.NOMESUB' | translate}}</label>
+							<input id="nome_edit" name="nome_edit" type="text" ng-model="object.nome"
+								   required ng-required="true">
+							<div ng-messages="basicForm.nome_edit.$error"
+								 ng-show="basicForm.nome_edit.$touched">
+								<div ng-message="required">
+									<span>{{'UNIDADES.CAMPOOBRIGATORIO' | translate}}.</span>
+								</div>
+							</div>
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="30">
+							<label id="lbl_descricao" for="descricao">{{'UNIDADES.DESCRICAO' | translate}}</label>
+							<input id="descricao" name="descricao" type="text" ng-model="object.descricao">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="20">
+							<label id="lbl_situacao_edit" for="situacao_edit">{{'UNIDADES.SITUACAO' | translate}}</label>
+							<input id="situacao_edit" name="situacao_edit" type="text"
+								   ng-value="'SITUACAO.' + object.situacao | translate" ng-disabled="true">
+						</md-input-container>
+					</div>
+				</form>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions flex layout="row">
+			<div flex layout-align="start center">
+				<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Cancelar
+				</md-button>
+			</div>
+			<div layout-align="end center">
+				<md-button id="btn_confirmar_cancelar_nregistro" class="md-raised md-default text-capitalize" ng-click="save()" ng-disabled="basicForm.$invalid || action">
+					Salvar
+				</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

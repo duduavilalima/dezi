@@ -1,0 +1,33 @@
+defaults
+	mode http
+	option httplog
+	timeout http-request 5m
+	timeout connect 10s
+	timeout client 10m
+	timeout server 20m
+	compression algo gzip
+	compression type text/html text/plain text/css
+
+frontend www
+	bind :80
+	bind :443 ssl crt /etc/haproxy/conf.d/all.pem
+	redirect scheme https if !{ ssl_fc }
+	option http-server-close
+	acl is_root path /
+	acl is_rest path_beg -i /rest
+	acl is_mobile hdr_end(host) -i mobile.dezi.com.br
+	tcp-request inspect-delay 30s
+	http-request redirect location /index.html code 301 if is_root
+	use_backend mobile if is_mobile
+	use_backend rest if !is_mobile is_rest
+	default_backend web
+
+backend rest
+	reqrep ^([^\ :]*)\ /rest/(.*)  \1\ /\2
+	server rest rest:8080 check
+
+backend web
+	server web web:3000 check
+
+backend mobile
+	server mobile mobile:3000 check

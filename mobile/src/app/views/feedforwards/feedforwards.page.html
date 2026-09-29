@@ -1,0 +1,68 @@
+<ion-header>
+	<ion-toolbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>{{ "app.views.feedforwards.title" | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="content-color">
+	<ion-grid class="margin-top-push-8" *ngIf="!failed && avaliados.length > 0">
+		<ion-row class="white">
+			<ion-col>
+				<app-avatar-slide
+					[avaliados]="avaliados"
+					(selectedAvaliado)="onSelectedAvaliado($event)"
+				></app-avatar-slide>
+			</ion-col>
+		</ion-row>
+		<span class="separator grey"></span>
+		<ion-row class="white">
+			<ion-col>
+				<app-tipo-competencia-slides
+					[tipoCompetenciaList]="tiposCompetencia"
+					(selectedTipo)="onSelectedTipoCompetencia($event)"
+				></app-tipo-competencia-slides>
+			</ion-col>
+		</ion-row>
+		<span class="separator grey"></span>
+		<ion-row class="row-grey">
+			<ion-col text-center>
+				<button ion-button icon-start (click)="onClickNovoFeedForward()">
+					<ion-icon name="add"></ion-icon>
+					{{ "app.views.feedforwards.fields.button.label" | translate | uppercase }}
+				</button>
+			</ion-col>
+		</ion-row>
+		<ion-row class="row-grey">
+			<ion-col>
+				<ion-card *ngIf="feedforwards && feedforwards.length === 0" padding>
+					<p>{{ "app.views.feedforwards.messages.no-data" | translate }}</p>
+				</ion-card>
+				<app-apontamentos-card
+					*ngIf="feedforwards && feedforwards.length > 0"
+					[apontamentosList]="feedforwards"></app-apontamentos-card
+				>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid *ngIf="!failed && avaliados.length === 0" padding-top>
+		<ion-row>
+			<ion-col>
+				<ion-card padding>
+					<p>{{ "app.views.feedforwards.messages.no-avaliado" | translate }}</p>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid *ngIf="failed" padding-top>
+		<ion-row>
+			<ion-col>
+				<ion-card padding>
+					<p>{{ "app.messages.loading-failed" | translate }}</p>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

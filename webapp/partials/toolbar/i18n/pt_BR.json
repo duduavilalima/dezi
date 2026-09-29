@@ -1,0 +1,47 @@
+{
+  "TOOLBAR": {
+    "BRAZIL": "Português-BR",
+    "ENGLISH": "Inglês",
+    "SPANISH": "Espanhol",
+    "FRENCH" : "Francês",
+    "TROCAR_IDIOMA": "Trocar Idioma",
+    "TROCAR_EMPRESA": "Alternar empresa",
+    "TROCAR_SENHA": "Redefinir senha",
+    "MENSAGENS":"Mensagens",
+    "PERFIL":"Perfil",
+    "EMPRESA":"Empresa",
+    "ABRIRCHAMADO":"Abrir chamado",
+    "LOGOUT":"Sair"
+  },
+  "CONTATO": {
+    "TITULO":"Contato",
+    "VALIDATION": "Campo obrigatório"
+  },
+  "CHAMADO":{
+    "TITULO":"Abrir Chamado",
+    "ASSUNTO":"Assunto",
+    "CLASSIFICACAO":"Classificação",
+    "MENSAGEM":"Mensagem",
+    "CANCELAR":"Cancelar",
+    "ENVIAR":"Abrir chamado",
+    "SUCCESS":"Chamado aberto com sucesso!"
+  },
+  "CLASSIFICACAO": {
+    "DUVIDA":"Dúvida",
+    "CRITICA":"Crítica",
+    "SUGESTAO":"Sugestão",
+    "RECLAMACAO":"Reclamação"
+  },
+  "MENSAGENS": {
+    "TABS": {
+      "TODAS": "Todas",
+      "RECEBIDAS": "Recebidas",
+      "ENVIADAS": "Enviadas"
+    }
+  },
+  "validation": {
+    "password-not-match": "Senhas não conferem.",
+    "actual-password-not-match": "A senha atual está incorreta.",
+    "login-password-invalid" : "Login ou senha inválidos."
+  }
+}

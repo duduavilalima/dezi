@@ -1,0 +1,219 @@
+<div id="dashboard" class="page-layout simple fullwidth" ng-controller="DimensaoCadastroCtrl">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">{{ ::modulo }}</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent"><a href ng-click="back()">{{ ::titulo }}</a></span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent" ng-if="screenMode === 'VIEW'">{{ 'DIMENSAO.EXIBICAO' | translate }}</span>
+				<span class="parent" ng-if="screenMode === 'EDIT'">{{ 'DIMENSAO.EDICAO' | translate }}</span>
+				<span class="parent" ng-if="screenMode === 'NEW'">{{ 'DIMENSAO.NOVO' | translate }}</span>
+			</div>
+		</div>
+		<div layout-align="end center" layout="row" class="margin-input" layout-align-xs="start center">
+			<!-- BOTÃO NOVO -->
+			<md-button type="button" translate-attr-aria-label="DIMENSAO.BTNNOVO" ng-if="screenMode === 'VIEW'"
+					   class="font-size-13 md-raised md-accent m-0 mr-5 text-none" aria-label="Criar"
+					   ng-click="displayNew()" value="Novo">
+				{{'DIMENSAO.BTNNOVO' | translate}}
+			</md-button>
+		</div>
+	</div>
+	<div class="mt-70">
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center" ng-if="screenMode === 'VIEW'">
+				<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize"
+						   aria-label="Voltar" translate translate-attr-aria-label="CAMPANHASLISTAR.VOLTAR">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"
+							 ng-if="screenMode === 'VIEW'"></md-icon>
+					<span>{{'DIMENSAO.VOLTAR' | translate}}</span>
+				</md-button>
+			</div>
+		</div>
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-16" ng-if="screenMode !== 'VIEW'">
+				<div class="m-10 content" flex layout="column">
+					<form name="horizontalStepper" ms-horizontal-stepper ng-submit="save()"
+						  ng-model="horizontalStepper" novalidate>
+						<ms-horizontal-stepper-step ng-form="horizontalStep1" step="1" step-title="'Descrição'">
+							<div layout="column" layout-gt-xs="row" layout-xs="column" layout-sm="row" flex="100"
+								 class="p-20">
+								<md-input-container flex="30">
+									<label id="lbl_nome_edit" for="nome_edit">{{'DIMENSAO.NOME' | translate}}</label>
+									<input id="nome_edit" name="nome_edit" type="text" ng-model="object.nome"
+										   required ng-required="true">
+									<div ng-messages="basicForm.nome_edit.$error"
+										 ng-show="basicForm.nome_edit.$touched">
+										<div ng-message="required">
+											<span>{{'DIMENSAO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+								<span class="width-20"></span>
+								<md-input-container flex="40">
+									<label id="lbl_descricao_edit" for="descricao_edit">{{'DIMENSAO.DESCRICAO' |
+										translate}}</label>
+									<input id="descricao_edit" name="descricao_edit" type="text"
+										   ng-model="object.descricao"
+										   required ng-required="true">
+									<div ng-messages="basicForm.descricao_edit.$error"
+										 ng-show="basicForm.descricao_edit.$touched">
+										<div ng-message="required">
+											<span>{{'DIMENSAO.CAMPOOBRIGATORIO' | translate}}.</span>
+										</div>
+									</div>
+								</md-input-container>
+								<span class="width-20"></span>
+								<md-input-container flex="20">
+									<label id="lbl_situacao_edit" for="situacao_edit">{{'DIMENSAO.SITUACAO' |
+										translate}}</label>
+									<input id="situacao_edit" name="situacao_edit" type="text"
+										   value="{{'SITUACAO.' +object.situacao| translate }}" ng-disabled="true">
+								</md-input-container>
+							</div>
+						</ms-horizontal-stepper-step>
+
+						<ms-horizontal-stepper-step ng-form="horizontalStep2" step="2"
+													step-title="'Competências e Detalhamentos'">
+							<div flex layout="row" style="max-height: 400px;">
+								<div flex flex-xs="100" class="p-8" flex-sm="100"
+									 style="border-right: 1px solid rgba(88, 88, 88, 0.32);max-height: 400px; overflow: auto;">
+									<treecontrol class="tree-classic"
+												 tree-model="dataForTheTree"
+												 options="treeOptions" expanded-nodes="expandedNodes">
+										<a href ng-click="changeCompetencia(node)" class="md-accent-fg"><b
+											ng-class="{'node_tree': selected == node.idCompetencia}">{{::node.nome}}</b></a>
+									</treecontrol>
+								</div>
+
+								<div flex style="max-height: 400px; overflow: auto;">
+									<md-table-container class="table_pesquisa">
+										<table id="table-list" md-table md-progress="promise">
+											<thead md-head md-order="query.order">
+											<tr md-row class="grey-200-bg">
+												<th md-column width="5%">
+													<div class="table-header">
+														<md-checkbox ng-model="checkDetalhamento.all"
+																	 class="font-size-5"
+																	 ng-change="onChangeAllListDetalhamento(checkDetalhamento)"
+																	 aria-label="Checkbox todos"></md-checkbox>
+													</div>
+												</th>
+												<th md-column md-order-by="descricao">
+													<span>Detalhamento</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body>
+											<tr md-row ng-repeat="item in listOptions" class="text-left">
+												<td md-cell style="padding-bottom: 0px; padding-top: 0px;">
+													<md-checkbox ng-model="item.selected" class="font-size-14"
+																 ng-change="onChangeListDetalhamento(item)"
+																 aria-label="Checkbox selecionar"></md-checkbox>
+												</td>
+												<td md-cell>{{ item.name }}</td>
+											</tr>
+											</tbody>
+										</table>
+									</md-table-container>
+								</div>
+							</div>
+						</ms-horizontal-stepper-step>
+
+						<md-button class="md-accent md-raised text-capitalize"
+								   ng-click="back()" style="position: absolute;">
+							Cancelar
+						</md-button>
+
+					</form>
+				</div>
+			</div>
+			<div flex layout="row" class="p-16 m-10" ng-if="screenMode === 'VIEW'" layout-xs="column"
+				 layout-sm="column">
+				<div layout="column" flex class="content">
+					<form name="horizontalStepper" ms-horizontal-stepper ng-submit="submitHorizontalStepper()"
+						  ng-model="horizontalStepper" novalidate>
+						<ms-horizontal-stepper-step ng-form="horizontalStep1" step="1" step-title="'Descrição'">
+							<div layout-align="end center" layout-align-xs="center center" layout="row">
+								<md-switch ng-model="mdswitch.situacao" aria-label="Botão situação"
+										   ng-change="onChangeSituacao(mdswitch.situacao)">
+									{{'SITUACAO.' + object.situacao | translate }}
+								</md-switch>
+								<span class="width-20"></span>
+								<md-button ng-click="displayEdit(object)" class="md-fab md-mini md-accent-bg"
+										   aria-label="Editar" translate translate-attr-aria-label="DIMENSAO.EDITAR">
+									<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+									<md-tooltip class="h4">{{'DIMENSAO.EDITAR' | translate}}</md-tooltip>
+								</md-button>
+								<md-button ng-click="detalhes($event)" ng-if="admin" class="md-icon-button" aria-label="Editar"
+										   translate translate-attr-aria-label="DIMENSAO.DETALHES">
+									<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+									<md-tooltip class="h4">{{'DIMENSAO.DETALHES' | translate}}</md-tooltip>
+								</md-button>
+							</div>
+							<md-divider></md-divider>
+							<div layout="column" layout-gt-xs="row" layout-xs="column" layout-sm="row" flex="100"
+								 class="p-20">
+								<md-input-container flex="30">
+									<label id="lbl_nome" for="nome">{{'DIMENSAO.NOME' | translate}}</label>
+									<input id="nome" name="nome" type="text" value="{{object.nome}}"
+										   ng-disabled="true">
+								</md-input-container>
+								<span class="width-20"></span>
+								<md-input-container flex="40">
+									<label id="lbl_descricao" for="descricao">{{'DIMENSAO.DESCRICAO' |
+										translate}}</label>
+									<input id="descricao" name="descricao" type="text" value="{{object.descricao}}"
+										   ng-disabled="true">
+								</md-input-container>
+								<span class="width-20"></span>
+								<md-input-container flex="20">
+									<label id="lbl_situacao" for="situacao">{{'DIMENSAO.SITUACAO' | translate}}</label>
+									<input id="situacao" name="situacaot" type="text"
+										   value="{{'SITUACAO.' +object.situacao| translate }}" ng-disabled="true">
+								</md-input-container>
+							</div>
+						</ms-horizontal-stepper-step>
+
+						<ms-horizontal-stepper-step ng-form="horizontalStep2" step="2"
+													step-title="'Competências e Detalhamentos'">
+							<div flex layout="row" style="max-height: 400px;">
+								<div flex flex-xs="100" flex-sm="100" class="p-8"
+									 style="border-right: 1px solid rgba(88, 88, 88, 0.32);max-height: 400px; overflow: auto;">
+									<treecontrol class="tree-classic"
+												 tree-model="dataForTheTree"
+												 options="treeOptions" expanded-nodes="expandedNodes">
+										<b ng-class="{'node_tree': object.nome == node.nome}">{{::node.nome}}</b>
+									</treecontrol>
+								</div>
+
+								<div flex style="max-height: 400px; overflow: auto;">
+									<md-table-container class="table_pesquisa">
+										<table id="table-exibir" md-table md-progress="promise">
+											<thead md-head md-order="query.order">
+											<tr md-row class="grey-200-bg">
+												<th md-column md-order-by="descricao">
+													<span>Detalhamento</span>
+												</th>
+											</tr>
+											</thead>
+
+											<tbody md-body>
+											<tr md-row ng-repeat="item in listDetalhamentos" class="text-left">
+												<td md-cell>{{ ::item.competenciaDetalhamento.descricao }}</td>
+											</tr>
+											</tbody>
+										</table>
+									</md-table-container>
+								</div>
+							</div>
+						</ms-horizontal-stepper-step>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

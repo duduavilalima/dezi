@@ -1,0 +1,48 @@
+{
+  "DIMENSAO": {
+    "CADASTOS": "Cadastros",
+    "FUNCIONARIOS": "Colaboradores",
+    "PESQUISAR": "Pesquisar",
+    "BTNNOVO": "Nova Dimensão",
+    "BTNIMPORTAR": "Importar",
+    "DEPARTAMENTO": "Departamento",
+    "SITUACAO3": "Situação funcional",
+    "NOME": "Dimensão",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "SITUACAO": "Situação",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "OPCOES": "Opções",
+    "CANCELAR": "Cancelar",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "LBLPAGINA": "{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}",
+    "EXIBICAO": "Exibição",
+    "EDICAO": "Edição",
+    "NOVO": "Novo",
+    "DESCRICAO": "Descrição",
+    "DETALHES": "Detalhes"
+  },
+  "DIALOG_DIMENSAO": {
+    "TITULO_ATIVAR": "Ativar",
+    "BOTAO_CANCELAR": "Cancelar",
+    "BOTAO_CONFIRMAR": "Confirmar",
+    "MSG_ATIVAR": "Deseja ativar a ",
+    "TITULO_NOTIFICACAO": "Ativado",
+    "MSG_NOTIFICACAO_ATIVADO": " ativado com sucesso!",
+    "TITULO_INATIVAR": "Inativar",
+    "MSG_INATIVAR": "Deseja inativar a ",
+    "TITULO_NOTIFICACAO_INATIVADO": "Inativado",
+    "MSG_NOTIFICACAO_INATIVADO": " inativado com sucesso!",
+    "NIVELFALA": "Nível de fala",
+    "NIVELESCRITA": "Nível de escrita",
+    "NIVELLEITURA": "Nível de leitura"
+  },
+  "SITUACAO_FUNCIONAL": {
+  }
+}

@@ -1,0 +1,43 @@
+<form-page
+	can-create="{{ $ctrl.canEdit }}"
+	on-create="$ctrl.handleCreate()"
+	on-back="$ctrl.back()"
+>
+	<form-card
+		name="formCargo"
+		card-title="ESPECIALIZACAO.DESCRICAO"
+		on-save="$ctrl.save()"
+		on-cancel="$ctrl.cancel()"
+	>
+		<labeled-input
+			flex-gt-xs="40"
+			name="nome"
+			label="ESPECIALIZACAO.CURSO"
+			value="$ctrl.cursoEspecializacao.nome"
+			options="{
+				required: true,
+				min: 2,
+				max: 80
+			}"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+
+		<labeled-input
+			flex-gt-xs="30"
+			name="preencheOutrosCursos"
+			type="select-boolean"
+			label="ESPECIALIZACAO.REQUER"
+			value="$ctrl.cursoEspecializacao.preencheOutrosCursos"
+			options="{ required: true }"
+			on-change="$ctrl.handleChange(name, value)"
+		/>
+		
+		<labeled-input
+			flex-gt-xs="30"
+			name="situacao"
+			label="ESPECIALIZACAO.SITUACAO"
+			value="'SITUACAO.' + $ctrl.cursoEspecializacao.situacao"
+			options="{ disabled: true, translate: true }"
+		/>
+	</form-card>
+</form-page>

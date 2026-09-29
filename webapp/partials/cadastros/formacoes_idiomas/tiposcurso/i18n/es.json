@@ -1,0 +1,28 @@
+{
+  "TIPOS":{
+    "CADASTOS":"Registros",
+    "FORMACAO":"Idiomas y formación",
+    "TIPOSCURSO": "Tipos de curso",
+    "PESQUISAR":"Investigación",
+    "BTNNOVO":"Nuevo Tipo de Curso",
+    "SITUACAO": "Situación",
+    "REQUER": "Requiere la finalización de la graduación",
+    "REQUEROUTRO": "Requiere la finalización de una especialización",
+    "DESCRICAO": "Descripción",
+    "BTNIMPORTAR":"Importación",
+    "TIPODECURSO": "Tipo de curso",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 20 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZA": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar"
+  }
+}

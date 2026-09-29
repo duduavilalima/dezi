@@ -1,0 +1,39 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span>Parâmetros gerais</span></div>
+		</div>
+	</div>
+	<div flex md-background-bg class="md-background-bg">
+		<div flex>
+			<md-table-container>
+				<table id="table-list" md-table md-progress="promise">
+					<thead md-head md-order="query.order">
+						<tr md-row>
+							<th md-column width="40%">
+								<span>Chave</span>
+							</th>
+							<th md-column width="60%">
+								<span>Valor</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody md-body>
+						<tr md-row ng-repeat="item in parametros | orderBy:'chave'" class="text-left">
+							<td md-cell><b>{{ ::item.chave }}</b></td>
+							<td md-cell>
+								<input id="valor" type="text" name="valor" class="input_parametros" ng-model="item.valor">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-align="end center" flex>
+			<md-button class="md-raised md-accent md-primary" style="text-transform: none;" ng-click="salvarParametros()">
+				Salvar
+			</md-button>
+		</div>
+	</div>
+</div>

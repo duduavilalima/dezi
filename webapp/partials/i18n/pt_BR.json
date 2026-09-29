@@ -1,0 +1,72 @@
+{
+  "password-not-match" : "Login e/ou senha inválidos",
+  "validation": {
+    "title": "Erro de validação",
+    "duplicate": "Este(a) {{field}} já se encontra cadastrado(a).",
+    "not-null": "O campo \"{{field}}\" não pode ser vazio.",
+    "password-not-match": "Senhas não conferem.",
+    "actual-password-not-match": "A senha atual está incorreta.",
+    "login-password-invalid" : "Login ou senha inválidos.",
+    "email-not-found":"E-mail não encontrado.",
+    "canceled":"Não é possível cancelar o registro.",
+    "permission":"Você não tem permissão para essa ação!",
+    "empty_cargo_competencia":"O cargo do(a) participante {{nome}} não possui o(s) tipo(s) de competência(s) selecionado(s) para esta avaliação.",
+    "empty_tipos_competencias":"Não há tipos de competências selecionadas para essa avaliação.",
+    "empty_participantes":"Não há participantes selecionados para essa avaliação.",
+    "idDepartamentoCliente" : "Este(a) identificação do setor já se encontra cadastrado(a).",
+    "departamentoNome" : "Este(a) setor já se encontra cadastrado(a).",
+    "not-found-email": "E-mail {{field}} não encontrado."
+  },
+  "competencia":{
+    "not-found":"Não há competências associadas aos cargos",
+    "not-found-funcionario": "O cargo do colaborador {{value}} não possui competencias associadas.",
+    "not-found-detalhamento": "Não há detalhamnetos das competências associadas ao cargo {{value}}."
+  },
+  "liberacao-avaliacao":{
+    "inactive-user":"Não será possível a liberação de uma avaliação a um colaborador inativo {{field}}.",
+    "inactive-dpt": "Não será possível a liberação de uma avaliação a um colaborador cujo Depto esteja inativo {{field}}.",
+    "inactive-cargo": "Não será possível a liberação de uma avaliação a um colaborador cujo Cargo esteja inativo {{field}}.",
+    "inactive-compet": "Não será possível a liberação de uma avaliação a colaboradores do Cargo {{field}}, pois este cargo não possui competências ativas."
+  },
+  "estatistica": {
+    "no-data-report":"Para gerar o arquivo Excel é necessário que exista ao menos 1  (um) participante que atenda aos requisitos de filtro"
+  },
+  "field": {
+    "matricula": "matrícula",
+    "detalhamento": "detalhamento",
+    "descricaoModelo" : "modelo",
+    "label" : "graduação",
+    "descricaoAbreviada" : "competência",
+    "idDepartamentoCliente" : "setor do cliente",
+    "idCargoCliente" : "identificação do cargo",
+    "nome" : "nome",
+    "descricao" : "avaliação",
+    "tipodecompetencia": "tipo de competência",
+    "situacao" : "situação",
+    "senha" : "senha",
+    "confirmar_senha": "confirmar senha",
+    "email":"e-mail",
+    "campanha": "campanha"
+  },
+  "avaliacao-participante": {
+    "inactive-user": "Não é permitido adicionar um colaborador ({{field}}) inativo a uma avaliação.",
+    "inactive-cargo": "Não é permitido adicionar um colaborador ({{field}}) cujo o cargo esteja inativo, a uma avaliação.",
+    "inactive-dept": "Não é permitido adicionar um colaborador ({{field}}) cujo o depto esteja inativo, a uma avaliação.",
+    "inactive-compet": "Não é permitido adicionar um colaborador ({{field}}) cujo o cargo não possua competências ativas, a uma avaliação.",
+    "not-found-compet-agentes": "O colaborador ({{field}}) não possui nenhuma das competências que seus avaliadores podem avaliar.",
+    "not-found-compet-avaliador": "O participante ({{field}}) não possui os tipos das competências associados ao cargo.",
+    "not-found-compet-perfil": "O participante ({{field}}) não possui o tipo da competência ({{field2 | uppercase}}) associado ao cargo.",
+    "not-found-competencia-detalhamento": "O participante ({{field}}) não possui competências ou detalhamentos ativos ao cargo.",
+    "error-pendencias": "A avaliação possui pendências a serem resolvidas",
+    "not-found-gabarito": "O participante ({{field}}) não possui 'Detalhamentos / Comportamentos observáveis' ativos ou aplicáveis ao cargo.",
+    "empty-date-autoavaliacao":"A data da autoavaliação é um campo de preenchimento obrigatório.",
+    "empty-date-avaliacao":"A data de avaliação é um campo de preenchimento obrigatório.",
+    "empty-date-consenso":"A data do consenso é um campo de preenchimento obrigatório.",
+    "empty-date-revisao":"A data da revisão é um campo de preenchimento obrigatório.",
+    "error-liberacao-revisados":"A avaliação não pode ser liberada, há participantes que não foram revisados.",
+    "error-clone-participante":"Erro ao clonar participante."
+  },
+  "avaliacao":{
+    "error-status-remover-avaliacao": "Não é permitido remover a avaliação ({{field}}), pois não possui o status 'Ag. liberação'."
+  }
+}

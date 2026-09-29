@@ -1,0 +1,260 @@
+<div id="homeoffice">
+    <!-- Navigation-->
+    <!-- Masthead-->
+    <header class="masthead">
+
+        <span style="height: 50%;">
+            <a href="#page-top">
+                <img src="partials/homeoffice/assets/img/navbar-logo.png" style="
+                margin: -8.5vh 0 4vh 3vw;
+            " />
+            </a>
+        </span>
+
+        <div class="container">
+            <div layout="column" layout-gt-sm="row" layout-align="space-around top">
+                <div flex flex-gt-xs="60" flex-gt-md="70" flex="100" class="pr-64">
+                    <div class="texto mt-32">PARTICIPE DA<br />
+                        <h1>Pesquisa nacional<br />
+                            de clima home office</h1>
+                        <p margin-top> Vamos mapear os desafios enfrentados nas rotinas de
+                            trabalho em casa de seus colaboradores. </p>
+                        <p> <b>Nós já possuímos a ferramenta padrão: é só personalizar e aprovar!</b> </p>
+                        <p> Você receberá um relatório completo dos resultados e poderá propor novas soluções
+                            com rapidez, aumentando a produtividade de sua equipe. </p>
+                    </div>
+                </div>
+
+                <!-- <span class="width-20"></span> -->
+
+                <div flex flex-gt-xs="40" flex-gt-md="30" flex="100" class="p-32">
+                    <md-card class="homeoffice-form-card">
+                        <md-card-content>
+                            <div class="container">
+                                <div flex-xs flex-gt-xs="100" flex="100" layout="row"
+                                    class="content white-bg mt-32 mb-32 m-8">
+                                    <div layout="column" flex-xs flex-gt-xs="100" flex="100">
+                                        <form name="$ctrl.homeOfficeForm" novalidate ng-submit="$ctrl.signIn()">
+
+                                            <div layout="row">
+                                                <md-input-container class="md-block mentorapp-label" flex>
+                                                    <label id="lbl_input_nome" for="input_nome">Nome
+                                                    </label>
+                                                    <input type="text" autocorrect="off" autocapitalize="none"
+                                                        id="input_nome" name="nome" ng-model="$ctrl.object.nome"
+                                                        ng-required="true" required>
+                                                    <div ng-messages="$ctrl.homeOfficeForm.nome.$error"
+                                                        ng-show="$ctrl.homeOfficeForm.nome.$touched" role="alert"
+                                                        multiple>
+                                                        <div ng-message="required">
+                                                            <span translate="HOME.VALIDATION" />
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+
+                                            <div layout="row">
+                                                <md-input-container class="md-block mentorapp-label" flex>
+                                                    <label id="lbl_input_email" for="input_email">
+                                                        <span translate="HOME.EMAIL" />
+                                                    </label>
+                                                    <input type="email" autocorrect="off" autocapitalize="none"
+                                                        id="input_email" name="email"
+                                                        ng-model="$ctrl.object.emailFuncional" ng-required="true"
+                                                        required>
+                                                    <div ng-messages="$ctrl.homeOfficeForm.email.$error"
+                                                        ng-show="$ctrl.homeOfficeForm.email.$touched" role="alert"
+                                                        multiple>
+                                                        <div ng-message="required">
+                                                            <span translate="HOME.VALIDATION" />
+                                                        </div>
+                                                        <div ng-message="email">
+                                                            <span>E-mail inválido</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+
+
+                                            <div layout-gt-md="row" layout="column">
+                                                <md-input-container flex-gt-md="50" flex="100" class="datePickerPDI mentorapp-label">
+                                                    <label id="lbl_data_nascimento"
+                                                        for="data_nascimento">Nascimento</label>
+                                                    <md-datepicker id="data_nascimento" name="data_nascimento" required
+                                                        ng-required="true" ng-model="$ctrl.object.nascimento"
+                                                        md-open-on-focus md-hide-icons="calendar"
+                                                        md-max-date="$ctrl.actualDate">
+                                                    </md-datepicker>
+                                                    <div class="validation-messages"
+                                                        ng-messages="$ctrl.homeOfficeForm.data_nascimento.$error">
+                                                        <div ng-message="required">
+                                                            <span translate="HOME.VALIDATION" />
+                                                        </div>
+                                                    </div>
+
+                                                </md-input-container>
+
+                                                <span class="width-20"></span>
+
+                                                <md-input-container flex-gt-md="70" flex="100" class="mentorapp-selectbox">
+                                                    <label id="lbl_sexo" for="sexo">Gênero</label>
+                                                    <md-select id="sexo" name="sexo" ng-model="$ctrl.object.tipoSexo"
+                                                        required ng-required="true" name="sexo">
+                                                        <md-option ng-repeat="item in $ctrl.comboTipoSexo"
+                                                            ng-value="item" value="{{item}}">
+                                                            {{'TIPO.' + item | translate}}
+                                                        </md-option>
+                                                    </md-select>
+
+                                                    <div class="validation-messages"
+                                                        ng-messages="$ctrl.homeOfficeForm.sexo.$error">
+                                                        <div ng-message="required">
+                                                            <span translate="HOME.VALIDATION" />
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+
+                                            <div layout-gt-md="row" layout="column">
+                                                <md-autocomplete name="autocompleteEstado" flex-gt-md="100" flex="100" 
+                                                    class="mentorapp-autocomplete"
+                                                    required md-input-name="autocompleteEstado"
+                                                    ng-model="$ctrl.object.estado" md-input-minlength="1"
+                                                    md-no-cache="false" md-selected-item="$ctrl.object.estado"
+                                                    md-search-text="searchTermUF" md-item-text="item.sigla"
+                                                    md-items="item in $ctrl.querySearchEstado(searchTermUF)"
+                                                    md-selected-item-change="$ctrl.changeEstado(item)"
+                                                    md-floating-label="Estado/UF">
+                                                    <md-item-template>
+                                                        <span md-highlight-text="searchTermUF">{{item.sigla}}</span>
+                                                    </md-item-template>
+                                                    <div ng-messages="$ctrl.homeOfficeForm.autocompleteEstado.$error"
+                                                        ng-show="$ctrl.homeOfficeForm.autocompleteEstado.$touched"
+                                                        role="alert">
+                                                        <div ng-message="required" id="msg_required_estado">
+                                                            Campo obrigatório</div>
+                                                    </div>
+                                                </md-autocomplete>
+                                            </div>
+
+                                            <div layout-gt-md="row" layout="column">
+                                                <md-autocomplete flex-gt-md="100"
+                                                    class="mentorapp-autocomplete"
+                                                    flex="100" required
+                                                    name="autocompleteMunicipio" md-input-name="autocompleteMunicipio"
+                                                    ng-model="$ctrl.object.municipio" md-input-minlength="0"
+                                                    md-no-cache="false" md-selected-item="$ctrl.object.municipio"
+                                                    md-search-text="searchTermMuncipio" md-item-text="item.nome"
+                                                    ng-disabled="!$ctrl.isMunicipioEnabled"
+                                                    md-items="item in $ctrl.querySearchMunicipio(searchTermMuncipio)"
+                                                    md-floating-label="Município">
+                                                    <md-item-template>
+                                                        <span
+                                                            md-highlight-text="searchTermMuncipio">{{item.nome}}</span>
+                                                    </md-item-template>
+                                                    <div ng-messages="$ctrl.homeOfficeForm.autocompleteMunicipio.$error"
+                                                        ng-show="$ctrl.homeOfficeForm.autocompleteMunicipio.$touched"
+                                                        role="alert">
+                                                        <div ng-message="required" id="msg_required_municipio">Campo
+                                                            obrigatório
+                                                        </div>
+                                                    </div>
+                                                </md-autocomplete>
+                                            </div>
+
+                                            <div layout="row">
+                                                <md-checkbox class="mentorapp-check"
+                                                    ng-model="$ctrl.object.isDiagnostico" aria-label="Diagnóstico">
+                                                    Quero participar da pesquisa para ajudar na construção
+                                                    de um diagnóstico nacional do Home Office no Brasil
+                                                    durante a pandemia;
+                                                </md-checkbox>
+                                            </div>
+
+
+                                            <div layout="row">
+                                                <md-checkbox ng-model="$ctrl.object.isAmbienteEmpresa"
+                                                    aria-label="Ambiente empresa" class="mentorapp-check">
+                                                    Quero ter um ambiente exclusivo para que a minha empresa
+                                                    tenha um diagnóstico do Home Office entre os
+                                                    colaboradores da minha empresa, e possa repetir este
+                                                    diagnóstico periodicamente, acompanhando o impacto de
+                                                    eventuais ações por ela realizadas;
+                                                </md-checkbox>
+                                            </div>
+
+                                            <div class="text-center" style="margin-top:24px">
+                                                <!-- <md-button id="bt_cancelar"
+                                                    class="md-raised md-accent submit-button"
+                                                    ng-click="$ctrl.onCancel()" aria-label="Cancelar">
+                                                    <span class="white-fg">CANCELAR</span>
+                                                </md-button> -->
+
+                                                <md-button id="bt_salvar" focus-me="$ctrl.object.municipio"
+                                                    type="submit" class="mentorapp-btn md-raised submit-button"
+                                                    aria-label="Salvar">
+                                                    <span ng-show="!$ctrl.isLoading" class="white-fg">PARTICIPAR</span>
+                                                    <md-progress-circular id="toolbar-progress"
+                                                        ng-show="$ctrl.isLoading" class="md-primary"
+                                                        md-mode="indeterminate" md-diameter="24"
+                                                        style="margin: auto;" />
+                                                </md-button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Services-->
+    <section class="page-section" id="services">
+        <div class="container">
+            <div layout="column" layout-gt-xs="row" layout-wrap layout-padding class="text-center">
+                <div flex="100" flex-gt-xs="50" class="p-16">
+                    <h2 style="color:#0d4d9e; text-align:left">Quem Somos</h2>
+                    <p class="textoQuemSomos mt-5"> Uma empresa na liderança de mercado de soluções tecnológicas
+                        e inovadoras para a gestão de RH em qualquer situação. </p>
+                    <p class="textoQuemSomos"> Trabalhamos com plataformas de Avaliação de Desempenho, Pesquisa
+                        de Clima e Jornadas para desenvolvimento de Soft Skills com inteligência artificial,
+                        gamificada e em doses diárias, para encantar os usuários e tornar o aprendizado mais
+                        produtivo. </p>
+                </div>
+                <div flex="100" flex-gt-xs="50"> <img style="max-width:400px; width:80%"
+                        src="partials/homeoffice/assets/img/icones.jpg" /> </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer">
+        <div class="container homeoffice-footer">
+            <div layout="column" layout-gt-xs="row" layout-align="center center">
+                <div flex="100" flex-gt-xs="30" class="homeoffice-footer-copyright">Copyright © MentorApp DEZI 2020
+                </div>
+                <div flex="100" flex-gt-xs="40" class="homeoffice-footer-social">
+                    <a href="https://twitter.com/MentorAppBR">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.facebook.com/MentorAppBR/">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/mentorapp">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/mentorapp">
+                        <i class="fab fa-instagram-square"></i>
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCGPbE6LCXOQAOPsoO503f1A">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                <div flex="100" flex-gt-xs="30" class="homeoffice-footer-madein">
+                    Feito com <i class="fas fa-heart"></i> no Brasil
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

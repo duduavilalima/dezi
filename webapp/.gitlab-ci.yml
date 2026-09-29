@@ -1,0 +1,40 @@
+include:
+  - project: 'avd/deploy'
+    ref: master
+    file: '/ci/gitlab-ci.common.yml'
+
+variables:
+  DEZI_SERVICE_VARNAME: WEB
+  DEZI_SERVICE_NAME: web
+
+.artifact-paths: &artifact-paths
+  paths:
+    - build/target/*.txz
+
+.cache-paths: &cache-paths
+  paths:
+    - node_modules
+
+build-staging-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-production-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-hotfix-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths

@@ -1,0 +1,342 @@
+<div id="funcionarios" class="page-layout simple fullwidth doc-page" ng-controller="FormacoesIdiomasCtrl">
+	<!-- HEADER -->
+	<div class="header md-accent-bg" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent"><a href ng-click="back()">{{'PREENCHIMENTO.TITLE' | translate}}</a></span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{ ::titulo }}</span>
+				<!--<md-icon md-font- {{ screenMode === 'VIEW' ? 'Exibição' : (screenMode === 'EDIT' ? 'Edição' : 'Novo') }}</span>-->
+
+			</div>
+		</div>
+	</div>
+
+	<div class="page-layout simple tabbed" layout="column">
+		<div class="content page-style white-bg" layout="column" flex>
+
+			<!-- BOTÕES -->
+			<div layout="row" class="content">
+				<div flex layout-align="start center">
+					<md-button ng-click="back()" class="m-0 ph-20 pv-10 md-button md-accent" aria-label="Voltar" translate-attr-aria-label="DEPARTAMENTO.VOLTAR">
+						<md-icon md-font-icon="icon-arrow-left-bold-circle-outline"></md-icon>
+						{{'PREENCHIMENTO.PREENCHIMENTODASAVALIACOES' | translate}}
+					</md-button>
+				</div>
+			</div>
+
+			<md-divider></md-divider>
+
+			<!--Painel expansível-->
+			<div class="content page-style white-bg" layout="column" flex style="margin-top: 5px; width: 100%">
+				<div layout="column" layout-align="center" class="pl-32 pr-32" style="margin-top: -15px; width: 100%">
+
+					<v-accordion class="vAccordion--default" multiple>
+
+						<!-- add expanded attribute to open the section -->
+						<v-pane expanded="true">
+
+							<!--FORMAÇÃO-->
+							<v-pane-header>
+								<div id="formacao" class="md-accent-fg">
+									<h3>Formação</h3></div>
+							</v-pane-header>
+
+
+							<v-pane-content>
+								<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+								<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="funcionarioFormacaoList == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+
+
+								<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+
+								<table id="table-list-formacao" width="100%" class="simple row-border hover text-center" ms-responsive-table ng-show="funcionarioFormacaoList != null">
+									<thead>
+									<tr ng-show="funcionarioFormacaoList.length == 0">
+										<th class="secondary-text" colspan="3"> </th>
+									</tr>
+									<tr ng-show="funcionarioFormacaoList.length > 0">
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">Escolaridade</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">Tipo de Curso</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">Graduação</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">Especialização</span></div>
+										</th>
+										<th class="secondary-text" width="20%">
+											<div class="table-header text-left"><span class="column-title">Outros</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Situação</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Opções</span></div>
+										</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<tr ng-show="funcionarioFormacaoList.length == 0">
+										<td colspan="3" class="text-center">Não há formações cadastradas</td>
+									</tr>
+									<tr ng-show="funcionarioFormacaoList.length > 0" ng-repeat="item in funcionarioFormacaoList">
+
+										<td class="text-left"> <b><a href ng-click = "acaoEditarFormacao($event, item)">{{ ::item.escolaridade.nome}} </a> </b></td>
+										<td class="text-left">{{ ::item.tipoCurso.nome}}</td>
+										<td class="text-left">{{ ::item.cursoGraduacao.nome }}</td>
+										<td class="text-left">{{ ::item.cursoEspecializacao.nome }}</td>
+										<td class="text-left">{{ ::item.outroCurso }}</td>
+										<td class="text-left">{{ ::item.situacaoConclusao.descricao }}</td>
+										<td style="padding: 0" class="text-left">
+											<md-button id="btn_remover_formacao" aria-label="Remover formacao" ng-click="acaoRemoverFormacao($event, $index, item)">
+												<md-icon style="color: red" md-font-icon="icon-close"></md-icon>
+											</md-button>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<md-divider></md-divider>
+
+								<div layout="row" class="content">
+									<div hide show-gt-xs flex layout-align="start center" style="margin-top: 15px;">
+									</div>
+									<div hide show-gt-xs flex layout-align="center center">
+									</div>
+									<div flex layout-align="end center">
+										<!-- BOTÃO NOVO FORMAÇÃO -->
+										<md-button id="btn_novo_formacao" ng-click="acaoNovoFormacao($event, null)" class="p-8 md-button md-accent text-capitalize" aria-label="novo formacao" style="float: right">
+											<md-icon md-font-icon="icon-checkbox-multiple-marked-outline"></md-icon>
+											Adicionar formação
+										</md-button>
+									</div>
+								</div>
+							</v-pane-content>
+						</v-pane>
+
+						<v-pane expanded="true">
+
+							<!--IDIOMAS-->
+							<v-pane-header>
+								<div id="idioma" class="md-accent-fg">
+									<h3>Idiomas</h3></div>
+							</v-pane-header>
+
+
+							<v-pane-content>
+								<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+								<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="funcionarioFormacaoIdiomaList == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+
+
+								<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+
+								<table id="table-list-idiomas" class="simple row-border hover text-center" ms-responsive-table ng-show="funcionarioFormacaoIdiomaList != null">
+									<thead>
+									<tr ng-show="funcionarioFormacaoIdiomaList.length == 0">
+										<th class="secondary-text" colspan="3"> </th>
+									</tr>
+									<tr ng-show="funcionarioFormacaoIdiomaList.length > 0">
+										<th class="secondary-text" width="25%">
+											<div class="table-header text-left"><span class="column-title">Idioma</span></div>
+										</th>
+										<th class="secondary-text">
+											<div class="table-header text-left"><span class="column-title">Fala</span></div>
+										</th>
+										<th class="secondary-text">
+											<div class="table-header text-left"><span class="column-title">Escrita</span></div>
+										</th>
+										<th class="secondary-text">
+											<div class="table-header text-left"><span class="column-title">Leitura</span></div>
+										</th>
+										<th class="secondary-text" width="10%">
+											<div class="table-header text-left"><span class="column-title">Opções</span></div>
+										</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<tr ng-show="funcionarioFormacaoIdiomaList.length == 0">
+										<td colspan="3" class="text-center">Não há idiomas cadastrados</td>
+									</tr>
+									<tr ng-show="funcionarioFormacaoIdiomaList.length > 0" ng-repeat="item in funcionarioFormacaoIdiomaList">
+										<td class="text-left"> <b> <a href ng-click="acaoEditarIdioma($event, item)" >{{ ::item.idioma.nome }} </a> </b></td>
+										<td class="text-left">
+											{{::item.situacaoNivelFala.descricao}}
+										</td>
+										<td class="text-left">
+											{{::item.situacaoNivelEscrita.descricao}}
+										</td>
+										<td class="text-left">
+											{{::item.situacaoNivelLeitura.descricao}}
+										</td>
+										<td style="padding: 0">
+											<md-button id="btn_remover_idioma" aria-label="Remover idioma" ng-click="acaoRemoverIdioma($event, $index, item)">
+												<md-icon style="color: red" md-font-icon="icon-close"></md-icon>
+											</md-button>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<md-divider></md-divider>
+
+								<div layout="row" class="content">
+									<div hide show-gt-xs flex layout-align="start center">
+
+									</div>
+									<div hide show-gt-xs flex layout-align="center center">
+
+									</div>
+									<div flex layout-align="end center">
+										<!-- BOTÃO NOVO FORMAÇÃO -->
+										<md-button id="btn_novo_idioma" ng-click="acaoNovoIdioma($event)" class="p-8 md-button md-accent text-capitalize" aria-label="novo idioma" style="float: right">
+											<md-icon md-font-icon="icon-checkbox-multiple-marked-outline"></md-icon>
+											Adicionar idioma
+										</md-button>
+									</div>
+								</div>
+							</v-pane-content>
+						</v-pane>
+
+
+						<v-pane ng-if="false">
+
+							<!--AVALIAÇÕES-->
+							<v-pane-header>
+								<div id="avaliacaoes" class="md-accent-fg">
+									<h3>Avaliações em que participa</h3></div>
+							</v-pane-header>
+
+
+							<v-pane-content>
+								</br>
+
+								<!--COMO AVALIADO-->
+								<div layout="column" layout-align="center start" class="pl-16 pr-16" style="margin-top: -20px; margin-bottom: -10px">
+									<div id="title_comoAvaliado" class="md-accent-fg">
+										<h1>Como Avaliado</h1></div>
+								</div>
+
+
+								<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+								<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="listComoAvaliado == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+
+
+								<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+
+								<table id="table-list-comoAvaliado" class="simple row-border hover text-center" ms-responsive-table ng-show="listComoAvaliado != null">
+									<thead>
+									<tr ng-show="listComoAvaliado.length == 0">
+										<th class="secondary-text" colspan="3"> </th>
+									</tr>
+									<tr ng-show="listComoAvaliado.length > 0">
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Campanha</span></div>
+										</th>
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Avaliação</span></div>
+										</th>
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Avaliador</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV1</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV2</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV3</span></div>
+										</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<tr ng-show="listComoAvaliado.length == 0">
+										<td colspan="3">Idiomas não preenchido</td>
+									</tr>
+									<tr ng-show="listComoAvaliado.length > 0" ng-repeat="item in listComoAvaliado">
+										<td class="text-left">{{ ::item.campanha }}</td>
+										<td class="text-left">{{ ::item.avaliacao}}</td>
+										<td class="text-left">{{ ::item.avaliador}}</td>
+										<td class="text-left">{{ ::item.av1}}</td>
+										<td class="text-left">{{ ::item.av2}}</td>
+										<td class="text-left">{{ ::item.av3}}</td>
+									</tr>
+									</tbody>
+								</table>
+
+
+
+								<!--COMO AVALIADOR-->
+								<div layout="column" layout-align="center start" class="pl-16 pr-16" style="margin-top: 20px; margin-bottom: -10px">
+									<div id="title_comoAvaliador" class="md-accent-fg">
+										<h1>Como Avaliador</h1></div>
+								</div>
+
+
+								<!-- O LOADING APARECE ENQUANTO A LISTA FOR NULA -->
+								<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="listComoAvaliador == null">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</div>
+
+
+								<!-- A TABELA SÓ APARECE QUANDO A LISTA FOR DIFERENTE DE NULL -->
+
+								<table id="table-list-comoAvaliador" class="simple row-border hover text-center" ms-responsive-table ng-show="listComoAvaliador != null">
+									<thead>
+									<tr ng-show="listComoAvaliador.length > 0">
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Campanha</span></div>
+										</th>
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Avaliação</span></div>
+										</th>
+										<th class="secondary-text" width="22%">
+											<div class="table-header text-left"><span class="column-title">Avaliado</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV1</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV2</span></div>
+										</th>
+										<th class="secondary-text" width="15%">
+											<div class="table-header text-left"><span class="column-title">AV3</span></div>
+										</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<tr ng-show="listComoAvaliador.length == 0">
+										<td colspan="3" class="text-center">Idiomas não preenchidos</td>
+									</tr>
+									<tr ng-show="listComoAvaliador.length > 0" ng-repeat="item in listComoAvaliador">
+										<td class="text-left">{{ ::item.campanha }}</td>
+										<td class="text-left">{{ ::item.avaliacao}}</td>
+										<td class="text-left">{{ ::item.avaliador}}</td>
+										<td class="text-left">{{ ::item.av1}}</td>
+										<td class="text-left">{{ ::item.av2}}</td>
+										<td class="text-left">{{ ::item.av3}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</v-pane-content>
+						</v-pane>
+					</v-accordion>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

@@ -1,0 +1,22 @@
+<div layout="column" layout-align="center" class="ph-16 tamanhoPequeno">
+	<p>{{ $ctrl.avaliacaoCtrl.stage == 'av2' ? $ctrl.competencia.direcionamentoGestor : $ctrl.competencia.direcionamentoNaoGestor }}
+	</p>
+	<p></p>
+</div>
+
+<md-divider></md-divider>
+
+<div ng-repeat="(key, detalhamento) in $ctrl.competencia.detalhamentos">
+	<ad-detalhamento stage="{{ $ctrl.avaliacaoCtrl.stage }}" detalhamento="detalhamento" index="key + 1"
+		graduacoes="$ctrl.competencia.modeloGraduacaoComp.graduacoes"
+		on-change="$ctrl.change(detalhamento, prop, value)" />
+</div>
+
+<div layout-align="end right" layout="row" class="content mt-30" ng-switch="{{$ctrl.hasNext}}">
+	<span ng-switch-default>
+		<md-button ng-if="$ctrl.hasNext === 'true'" ng-click="$ctrl.save(true, false, $event)" class="md-raised md-accent" id="salvar_detalhamento"
+			ng-disabled="($ctrl.avaliacaoCtrl.stage != 'av3' && $ctrl.consensoLiberado) || basicForm.$invalid">
+			Salvar
+		</md-button>
+	</span>
+</div>

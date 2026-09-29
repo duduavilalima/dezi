@@ -1,0 +1,87 @@
+<md-dialog aria-label="Mensagem" style="width: 1160px;">
+	<form name="basicForm" novalidate ui-keypress="{13:'confirmar()'}">
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{ title }}</h2>
+				<span flex />
+				<md-button class="md-icon-button" ng-click="cancel()" aria-label="Fechar" >
+					<md-icon class="white-fg" md-font-icon="icon-close" />
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-content-body">
+
+				<ms-widget flippable="false" layout="row" flex="100">
+
+					<!-- Front -->
+					<ms-widget-front>
+
+						<div layout="row">
+							<md-input-container flex="100">
+								<label id="lbl_de" for="de">De</label>
+								<input id="de" name="de" type="text" ng-value="object.mensagemOriginal.avaliacaoDestino != null ? '{{ ::object.mensagemOriginal.avaliacaoDestino.descricaoAbreviada }}' :
+								'{{ ::object.mensagemOriginal.usuarioDestino.nome }}'" ng-disabled="true">
+							</md-input-container>
+						</div>
+
+						<div layout="row">
+							<md-input-container flex="100">
+								<label id="lbl_para" for="de">Para</label>
+								<input id="para" name="para" type="text" ng-value="object.mensagemOriginal.avaliacaoEnvio != null ? '{{ ::object.mensagemOriginal.avaliacaoEnvio.descricaoAbreviada }}' :
+								'{{ ::object.mensagemOriginal.usuarioEnvio.nome }}'" ng-disabled="true">
+							</md-input-container>
+						</div>
+
+						<div layout="row">
+							<md-input-container flex="100">
+								<label id="lbl_assunto" for="assunto">Título</label>
+								<input id="assunto" name="assunto" type="text" ng-value="object.titulo" ng-disabled="true">
+							</md-input-container>
+						</div>
+
+						<div flex id="title_mensagens" flex class="md-accent-fg" style="margin-top: -40px;">
+
+							<div id="title_mensagem _anterior" class="pb-8" flex class="md-accent-fg"><h1>Mensagem anterior</h1>
+							</div>
+
+							<div ta-bind="text" class="p-8" style="border: 1px solid rgba(0,0,0,0.40);" ng-model="object.mensagemOriginal.texto"></div>
+
+							<div id="title_resposta" class="pb-8" flex class="md-accent-fg"><h1>Sua resposta</h1>
+							</div>
+
+							<!--Plugin de formatação da mensagem-->
+							<text-angular id="mensagem" name="mensagem" style="color: black; border: 2px solid rgb(158,180,77) !important;" ng-required="true" ng-model="object.texto" ng-style="{border: basicForm.mensagem.$error.required && basicForm.mensagem.$touched ? '2px solid red' : '2px solid rgb(158,180,77) !important'}"></text-angular>
+							<div ng-messages="basicForm.mensagem.$error" ng-show="basicForm.mensagem.$touched">
+								<div style="color: red" ng-message="required">
+									<span>Campo obrigatório.</span>
+								</div>
+							</div>
+						</div>
+
+					</ms-widget-front>
+					<!-- / Front -->
+
+				</ms-widget>
+
+			</div>
+
+		</md-dialog-content>
+
+		<md-dialog-actions class="white-bg">
+
+			<div flex layout-align="start center">
+
+				<!--BOTÃO CANCELAR-->
+				<md-button aria-label="Fechar" id="btn_cancelar_cancelar_nregistro" style="float: left" class="md-raised md-default text-capitalize" ng-click="cancel()">
+					Fechar
+				</md-button>
+				<!--BOTÃO RESPONDER-->
+				<md-button aria-label="Responder" id="btn_cancelar_cancelar_nregistro" style="float: right" class="md-raised md-accent text-capitalize" ng-click="responder()" ng-disabled="basicForm.$invalid">
+					Responder
+				</md-button>
+			</div>
+
+		</md-dialog-actions>
+	</form>
+</md-dialog>

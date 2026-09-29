@@ -1,0 +1,26 @@
+{
+  "ESPECIALIZACAO":{
+    "CADASTOS":"Data",
+    "FORMACAO":"Education and languages",
+    "ESPECIALIZA": "Specialization Courses",
+    "PESQUISAR":"Search",
+    "BTNNOVO":"New Specialization Courses",
+    "SITUACAO": "Import",
+    "REQUER": "Other courses is required",
+    "CURSO": "Specialization Course",
+    "CRIADOR": "Author",
+    "DATACRIACAO": "Creation Date",
+    "ATUALIZADOR": "Updater",
+    "DATAATUALIZA": "Update Date",
+    "SALVAR": "Save",
+    "VOLTAR": "Back",
+    "EDITAR": "Edit",
+    "CANCELAR": "Cancel",
+    "ATIVAR": "Activate",
+    "INATIVAR": "Inactivate",
+    "CAMPOOBRIGATORIO": "Required field",
+    "MAXIMO": "Maximum 80 characters",
+    "MINIMO": "Minimum 2 characters",
+    "DESCRICAO" : "Description"
+  }
+}

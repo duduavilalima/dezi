@@ -1,0 +1,55 @@
+<md-input-container style="font-size: 1.6rem; width: 100%;" fill-width ng-form="{{ $ctrl.name }}" ng-keyup="$ctrl.handleKeyup($event)">
+	<label for="input" translate>{{ $ctrl.label }}</label>
+		<input
+			name="input"
+			ng-if="!$ctrl.showSelect() && !$ctrl.showSelectBoolean()"
+			ng-model="$ctrl.value"
+			ng-change="$ctrl.handleChange($ctrl.value)"
+			ng-required="!!$ctrl.options.required"
+			ng-disabled="!!$ctrl.options.disabled"
+			ng-minlength="$ctrl.options.min"
+			ng-maxlength="$ctrl.options.max"
+			md-maxlength="$ctrl.options.max"
+			ng-pattern="$ctrl.options.pattern"
+		/>
+		<md-select
+			name="input"
+			ng-if="$ctrl.showSelect()"
+			ng-model="$ctrl.value"
+			ng-model-options="$ctrl.selectModelOptions"
+			ng-change="$ctrl.handleChange($ctrl.value)"
+			ng-disabled="!!$ctrl.options.disabled"
+			ng-required="!!$ctrl.options.required"
+		>
+			<md-option
+				ng-repeat="option in $ctrl.selectOptions.list"
+				ng-value="$ctrl.selectOptionValue(option)"
+			>
+				{{:: option[$ctrl.selectOptions.label] }}
+			</md-option>
+		</md-select>
+		<div ng-if="$ctrl.showSelect()" class="md-errors-spacer"></div>
+
+		<md-select
+		name="input"
+		ng-if="$ctrl.showSelectBoolean()"
+		ng-model="$ctrl.value"
+		ng-model-options="$ctrl.selectModelOptions"
+		ng-change="$ctrl.handleChange($ctrl.value)"
+		ng-disabled="!!$ctrl.options.disabled"
+	>
+		<md-option
+			ng-repeat="option in $ctrl.BOOLEAN_LIST"
+			ng-value="$ctrl.selectOptionValue(option.value)"
+		>
+			{{:: option.label }}
+		</md-option>
+	</md-select>
+	<div ng-if="$ctrl.showSelectBoolean()" class="md-errors-spacer"></div>
+	</span>
+	<div ng-messages="$ctrl.formErrors()">
+		<div ng-repeat="(message, value) in $ctrl.messages" ng-message="{{:: message }}">
+			<span translate translate-values="$ctrl.translateValues">{{ value }}</span>
+		</div>
+	</div>
+</md-input-container>

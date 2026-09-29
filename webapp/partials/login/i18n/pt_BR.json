@@ -1,0 +1,48 @@
+{
+  "LOGIN": {
+    "CONTA": "Faça login na sua conta",
+    "EMAIL": "Login",
+    "VALIDATION": "Obrigatório",
+    "VALIDATION-EMAIL" : "E-mail deve ser um endereço de e-mail válido",
+    "SENHA": "Senha",
+    "ESQUECER": "Esqueceu a senha?",
+    "BTNENTRAR": "Entrar",
+    "EMPRESA":"Empresa",
+    "INSERIR_MATRICULA":"(insira aqui sua matrícula)"
+  },
+  "ESQUECEUSENHA": {
+    "REDEFINA": "Redefina sua senha",
+    "ENVIADO": "Será enviado um e-mail com sua nova senha",
+    "ENDERECO": "Endereço de e-mail",
+    "EMAILINVALIDO": "O e-mail informado não é válido",
+    "BTNREDEFINA": "Redefinir senha",
+    "BTNVOLTAR": "Voltar para a tela de login",
+    "TITLESUCCESS": "Redefinição de senha",
+    "MESSAGESUCCESS": "Sua senha foi redefinida com sucesso! Em pouco tempo, você receberá sua nova senha por e-mail.",
+    "MATRICULA":"Login"
+  },
+  "ERROR": {
+    "LOGINERROR": "Login e/ou senha inválidos",
+    "LOGINLOCKERROR": "Aguarde alguns minutos e tente novamente.",
+    "IPLOGINLOCKERROR": "Excesso de tentativas inválidas. Aguarde alguns minutos e tente novamente.",
+    "LOGINSERVERERROR": "Serviço indisponível."
+  },
+  "validation": {
+    "title": "Erro de validação",
+    "duplicate": "Este(a) {{field}} já se encontra cadastrado(a).",
+    "not-null": "O campo \"{{field}}\" não pode ser vazio.",
+    "password-not-match": "Senhas não conferem.",
+    "actual-password-not-match": "A senha atual está incorreta.",
+    "login-password-invalid" : "Login ou senha inválidos.",
+    "email-not-found":"E-mail não encontrado.",
+    "canceled":"Não é possível cancelar o registro.",
+    "permission":"Você não tem permissão para essa ação!",
+    "empty_cargo_competencia":"O cargo do(a) participante {{nome}} não possui o(s) tipo(s) de competência(s) selecionado(s) para esta avaliação.",
+    "empty_tipos_competencias":"Não há tipos de competências selecionadas para essa avaliação.",
+    "empty_participantes":"Não há participantes selecionados para essa avaliação.",
+    "idDepartamentoCliente" : "Este(a) identificação do setor já se encontra cadastrado(a).",
+    "departamentoNome" : "Este(a) setor já se encontra cadastrado(a).",
+    "not-employee": "Apenas o funcionário pode realizar esta ação!",
+    "not-found-email": "E-mail {{field}} não encontrado."
+  }
+}

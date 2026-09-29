@@ -1,0 +1,267 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent">
+					<a href ng-click="$ctrl.back()">{{ 'CAMPANHA.'+ $ctrl.modulo | uppercase | translate }}s</a>
+				</span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"/>
+				<span class="parent">{{ 'CAMPANHA.'+ $ctrl.titulo | uppercase | translate }}</span>
+				<md-icon md-font-icon="icon-chevron-right" class="s16 separator"/>
+				<span class="parent">{{ 'CAMPANHASLISTAR.EXIBICAO' | translate }}</span>
+			</div>
+		</div>
+
+		<div layout-align="end center" layout="row" class="margin-input">
+			<md-button
+				hide-xs
+				translate="CAMPANHASLISTAR.BTNNOVA"
+				class="font-size-13 md-raised md-accent m-0 mr-5 text-none"
+				ng-click="$ctrl.displayNew()"
+				value="Novo"
+			/>
+		</div>
+	</div>
+
+	<div class="mt-50">
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button ng-click="$ctrl.back()" class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize">
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline"/>
+					{{'CAMPANHASLISTAR.VOLTAR' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div>
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m4">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div layout="row" class="content" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1 translate>CAMPANHASLISTAR.DESCRICOES</h1>
+						</div>
+						<div layout-align="end center" layout-align-xs="center center" layout="row">
+							<md-switch ng-model="$ctrl.situacaoCampanha"  aria-label="Botão situação" ng-change="$ctrl.onChangeSituacao()">
+								{{'SITUACAO.' + $ctrl.object.status | translate }}
+							</md-switch>
+							<span class="width-20"></span>
+							<md-button ng-click="$ctrl.displayEdit($ctrl.object)" class="md-fab md-mini md-accent-bg">
+								<md-icon md-font-icon="icon-pencil" class="white-fg"/>
+								<md-tooltip class="h4">{{'CAMPANHASLISTAR.EDITAR' | translate}}</md-tooltip>
+							</md-button>
+							<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin"  class="md-icon-button">
+								<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"/>
+								<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+							</md-button>
+						</div>
+					</div>
+					<md-divider></md-divider>
+					<div class="content">
+						<form name="form" novalidate class="p-16">
+							<div layout="column" flex >
+								<div layout="column" layout-gt-sm="row" flex>
+									<md-input-container flex="30">
+										<label for="empresa_view" translate>CAMPANHASLISTAR.TITLEEMPRESA</label>
+										<input
+											id="empresa_view"
+											name="empresa_view"
+											type="text"
+											value="{{::$ctrl.object.empresa.nome}}"
+											ng-disabled="true"
+										/>
+									</md-input-container>
+
+									<span class="width-20"></span>
+
+									<md-input-container flex="40">
+										<label for="campanha_view" translate>CAMPANHASLISTAR.CAMPANHA</label>
+										<input
+											id="campanha_view"
+											name="campanha_view"
+											type="text"
+											value="{{::$ctrl.object.descricao}}"
+											ng-disabled="true"
+										>
+									</md-input-container>
+
+									<!-- <span class="width-20"></span>
+
+									<md-input-container flex="50">
+										<label id="lbl_dimensao" for="dimensao" translate>CAMPANHASLISTAR.DIMENSAO</label>
+										<input id="dimensao" name="dimensao" type="text" value="{{$ctrl.object.dimensao ? 'Sim' : 'Não'}}" ng-disabled="true">
+									</md-input-container> -->
+
+									<span class="width-20"></span>
+
+									<md-input-container flex="30">
+										<label for="situacao" translate>CAMPANHASLISTAR.SITUACAO</label>
+										<input id="situacao" name="situacao" type="text" value="{{ 'SITUACAO.'+$ctrl.object.status | translate }}" ng-disabled="true">
+									</md-input-container>
+								</div>
+
+							</div>
+						</form>
+					</div>
+					<md-divider/>
+				</div>
+			</div>
+
+			<div flex-xs flex-gt-xs="100" flex="100" layout="row" class="p-8 m20">
+				<div class="white-bg style_card m-8" flex layout="column">
+					<div class="content">
+						<div layout="row" class="content">
+							<div flex layout-align="center center" class="pl-16 pr-16">
+								<div id="title_avaliacoes" class="md-accent-fg">
+									<h1 translate>ANALISE.AVALIACOES</h1>
+								</div>
+							</div>
+							<div layout-align="end center">
+								<md-button id="btn_nova_avaliacao"
+									ng-click="$ctrl.acaoNovaAvaliacao()"
+									class="p-8 md-button md-accent text-capitalize"
+									style="float: right">
+									<md-icon md-font-icon="icon-plus"></md-icon>
+									<span translate>CAMPANHASLISTAR.BTNNOVAAVALIACAO</span>
+								</md-button>
+							</div>
+						</div>
+						<md-divider></md-divider>
+						<div>
+							<md-table-container>
+								<table id="table-list" md-table md-progress="$ctrl.listAvaliacoesPromise">
+									<thead md-head>
+										<tr md-row class="grey-200-bg">
+											<th md-column>
+												<span class="column-title" translate>CAMPANHASLISTAR.DESCRICAO</span>
+											</th>
+											<th md-column class="text-center">
+												<span class="column-title" translate>CAMPANHASLISTAR.NUMEROAVALIACOES</span>
+											</th>
+											<th md-column class="text-center p-8">
+												<span class="column-title" translate>CAMPANHASLISTAR.NUMEROPARTICIPANTE</span>
+											</th>
+											<th md-column class="text-center">
+												<span class="column-title" translate>CAMPANHASLISTAR.DTAV1</span>
+											</th>
+											<th md-column class="text-center">
+												<span class="column-title" translate>CAMPANHASLISTAR.DTAV2</span>
+											</th>
+											<th md-column class="text-center">
+												<span class="column-title" translate>CAMPANHASLISTAR.DTAV3</span>
+											</th>
+											<th md-column ng-if="false" ng-disabled="true">
+												<span class="column-title" translate>CAMPANHASLISTAR.DTREV</span>
+											</th>
+											<th md-column class="text-center">
+												<span class="column-title" translate>CAMPANHASLISTAR.SITUACAO</span>
+											</th>
+											<th md-column>
+												<span class="column-title" translate>CAMPANHASLISTAR.PORCENTAGEMPREENCHIMENTO</span>
+											</th>
+											<th md-column>
+												<span class="column-title" translate>CAMPANHASLISTAR.OPCOES</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody md-body>
+										<tr md-row ng-show="$ctrl.listAvaliacoes.length == 0">
+											<td md-cell colspan="9" hide show-gt-xs>
+												<div class="text-center" translate>CAMPANHASLISTAR.NAOHA</div>
+											</td>
+											<td md-cell colspan="9" hide-gt-xs>
+												<div class="pl-16" translate>CAMPANHASLISTAR.NAOHA</div>
+											</td>
+										</tr>
+										<tr md-row ng-show="$ctrl.listAvaliacoes.length > 0" ng-repeat="item in $ctrl.listAvaliacoes" class="text-left">
+											<td md-cell>
+												<a href  ng-click="$ctrl.exibirAvaliacao(item)"><b>{{::item.descricaoAbreviada}}</b></a>
+											</td>
+											<td md-cell class="text-center">{{ ::item.numAvaliacoes }}</td>
+											<td md-cell class="text-center">{{ ::item.numParticipantes }}</td>
+											<td md-cell class="text-center">{{ item.limiteAv1 | date:'dd/MM/yyyy' }}</td>
+											<td md-cell class="text-center">{{ item.limiteAv2 | date:'dd/MM/yyyy' }}</td>
+											<td md-cell class="text-center">{{ item.limiteAv3 | date:'dd/MM/yyyy' }}</td>
+											<td md-cell ng-if="false" ng-disabled="true">{{ ::item.limiteAv4 | date:'dd/MM/yyyy' }}</td>
+											<td md-cell class="text-center">
+												<span
+													ng-class="{'black-bg white-fg': item.situacao == 'CANCELADA',
+													'red-bg white-fg': item.situacao == 'INATIVA',
+													'green-bg white-fg': item.situacao == 'LIBERADA',
+													'amber-bg white-fg': item.situacao == 'AG_LIBERACAO' && !item.emLiberacao,
+													'blue-bg white-fg': item.situacao == 'CONCLUIDA',
+													'mint-bg white-fg': item.emLiberacao}"
+													class="estilo_situacao line_break"
+												>
+														<b ng-if="!item.emLiberacao">{{ 'SITUACAO.' + item.situacao | translate }}</b>
+														<b ng-if="item.emLiberacao">{{ 'SITUACAO.EM_LIBERACAO' | translate }}</b>
+												</span>
+											</td>
+											<td md-cell class="text-center">{{::item.percentualTotalPreenchimento}}%</td>
+											<td md-cell class="text-left">
+												<md-menu id="menu-table"  ng-hide="item.situacao === 'CANCELADA'">
+													<md-button class="md-icon-button" ng-click="$mdMenu.open()">
+														<md-icon md-font-icon="icon-dots-vertical"/>
+													</md-button>
+													<md-menu-content class="p-0">
+														<md-menu-item ng-show="item.status !== 'CONCLUIDA' && item.status !== 'CANCELADA'">
+															<md-button ng-click="$ctrl.editAvaliacao(item)">
+																<md-icon style="color: black" md-font-icon="icon-pencil"/>
+																<span translate>CAMPANHASLISTAR.EDITAR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item ng-show="item.status === 'AG_LIBERACAO'">
+															<md-button ng-click="$ctrl.acaoLiberarAvaliacao(item)" ng-disabled="$ctrl.object.avEmLiberacao && !$ctrl.admin">
+																<md-icon style="color: green" md-font-icon="icon-check-all"/>
+																<span translate>CAMPANHASLISTAR.LIBERAR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item ng-show="item.status === 'LIBERADA'">
+															<md-button ng-click="$ctrl.acaoConcluirAvaliacao(item)">
+																<md-icon style="color: blue" md-font-icon="icon-checkbox-marked-circle"/>
+																<span translate>CAMPANHASLISTAR.CONCLUIR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item ng-show="item.status === 'INATIVA'">
+															<md-button ng-click="$ctrl.acaoAtivarAvaliacao(item)">
+																<md-icon style="color: green" md-font-icon="icon-check"/>
+																<span translate>CAMPANHASLISTAR.ATIVAR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item ng-show="item.status === 'LIBERADA'">
+															<md-button ng-click="$ctrl.acaoInativarAvaliacao(item)">
+																<md-icon style="color: red" md-font-icon="icon-close-circle-outline"/>
+																<span translate>CAMPANHASLISTAR.INATIVAR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item>
+															<md-button ng-click="$ctrl.acaoRepetirAvaliacao(item)">
+																<md-icon style="color: rgb(46,98,177)" md-font-icon="icon-content-duplicate"/>
+																<span translate>CAMPANHASLISTAR.REPETIR</span>
+															</md-button>
+														</md-menu-item>
+
+														<md-menu-item
+															ng-show="item.status === 'AG_LIBERACAO'">
+															<md-button ng-click="$ctrl.acaoRemoverAvaliacao(item)">
+																<md-icon style="color: black" md-font-icon="icon-trash"/>
+																<span translate>CAMPANHASLISTAR.REMOVER</span>
+															</md-button>
+														</md-menu-item>
+													</md-menu-content>
+												</md-menu>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

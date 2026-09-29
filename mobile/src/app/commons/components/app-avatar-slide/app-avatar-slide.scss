@@ -1,0 +1,75 @@
+app-avatar-slide {
+
+	ion-item.item.item-block.item-ios {
+		padding: 0;
+	}
+
+	.nome {
+		font-size: 14px;
+		overflow-wrap: break-word;
+		font-weight: bold;
+	}
+
+	.cargo {
+		font-size: 12px;
+		overflow-wrap: break-word;
+	}
+
+	.white-space {
+		white-space: normal;
+	}
+
+	.inactive {
+		opacity: 0.4;
+		&.active {
+			opacity: 1;
+		}
+	}
+
+	.text {
+		font-size: 16px;
+		padding: 3px 0px 3px 0px;
+	}
+	.item-md {
+		padding: 0;
+	}
+	.item-block {
+		overflow: unset;
+	}
+	.swiper-wrapper {
+		justify-content: flex-start;
+	}
+	ion-avatar {
+		zoom: 1.8;
+	}
+
+	.btn-prev.button-clear-md {
+		zoom: 1.2;
+		position: absolute;
+		top: 50px;
+		left: 0;
+		z-index: 10;
+	}
+	.btn-next.button-clear-md {
+		zoom: 1.2;
+		position: absolute;
+    	top: 50px;
+		right: 0;
+		z-index: 10;
+	}
+
+	.btn-prev.button-clear-ios {
+		zoom: 1.2;
+		position: absolute;
+		top: 40px;
+		left: 0;
+		z-index: 10;
+	}
+	.btn-next.button-clear-ios {
+		zoom: 1.2;
+		position: absolute;
+    	top: 40px;
+		right: 0;
+		z-index: 10;
+	}
+}

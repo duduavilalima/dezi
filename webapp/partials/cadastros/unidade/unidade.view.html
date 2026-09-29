@@ -1,0 +1,148 @@
+<div class="page-layout simple fullwidth">
+	<div flex layout="row" layout-xs="column" flex-xs="100" flex-sm="100" class="margin-default div-cards">
+		<div layout="column" flex="65" flex-xs="100" flex-sm="100">
+			<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+						<h1 class="mt-10">{{'UNIDADES.DESCRICAO' | translate }}</h1>
+					</div>
+					<div layout-align="end center" layout-align-xs="center center" layout="row">
+							<md-switch 
+							ng-model="$ctrl.mdswitch.situacao" 
+							aria-label="Botão situação"
+							ng-change="$ctrl.onChangeSituacao($ctrl.object, 'unidade')">
+							 {{'SITUACAO.' + $ctrl.object.situacao | translate }}
+							 </md-switch>
+						<span class="width-20"></span>
+						<md-button ng-click="$ctrl.displayEdit()" class="md-fab md-mini md-accent-bg" aria-label="Editar" translate
+									translate-attr-aria-label="CAMPANHASLISTAR.EDITAR">
+							<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+							<md-tooltip class="h4">{{'UNIDADES.EDITAR' | translate}}</md-tooltip>
+						</md-button>
+						<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin" class="md-icon-button"
+									aria-label="Editar" translate
+									translate-attr-aria-label="DIMENSAO.DETALHES">
+							<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+							<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+						</md-button>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+					<div layout="column" layout-gt-sm="row" flex layout-sm="row">
+						<md-input-container flex="30">
+							<label id="lbl_unidade" for="unidade">{{'UNIDADES.UNIDADE' | translate}}</label>
+							<input id="unidade_view" name="unidade" type="text" value="{{::$ctrl.object.nome}}" ng-disabled="true">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="50">
+							<label id="lbl_descricao_view" for="descricao">{{'UNIDADES.DESCRICAO' | translate}}</label>
+							<input id="descricao_view" name="descricao" type="text" value="{{::$ctrl.object.descricao}}" ng-disabled="true">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="20">
+							<label id="lbl_situacao" for="situacao">{{'UNIDADES.SITUACAO' | translate}}</label>
+							<input id="situacao" name="situacao" type="text" value="{{'SITUACAO.'+ $ctrl.object.situacao | translate}}" ng-disabled="true">
+						</md-input-container>
+					</div>
+				</form>
+			</div>
+			<div flex class="white-bg style_card mt-15 mx-h-350" flex-xs="100" flex-sm="100">
+				<div class="content">
+					<div layout="row" class="content h50" layout-xs="column">
+						<div flex layout-align="center center" class="pl-16 pr-16">
+							<div id="title_detalhamentos" class="md-accent-fg">
+								<h1 class="mt-10">{{'UNIDADES.SUBUNIDADES' | translate }}</h1>
+							</div>
+						</div>
+						<div layout-align="end center" layout-align-xs="start center">
+							<md-button id="btn_nova_subunidade"
+										translate-attr-aria-label="UNIDADES.NOVASUBUNIDADE"
+										ng-click="$ctrl.openDialogSubunidade($ctrl.object)"
+										class="mt-10 md-button md-accent text-capitalize"
+										aria-label="Nova subunidade">
+								<md-icon md-font-icon="icon-plus"></md-icon>
+								{{ 'UNIDADES.NOVASUBUNIDADE' | translate}}
+							</md-button>
+						</div>
+					</div>
+					<md-divider></md-divider>
+					<div ng-show="$ctrl.listFilhos != null">
+						<md-table-container class="scroll_tables">
+							<table md-table id="table-list" md-progress="$ctrl.listFilhos">
+								<thead md-head>
+								<tr md-row  class="grey-200-bg">
+									<th md-column width="35%">
+										<div class="table-header text-left"><span class="column-title">{{'UNIDADES.SUBUNIDADE' | translate}}</span></div>
+									</th>
+									<th md-column width="50%">
+										<div class="table-header"><span class="column-title">{{'UNIDADES.DESCRICAO' | translate}}</span></div>
+									</th>
+									<th md-column width="10%" class="text_align_center">
+										<div class="table-header text-center"><span class="column-title">{{'UNIDADES.SITUACAO' | translate}}</span></div>
+									</th>
+									<th md-column width="5%">
+										<div class="table-header text-center"><span class="column-title">{{'UNIDADES.OPCOES' | translate}}</span></div>
+									</th>
+								</tr>
+								</thead>
+								<tbody md-body>
+								<tr md-row ng-show="$ctrl.listFilhos.length == 0">
+									<td md-cell style="text-align: center;" colspan="5">
+										<b>Não há Subunidades cadastradas</b>
+									</td>
+								</tr>
+								<tr md-row ng-show="$ctrl.listFilhos.length > 0" ng-repeat="item in $ctrl.listFilhos">
+									<td md-cell>
+										<a href ng-click="$ctrl.displayEdit()"><b>{{ ::item.nome }}</b></a>
+									</td>
+									<td md-cell>{{ ::item.descricao | limitTo: 300}}</td>
+									<td md-cell class="text_align_center">
+										<span ng-class="{'green-bg': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}" class="estilo_situacao"><b>{{'SITUACAO.' + item.situacao | translate}}</b></span>
+									</td>
+									<td md-cell>
+										<md-button id="btn_ativar_subunidade" aria-label="Situacao" translate-attr-aria-label="{{item.situacao === 'ATIVA'? UNIDADES.INATIVAR : UNIDADES.ATIVAR}}" ng-click="$ctrl.onChangeSituacao(item, 'subunidade')">
+												<md-icon ng-if="item.situacao === 'ATIVA'" style="color: red" md-font-icon="icon-cancel"></md-icon>
+												<md-icon ng-if="item.situacao !== 'ATIVA'" style="color: green" md-font-icon="icon-check"></md-icon>
+												<md-tooltip class="h4">
+													{{(item.situacao === 'ATIVA'? 'UNIDADES.INATIVAR' : 'UNIDADES.ATIVAR') | translate}}
+												</md-tooltip>
+										</md-button>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</md-table-container>
+					</div>
+				</div>
+			</div>
+		</div>
+		<span class="width-15"></span>
+		<span class="height-15" hide show-xs></span>
+		<div flex="35" layout="column" class="white-bg style_card w100 mx-h-600" flex-xs="100" flex-sm="100">
+			<div layout="row" class="content h50" layout-xs="column">
+				<div flex layout-align="center center" class="pl-16 pr-16">
+					<div id="title_hierarquia" class="md-accent-fg">
+						<h1 class="mt-10">{{'UNIDADES.HIERARQUIA' | translate }}</h1>
+					</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<div class="content overflow" style="padding: 20px;" >
+				<treecontrol class="tree-classic"
+								tree-model="$ctrl.dataForTheTree"
+								options="$ctrl.treeOptions"
+								expanded-nodes="$ctrl.expandedNodes"
+								on-selection="$ctrl.showSelected(node)"
+								selected-node="node1">
+					<a href ng-click="$ctrl.displayView(node)" class="md-accent-fg"><b
+						ng-class="{'node_tree': $ctrl.object.nome == node.nome}" title="{{::node.descricao}}">{{node.nome}}</b></a>
+				</treecontrol>
+			</div>
+		</div>
+	</div>
+</div>

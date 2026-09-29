@@ -1,0 +1,57 @@
+app-descricao-competencia {
+	/* Titulo */
+	h3 {
+		font-size: 2.1rem;
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		text-align: center;
+	}
+	/* Diminuição da fonte dentro dos "items" */
+	.item,
+	.item-md,
+	.item-ios {
+		font-size: 1em;
+	}
+
+	/* Subtitulo, descrição para o gestor (avaliador) */
+	ion-label {
+		white-space: normal;
+		overflow: hidden;
+		max-height: 3.5em; /* 3.6em = 3 rows */
+		text-align: center;
+		transition: max-height 0.5s ease;
+	}
+	/* Classes do botão de expansão do texto */
+	.expandable {
+		max-height: 900px;
+	}
+	.rotate {
+		transform: rotate(180deg);
+		transition: transform 0.5s ease;
+	}
+	.rotate-inicial {
+		transform: rotate(0deg);
+		transition: transform 0.5s ease;
+	}
+	.button {
+		position: absolute;
+		right: 10px;
+		margin-top: -30px;
+		ion-icon {
+			zoom: 2;
+		}
+	}
+	ion-item,
+	.item-block,
+	.item-ios,
+	.item-md,
+	.item-md.item-block {
+		padding: 0;
+	}
+	.item-inner {
+		padding: 12px 8px 24px 8px;
+	}
+	.label {
+		margin: 0;
+	}
+}

@@ -1,0 +1,137 @@
+<form-card
+	name="formTipo"
+	card-title="CARGO.TIPO"
+	object="$ctrl.tipoCompetencia"
+	can-edit="$ctrl.canEdit"
+	entity-data="{ typeName: 'CARGO.TIPO', typeArticle: 'o', nameField: 'nome' }"
+>
+	<labeled-input
+		flex-gt-xs="50"
+		name="nome"
+		label="CARGO.TIPO"
+		value="$ctrl.tipoCompetencia.nome"
+		options="{ disabled: true }"
+	/>
+	<!-- FIXME: Usar o labeled input, mas para isso, 
+	precisa passar os loads do controller para o route -->
+	<md-input-container style="font-size: 1.6rem" flex="50">
+			<label id="lbl_descricao_view" for="descricao">{{'CARGO.SITUACAO' | translate}}</label>
+			<input id="descricao_view" name="descricao" type="text"
+			value="{{'SITUACAO.'+ $ctrl.tipoCompetencia.situacao | translate}}" ng-disabled="true">
+	</md-input-container>
+
+<!-- 	<labeled-input
+		flex-gt-xs="50"
+		name="situacao"
+		label="CARGO.SITUACAO"
+		value="'SITUACAO.' + $ctrl.tipoCompetencia.situacao"
+		options="{ disabled: true, translate: true }"
+	/> -->
+
+</form-card>
+<div flex-xs flex-gt-xs="100" flex="100"layout="row" layout-xs="column" layout-sm="column"class="p-5"  >
+	<div class="white-bg style_card mt-5 ml-10 mr-10" flex flex-xs="100" flex-sm="100" layout="column">
+		<div class="content">
+			<div layout="row" class="content" layout-xs="column">
+				<div flex layout-align="center center" class="pl-16 pr-16">
+					<div id="title_competencias" class="md-accent-fg">
+						<h1>{{'CARGO.COMPETENCIA' | translate}}</h1>
+					</div>
+				</div>
+				<div layout-align="end center" layout-align-xs="start center">
+					<md-button ng-click="$ctrl.associarCompetencia()" class="p-8 md-button md-accent  text-capitalize" aria-label="associar competência">
+						<md-icon md-font-icon="icon-checkbox-multiple-marked-outline"></md-icon>
+						{{'CARGO.ASSOCIAR' | translate}}
+					</md-button>
+				</div>
+			</div>
+
+			<md-divider></md-divider>
+
+			<div layout="column" layout-align="center center" class="pl-16 pr-16" ng-show="$ctrl.listCompetencias == null">
+				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+			</div>
+
+			<md-table-container>
+				<table id="table-list" md-table ng-show="$ctrl.listCompetencias != null">
+					<thead md-head>
+					<tr md-row ng-show="$ctrl.listCompetencias.length == 0">
+						<th md-column colspan="3"> </th>
+					</tr>
+					<tr md-row class="grey-200-bg" ng-show="$ctrl.listCompetencias.length > 0">
+						<th md-column width="50%">
+							<div class="table-header text-left"><span class="column-title">{{'CARGO.DESCRICAO' | translate}}</span></div>
+						</th>
+						<th md-column width="20%">
+							<div class="table-header text-left"><span class="column-title">{{'CARGO.PESO' | translate}}</span></div>
+						</th>
+						<th md-column width="20%">
+							<div class="table-header text-left"><span class="column-title">{{'CARGO.SITUACAO' | translate}}</span></div>
+						</th>
+						<th md-column width="10%">
+							<div class="table-header text-left"><span class="column-title">{{'CARGO.OPCOES' | translate}}</span></div>
+						</th>
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-show="$ctrl.listCompetencias.length == 0">
+						<td md-cell colspan="3"><div class="text-center">{{'CARGO.NAOCOMPETENCIA' | translate}}</div></td>
+					</tr>
+					<tr md-row ng-show="$ctrl.listCompetencias.length == 0">
+						<td md-cell colspan="3" class="text-center text-bold md-warn-fg">{{'CARGO.ATIVACAO_CARGO' | translate}}</td>
+					</tr>
+					<tr md-row ng-show="$ctrl.listCompetencias.length > 0" ng-repeat="item in $ctrl.listCompetencias" class="text-left">
+						<td md-cell>
+							<b><a href ng-click = "$ctrl.associarCompetenciaEdit(item)">{{ ::item.competencia.descricaoAbreviada }}</a></b>
+						</td>
+						<td md-cell>
+							<span>{{ item.peso }}</span>
+						</td>
+						<td md-cell>
+							<span ng-class="{'green-bg': item.situacao == 'ATIVA', 'red-bg' : item.situacao != 'ATIVA'}" class="estilo_situacao"><b>{{'SITUACAO.' + item.situacao | translate}}</b></span>
+						</td>
+						<td md-cell>
+							<md-menu>
+								<md-button class="md-icon-button" ng-click="$mdMenu.open()"
+										   aria-label="more">
+									<md-icon md-font-icon="icon-dots-vertical"></md-icon>
+								</md-button>
+
+								<md-menu-content class="p-0">
+									<md-menu-item>
+										<md-button ng-click="$ctrl.associarCompetenciaEdit(item)">
+											<md-icon class="blue-fg" md-font-icon="icon-pencil"></md-icon>
+											<span translate>CARGO.EDITARTIPOCOMP</span>
+										</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button id="btn_subir_competencia_associada" translate-attr-aria-label="competencia_associada.SUBIR" ng-disabled="$first" 
+													aria-label="Subir" ng-click="$ctrl.move(item,'up',$index)">
+											<md-icon style="color: blue" md-font-icon="icon-arrow-up-bold-circle-outline"></md-icon>{{'MODELOS.SUBIR' | translate}}</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button id="btn_descer_competencia_associada" ng-disabled="$last" translate-attr-aria-label="competencia_associada.DESCER" 
+													aria-label="Descer" ng-click="$ctrl.move(item,'down',$index)">
+											<md-icon style="color: blue" md-font-icon="icon-arrow-down-bold-circle-outline"></md-icon> {{'MODELOS.DESCER' | translate}} </md-button>
+									</md-menu-item>
+
+									<md-menu-item>
+										<md-button id="btn_ativar_subunidade" aria-label="Situacao" translate-attr-aria-label="{{item.situacao === 'ATIVA'? DIALOG_CARGO.TITULO_INATIVAR : DIALOG_CARGO.TITULO_ATIVAR}}" ng-click="$ctrl.onChangeSituacao(item)">
+												<md-icon ng-if="item.situacao === 'ATIVA'" style="color: red" md-font-icon="icon-cancel"></md-icon>
+												<md-icon ng-if="item.situacao !== 'ATIVA'" style="color: green" md-font-icon="icon-check"></md-icon>
+													{{(item.situacao === 'ATIVA'? 'DIALOG_CARGO.TITULO_INATIVAR' : 'DIALOG_CARGO.TITULO_ATIVAR') | translate}}
+										</md-button>
+									</md-menu-item>
+								</md-menu-content>
+
+							</md-menu>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</div>
+
+	</div>
+
+</div>

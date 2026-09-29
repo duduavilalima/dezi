@@ -1,0 +1,37 @@
+<div>
+
+	<form name="test" ng-controller="testCtrl">
+
+
+		<!-- Atributos e seus comportamentos-->
+		<!-- id - se não for definida o default será "pick_list_test" -->
+		<!-- name - se não for definida o default será "pick_list_test"  -->
+		<!-- size - se não for definida o default será "10" -->
+		<!-- pick-model - é obrigatória, se não for definida ocorrerá erro -->
+		<!-- pick-options - é obrigatória, se não for definida ocorrerá erro -->
+		<!-- pick-label-src - se não for definida o default será "Origem"  -->
+		<!-- pick-label-dest - não é obrigatória -->
+		<!-- pick-flex - se não for definida o default será "100"  -->
+		<!-- pick-screen-model - se não for definida o default será "EDIT"  -->
+		<!-- pick-button-all-add - se não for definida o default será "Selecionar todas"  -->
+		<!-- pick-button-add - se não for definida o default será "Selecionar"  -->
+		<!-- pick-button-all-rev - se não for definida o default será "Remover todas"  -->
+		<!-- pick-button-rev - se não for definida o default será "Remover"  -->
+		<!-- -->
+
+		<div class="padding-16" >
+			<picklist id="pktest" name="pktest" size="10"  pick-model="tselected"
+					  pick-options="v.name for v in toptions"
+					  pick-label-src="Origem"
+					  pick-label-dest="Destino"
+					  pick-flex="100"
+					  pick-screen-model="VIEW"
+					  pick-button-all-add="Habilitar todas"
+					  pick-button-add="Habilitar"
+					  pick-button-all-rev="Desabilitar todas"
+					  pick-button-rev="Desabilitar"/>
+		</div>
+
+	</form>
+
+</div>

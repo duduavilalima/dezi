@@ -1,0 +1,84 @@
+# Autoconfig do SpringBoot
+environment:
+  mode: ${ENVIRONMENT:development}
+  name: ${ENVIRONMENT_NAME:development}
+spring:
+  rabbitmq:
+    host: ${DEZI_QUEUE_HOST:localhost}
+    port: ${DEZI_QUEUE_PORT:5672}
+    username: ${DEZI_QUEUE_USERNAME:admin}
+    password: ${DEZI_QUEUE_PASSWORD:admin}
+    listener:
+      simple:
+        concurrency: 4
+        max-concurrency: 8
+        retry:
+          enabled: true
+          initial-interval: 1000ms
+          max-attempts: 2
+          max-interval: 5000ms
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    servlet:
+      content-type: text/html
+  jpa:
+    database: default
+    generate-ddl: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        use_sql_comments: true
+        format_sql: true
+        type: info
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    url: jdbc:postgresql://${DEZI_DB_HOST:localhost}:${DEZI_DB_PORT:5432}/${DEZI_DB_NAME:avd-homolog}
+    username: ${DEZI_DB_USERNAME:deziuser}
+    password: ${DEZI_DB_PASSWORD:deziuser}
+    validation-query: select 1
+    test-on-borrow: true
+
+  mail:
+    host: ${DEZI_SMTP_HOST:email-smtp.us-east-1.amazonaws.com}
+    username: ${DEZI_SMTP_USERNAME:AKIAJONPJ4MMSJNN37QA}
+    password: ${DEZI_SMTP_PASSWORD:Arf5YrVB7ydpXnqpemA850XyKTdZxRIfiew64V1uxdmG}
+    properties:
+      mail:
+        debug: false
+        transport:
+          protocol: smtp
+        smtp:
+          port: 465
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+
+# Queues and Exchanges
+pubsub:
+  exchange-name: dezi-exchange
+  delayed-exchange-name: dezi-delayed-exchange
+  queue-name: dezi-queue
+  routing-key: dezi-routing-key
+  resend-queue-name: dezi-queue-reenvio
+  resend-routing-key: dezi-routing-key-reenvio
+  send-delay: 10000
+
+# Application defaults
+default:
+  email-from: ${DEZI_EMAIL_FROM:no-reply@dezi.com.br}
+
+logging:
+  level:
+    root: DEBUG

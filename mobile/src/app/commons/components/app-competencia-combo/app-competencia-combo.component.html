@@ -1,0 +1,14 @@
+<ion-row [formGroup]="parentForm">
+	<ion-col>
+		<ion-item>
+			<ion-label color="primary" floating>
+				{{ "app.components.competencia-combo.label" | translate }}*
+			</ion-label>
+			<ion-select [cancelText]="'app.system.cancel' | translate" name="competencia"
+				[formControlName]="'competenciaId'" required>
+				<ion-option *ngFor="let competencia of competenciaList" [value]="competencia.id">
+					{{ competencia.descricaoAbreviada || competencia.descricao }}</ion-option>
+			</ion-select>
+		</ion-item>
+	</ion-col>
+</ion-row>

@@ -1,0 +1,27 @@
+{
+  "ESCOLARIDADE":{
+    "CADASTROS":"Cadastros",
+    "DESCRICAO": "Descrição",
+    "FORMACAO":"Formação e idiomas",
+    "ESCOLARIDADE": "Escolaridades",
+    "PESQUISAR":"Pesquisar",
+    "BTNNOVO":"Nova Escolaridade",
+    "SITUACAO": "Situação",
+    "REQUER": "Requer preenchimento do Tipo de curso",
+    "REQUEROUTRO": "Requer preenchimento de Outros cursos",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 35 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "ESCOLARIDADE2": "Escolaridade",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZA": "Data de Atualização",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "CANCELAR": "Cancelar",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar"
+  }
+}

@@ -1,0 +1,76 @@
+<v-accordion id="acc" class="vAccordion--default mt-15" control="$ctrl.compList" onexpand="$ctrl.expandCallback(index)"
+			 multiple>
+	<v-pane ng-repeat="competencia in $ctrl.competencias" id="{{ competencia.id }}">
+		{{current}}
+		<v-pane-header>
+			<div id="processos" class="md-accent-fg"><span class="text-uppercase text-bold">{{ competencia.descricaoAbreviada }}</span> - {{ competencia.progresso[$ctrl.stage] }} respostas de {{ competencia.detalhamentos.length }} perguntas</div>
+		</v-pane-header>
+		<v-pane-content>
+			<ad-competencia competencia="competencia" has-next="{{ !$last }}" on-save="$ctrl.save(competencia, final, $event)"></ad-competencia>
+		</v-pane-content>
+	</v-pane>
+</v-accordion>
+
+
+<div fill-width layout="row" class="content mt-30">
+	<div fill-width layout="column" layout-align="start right">
+		<form name="basicForm" novalidate>
+			<div layout="row" flex="50" ng-if="$ctrl.stage == 'av3' && $ctrl.consensoLiberado">
+				<md-input-container class="mr-16" id="justificativa_avaliador" flex="50">
+					<label for="justificativa_avaliador_input" translate>PREENCHIMENTO.JUSTIFICATIVA_AVALIADOR</label>
+					<textarea
+						ng-model="$ctrl.comentarioFinalAvaliador" id="justificativa_avaliador_input" name="justificativaAvaliador"
+						md-maxlength="500" ng-maxlength="500">
+						</textarea>
+					<div ng-messages="basicForm.justificativaAvaliador.$error" ng-show="basicForm.justificativaAvaliador.$touched">
+						<div ng-message="maxlength">
+							<span translate>PREENCHIMENTO.MAXIMO_500</span>
+						</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container id="justificativa_avaliado" flex="50">
+					<label for="justificativa_avaliado_input" translate>PREENCHIMENTO.JUSTIFICATIVA_AVALIADO</label>
+					<textarea
+						ng-model="$ctrl.comentarioFinalAvaliado" id="justificativa_avaliado_input" name="justificativaAvaliado"
+						md-maxlength="500" ng-maxlength="500">
+				</textarea>
+					<div ng-messages="basicForm.justificativaAvaliado.$error" ng-show="basicForm.justificativaAvaliado.$touched">
+						<div ng-message="maxlength">
+							<span translate>PREENCHIMENTO.MAXIMO_500</span>
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+
+			<div layout="row" flex="50" ng-if="$ctrl.stage != 'av1'" class="mr-16">
+				<md-input-container class="mr-16" fill-width id="acoes_pdi">
+					<label for="acoes_pdi_input" translate>PREENCHIMENTO.ACOES_PDI</label>
+					<textarea ng-disabled="($ctrl.stage != 'av3' && $ctrl.consensoLiberado)"
+						ng-model="$ctrl.pdi" id="acoes_pdi_input" name="pdi"
+						md-maxlength="500" ng-maxlength="500">
+				</textarea>
+					<div ng-messages="basicForm.pdi.$error" ng-show="basicForm.pdi.$touched">
+						<div ng-message="maxlength">
+							<span translate>PREENCHIMENTO.MAXIMO_500</span>
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+		</form>
+	</div>
+</div>
+<div layout="row" class="content" layout-align="end right">
+<div layout="column" layout-align="end right">
+	<md-button ng-click="$ctrl.salvarFinalizar($event)" class="md-raised md-accent"
+		ng-disabled="($ctrl.stage != 'av3' && $ctrl.consensoLiberado) || basicForm.$invalid">
+		Salvar e Finalizar
+	</md-button>
+</div>
+</div>
+
+
+
+<!--expanded="$index == 0"-->
+
+<!--expanded="competencia.isExpanded">-->

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:component-scan base-package="br.com.fasolti"/>
+
+	<context:property-placeholder location="classpath:spring/conf/*.properties"/>
+
+	<bean id="propertyPlaceHolderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>20971520</value>
+		</property>
+	</bean>
+
+	<import resource="applicationContext-rest.xml"/>
+	<import resource="applicationContext-persistence.xml"/>
+
+	<beans profile="production">
+		<import resource="applicationContext-security.xml"/>
+	</beans>
+
+	<beans profile="development">
+		<import resource="applicationContext-security-dev.xml"/>
+	</beans>
+</beans>

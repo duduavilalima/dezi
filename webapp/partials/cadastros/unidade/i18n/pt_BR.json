@@ -1,0 +1,46 @@
+{
+  "SITUACAO": {
+    "ATIVA": "Ativa",
+    "INATIVA": "Inativa"
+  },
+  "UNIDADES":{
+    "CADASTOS":"Cadastros",
+    "UNIDADES": "Unidades",
+    "COMPETENCIAS":"Competências",
+    "PESQUISAR":"Pesquisar",
+    "BTNNOVO":"Nova Unidade",
+    "BTNIMPORTAR":"Importar",
+    "UNIDADE":"Unidade",
+    "NOME":"Nome",
+    "SITUACAO": "Situação",
+    "DESCRICAO": "Descrição",
+    "CAMPOOBRIGATORIO": "Campo obrigatório",
+    "MAXIMO": "Máximo de 50 caracteres",
+    "MINIMO": "Mínimo de 2 caracteres",
+    "CRIADOR": "Criador",
+    "DATACRIACAO": "Data de Criação",
+    "ATUALIZADOR": "Atualizador",
+    "DATAATUALIZACAO": "Data de Atualização",
+    "ATIVAR": "Ativar",
+    "INATIVAR": "Inativar",
+    "CANCELAR": "Cancelar",
+    "SALVAR": "Salvar",
+    "VOLTAR": "Voltar",
+    "EDITAR": "Editar",
+    "LBLPAGINA": "{page: 'Página:', rowsPerPage: 'Registros por página:', of: 'de'}",
+    "EXIBICAO" : "Exibição",
+    "EDICAO" : "Edição",
+    "NOVO" : "Novo",
+    "SUBUNIDADES": "Subunidades",
+    "HIERARQUIA": "Hierarquia de unidades",
+    "NOVASUBUNIDADE": "Nova Subunidade",
+    "SUBUNIDADE": "Subunidade",
+    "OPCOES": "Opções",
+    "NOMESUB": "Subunidade",
+    "MSG_ATIVAR" : "Deseja ativar o(a) ",
+    "MSG_INATIVAR" : "Deseja inativar o(a) "
+  },
+  "VALIDATION": {
+    "REQUIRED": "Campo obrigatório"
+  }
+}

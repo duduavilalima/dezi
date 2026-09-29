@@ -1,0 +1,241 @@
+<div class="page-layout simple fullwidth">
+	<div flex layout="row" layout-xs="column" flex-xs="100" flex-sm="100" class="margin-default div-cards">
+		<div layout="column" flex="65" flex-xs="100" flex-sm="100">
+			<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+				<div layout="row" class="content h50" layout-xs="column">
+					<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+						<h1 class="mt-10">{{'CARGO.DESCRICAO' | translate }}</h1>
+					</div>
+					<div layout-align="end center" layout-align-xs="center center" layout="row">
+						<md-switch ng-model="$ctrl.mdswitch.situacao" aria-label="Botão situação"
+							ng-change="$ctrl.onChangeSituacao($ctrl.object, 'cargo')">
+							{{'SITUACAO.' + $ctrl.object.situacao | translate }}
+						</md-switch>
+						<span class="width-20"></span>
+						<md-button ng-click="$ctrl.displayEdit()" class="md-fab md-mini md-accent-bg"
+							aria-label="Editar" translate translate-attr-aria-label="CARGO.EDITAR">
+							<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+							<md-tooltip class="h4">{{'UNIDADES.EDITAR' | translate}}</md-tooltip>
+						</md-button>
+						<md-button ng-click="$ctrl.detalhes()" ng-if="$ctrl.admin" class="md-icon-button"
+							aria-label="Editar" translate translate-attr-aria-label="CARGO.DETALHES">
+							<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+							<md-tooltip class="h4">{{'DIALOG.DETALHES' | translate}}</md-tooltip>
+						</md-button>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<form name="basicForm" class="md-inline-form" layout-padding novalidate>
+					<div layout="column" layout-gt-sm="row" flex layout-sm="row">
+						<md-input-container flex="30">
+							<label id="lbl_unidade" for="unidade">{{'CARGO.NOME' | translate}}</label>
+							<input id="unidade_view" name="unidade" type="text" value="{{::$ctrl.object.nome}}"
+								ng-disabled="true">
+						</md-input-container>
+
+						<span class="width-20"></span>
+
+						<md-input-container flex="50">
+							<label id="lbl_descricao_view" for="descricao">{{'CARGO.SITUACAO' | translate}}</label>
+							<input id="descricao_view" name="descricao" type="text"
+								value="{{'SITUACAO.'+ $ctrl.object.situacao | translate}}" ng-disabled="true">
+						</md-input-container>
+					</div>
+
+					<div layout="column" layout-gt-sm="row" flex layout-sm="row">
+						<md-input-container flex="20">
+							<label id="lbl_departamento" for="situacao">{{'CARGO.DEPARTAMENTO' | translate}}</label>
+							<input id="departamento" name="situacao" type="text"
+								value="{{$ctrl.object.departamento.nome}}" ng-disabled="true">
+						</md-input-container>
+
+						<md-input-container flex="20">
+							<label id="lbl_idrh" for="situacao">{{'CARGO.IDRH' | translate}}</label>
+							<input id="idrh" name="situacao" type="text" value="{{$ctrl.object.idCargoCliente}}"
+								ng-disabled="true">
+						</md-input-container>
+					</div>
+					<v-accordion flex class="vAccordion--default" onexpand="$ctrl.handleExpand(index, id)">
+						<v-pane id="funcionarios">
+							<v-pane-header>
+								<div id="funcionarios" class="md-accent-fg">
+									<h3>Funcionários que ocupam este cargo</h3>
+								</div>
+							</v-pane-header>
+							<v-pane-content>
+								<!--TODO Substituir por componente -->
+								<md-table-container class="table_setor">
+									<table md-table md-progress="$ctrl.funcionarios.$promise">
+										<thead md-head md-order="nome">
+											<tr md-row class="grey-200-bg">
+												<th md-column>
+													<span translate>FUNCIONARIO.NOME</span>
+												</th>
+												<th md-column width="20%">
+													<span translate>FUNCIONARIO.DEPARTAMENTO</span>
+												</th>
+												<th md-column width="10%">
+													<span translate>FUNCIONARIO.DTADMI</span>
+												</th>
+												<th md-column width="10%">
+													<span translate>FUNCIONARIO.DTCARGOLIST</span>
+												</th>
+												<th md-column width="10%">
+													<span translate>FUNCIONARIO.SITUACAO</span>
+												</th>
+												<th md-column width="10%">
+													<span translate>FUNCIONARIO.SITUACAO3</span>
+												</th>
+											</tr>
+										</thead>
+										<tbody md-body>
+											<tr md-row ng-repeat="funcionario in $ctrl.funcionarios | orderBy: 'nome'"
+												class="text-left">
+												<td md-cell>
+													<a href ng-click="$ctrl.displayFuncionario(funcionario)">
+														{{:: funcionario.nome }}
+													</a>
+												</td>
+												<td md-cell>{{:: funcionario.departamento.nome }}</td>
+												<td md-cell>{{:: funcionario.admissao  | date: 'dd/MM/yyyy' }}</td>
+												<td md-cell>{{:: funcionario.dataCargo | date: 'dd/MM/yyyy' }}</td>
+												<td md-cell class="text-center">
+													<span
+														ng-class="{'green-bg': funcionario.situacao == 'ATIVA', 'red-bg': funcionario.situacao != 'ATIVA'}"
+														class="estilo_situacao" style="font-size: 10px;" translate>
+														{{ 'SITUACAO.' + funcionario.situacao }}
+													</span>
+												</td>
+												<td md-cell class="text-center">
+													<span
+														ng-class="{'green-bg': funcionario.situacaoFuncional == 'EM_ATIVIDADE', 'red-bg': funcionario.situacaoFuncional != 'EM_ATIVIDADE'}"
+														class="estilo_situacao" style="font-size: 10px;" translate>
+														{{ 'SITUACAO.' + funcionario.situacaoFuncional }}
+													</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</md-table-container>
+							</v-pane-content>
+						</v-pane>
+					</v-accordion>
+				</form>
+			</div>
+
+			<div flex class="white-bg style_card mt-15 mx-h-350" flex-xs="100" flex-sm="100">
+				<div class="content">
+					<div class="md-accent-fg h50 ph-16" layout="row" layout-xs="column">
+						<div flex layout-align="start center" layout-align-xs="center center" layout="row">
+							<h1 class="mt-10" translate>CARGO.TIPOASSOCIADA</h1>
+						</div>
+						<div layout-align="end center" layout-align-xs="center center" layout="row">
+							<md-button ng-click="$ctrl.associarTipoCompetencia()" class="mt-10 md-accent">
+								<md-icon md-font-icon="icon-checkbox-multiple-marked-outline" />
+								<span translate>CARGO.ASSOCIARTIPO</span>
+							</md-button>
+						</div>
+					</div>
+
+					<md-divider></md-divider>
+					<div>
+						<md-table-container class="scroll_tables">
+							<table md-table>
+								<thead md-head>
+									<tr md-row class="grey-200-bg">
+										<th md-column><span translate>CARGO.TIPO</span></th>
+										<th md-column width="20%"><span translate>CARGO.DEFINIRPESO</span></th>
+										<th md-column width="20%"><span translate>CARGO.SITUACAO</span></th>
+										<th md-column width="10%"><span translate>CARGO.OPCOES</span></th>
+									</tr>
+								</thead>
+								<tbody md-body>
+									<tr md-row ng-show="$ctrl.tiposCompetencias.length == 0">
+										<td md-cell colspan="4" class="text-center">
+											<span translate>CARGO.NAOTIPOCOMPETENCIA</span>
+										</td>
+									</tr>
+									<tr md-row ng-show="$ctrl.tiposCompetencias.length == 0">
+										<td md-cell colspan="4" class="text-center text-bold md-warn-fg">
+											<span translate>CARGO.ATIVACAO_CARGO_TIPO_COMPETENCIA</span>
+										</td>
+									</tr>
+									<tr md-row ng-repeat="item in $ctrl.tiposCompetencias | orderBy: 'nome'">
+										<td md-cell>
+											<a href ng-click="$ctrl.associarCompetenciaTipo(item)">
+												{{:: item.tipoCompetencia.nome }}
+											</a>
+										</td>
+										<td md-cell class="text-center">{{ ::item.peso }}</td>
+										<td md-cell class="text-center">
+											<span
+												ng-class="{'green-bg': item.situacao == 'ATIVA', 'red-bg': item.situacao != 'ATIVA'}"
+												class="estilo_situacao" translate>
+												{{ 'SITUACAO.' + item.situacao }}
+											</span>
+										</td>
+										<td md-cell class="text-right">
+											<md-menu>
+												<md-button class="md-icon-button" ng-click="$mdMenu.open()">
+													<md-icon md-font-icon="icon-dots-vertical" />
+												</md-button>
+												<md-menu-content class="p-0">
+													<md-menu-item>
+														<md-button ng-click="$ctrl.associarTipoCompetenciaEdit(item)">
+															<md-icon class="blue-fg" md-font-icon="icon-pencil">
+															</md-icon>
+															<span translate>CARGO.EDITARTIPO</span>
+														</md-button>
+													</md-menu-item>
+													<md-menu-item>
+														<md-button ng-click="$ctrl.associarCompetenciaTipo(item)">
+															<md-icon class="blue-fg"
+																md-font-icon="icon-checkbox-multiple-marked-outline" />
+															<span translate>CARGO.ASSOCIAR</span>
+														</md-button>
+													</md-menu-item>
+													<md-menu-item>
+														<md-button id="btn_ativar_subunidade" aria-label="Situacao"
+															translate-attr-aria-label="{{item.situacao === 'ATIVA'? DIALOG_CARGO.TITULO_INATIVAR : DIALOG_CARGO.TITULO_ATIVAR}}"
+															ng-click="$ctrl.onChangeSituacao(item, 'cargoTipoCompetencia')">
+															<md-icon ng-if="item.situacao === 'ATIVA'"
+																style="color: red" md-font-icon="icon-cancel"></md-icon>
+															<md-icon ng-if="item.situacao !== 'ATIVA'"
+																style="color: green" md-font-icon="icon-check">
+															</md-icon>
+															{{(item.situacao === 'ATIVA'? 'DIALOG_CARGO.TITULO_INATIVAR' : 'DIALOG_CARGO.TITULO_ATIVAR') | translate}}
+														</md-button>
+													</md-menu-item>
+												</md-menu-content>
+											</md-menu>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</md-table-container>
+					</div>
+				</div>
+			</div>
+		</div>
+		<span class="width-15"></span>
+		<span class="height-15" hide show-xs></span>
+		<div flex="35" layout="column" class="white-bg style_card w100 mx-h-600" flex-xs="100" flex-sm="100">
+			<div layout="row" class="content h50" layout-xs="column">
+				<div flex layout-align="center center" class="pl-16 pr-16">
+					<div id="title_hierarquia" class="md-accent-fg">
+						<h1 class="mt-10">{{'CARGO.HIERARQUIA' | translate }}</h1>
+					</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+
+			<div class="content overflow" style="padding: 20px;">
+				<treecontrol class="tree-classic" tree-model="$ctrl.dataForTheTree" options="$ctrl.treeOptions"
+					expanded-nodes="$ctrl.expandedNodes" on-selection="$ctrl.showSelected(node)" selected-node="node1">
+					<a href ng-click="$ctrl.displayView(node)" class="md-accent-fg"><b
+							ng-class="{'node_tree': $ctrl.object.nome == node.nome}"
+							title="{{::node.descricao}}">{{node.nome}}</b></a>
+				</treecontrol>
+			</div>
+		</div>
+	</div>

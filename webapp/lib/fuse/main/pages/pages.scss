@@ -1,0 +1,78 @@
+.page-style {
+  .form-title {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.70);
+    text-transform: uppercase;
+  }
+  .title {
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.70);
+  }
+  .check_position_table {
+    margin-top: 7px;
+  }
+  #image_user {
+    height: 200px;
+    width: 200px;
+  }
+  #bt-image-user {
+    position: relative;
+    left: 75px;
+    top: -200px;
+  }
+  //#bt-fingerprint {
+  //  position: relative;
+  //  margin-top: -250px;
+  //  left: 75px;
+  //}
+  .content {
+    md-content {
+      background-color: transparent;
+    }
+  }
+  // Profile boxes
+  .profile-box {
+    margin-bottom: 16px;
+    header {
+      padding: 16px;
+      .title {
+        font-size: 17px;
+      }
+      .more {
+        cursor: pointer;
+      }
+    }
+    .content {
+      padding: 16px;
+      background-color: #FFF;
+    }
+    .content_2 {
+      padding: 0px;
+      background-color: #FFF;
+    }
+    footer {
+      padding: 8px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+    &.info-box {
+      .info-line {
+        margin-bottom: 24px;
+        .title {
+          font-size: 15px;
+          font-weight: 500;
+          padding-bottom: 4px;
+        }
+        .info {}
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+

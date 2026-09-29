@@ -1,0 +1,77 @@
+button.login {
+	width: 100%;
+}
+
+ion-grid {
+	padding: 0 !important;
+}
+
+ion-row.dezi-logo {
+	padding: 0;
+}
+
+ion-row.dezi-logo * {
+	padding: 0;
+}
+
+div.dezi-fundo-div {
+	position: relative;
+	height: 25vh;
+	background-image: url("/assets/imgs/drawable-mdpi/dezi_verde.png");
+	background-size: cover;
+	background-position: top;
+}
+
+div.dezi-logo-div {
+	position: relative;
+	height: 10vh;
+	margin: 0 auto;
+	content: url("/assets/imgs/drawable-mdpi/logo_dezi.png");
+}
+
+@media (min-width: map-get($grid-breakpoints, "sm")) {
+	div.dezi-fundo-div {
+		height: 30vh;
+		background-image: url("/assets/imgs/drawable-hdpi/dezi_verde.png");
+	}
+	div.dezi-logo-div {
+		content: url("/assets/imgs/drawable-hdpi/logo_dezi.png");
+	}
+}
+
+@media (min-width: map-get($grid-breakpoints, "md")) {
+	div.dezi-fundo-div {
+		height: 35vh;
+		background-image: url("/assets/imgs/drawable-xhdpi/dezi_verde.png");
+	}
+	div.dezi-logo-div {
+		content: url("/assets/imgs/drawable-xhdpi/logo_dezi.png");
+	}
+}
+
+@media (min-width: map-get($grid-breakpoints, "lg")) {
+	div.dezi-fundo-div {
+		height: 40vh;
+		background-image: url("/assets/imgs/drawable-xxhdpi/dezi_verde.png");
+	}
+	div.dezi-logo-div {
+		content: url("/assets/imgs/drawable-xxhdpi/logo_dezi.png");
+	}
+}
+
+@media (min-width: map-get($grid-breakpoints, "xl") ) {
+	div.dezi-fundo-div {
+		height: 60vh;
+		background-image: url("/assets/imgs/drawable-xxxhdpi/dezi_verde.png");
+	}
+	div.dezi-logo-div {
+		content: url("/assets/imgs/drawable-xxxhdpi/logo_dezi.png");
+	}
+}
+
+@media (min-width: map-get($grid-breakpoints, "xl") * 2 ) {
+	div.dezi-fundo-div {
+		height: 80vh;
+		background-image: url("/assets/imgs/drawable-xxxhdpi/dezi_verde.png");
+	}
+}

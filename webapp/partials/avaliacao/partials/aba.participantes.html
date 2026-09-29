@@ -1,0 +1,271 @@
+<md-content class="content" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="column" class="margin-default">
+		<div class="white-bg style_card">
+			<div flex layout="column">
+				<div class="pl-8 border-bottom h-50" layout="row">
+					<div id="title__participantes" flex layout="row" layout-align="start center">
+						<h2 class="md-accent-fg" translate>PARTICIPANTES.SELECIONEABAIXOPESSOASAVALIADAS</h2>
+					</div>
+					<div layout-align="end center">
+						<md-button
+							id="validar"
+							ng-click="$ctrl.importarPares()"
+							ng-if="$ctrl.model.avaliacao.pares"
+							class="md-fab md-mini"
+							aria-label="Validar"
+							translate
+							translate-attr-aria-label="RESUMO.VALIDAR"
+						>
+							<md-icon md-font-icon="icon-upload"></md-icon>
+							<md-tooltip md-direction="top" class="h4">Importar Pares</md-tooltip>
+						</md-button>
+					</div>
+				</div>
+
+				<div class="pl-8 border-bottom" layout="row" flex layout-xs="column" layout-sm="column">
+
+					<div layout="row" flex layout-align="start center">
+						<md-switch
+							id="exibir_tabela"
+							aria-label="Exibir somente selecionados"
+							ng-model="$ctrl.somenteSelecionados"
+							ng-change="$ctrl.onChangeSelecionados()"
+							class="md-primary"
+						>
+							{{'PARTICIPANTES.EXIBIRSELECIONADOS' | translate}}
+						</md-switch>
+					</div>
+					<div
+						layout="row"
+						layout-xs="column"
+						flex layout-align="end center"
+						layout-align-sm="start center"
+						layout-align-xs="start center"
+						class="pr-8"
+					>
+						<div class="pl-8 mr-10">
+							<md-icon md-font-icon="icon-brightness-1" class="yellow-300-fg"></md-icon>
+							&nbsp;<span class="f14">Selecionado e não liberado</span>
+						</div>
+						<div>
+							<md-icon md-font-icon="icon-brightness-1" class="grey-400-fg"></md-icon>
+							&nbsp;<span class="f14">Selecionado e liberado </span>
+						</div>
+					</div>
+				</div>
+
+				<div id="participantes">
+					<md-table-container>
+						<table md-table md-progress="$ctrl.promise" id="tabela_participantes">
+							<thead ng-if="!options.decapitate" md-head md-order="$ctrl.participanteTableControl.order" md-on-reorder="logOrder">
+							<tr md-row class="grey-200-bg h-30">
+								<th md-column colspan="6">
+									<div flex layout="row" class="h-60 mt-20">
+										<md-autocomplete
+											id="autocomplete_colaborador"
+											name="autocompleteColaborador"
+											ng-model="selectedFilter.nome"
+											md-input-name="autocompleteColaborador"
+											md-selected-item="selectedFilter.nome"
+											md-no-cache="false"
+											md-selected-item-change="$ctrl.selectedItemColaboradorChange(item)"
+											md-search-text-change="$ctrl.changeSearchTextColaborador(searchTextColaborador)"
+											md-items="item in $ctrl.querySearchColaborador(searchTextColaborador)"
+											md-search-text="searchTextColaborador"
+											md-min-length="2"
+											md-item-text="item.nome"
+											md-floating-label="Colaborador"
+											md-menu-class="autocomplete-custom-template"
+											md-delay="250"
+											md-input-id="input_colaborador" flex="{{flex}}"
+										>
+											<md-item-template>
+												  <span class="item-metadata">
+													  <span class="item-metastat">
+														<strong>NOME: </strong><span>{{item.nome}} </span>
+													  </span>
+												  </span>
+											</md-item-template>
+
+											<div
+												ng-messages="basicForm.autocompleteColaborador.$error"
+												ng-show="basicForm.autocompleteColaborador.$touched"
+												role="alert"
+											>
+												<div ng-message="minlength" id="msg_min_colaborador">O nome informado não é suficiente.</div>
+												<div ng-message="maxlength" id="msg_max_colaborador">O nome informado é muito longo.</div>
+											</div>
+										</md-autocomplete>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label>Setor</label>
+											<md-select
+												id="id_departamento"
+												name="departamento"
+												ng-model="$ctrl.selectedFilter.departamento"
+												ng-change="$ctrl.changeFilter()"
+											>
+												<md-option ng-repeat="item in $ctrl.model.setores" ng-value="{{item}}" value="{{item}}">{{item.nome}}
+												</md-option>
+											</md-select>
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label>Cargo</label>
+											<md-select
+												id="id_cargo"
+												name="cargo"
+												ng-model="$ctrl.selectedFilter.cargo"
+												ng-change="$ctrl.changeFilter()"
+											>
+												<md-option ng-repeat="item in $ctrl.model.cargos" ng-value="{{item}}" value="{{item}}">
+													{{item.nome}}
+												</md-option>
+											</md-select>
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label for="data-admissao-de">Admissão a partir de</label>
+											<input
+												id="data-admissao-de"
+												name="admissao-de"
+												tt-date-picker
+												locale="user.configuracao.linguagem"
+												type="text"
+												ng-model="selectedFilter.admissao"
+												ng-change="$ctrl.changeFilter()"
+											>
+										</md-input-container>
+
+										<span class="width-20"></span>
+
+										<md-input-container flex>
+											<label id="id_situacao_funcional">{{'FUNCIONARIO.SITUACAO3' | translate}}</label>
+											<md-select
+												id="id_situacao_funcional_edit"
+												name="situacao_funcional_edit"
+												ng-model="$ctrl.selectedFilter.situacaoFuncional"
+												placeholder="{{'FUNCIONARIO.SITUACAO3' | translate}}"
+												ng-change="$ctrl.changeFilter()"
+											>
+												<md-option ng-repeat="item in $ctrl.situacaoFuncionalList" ng-value="item">
+													{{'SITUACAO.' + item | translate}}
+												</md-option>
+											</md-select>
+										</md-input-container>
+									</div>
+								</th>
+							</tr>
+							<tr md-row class="grey-200-bg">
+								<th class="secondary-text" width="3%">
+									<div class="table-header ml-25" style="margin-top: 14px">
+										<md-checkbox
+											ng-model="$ctrl.isAllAvaliadosSelected"
+											ng-change="$ctrl.toggleAllFuncionarios()"
+											class="font-size-5 mb-negativo--15"
+											aria-label="Checkbox tabela"
+											ng-disabled="object.status == 'CONCLUIDA'"
+										>
+										</md-checkbox>
+									</div>
+								</th>
+								<th md-column md-order-by="nome">
+									<span>{{'PARTICIPANTES.COLABORADOR' | translate}}</span>
+								</th>
+								<th md-column md-order-by="cargo.nome"><span>{{'PARTICIPANTES.CARGO' | translate}}</span>
+								</th>
+								<th md-column md-order-by="departamento.nome"><span>{{'PARTICIPANTES.DEPARTAMENTO' | translate}}</span>
+								</th>
+								<th md-column md-order-by="dataCargo" width="10%"><span>{{'PARTICIPANTES.DATACARGO' | translate}}</span>
+								</th>
+								<th md-column md-order-by="situacao" width="10%"><span>{{'PARTICIPANTES.SITUACAOFUNCIONAL' | translate}}</span>
+								</th>
+							</tr>
+							</thead>
+							<tbody md-body>
+							<tr
+								md-row
+								ng-repeat="item in ($ctrl.filteredList  = ($ctrl.model.funcionarios |
+									filtroAbaAvaliados : $ctrl.filtro_participantes : $ctrl.somenteSelecionados) |
+									orderBy: $ctrl.participanteTableControl.order |
+									limitTo: $ctrl.participanteTableControl.limit : ($ctrl.participanteTableControl.page -1) * $ctrl.participanteTableControl.limit)"
+								ng-class="{'yellow-300-bg': item.selected,
+									'grey-400-bg': item.selected && item.selectedOld && object.status != 'AG_LIBERACAO' }"
+								class="text-left"
+							>
+								<td md-cell style="padding-bottom: 0px; padding-top: 0px;">
+									<md-checkbox
+										ng-model="item.selected"
+										class="font-size-14"
+										ng-change="$ctrl.onChangeList($event, item)"
+										aria-label="Checkbox tabela"
+										ng-disabled="object.status == 'CONCLUIDA'"
+									>
+									</md-checkbox>
+								</td>
+								<td md-cell><b>{{ ::item.nome }}</b>
+								</td>
+								<td md-cell>{{ ::item.cargo.nome }}</td>
+								<td md-cell>{{ ::item.departamento.nome }}</td>
+								<td md-cell>{{ ::item.dataCargo | date: 'dd/MM/yyyy' }}</td>
+								<td md-cell style="text-align:left;">
+							<span
+								ng-class="{'green-bg': item.situacaoFuncional == 'EM_ATIVIDADE',
+									'orange-bg ml-15': item.situacaoFuncional == 'RECESSO',
+									'red-bg': item.situacaoFuncional != 'EM_ATIVIDADE'}"
+								class="estilo_situacao"
+							>
+								<b>{{ 'SITUACAO.' +item.situacaoFuncional | translate}}</b>
+								<md-tooltip ng-if="item.situacaoFuncional == 'RECESSO'">
+									<span class="h4">
+										{{'PARTICIPANTES.INICIO' | translate}}: {{ ::item.dataInicioRecesso| date: 'dd/MM/yyyy'}}
+										- {{'PARTICIPANTES.FIM' | translate}}: {{ ::item.dataFimRecesso| date: 'dd/MM/yyyy'}}
+									</span>
+							</md-tooltip>
+							</span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+					</md-table-container>
+					<md-table-pagination
+						md-limit-options="[5, 10, 15, 20, 25, 30, 35, 40]"
+						md-page="$ctrl.participanteTableControl.page"
+						md-total="{{($ctrl.model.funcionarios | filtroAbaAvaliados : $ctrl.filtro_participantes : $ctrl.somenteSelecionados).length}}"
+						md-limit="$ctrl.participanteTableControl.limit"
+						md-limit-select md-label="{{'PREENCHIMENTO.LBLPAGINA' | translate}}"
+					>
+					</md-table-pagination>
+				</div>
+			</div>
+			<div layout="row" class="content border-top" layout-align="end center" layout-align-xs="center center">
+				<md-button
+					id="cancelar"
+					ng-click="$ctrl.back()"
+					class="md-raised text-capitalize"
+					aria-label="Cancelar"
+					translate-attr-aria-label="PARTICIPANTES.BTNCANCELAR"
+				>
+					{{'PARTICIPANTES.BTNCANCELAR' | translate}}
+				</md-button>
+				<md-button
+					id="validar"
+					ng-click="$ctrl.validar($event)"
+					class="md-raised md-accent text-capitalize"
+					aria-label="Validar"
+					translate translate-attr-aria-label="RESUMO.VALIDAR"
+				>
+					{{'RESUMO.VALIDAR' | translate}}
+					<md-tooltip md-direction="top" class="h4">Validar Avaliados</md-tooltip>
+				</md-button>
+			</div>
+		</div>
+	</div>
+</md-content>

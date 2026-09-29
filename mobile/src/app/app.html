@@ -1,0 +1,46 @@
+<ion-menu [content]="content">
+	<ion-header class="menu-header white">
+		<div class="menu-div">
+			<img [src]="imagemSidebar" />
+			<p class="menu-title">{{ tituloSidebar }}</p>
+			<p class="menu-subtitle">{{ subtituloSidebar }}</p>
+		</div>
+		<span class="separator"></span>
+	</ion-header>
+
+	<ion-content class="menu">
+		<ion-list no-lines>
+			<div *ngFor="let p of menu">
+				<div *ngIf="shouldRenderItem(p)">
+					<button menuClose ion-item (click)="openPage(p)"
+						[ngClass]="p.title === activeMenu ? 'selected' : ''">
+						<ion-icon *ngIf="p.icon" [name]="p.icon"></ion-icon>
+						{{ "app.menu." + p.title | translate }}
+					</button>
+				</div>
+			</div>
+		</ion-list>
+		<span class="separator"></span>
+		<ion-list no-lines>
+			<div *ngFor="let p of submenu">
+				<div *ngIf="shouldRenderItem(p)">
+					<button menuClose ion-item (click)="openPage(p)"
+						[ngClass]="p.title === activeMenu ? 'selected' : ''">
+						<ion-icon *ngIf="p.icon" [name]="p.icon"></ion-icon>
+						{{ "app.menu." + p.title | translate }}
+					</button>
+				</div>
+			</div>
+		</ion-list>
+	</ion-content>
+
+	<ion-footer class="menu-footer" padding>
+		<div class="menu-div">
+			<span>Dezi v{{ version }} ({{ environment }})</span>
+			<ion-icon name="build" (click)="showVersionInfo()" float-right></ion-icon>
+		</div>
+	</ion-footer>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

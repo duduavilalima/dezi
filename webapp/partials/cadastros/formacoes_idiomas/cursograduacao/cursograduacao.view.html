@@ -1,0 +1,101 @@
+<div id="dashboard" class="page-layout simple fullwidth">
+	<div flex>
+		<div layout="row" class="content white-bg">
+			<div flex layout-align="start center">
+				<md-button
+					ng-click="$ctrl.back()"
+					class="m-0 ph-20 pv-10 md-button md-primary md-accent-fg text-capitalize"
+					translate="GRADUACAO.VOLTAR"
+				>
+					<md-icon class="md-accent-fg" md-font-icon="icon-arrow-left-bold-circle-outline" />
+				</md-button>
+			</div>
+		</div>
+
+		<div
+			flex
+			layout="row"
+			layout-xs="column"
+			flex-xs="100"
+			flex-sm="100"
+			class="margin-default div-cards"
+		>
+			<div layout="column" flex="100" flex-xs="100" flex-sm="100">
+				<div flex class="white-bg style_card" flex-xs="100" flex-sm="100">
+					<div layout="row" class="content h50" layout-xs="column">
+						<div id="title_descricao" flex class="md-accent-fg pl-16 pr-16">
+							<h1 class="mt-10" translate>GRADUACAO.DESCRICAO</h1>
+						</div>
+						<div layout-align="end center" layout-align-xs="center center" layout="row">
+							<!-- <md-switch
+								ng-model="$ctrl.cursoGraduacao.situacao"
+								aria-label="Botão situação"
+								ng-if="$ctrl.canEdit"
+								ng-change="onChangeSituacao($ctrl.cursoGraduacao.situacao)"
+							>
+								{{'SITUACAO.' + $ctrl.cursoGraduacao.situacao | translate }}
+							</md-switch>
+ -->
+							<switch-dialog-input
+							name="situacao"
+							label="GRADUACAO.CURSO"
+							situacao="$ctrl.cursoGraduacao.situacao"
+							value="$ctrl.cursoGraduacao.situacao === 'ATIVA'? true : false"
+							on-change="$ctrl.handleChange(name, value)"
+						/>
+							<md-button
+								ng-click="$ctrl.displayEdit()"
+								ng-if="$ctrl.canEdit"
+								class="md-fab md-mini md-accent-bg"
+								translate
+							>
+								<md-icon md-font-icon="icon-pencil" class="white-fg"></md-icon>
+								<md-tooltip class="h4">{{ 'GRADUACAO.EDITAR' | translate }}</md-tooltip>
+							</md-button>
+							<md-button
+								ng-click="detalhes($event)"
+								ng-if="$ctrl.canEdit"
+								class="md-icon-button"
+								translate
+							>
+								<md-icon md-font-icon="icon-clipboard-text" class="md-accent-fg"></md-icon>
+								<md-tooltip class="h4">{{ 'DIALOG.DETALHES' | translate }}</md-tooltip>
+							</md-button>
+						</div>
+					</div>
+
+					<md-divider></md-divider>
+
+					<div class="content mt-16" ng-form="$ctrl.form">
+						<div layout="row" layout-xs="column" layout-wrap="wrap" layout-padding="8">
+							<labeled-input
+								name="descricao"
+								flex="40"
+								label="GRADUACAO.CURSO"
+								value="$ctrl.cursoGraduacao.nome"
+								options="{ disabled: true }"
+							/>
+
+							<labeled-input
+								flex="30"
+								name="requer"
+								label="GRADUACAO.REQUER"
+								value="$ctrl.cursoGraduacao.preencheOutrosCursos ? 'Sim' : 'Não'"
+								options="{ disabled: true, translate: false }"
+							/>
+
+							<labeled-input
+								flex="30"
+								name="situacao"
+								label="GRADUACAO.SITUACAO"
+								value="'SITUACAO.' + $ctrl.cursoGraduacao.situacao"
+								options="{ disabled: true, translate: true }"
+							/>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

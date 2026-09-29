@@ -1,0 +1,90 @@
+include:
+  - project: 'avd/deploy'
+    ref: master
+    file: '/ci/gitlab-ci.common.yml'
+
+variables:
+  DEZI_SERVICE_VARNAME: MOBILE
+  DEZI_SERVICE_NAME: mobile
+
+.artifact-paths: &artifact-paths
+  paths:
+    - build/target/*.txz
+
+.cache-paths: &cache-paths
+  paths:
+    - node_modules
+
+build-staging-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-production-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+build-prerelease-hotfix-sources:
+  artifacts:
+    <<: *artifact-paths
+  cache:
+    <<: *cache-paths
+
+.pack-base: &pack-base
+  stage: pack
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - dist/.home
+      - node_modules
+      - platforms
+      - plugins
+      - www
+  variables:
+    DEZI_ENVIRONMENTS: staging staging-hotfix production demo
+  script:
+    - docker login -u ${NEXUS_USER} -p ${NEXUS_PASSWORD} docker.fasolti.com.br
+    - cat "${DEZI_MOBILE_ANDROID_KEYSTORE_BASE64}" | base64 -d > build/dezi_mobile.jks
+    - ./build/build-apps.sh ${DEZI_ENVIRONMENTS}
+    - rm -f build/dezi_mobile.jks
+
+pack-unstable:
+  <<: *pack-base
+  extends: .only-staging-phases
+  artifacts:
+    paths:
+      - dist/apps/**/*.apk
+    expire_in: 15 days
+
+pack-prerelease:
+  <<: *pack-base
+  extends: .only-prerelease-phases
+  artifacts:
+    paths:
+      - dist/apps/**/*.apk
+    expire_in: 30 days
+
+pack-prerelease-hotfix:
+  <<: *pack-base
+  extends: .only-prerelease-hotfix-phases
+  artifacts:
+    paths:
+      - dist/apps/**/*.apk
+    expire_in: 30 days
+
+pack-stable:
+  <<: *pack-base
+  extends: .only-production-phases
+  artifacts:
+    paths:
+      - dist/apps/**/*.apk
+    expire_in: 3 months

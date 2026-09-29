@@ -1,0 +1,45 @@
+<md-input-container
+	fill-width
+	ng-form="{{ $ctrl.name }}"
+	ng-keyup="$ctrl._onReset($event)"
+>
+	<label for="input">
+		<span translate ng-if="$ctrl.translateLabel">{{ $ctrl.label }}</span>
+		<span ng-if="!$ctrl.translateLabel">{{ $ctrl.label }}</span>
+	</label>
+
+	<md-select
+		name="input"
+		ng-model="$ctrl.value"
+		ng-change="$ctrl._onChange($ctrl.value)"
+		ng-disabled="$ctrl.readOnly"
+		ng-required="$ctrl.required"
+	>
+		<md-option
+			ng-if="$ctrl.nullable || $ctrl.value === undefined || $ctrl.value === null"
+			ng-value="undefined"
+			ng-disabled="!$ctrl.nullable"
+			md-option-empty="true"
+		>
+			<!-- TODO Traduzir -->
+			Selecione...
+		</md-option>
+		<md-option
+			ng-repeat="option in $ctrl.list"
+			ng-value="option[$ctrl.key]"
+		>
+			<span ng-if="!$ctrl.translate">
+				{{:: option[$ctrl.optionLabelKey || $ctrl.key] }}
+			</span>
+			<span ng-if="$ctrl.translate">
+				{{:: option[$ctrl.optionLabelKey || $ctrl.key] | translate }}
+			</span>
+		</md-option>
+	</md-select>
+
+	<div ng-messages="$ctrl._getFormErrors()">
+		<div ng-repeat="(message, value) in $ctrl.messages" ng-message="{{:: message }}">
+			<span translate translate-values="$ctrl.translateValues">{{ value }}</span>
+		</div>
+	</div>
+</md-input-container>

@@ -1,0 +1,86 @@
+<md-dialog aria-label="Mensagem" style="width: 1160px;">
+	<form name="basicForm" novalidate>
+		<md-toolbar class="cor_title white-fg">
+			<div class="md-toolbar-tools">
+				<h2>{{ title }}</h2>
+				<span flex></span>
+				<md-button id="bt_fechar_popup_confirmacao_confirmar" class="md-icon-button" ng-click="cancel()"
+						   style="padding: 0px 0px 0px 0px;">
+					<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+							 aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content style="padding: 0px 0px 0px 0px;padding: 0px;" ng-show="object != null">
+			<div class="md-dialog-content"
+				 style="padding: 0px 0px 0px 0px;padding: 0px;background-color: rgb(245,245,245);">
+
+				<!-- WIDGET GROUP -->
+				<div class="widget-group" layout="row" flex="100" layout-wrap>
+
+					<ms-widget flippable="false" layout="row" flex="100">
+
+						<!-- Front -->
+						<ms-widget-front class="p-16 white-bg">
+
+							<md-input-container flex="100" style="margin-bottom: -20px;">
+								<label id="lbl_de" for="de">De</label>
+								<input id="de" name="de" type="text" ng-model="object.usuarioEnvio.nome" ng-disabled="true">
+							</md-input-container>
+
+                            <md-input-container flex style="margin-bottom: -20px;">
+                                <label id="lbl_para" for="de">Para</label>
+                                <input id="para" name="para" type="text" ng-model="object.usuarioDestino.nome" ng-disabled="true">
+                            </md-input-container>
+
+                            <div flex style="margin-top: 15px;">
+                                <md-checkbox ng-model="object.envioEmail" class="font-size-14" aria-label="Envio por email">Notificar via e-mail</md-checkbox>
+                            </div>
+
+							<md-input-container flex="100">
+								<label id="lbl_assunto" for="assunto">Título</label>
+								<input id="assunto" name="assunto" type="text" ng-model="object.titulo" ng-required="true" ng-maxlength="255" md-maxlength="255" max="255">
+								<div ng-messages="basicForm.assunto.$error" ng-show="basicForm.assunto.$touched">
+									<div ng-message="required">
+										<span>Campo obrigatório.</span>
+									</div>
+									<div ng-message="maxlength">
+										<span>Máximo de 255 caracteres.</span>
+									</div>
+								</div>
+							</md-input-container>
+							<div flex="100" style="margin-top: -40px;">
+								<div id="title_participantes_msg" flex class="md-accent-fg"><h1>Mensagem *</h1></div>
+
+								<!--Plugin de formatação da mensagem-->
+								<text-angular ta-disabled="object.titulo == null" id="mensagem" name="mensagem" style="color: black; border: 2px solid #9EB44D !important;" ng-required="true" ng-model="object.texto" ng-style="{border: basicForm.mensagem.$error.required && basicForm.mensagem.$touched ? '2px solid red' : '2px solid #9EB44D'}"></text-angular>
+								<div ng-messages="basicForm.mensagem.$error" ng-show="basicForm.mensagem.$touched">
+									<div style="color: red" ng-message="required">
+										<span>Campo obrigatório.</span>
+									</div>
+								</div>
+							</div>
+
+						</ms-widget-front>
+						<!-- / Front -->
+
+					</ms-widget>
+
+				</div>
+			</div>
+
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row" class="white-bg">
+			<div flex layout-align="start center">
+				<md-button aria-label="cancelar" style="float: left" class="md-raised md-default  text-capitalize" ng-click="cancel()">Cancelar</md-button>
+			</div>
+			<div flex layout-align="center center">
+			</div>
+			<div flex layout-align="end center">
+				<md-button aria-label="confirmar" ng-disabled="basicForm.$invalid || peloMenosUmSelecionado()" style="float: right" class="md-raised md-accent text-capitalize"ng-click="confirmar()">Enviar</md-button>
+			</div>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

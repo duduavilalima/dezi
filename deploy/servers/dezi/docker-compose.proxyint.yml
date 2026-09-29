@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  proxy:
+    image: docker.fasolti.com.br/haproxy:${HAPROXY_VERSION}
+    restart: unless-stopped
+    volumes:
+      - ../../conf/proxy:/etc/haproxy/conf.d
+      - proxylogs:/var/log
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
+    depends_on:
+      - rest
+      - web
+
+volumes:
+  proxylogs:

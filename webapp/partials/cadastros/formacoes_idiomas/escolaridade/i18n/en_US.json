@@ -1,0 +1,26 @@
+{
+  "ESCOLARIDADES":{
+    "CADASTOS":"Data",
+    "FORMACAO":"Education and languages",
+    "ESCOLARIDADE": "Schooling",
+    "PESQUISAR":"Search",
+    "BTNNOVO":"New Schooling",
+    "SITUACAO": "Situation",
+    "REQUER": "Type of course is required",
+    "REQUEROUTRO": "Other courses is required",
+    "CAMPOOBRIGATORIO": "Required field",
+    "MAXIMO": "Maximum 35 characters",
+    "MINIMO": "Minimum 2 characters",
+    "ESCOLARIDADE2": "Schooling",
+    "CRIADOR": "Author",
+    "DATACRIACAO": "Creation Date",
+    "ATUALIZADOR": "Updater",
+    "DATAATUALIZA": "Update Date",
+    "SALVAR": "Save",
+    "VOLTAR": "Back",
+    "EDITAR": "Edit",
+    "CANCELAR": "Cancel",
+    "ATIVAR": "Activate",
+    "INATIVAR": "Inactivate"
+  }
+}

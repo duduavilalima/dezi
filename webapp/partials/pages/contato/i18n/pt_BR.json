@@ -1,0 +1,21 @@
+{
+  "CONTATO": {
+    "TITULO":"Contato",
+    "VALIDATION": "Campo obrigatório"
+  },
+  "CHAMADO":{
+    "TITULO":"Abrir Chamado",
+    "ASSUNTO":"Assunto",
+    "CLASSIFICACAO":"Classificação",
+    "MENSAGEM":"Mensagem",
+    "CANCELAR":"Cancelar",
+    "ENVIAR":"Abrir chamado",
+    "SUCCESS":"Chamado aberto com sucesso!"
+  },
+  "CLASSIFICACAO": {
+    "DUVIDA":"Dúvida",
+    "CRITICA":"Crítica",
+    "SUGESTAO":"Sugestão",
+    "RECLAMACAO":"Reclamação"
+  }
+}

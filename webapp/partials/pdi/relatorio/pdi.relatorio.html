@@ -1,0 +1,262 @@
+<div id="campanhas" class="page-layout simple fullwidth doc-page">
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between">
+		<div layout="column" layout-align="center start">
+			<div class="title"><span translate>PDI.MENU_RELATORIO</span></div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" layout="column" class="p-0 mt-50">
+		<div class="white-bg style_card m-8">
+			<div layout="row" layout-wrap="" class="p-15 mt-10" style="align-items: center">
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_colaborador" for="id_colaborador">{{'FUNCIONARIO.FUNCIONARIO' | translate}}</label>
+						<md-select id="id_colaborador" name="colaborador" ng-model="$ctrl.selectedFilter.avaliado">
+						<md-select-header>
+							<input id="searchTermColaborador" ng-model="searchTermColaborador" type="search" ng-keydown="onSearchChange($event)" placeholder="Pesquisar colaborador...">
+						</md-select-header>
+						<md-optgroup label="Colaborador">
+							<md-option ng-repeat="item in $ctrl.comboFuncionario | orderBy:'nome' | filter:{nome: searchTermColaborador}" ng-value="item">{{item.nome}}</md-option>
+						</md-optgroup>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_setor" for="id_setor">{{'FUNCIONARIO.DEPARTAMENTO' | translate}}</label>
+						<md-select id="id_setor" name="setor" ng-model="$ctrl.selectedFilter.departamento">
+							<md-select-header>
+								<input id="searchTermSetor" ng-model="searchTermSetor" type="search" ng-keydown="onSearchChange($event)" placeholder="Pesquisar Setor...">
+							</md-select-header>
+							<md-optgroup label="Setor">
+								<md-option ng-repeat="item in $ctrl.comboSetor | orderBy:'nome' | filter:{nome: searchTermSetor}" ng-value="item">{{item.nome}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_cargo" for="id_cargo">{{'FUNCIONARIO.CARGO' | translate}}</label>
+						<md-select id="id_cargo" name="cargo" ng-model="$ctrl.selectedFilter.cargo">
+							<md-select-header>
+								<input id="searchTermCargo" ng-model="searchTermCargo" type="search" ng-keydown="onSearchChange($event)" placeholder="Pesquisar Cargo...">
+							</md-select-header>
+							<md-optgroup label="Cargo">
+								<md-option ng-repeat="item in $ctrl.comboCargo | orderBy:'nome' | filter:{nome: searchTermCargo}" ng-value="item">{{item.nome}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_competencia" for="id_competencia">{{'PDI.TEXT_COMP' | translate}}</label>
+						<md-select id="id_competencia" name="competencia" ng-model="$ctrl.selectedFilter.competencia">
+							<md-select-header>
+								<input id="searchTermCompetencia" ng-model="searchTermCompetencia" type="search" ng-keydown="onSearchChange($event)" placeholder="Pesquisar competência...">
+							</md-select-header>
+							<md-optgroup label="Competencia">
+								<md-option ng-repeat="item in $ctrl.comboCompetencia | orderBy:'nome' | filter:{nome: searchTermCompetencia}" ng-value="item">{{item.descricaoAbreviada}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+						<md-input-container flex="100" class="mr-10">
+								<label id="lbl_situacao" for="situacao">Situação</label>
+								<md-select id="situacao" name="situacao" ng-model="$ctrl.selectedFilter.situacao">
+									<md-option ng-repeat="item in $ctrl.comboSituacao" ng-value="item" value="{{item}}">
+										{{'SITUACAO.' + item | translate}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+				</div>
+
+				<div layout="row" flex-md="20" flex=20 layout-align="center center" class="content mt-10" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_campanha" for="campanha">Campanha</label>
+						<md-select id="campanha" name="campanha" ng-model="$ctrl.selectedFilter.campanha" ng-change="handleChangeCampanha()">
+							<md-option ng-repeat="item in $ctrl.comboCampanha" ng-value="item" value="{{item}}">
+								{{::item.descricao}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div layout="row" flex-md="20" flex=20 layout-align="center center" class="content mt-10" layout-xs="column">
+					<md-input-container flex="100" class="mr-10">
+						<label id="lbl_avaliacao" for="avaliacao">Avaliação</label>
+						<md-select id="avaliacao" name="avaliacao" ng-model="$ctrl.selectedFilter.avaliacao" ng-disabled="!$ctrl.selectedFilter.campanha.id">
+							<md-option ng-repeat="item in $ctrl.comboAvaliacao" ng-value="item" value="{{item}}">
+								{{::item.descricaoAbreviada}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container  flex="100" class="datePickerPDI" style="margin-top: 36px; padding-right: 10px;">
+						<label id="lbl_periodo_inicial" for="periodo_inicial">Período Inicial</label>
+						<md-datepicker
+							id="periodo_inicial"
+							name="periodo_inicial"
+							ng-model="$ctrl.selectedFilter.dataInicio"
+							md-open-on-focus
+							md-hide-icons="calendar"
+						></md-datepicker>
+						<div class="validation-messages" ng-messages="basicForm.periodo_inicial.$error">
+							<div ng-message="valid">O valor inserido não é uma data!</div>
+							<div ng-message="mindate">A data é muito cedo! </div>
+							<div ng-message="maxdate">A data é tarde demais!</div>
+						</div>
+					</md-input-container>
+				</div>
+				<div layout="row" flex=20 layout-align="center center" class="content" layout-xs="column">
+					<md-input-container  flex="100" class="datePickerPDI" style="margin-top: 36px; padding-right: 10px">
+						<label id="lbl_periodo_final" for="periodo_final">Período Final</label>
+						<md-datepicker
+							id="periodo_final"
+							name="periodo_final"
+							ng-model="$ctrl.selectedFilter.dataFim"
+							md-min-date="$ctrl.selectedFilter.dataInicio"
+							md-open-on-focus
+							md-hide-icons="calendar"
+						></md-datepicker>
+						<div class="validation-messages" ng-messages="basicForm.periodo_final.$error">
+							<div ng-message="valid">O valor inserido não é uma data!</div>
+							<div ng-message="mindate">A data é muito cedo! </div>
+							<div ng-message="maxdate">A data é tarde demais!</div>
+						</div>
+					</md-input-container>
+				</div>
+				<div layout="row" flex-md="100" flex=20 layout-align="end center" class="content" layout-xs="column">
+					<div layout-align="end center" layout-align-xs="center center" layout="row">
+						<md-button ng-click="$ctrl.clearFilter()" class="md-button md-primary md-accent-fg text-capitalize">
+							<md-icon md-font-icon="icon-broom" class="md-accent-fg"/>
+							<span>Limpar</span>
+							<md-tooltip class="h4"><span>Limpar Formulário</span></md-tooltip>
+						</md-button>
+					</div>
+					<div layout-align="end center" layout-align-xs="center center" layout="row" ng-if="$ctrl.selectedIndex != 0">
+						<md-button ng-click="$ctrl.filtrarRelatorio()" class="md-button md-primary md-accent-fg text-capitalize">
+							<md-icon md-font-icon="icon-file" class="md-accent-fg"/>
+							<span translate>PDI.BOTAO_RELATORIO</span>
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" ng-if="$ctrl.acoesPDI.length === 0" layout="column" class="p-8">
+		<div class="text-center">
+			Não há ações para PDI para esta pesquisa.
+		</div>
+	</div>
+	<div flex-xs flex-gt-xs="100" ng-if="$ctrl.acoesPDI.length > 0" layout="column" class="p-8">
+			<div class="white-bg style_card m-8">
+				<md-table-container class="table_pesquisa">
+					<table id="table-list" md-table md-progress="$ctrl.acoesPDI">
+						<md-progress-linear ng-if="true" ng-hide="!$ctrl.isLoading" md-mode="indeterminate"></md-progress-linear>
+						<thead fix-head md-head md-order="$ctrl.query.order">
+							<tr md-row class="grey-200-bg">
+								<th class="secondary-text" width="3%">
+									<div class="table-header ml-25" style="margin-top: 14px">
+										<md-checkbox
+											ng-model="$ctrl.isAllPDISelected"
+											ng-change="$ctrl.toggleAllPDI()"
+											class="font-size-5 mb-negativo--15"
+											aria-label="Checkbox tabela"
+										>
+										</md-checkbox>
+									</div>
+								</th>
+								<th md-column class="text-center" width="20%">
+									<span class="column-title" translate>PDI.TEXT_ACAODEV</span>
+								</th>
+								<th md-column class="text-center" width="20%">
+									<span class="column-title" translate>PDI.COLABORADOR</span>
+								</th>
+								<th md-column class="text-center" width="20%">
+									<span class="column-title" translate>PDI.SETOR</span>
+								</th>
+								<th md-column class="text-center" width="20%">
+									<span class="column-title" translate>PDI.CARGO</span>
+								</th>
+								<th md-column class="text-center" width="10%">
+									<span class="column-title" translate>COMPETENCIA.COMPETENCIA</span>
+								</th>
+								<th md-column class="text-center" width="3%">
+									<span class="column-title">Período inicial</span>
+								</th>
+								<th md-column class="text-center" width="3%">
+									<span class="column-title">Período final</span>
+								</th>
+								<th md-column class="text-center" width="2%">
+									<span class="column-title">Situação</span>
+								</th>
+							<!-- 	<th md-column class="text-center" width="2%">
+									<span class="column-title">Opções</span>
+								</th> -->
+							</tr>
+						</thead>
+
+						<tbody md-body>
+							<tr
+								md-row
+								ng-repeat="item in $ctrl.acoesPDI
+								| orderBy: $ctrl.tableControl.order | limitTo: $ctrl.tableControl.limit : ($ctrl.tableControl.page -1) * $ctrl.tableControl.limit"
+								class="text-left">
+								<td>
+									<div class="table-header ml-25" style="margin-top: 14px">
+										<md-checkbox
+											ng-model="item.isSelected"
+											ng-change="$ctrl.handleChangeSelected()"
+											class="font-size-5 mb-negativo--15"
+											aria-label="Checkbox tabela"
+										>
+										</md-checkbox>
+									</div>
+								</td>
+								<td md-cell class="text-center">{{ ::item.acaoParaDesenvolvimento }}</td>
+								<td md-cell class="text-center">{{ ::item.funcionario.nome }}</td>
+								<td md-cell class="text-center">{{ ::item.funcionario.departamento.nome }}</td>
+								<td md-cell class="text-center">{{ ::item.funcionario.cargo.nome }}</td>
+								<td md-cell class="text-center">
+									<span class="competenciasPDI" ng-repeat="acaoCompetencia in item.pdiAcaoCompetencias">{{ ::acaoCompetencia.competencia.descricaoAbreviada }}</span>
+								</td>
+								<td md-cell class="text-center">{{ ::item.dataInicio | date: 'dd/MM/yyyy' }}</td>
+								<td md-cell class="text-center">{{ ::item.dataFim | date: 'dd/MM/yyyy' }}</td>
+								<td md-cell class="text-center">{{'SITUACAO.' + item.situacao | translate}}</td>
+								<!-- <td md-cell class="text-center">
+									<md-button ng-click="$ctrl.exportarRelatorio(item)">
+										<md-icon style="color: black" md-font-icon="icon-pencil"/>
+										<md-tooltip md-direction="bottom">Exportar ação</md-tooltip>
+									</md-button>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+				<md-table-pagination
+				md-limit-options="[5, 10, 15, 20, 25, 30, 35, 40]"
+				md-page="$ctrl.tableControl.page"
+				md-total="{{$ctrl.acoesPDI.length}}"
+				md-limit="$ctrl.tableControl.limit"
+				md-limit-select md-label="{{'CAMPANHALISTAR.LBLPAGINA' | translate}}"
+			>
+			</md-table-pagination>
+			<div layout="row" class="content border-top" layout-align="end center" layout-align-xs="center center">
+					<md-button
+						id="validar"
+						ng-click="$ctrl.exportarRelatorio()"
+						class="md-raised md-accent text-capitalize"
+						aria-label="Validar"
+						translate translate-attr-aria-label="PDI.EXPORTAR_ACOES"
+					>
+						{{'PDI.EXPORTAR_ACOES' | translate}}
+						<md-tooltip md-direction="top" class="h4">Exportar Ações</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+
+		</div>
+
+</div>

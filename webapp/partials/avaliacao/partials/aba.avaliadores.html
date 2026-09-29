@@ -1,0 +1,244 @@
+<md-content class="content avaliadores" style="background-color: rgb(245,245,245);">
+	<div flex-xs flex-gt-xs="100" layout="row" layout-xs="column" layout-sm="row" class="margin-default">
+		<!--ACOES IMPORTANTE-->
+		<div class="white-bg style_card" flex layout="column">
+			<div class="pl-8 border-bottom h50" layout="row" layout-xs="column">
+				<div id="title__participantes" flex layout-align="start center">
+					<h2 class="md-accent-fg mt-10">Avaliados</h2>
+				</div>
+
+				<div class="pesquisa_av filtros" layout="row" flex-sx="100">
+					<md-icon class="grey-fg" md-font-icon="icon-magnify"></md-icon>
+					<input id="id_pesquisa" placeholder="Filtrar..." type="text" name="input_search" ng-model="$ctrl.filtro_avaliadores">
+				</div>
+			</div>
+
+			<div id="avaliadores">
+				<md-table-container class="table_avaliador tabela-avaliadores">
+					<table md-table md-progress="$ctrl.promises.loadAvaliados">
+						<thead fix-head md-head md-order="ctrl.avaliadorTableControl.order">
+							<tr md-row class="grey-200-bg">
+								<th md-column md-order-by="nome">
+									<span>{{ 'AVALIADORES.PARTICIPANTE' | translate}}</span>
+								</th>
+								<th md-column md-order-by="cargo.nome" ng-if="!$ctrl.avaliado">
+									<span>{{ 'AVALIADORES.CARGO' | translate}}</span>
+								</th>
+								<th md-column width="10%" ng-if="!$ctrl.avaliado">
+									<span>{{ 'AVALIADORES.NUMEROAVALIADORES' | translate }}</span>
+								</th>
+								<th md-column md-order-by="situacaoFuncional" width="10%">
+									<span>{{ 'AVALIADORES.SITUACAOFUNCIONAL' | translate}}</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody md-body>
+							<tr md-row ng-if="!$ctrl.model.avaliados">
+								<td md-cell colspan="{{ !$ctrl.avaliado ? 2 : 4 }}">
+									<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+								</td>
+							</tr>
+							<tr md-row ng-if="$ctrl.model.avaliados && $ctrl.model.avaliados.length === 0">
+								<td md-cell colspan="{{ !$ctrl.avaliado ? 2 : 4 }}">
+									<span>{{ 'AVALIADORES.NAOHAAVALIADOS' | translate }}</span>
+								</td>
+							</tr>
+							<tr md-row
+								ng-if="$ctrl.model.avaliados && $ctrl.model.avaliados.length > 0"
+								ng-repeat="avaliado in $ctrl.model.avaliados | filtroAvaliadoresAba: $ctrl.filtro_avaliadores : $ctrl.trocaTitulo | orderBy: $ctrl.avaliadorTableControl.order track by $index"
+								ng-class="{'tr-avaliadores td-avaliadores': $ctrl.avaliado && $ctrl.avaliado.id == avaliado.id}"
+								ng-click="$ctrl.onMostrarAvaliadores(avaliado)">
+								<td md-cell>
+									<a href ng-click="$ctrl.onMostrarAvaliadores(avaliado)">
+										<b>{{ avaliado.nome }}</b>
+									</a>
+								</td>
+								<td md-cell ng-if="!$ctrl.avaliado">
+									{{ avaliado.cargo.nome }}
+								</td>
+								<td md-cell ng-if="!$ctrl.avaliado">
+									{{ avaliado.qtdAvaliadores? avaliado.qtdAvaliadores : '-' }}
+								</td>
+								<td md-cell style="text-align:left;">
+									<span
+										ng-class="{
+											'green-bg': avaliado && avaliado.situacaoFuncional == 'EM_ATIVIDADE',
+											'orange-bg ml-15': avaliado && avaliado.situacaoFuncional == 'RECESSO'
+										}"
+										class="estilo_situacao quebra_situacao"
+									>
+										<b>{{ 'SITUACAO.' + avaliado.situacaoFuncional | translate }}</b>
+										<md-tooltip ng-if="avaliado.situacaoFuncional == 'RECESSO'">
+											<span class="h4">
+												{{ 'AVALIADORES.INICIO' | translate }}
+												: {{ avaliado.dataInicioRecesso| date: 'dd/MM/yyyy' }}
+												- {{ 'AVALIADORES.FIM' | translate }}
+												: {{ avaliado.dataFimRecesso| date: 'dd/MM/yyyy' }}
+											</span>
+										</md-tooltip>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</div>
+			<footer layout="row " class="content border-top btn-footer" layout-align="end center">
+				<md-button
+					id="cancelar"
+					ng-click="$ctrl.back()"
+					class="md-raised text-capitalize"
+					aria-label="Cancelar"
+					translate-attr-aria-label="PARTICIPANTES.BTNCANCELAR"
+				>
+					{{ 'PARTICIPANTES.BTNCANCELAR' | translate }}
+				</md-button>
+				<md-button
+					id="validar"
+					ng-click="$ctrl.salvarAvaliadores()"
+					class="md-raised md-accent text-capitalize"
+					aria-label="Validar"
+					translate translate-attr-aria-label="RESUMO.VALIDAR"
+				>
+					{{ 'AVALIADORES.BTNSALVAR' | translate }}
+				</md-button>
+				<md-button
+					id="validar"
+					ng-click="$ctrl.salvarLiberar($event)"
+					class="md-raised md-accent text-none"
+					aria-label="Validar"
+					translate
+					translate-attr-aria-label="RESUMO.VALIDAR"
+					ng-disabled="$ctrl.model.avaliacao.pendencias.length > 0 || $ctrl.model.avaliacao.campanha.avEmLiberacao === true"
+				>
+					{{ 'AVALIADORES.BTNSALVARELIBERAR' | translate }}
+				</md-button>
+			</footer>
+		</div>
+		<div class="white-bg style_card" flex ng-if="$ctrl.avaliado">
+			<div class="border-bottom h50" layout="row">
+				<div id="title__avaliadores_de" flex layout-align="start center" class="pl-8">
+					<h2 class="md-accent-fg mt-10 name-long">Avaliadores de {{ $ctrl.avaliado.nome }}</h2>
+				</div>
+
+				<div layout-align="end center" class="mt-10 mr-10">
+					<md-button
+						class="md-icon-button md-accent"
+						aria-label="Esconder avaliadores"
+						ng-click="$ctrl.onOcultarAvaliadores()"
+						style="margin-top: -5px;"
+					>
+						<md-icon md-font-icon="icon-close"></md-icon>
+						<md-tooltip class="h4">{{ 'COMMON.LABELFECHAR' | translate }}</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+
+			<div class="p-8 border-bottom" layout="row" flex>
+				<div layout="row" flex layout-align="start center">
+					<div>
+						<md-icon md-font-icon="icon-brightness-1" class="gestor"></md-icon>
+						&nbsp;<span class="f14">{{ 'AVALIADORES.GESTOR' | translate }}</span>
+					</div>
+					<div class="ml-25">
+						<md-icon md-font-icon="icon-brightness-1" class="subordinado"></md-icon>
+						&nbsp;<span class="f14">{{ 'AVALIADORES.SUBORDINADO' | translate }}</span>
+					</div>
+					<div class="ml-25">
+						<md-icon md-font-icon="icon-brightness-1" class="par"></md-icon>
+						&nbsp;<span class="f14">{{ 'AVALIADORES.PAR' | translate }}</span>
+					</div>
+				</div>
+
+				<div layout="row" flex layout-align="end center">
+					<md-button
+						ng-click="$ctrl.openDialogAddAvaliadores($event, $ctrl.avaliado)"
+						ng-disabled="$ctrl.canAddAvaliadores"
+						class="md-icon-button md-accent"
+						aria-label="Adicionar participante"
+					>
+						<md-icon md-font-icon="icon-account-plus"></md-icon>
+						<md-tooltip class="h4">Adicionar Avaliador</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+			<div id="avaliadores_de">
+				<md-table-container class="table_avaliadores_de">
+					<table md-table md-progress="promise">
+						<thead md-head md-order="$ctrl.query.order">
+							<tr md-row class="grey-200-bg">
+								<th md-column><span>
+									<md-checkbox
+										ng-model="$ctrl.avaliado.isAllAvaliadoresSelected"
+										ng-change="$ctrl.onToggleAllAvaliadores($ctrl.avaliado)"
+										ng-disabled="$ctrl.canAddAvaliadores"
+										aria-label="Todos"
+									></md-checkbox>
+								</span>
+								<th md-column md-order-by="nome">
+									<span>{{ 'AVALIADORES.AVALIADOR' | translate }}</span>
+								</th>
+								<th md-column md-order-by="cargo.nome">
+									<span>{{ 'AVALIADORES.CARGO' | translate }}</span>
+								</th>
+								<th md-column md-order-by="situacaoFuncional" width="10%">
+									<span>{{ 'AVALIADORES.SITUACAOFUNCIONAL' | translate }}</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody md-body>
+							<tr md-row ng-show="$ctrl.avaliado == null || $ctrl.avaliado.avaliadores.length == 0">
+								<td md-cell colspan="5" class="text-center">
+									<b>Não há avaliadores selecionados</b>
+								</td>
+							</tr>
+							<tr md-row
+								ng-show="$ctrl.avaliado.avaliadores.length == 1 && $ctrl.avaliado.avaliadores[0].avaliador.id == $ctrl.avaliado.avaliadores[0].avaliado.id && !$ctrl.object.autoavaliacao && !$ctrl.object.gestores && !$ctrl.object.subordinados && $ctrl.object.pares">
+								<td md-cell colspan="5" class="text-center">
+									<b>Por favor, adicione um ou mais pares.</b>
+								</td>
+							</tr>
+							<tr md-row
+								ng-repeat="item in $ctrl.avaliado.avaliadores | orderBy: 'avaliador.nome'"
+								ng-if="!(item.avaliador.id == $ctrl.avaliado.id && !$ctrl.object.autoavaliacao && !$ctrl.object.gestores && !$ctrl.object.subordinados && $ctrl.object.pares)">
+								<td md-cell>
+									<md-checkbox
+										ng-model="item.selected"
+										ng-change="$ctrl.onChangeListAvaliadores($event, $ctrl.avaliado, item)"
+										ng-disabled="$ctrl.canAddAvaliadores || item.perfilAgente == 'AUTOAVALIACAO'"
+										aria-label="Selecionar"
+									></md-checkbox>
+								</td>
+								<td md-cell>
+									<md-icon
+										md-font-icon="icon-brightness-1 "
+										ng-class="{ 'gestor': item.perfilAgente=='GESTOR' , subordinado: item.perfilAgente=='SUBORDINADO' ,par: item.perfilAgente=='PARES' } "></md-icon>
+									<b>&nbsp;{{ item.avaliador.nome }}</b>
+								</td>
+								<td md-cell>
+									{{ item.avaliador.cargo.nome }}
+								</td>
+								<td md-cell style="text-align:left; ">
+									<span
+										ng-class="{ 'green-bg': item.avaliador.situacaoFuncional=='EM_ATIVIDADE' , 'orange-bg ml-15': item.avaliador.situacaoFuncional=='RECESSO' } "
+										class="estilo_situacao quebra_situacao ">
+										<b>{{ 'SITUACAO.' + item.avaliador.situacaoFuncional | translate }}</b>
+										<md-tooltip ng-if="item.avaliador.situacaoFuncional=='RECESSO' ">
+											<span class="h4 ">
+												{{ 'AVALIADORES.INICIO' | translate }}
+												: {{ ::item.avaliador.dataInicioRecesso | date: 'dd/MM/yyyy' }}
+												- {{ 'AVALIADORES.FIM' | translate }}
+												: {{ ::item.avaliador.dataFimRecesso | date: 'dd/MM/yyyy' }}
+											</span>
+										</md-tooltip>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</div>
+		</div>
+	</div>
+
+</md-content>

@@ -1,0 +1,66 @@
+<md-dialog id="dialog_titulo_popup_adicionar_acao" style="width:700px;" aria-label="Ações para PDI">
+	<md-toolbar class="md-accent">
+		<div class="md-toolbar-tools">
+			<h2>Ações para PDI</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="$dialog.cancelAcao()"
+				style="padding: 0px 0px 0px 0px;">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close"
+					aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="background-color: rgb(245,245,245);" class="p-16">
+		<form name="basicForm" novalidate>
+			<!-- WIDGET GROUP -->
+			<div class="widget-group" layout="row" flex="100">
+				<div flex-xs flex-gt-xs="100" flex="100" layout="row">
+					<div class="white-bg style_card" flex layout="column">
+						<div class="content">
+							<div layout="column" flex="100" class="pl-16 pt-8 pr-16">
+								<md-input-container class="mt-30" flex="100">
+									<label id="lbl_campanha" for="selecao_campanha"><span translate="CAMPANHA.CAMPANHA">Campanha</span></label>
+									<md-select id="selecao_campanha" name="campanha" ng-model="$dialog.campanhaSelected" disa
+										ng-change="$dialog.changeAvaliacao($dialog.campanhaSelected.id)" ng-disabled="$dialog.listCampanha.length === 0">
+										<md-option ng-repeat="item in $dialog.listCampanha" ng-value="item" value="{{item}}">
+											{{item.descricao}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="mt-30" flex="100">
+									<label id="lbl_avaliacao" for="selecao_avaliacao"><span translate="CAMPANHA.AVALIAÇÃO">Avaliação</span></label>
+									<md-select id="selecao_avaliacao" name="avaliacao" ng-model="$dialog.avaliacaoSelected"
+										ng-change="$dialog.changeRegistroAcao($dialog.avaliacaoSelected.pdi)" ng-disabled="$dialog.listCampanha.length === 0">
+										<md-option ng-repeat="item in $dialog.listAvaliacao" ng-value="item" value="{{item}}">
+											{{item.avaliacao.descricaoAbreviada}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="mt-30" flex="100">
+									<label id="lbl_acao" for="descricao_resumo_view_input" for="lbl_acao"><span translate="PDI.TEXT_AREA_ACAOREG">Ações registradas</span></label>
+									<textarea
+										ng-model="$dialog.acoesRegistradas"
+										name="textarea1"
+										id="descricao_resumo_view_input"
+										ng-disabled="true"
+									>
+									</textarea>
+								</md-input-container>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / WIDGET GROUP -->
+		</form>
+	</md-dialog-content>
+
+	<md-dialog-actions layout="row" flex class="white-bg"  layout-align="center center">
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_cancelar_nregistro" class="md-raised md-default estilo_botoes"
+				ng-click="$dialog.cancelAcao()">
+				Fechar
+			</md-button>
+	</md-dialog-actions>
+
+</md-dialog>

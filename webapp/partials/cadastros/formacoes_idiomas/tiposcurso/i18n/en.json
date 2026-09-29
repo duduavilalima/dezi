@@ -1,0 +1,28 @@
+{
+  "TIPOS":{
+    "CADASTOS":"Data",
+    "FORMACAO":"Education and languages",
+    "TIPOSCURSO": "Types of Courses",
+    "PESQUISAR":"Search",
+    "BTNNOVO":"New Course Type",
+    "SITUACAO": "Situation",
+    "REQUER": "Graduation is required",
+    "REQUEROUTRO": "Specialization is required",
+    "DESCRICAO": "Description",
+    "BTNIMPORTAR":"Import",
+    "TIPODECURSO": "Type of course",
+    "CAMPOOBRIGATORIO": "Required field",
+    "MAXIMO": "Maximum 20 characters",
+    "MINIMO": "Minimum 2 characters",
+    "CRIADOR": "Author",
+    "DATACRIACAO": "Creation Date",
+    "ATUALIZADOR": "Updater",
+    "DATAATUALIZA": "Update Date",
+    "SALVAR": "Save",
+    "VOLTAR": "Back",
+    "EDITAR": "Edit",
+    "CANCELAR": "Cancel",
+    "ATIVAR": "Activate",
+    "INATIVAR": "Inactivate"
+  }
+}

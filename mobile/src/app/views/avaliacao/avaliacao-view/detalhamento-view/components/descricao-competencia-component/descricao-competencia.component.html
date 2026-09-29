@@ -1,0 +1,10 @@
+<ion-col>
+	<h3>{{descricaoCompetencia}}</h3>
+	<!-- <ion-textarea rows="3" [(ngModel)]="direcionamentoCompetencia" [readonly]="true" name="message"></ion-textarea> -->
+	<ion-item  (click)="onExpandText()" class="direcionamento">
+		<ion-label [ngClass]="isExpandable? 'expandable': ''">{{direcionamentoCompetencia}}</ion-label>
+	</ion-item>
+		<a class="button btn-ios btn-md" (click)="onExpandText()" *ngIf="direcionamentoCompetencia?.length > 150">
+			<ion-icon name="arrow-down" [ngClass]="isExpandable? 'rotate': 'rotate-inicial'"></ion-icon>
+		</a>
+</ion-col>

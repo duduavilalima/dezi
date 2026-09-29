@@ -1,0 +1,84 @@
+<md-dialog aria-label="dialog" style="width:600px;">
+	<md-toolbar style="background-color: #9EB44D;color: #FFFFFF;">
+		<div class="md-toolbar-tools">
+			<h2>{{title}}</h2>
+			<span flex></span>
+			<md-button id="bt_fechar_popup_confirmacao_cancelar" class="md-icon-button" ng-click="cancel()" style="padding: 0px 0px 0px 0px;" ng-if="enabledButtonClose">
+				<md-icon style="color: rgba(255,255,255,0.87) !important" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+
+	<md-progress-linear ng-show="action" style="position: fixed;" md-mode="query"></md-progress-linear>
+
+	<md-dialog-content style="padding: 0px;" class="white-bg">
+		<div class="md-dialog-content" style="padding: 0px;">
+
+			<form name="basicForm" class="md-inline-form" layout-padding novalidate ui-keypress="{13:'confirm()'}">
+				<div layout="row" layout-wrap class="about-tab">
+					<div layout="column" flex>
+
+						<md-input-container flex>
+							<label id="lbl_senha_atual" for="senha_atual">Senha</label>
+							<input id="senha_atual" name="senha_atual" type="password" ng-model="object.senha" ng-disabled="action" ng-required="true" max="30" required md-maxlength="30" ng-maxlength="30" ng-minlength="3">
+							<div ng-messages="basicForm.senha_atual.$error" ng-show="basicForm.senha_atual.$touched">
+								<div ng-message="required"> <span>Obrigatório</span> </div>
+								<div ng-message="maxlength"> <span>Máximo de 30 caracteres</span> </div>
+								<div ng-message="minlength"> <span>Mínimo de 3 caracteres</span> </div>
+							</div>
+						</md-input-container>
+						<md-input-container flex >
+							<label id="lbl_nova_senha_atual" for="nova_senha_atual">Nova senha</label>
+							<input id="nova_senha_atual" name="nova_senha_atual" ng-change="validationInputPwdText(object.novaSenha)" type="password" ng-disabled="action" ng-model="object.novaSenha" ng-required="true" max="30" required md-maxlength="30" ng-maxlength="30" ng-minlength="3">
+							<div ng-messages="basicForm.nova_senha_atual.$error">
+								<div ng-message="required"> <span>Obrigatório</span> </div>
+								<div ng-message="maxlength"> <span>Máximo de 30 caracteres</span> </div>
+								<div ng-message="minlength"> <span>Mínimo de 3 caracteres</span> </div>
+							</div>
+							<div>
+								<div ng-if="basicForm.nova_senha_atual.$valid || basicForm.nova_senha_atual.$error.passwordStrong" data-strength="{{passwordStrength}}" 
+									 class="strength-meter-fill-text strength-meter-fill-text-color">{{passwordStrengthMsg}}
+								</div>
+							</div>
+						</md-input-container>
+						<div class="strength-meter strength-meter-fill-dezi">
+							<div class="strength-meter-fill" data-strength="{{passwordStrength}}"></div>
+						</div>
+
+						<md-input-container flex class="mb-30">
+							<label id="lbl_confirmar_senha_atual" for="confirmar_senha_atual">Confirmar senha</label>
+							<input id="confirmar_senha_atual" name="confirmar_senha_atual" type="password" pw-check="nova_senha_atual" my-enter="confirm()" ng-disabled="action" ng-model="object.confirmarSenha" ng-required="true" max="30" required md-maxlength="30" ng-maxlength="30" ng-minlength="3">
+							<div class="msg-block" ng-messages="basicForm.confirmar_senha_atual.$error" ng-show="basicForm.confirmar_senha_atual.$touched">
+								<div ng-message="required"> <span>Obrigatório</span> </div>
+								<div ng-message="pwmatch"> <span>Senha de confirmação inválida</span> </div>
+								<div ng-message="maxlength"> <span>Máximo de 30 caracteres</span> </div>
+								<div ng-message="minlength"> <span>Mínimo de 3 caracteres</span> </div>
+							</div>
+						</md-input-container>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+
+
+	<md-dialog-actions layout="row" flex style="margin-top: -40px;" class="white-bg">
+
+		<div flex layout-align="start center" ng-if="enabledButtonCancel">
+
+			<!--BOTÃO CANCELAR-->
+			<md-button id="btn_cancelar_registro" aria-label="Cancelar" class="md-raised md-default text-capitalize" ng-click="cancel()" ng-disabled="action">
+				Cancelar
+			</md-button>
+		</div>
+
+		<div layout-align="end center">
+
+			<!--BOTÃO SALVAR-->
+			<md-button id="btn_confirmar_registro" aria-label="Confirmar" class="md-raised md-primary text-capitalize" ng-click="confirm()" ng-disabled="basicForm.$invalid || action">
+				Confirmar
+			</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

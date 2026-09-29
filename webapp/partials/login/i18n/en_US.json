@@ -1,0 +1,27 @@
+{
+  "LOGIN": {
+    "CONTA": "Log in to your account",
+    "EMAIL": "Login",
+    "VALIDATION": "Required",
+    "VALIDATION-EMAIL": "E- mail must be a valid email address",
+    "SENHA": "Password",
+    "ESQUECER": "Forgot password?",
+    "BTNENTRAR": "Get in",
+    "EMPRESA":"Company",
+    "INSERIR_MATRICULA":"(insert here your registration)"
+  },
+  "ESQUECEUSENHA": {
+    "REDEFINA": "Reset your password",
+    "ENVIADO": "You will be sent an email with a new password",
+    "ENDERECO": "Email address",
+    "EMAILINVALIDO": "The email entered is not valid",
+    "BTNREDEFINA": "Redefine password",
+    "BTNVOLTAR": "Back to the login screen",
+    "TITLESUCCESS": "Password Reset",
+    "MESSAGESUCCESS": "Your password has been reset successfully! Soon, you will receive your new password by email .",
+    "MATRICULA":"Login"
+  },
+  "ERROR": {
+    "LOGINERROR":"Login and / or password invalid"
+  }
+}

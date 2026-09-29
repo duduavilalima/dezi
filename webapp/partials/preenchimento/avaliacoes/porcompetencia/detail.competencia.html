@@ -1,0 +1,122 @@
+<div id="preenchimento" class="page-layout simple fullwidth doc-page" ng-if="$ctrl.object != null">
+	<!-- HEADER -->
+	<div class="header md-accent-bg header_fixo" layout="row" layout-align="space-between" id="av_competencia">
+		<div layout="column" layout-align="center start">
+			<div class="breadcrumb" layout="row" layout-align="start center">
+				<span hide show-gt-xs class="parent"><a
+						ui-sref="main.preenchimento.avaliacoes">{{'PREENCHIMENTO.TITLE' | translate}}</a></span>
+				<md-icon hide show-gt-xs md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+				<span class="parent">{{'PREENCHIMENTO.AVALIACAO' | translate}}</span>
+			</div>
+		</div>
+	</div>
+
+	<form name="basicForm" novalidate class="mt-50">
+		<div flex-xs flex-gt-xs="100" layout="column" class="p-16">
+			<div class="white-bg style_card m-10">
+				<div id="descricaoAbreviada" layout="column" flex class="p-8 teste-sticky">
+					<h1 id="processos" class="grey-700-fg text-center md-headline text-uppercase m-0 text-bold">
+						{{ $ctrl.object.descricaoAbreviada }}</h1>
+					<p class="grey-700-fg">{{ $ctrl.object.direcionamentoGestor }}</p>
+				</div>
+				<md-divider></md-divider>
+				<div layout="row" flex id="$ctrl.lista_participantes_ordenada">
+					<div ng-style="{'border-bottom': '5px solid', color: avaliado.graduacaoTemp.cor}"
+						class="p-10 avatars-fill"
+						ng-repeat="avaliado in $ctrl.pessoasDetalhamento  | orderBy: '-graduacaoTemp.ponto'">
+						<figure class="m-0">
+							<div ng-class="{'back-avatar': !avaliado.graduacaoTemp.ordem}"></div>
+							<img class="md-avatar avatar-preenchimento" alt="{{avaliado.participante.avaliado.nome}}"
+								ng-if="avaliado.participante.avaliado.foto !== '../img/avatars/anon.png'"
+								ng-src="{{avaliado.participante.avaliado.foto}}" />
+							<img class="md-avatar avatar-preenchimento" alt="{{avaliado.participante.avaliado.nome}}"
+								ng-if="avaliado.participante.avaliado.foto === '../img/avatars/anon.png'"
+								src="../../../../img/avatars/anon.png" />
+						</figure>
+					</div>
+				</div>
+				<md-divider></md-divider>
+				<div flex style="position: relative;" class="p-35">
+					<md-button id="salvar" class="md-accent-fg btn-salvar-preenchimento" ng-click="$ctrl.salvar('sair')"
+						ng-disabled="$ctrl.todosConsensosLiberados == 'true' || $ctrl.todosConsensosLiberados == true">
+						Salvar
+					</md-button>
+					<slick id="slick" settings="$ctrl.slickPanels" init-onload="true">
+						<div id="campo3" ng-repeat="detalhamento in $ctrl.detalhamentos">
+							<div layout="column" layout-align="center" class="ph-16">
+								<p class="grey-800-fg"><strong>{{ $index + 1 }} - <span ng-bind-html="detalhamento.descricao | trustHtml"></span></strong>
+								</p>
+							</div>
+							<md-content class="main ph-16" ms-scroll>
+								<md-list>
+									<md-list-item class="md-white-bg"
+										ng-repeat="preench in detalhamento.preenchimentos">
+										<div layout="column" flex>
+											<div layout="column" layout-xs="column">
+												<div layout="row" layout-xs="column" id="participante">
+													<center>
+														<img class="md-avatar avatar-preenchimento"
+															alt="{{preench.participante.avaliado.nome}}"
+															ng-if="preench.participante.avaliado.foto !== '../img/avatars/anon.png'"
+															ng-src="{{preench.participante.avaliado.foto}}" />
+														<img class="md-avatar avatar-preenchimento"
+															alt="{{preench.participante.avaliado.nome}}"
+															ng-if="preench.participante.avaliado.foto === '../img/avatars/anon.png'"
+															src="../../../../img/avatars/anon.png" />
+													</center>
+
+													<p flex flex-sm flex-xs="100" layout="row" layout-xs="column"
+														class="grey-800-fg">
+														<strong>{{::preench.participante.avaliado.nome}}</strong><span
+															hide-xs>&nbsp;-&nbsp;</span><span
+															id="cargo_preenchimento">{{::preench.participante.avaliado.cargo.nome}}</span>
+													</p>
+												</div>
+
+												<p class="largura">
+													<md-radio-group layout-gt-sm="row" layout="row" layout-xs="column"
+														layout-sm="column"
+														ng-disabled="preench.participante.consensoLiberado"
+														ng-model="preench.idGraduacaoTemp"
+														ng-change="$ctrl.changeGraduacao(detalhamento, preench)">
+														<md-radio-button
+															ng-repeat="hint in detalhamento.hints | orderBy: graduacao.ordem"
+															value="{{::hint.graduacao.idGraduacao}}">
+															{{::hint.graduacao.label}}
+															<md-tooltip><span class="h4">{{::hint.hint}}</span>
+															</md-tooltip>
+														</md-radio-button>
+													</md-radio-group>
+												</p>
+											</div>
+											<div flex layout="row">
+												<md-input-container flex="100" class="mt-25" id="comentario">
+													<label>Comente registrando as evidências para sua escolha</label>
+													<textarea id="comentario_{{preench.id}}"
+														name="comentario_{{preench.id}}" ng-model="preench.observacao"
+														required ng-required="preench.comentarioObrigatorio"
+														md-maxlength="500" ng-maxlength="500"
+														md-select-on-focus></textarea>
+													<div ng-messages="basicForm['comentario_' + preench.id].$error"
+														ng-show="basicForm['comentario_' + preench.id].$touched">
+														<div ng-message="required">
+															<span>Campo obrigatório!</span>
+														</div>
+														<div ng-message="maxlength">
+															<span>Número máximo de caracteres excedido!</span>
+														</div>
+													</div>
+												</md-input-container>
+											</div>
+										</div>
+									</md-list-item>
+								</md-list>
+							</md-content>
+						</div>
+					</slick>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>

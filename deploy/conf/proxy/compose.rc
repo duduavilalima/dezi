@@ -1,0 +1,48 @@
+#!/bin/bash
+
+CONFIG_ROOT="${CONFIG_ROOT:-"$(cd "$(dirname "$0")"; pwd)"}"
+PROJECT_CONFIGS_ROOT="${CONFIG_ROOT:-"$(cd "${CONFIG_ROOT}/.."; pwd)"}"
+PROJECT_ROOT="${PROJECT_ROOT:-"$(cd "${PROJECT_CONFIGS_ROOT}/.."; pwd)"}"
+PROJECT_NAME="${PROJECT_NAME:-"dezi"}"
+PROJECT_SCRIPTS_ROOT="${PROJECT_SCRIPTS_ROOT:-"${PROJECT_ROOT}/scripts"}"
+
+. "${PROJECT_SCRIPTS_ROOT}/utils.sh"
+
+main() {
+    local to
+    local command_name
+    local proxy_conf_dir="${CONFIG_ROOT}"
+    local dezi_cfg_file="${proxy_conf_dir}/${PROJECT_NAME}.cfg"
+    local https_sample="${proxy_conf_dir}/${PROJECT_NAME}.https.cfg.sample"
+    local http_sample="${proxy_conf_dir}/${PROJECT_NAME}.cfg.sample"
+    local IFS
+    unset IFS
+
+    command_name="${1:?Faltando comando.}"; shift
+
+    case "${command_name}" in
+    setup)
+        if [ ! -e "${dezi_cfg_file}" ]; then
+            if [ -e "${proxy_conf_dir}/all.pem" ]; then
+                echo "*** INFO: >>> Copiando arquivo de configuração de proxy (HTTPS) para \"${dezi_cfg_file}\"" >&2
+                cp -f "${https_sample}" "${dezi_cfg_file}"
+            else
+                echo "*** INFO: >>> Copiando arquivo de configuração de proxy para \"${dezi_cfg_file}\"" >&2
+                cp -f "${http_sample}" "${dezi_cfg_file}"
+            fi
+        else
+            echo "*** DEBUG: >>> Arquivo de configuração do proxy já existe." >&2
+        fi
+        ;;
+
+    clean)
+        rm -f "${dezi_cfg_file}"
+        ;;
+
+    *)
+        die '*** ERROR: Comando desconhecido: "%s"' "${command_name}"
+        ;;
+    esac
+}
+
+main "$@"

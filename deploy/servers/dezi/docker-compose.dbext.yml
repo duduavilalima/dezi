@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  queue:
+    environment:
+      - DB_HOST=$EXT_DB_HOST
+      - DB_PORT=$EXT_DB_PORT
+      - DB_NAME=$EXT_DB_NAME
+      - DB_USER=$EXT_DB_USER
+      - DB_PASS=$EXT_DB_PASS
+      - DEZI_DB_HOST=$EXT_DB_HOST
+      - DEZI_DB_PORT=$EXT_DB_PORT
+      - DEZI_DB_NAME=$EXT_DB_NAME
+      - DEZI_DB_USERNAME=$EXT_DB_USER
+      - DEZI_DB_PASSWORD=$EXT_DB_PASS
+    extra_hosts:
+      - "db:${EXT_DB_HOST}"
+  rest:
+    environment:
+      - DB_HOST=$EXT_DB_HOST
+      - DB_PORT=$EXT_DB_PORT
+      - DB_NAME=$EXT_DB_NAME
+      - DB_USER=$EXT_DB_USER
+      - DB_PASS=$EXT_DB_PASS
+      - DEZI_DB_HOST=$EXT_DB_HOST
+      - DEZI_DB_PORT=$EXT_DB_PORT
+      - DEZI_DB_NAME=$EXT_DB_NAME
+      - DEZI_DB_USERNAME=$EXT_DB_USER
+      - DEZI_DB_PASSWORD=$EXT_DB_PASS
+      # FIXME Usar variáveis de ambiente ao invés de propriedades de sistema
+      # Ver se o Tomcat 8 suporta. Ou migrar para o Spring Boot.
+      - >-
+        JAVA_OPTS=-Djava.awt.headless=true
+        -Dspring.profiles.active=${ENVIRONMENT}
+        ${JAVA_EXTRA_OPTS}
+        -Ddb.host=$EXT_DB_HOST
+        -Ddb.port=$EXT_DB_PORT
+        -Ddb.name=$EXT_DB_NAME
+        -Ddb.username=$EXT_DB_USER
+        -Ddb.password=$EXT_DB_PASS
+    extra_hosts:
+      - "db:${EXT_DB_HOST}"
