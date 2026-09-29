@@ -1,0 +1,45 @@
+# Angular / Node
+node_modules/
+dist/
+tmp/
+out-tsc/
+.angular/
+.sass-cache/
+bower_components/
+npm-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+coverage/
+
+# Java / Maven / Gradle
+target/
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+nbproject/
+*.sublime-workspace
+
+# SO / logs / temporários
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*~
