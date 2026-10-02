@@ -2,7 +2,7 @@
 
 Sistema legado DEZI (`web/`). Documento de passagem entre conversas: mostra a ordem sugerida, o que já foi feito, o que falta e o contexto necessário para continuar.
 Roteiro geral: [`../roteiro-bmad-levantamento-regras-negocio.md`](../roteiro-bmad-levantamento-regras-negocio.md) (passo 3, analista Mary, `/bmad-agent-analyst`).
-Última atualização: 2026-10-01 (itens 1, 2 e 3 concluídos; próximo recomendado: 4).
+Última atualização: 2026-10-01 (itens 1 a 9 concluídos; levantamento por módulo completo; próximo: etapas posteriores da seção 6).
 
 ## 1. Sequência sugerida e progresso
 
@@ -13,17 +13,17 @@ Legenda: `[x]` abordado · `[~]` parcial · `[ ]` a fazer.
 | 1 | `[x]` | Acesso e perfis | [`01-acesso-perfis.md`](01-acesso-perfis.md) |
 | 2 | `[x]` | Cadastro organizacional | [`02-cadastro-organizacional.md`](02-cadastro-organizacional.md) |
 | 3 | `[x]` | Modelo de competências | [`03-modelo-competencias.md`](03-modelo-competencias.md) |
-| 4 | `[ ]` | Graduação e conceitos | `04-graduacao-conceitos.md` (a criar) |
+| 4 | `[x]` | Graduação e conceitos | [`04-graduacao-conceitos.md`](04-graduacao-conceitos.md) |
 | 5a | `[x]` | Avaliação: estados e transições | [`05a-avaliacao-estados-transicoes.md`](05a-avaliacao-estados-transicoes.md) |
 | 5b | `[x]` | Avaliação: criação, agentes, participantes, pendências | [`05b-avaliacao-criacao-agentes-participantes.md`](05b-avaliacao-criacao-agentes-participantes.md) |
 | 6 | `[x]` | Participantes e preenchimento | [`06-participantes-preenchimento.md`](06-participantes-preenchimento.md) |
 | 7 | `[x]` | Resultados e gráficos | [`07-resultados-graficos.md`](07-resultados-graficos.md) |
-| 8 | `[ ]` | PDI e feedforward | `08-pdi-feedforward.md` (a criar) |
-| 9 | `[ ]` | Comunicação | `09-comunicacao.md` (a criar) |
+| 8 | `[x]` | PDI e feedforward | [`08-pdi-feedforward.md`](08-pdi-feedforward.md) |
+| 9 | `[x]` | Comunicação | [`09-comunicacao.md`](09-comunicacao.md) |
 
 O **item 5** foi abordado por inteiro (5a e 5b). Foi feito antes dos itens 1 a 4 por escolha do responsável; por isso algumas regras dependem de módulos ainda não levantados (ver seção 4).
 
-Ordem recomendada daqui em diante: ~~6 → 7 → 1 → 2~~ (feitos) → ~~3~~ (feito) → **4 → 8 → 9**. O item 1 foi feito e esclareceu o que a tela permite (concluir, inativar e reativar avaliação; "Ajustar pesos" só ADM), mas **o servidor quase não impõe perfis** (só o painel de controle tem `@PreAuthorize`) e a permissão da transição genérica segue a confirmar (biblioteca `commons`). O item 4 tem agora um ponto de partida concreto: 07 mostra que a nota usa `peso_cargo_competencia`, `peso_cargo_tipo_competencia` e `ponto`, e que a escala de pontos varia de 0 a 120 por modelo.
+Ordem recomendada daqui em diante: ~~6 → 7 → 1 → 2~~ (feitos) → ~~3~~ (feito) → ~~4~~ (feito) → ~~8~~ (feito) → ~~9~~ (feito). O item 1 foi feito e esclareceu o que a tela permite (concluir, inativar e reativar avaliação; "Ajustar pesos" só ADM), mas **o servidor quase não impõe perfis** (só o painel de controle tem `@PreAuthorize`) e a permissão da transição genérica segue a confirmar (biblioteca `commons`). O item 4 foi feito a partir de 07 (a nota usa `ponto`, escala de 0 a 120 por modelo).
 
 Cadastros de apoio sem lógica (Idioma, Municipio, Escolaridade, CursoGraduacao, TipoCurso, CBO) entram só no glossário, sem arquivo próprio.
 
@@ -52,7 +52,8 @@ Achados que orientam os itens seguintes: o modelo efetivo de graduação é o do
 - **Migrações:** V1.0_016 a V1.0_020, V2.0_0014, V2.0_0021, V2.0_0022, V2.0_0023, V2.0_0030.
 - **Já sabido (5a/5b):** a liberação congela competências, detalhamentos, hints, pesos e graduações em tabelas `avaliacao_*` (snapshot).
 
-### 4. Graduação e conceitos
+### 4. Graduação e conceitos (concluído em 2026-10-01; ver `04-graduacao-conceitos.md`)
+Achados que orientam os itens seguintes: o **conceito não existe de fato** (tabela com 0 linhas, sem regra de nota → conceito nem tela; a "faixa de nota → conceito" do roteiro não existe no legado); `nao_graduar` e `qtd_graduacoes` não são confiáveis (o que vale é existir nível ativo com texto "Não posso avaliar"); `ponto = 0` marca "sem nota" (NPA e escala de comentário); editar um nível reescreve o texto de todas as perguntas; a cor vista no preenchimento vem da **ordem** (paleta fixa), não do cadastro; a liberação copia todos os níveis (ativos e inativos) para `graduacao_competencia` e a avaliação deixa de acompanhar o cadastro; web ordena níveis por ordem e mobile por ponto. Não lidos: `commons`, textos i18n, BI, `mobile/`. Lista original do que ler, mantida por referência:
 - **Ler:** `ModeloGraduacaoServiceImpl`, `GraduacaoServiceImpl` (278), `GraduacaoCompetenciaServiceImpl`, `ModeloGraduacaoCompServiceImpl`, `ModeloGraduacaoAvalCompServiceImpl`, `ConceitoServiceImpl`; enums `TipoConceito`, `GraduacaoCorEnum`.
 - **Extrair:** escala de notas (pontos, rótulos, cores, "não graduar"); modelo de graduação por detalhamento; conceito (faixas de nota → conceito).
 - **Migrações:** V1.0_005, V1.0_015, V2.0_0029, V2.0_0035.
@@ -70,11 +71,13 @@ Achados que orientam os itens seguintes: o `web/` não calcula a nota dos relat�
 - **Já sabido (5a/5b):** o progresso da avaliação é calculado como percentual (`calcularPreenchimentoTotalDaAvaliacao`) sem gravar estado; os pesos dos agentes não somam 100 (5b, RN-CRI-13).
 - **Atenção:** a view `conjunto_resultados` v2 tem uma precedência `AND`/`OR` suspeita (5a, RN-EST-24).
 
-### 8. PDI e feedforward
+### 8. PDI e feedforward (concluído em 2026-10-01; ver `08-pdi-feedforward.md`)
+Achados que orientam o item 9: o ciclo do PDI **não dispara e-mail nem mensagem** em nenhuma transição (RN-PDI-17; item 9 confirma ou corrige); o PDI é cadastro manual, sem ligação automática com o texto de consenso (`avaliacao_participante.pdi`, escrito quase só pelo gestor) nem com notas; a permissão de transição vive em `doBeforeUpdate` (só o par de situações é conferido, o dono vem do corpo da requisição, sem máquina de estados) e a exclusão pela tela não tem checagem alguma; o PDI está praticamente parado (360 das 379 ações criadas em 2020; 93% com prazo vencido sem avançar); feedforward é uma coluna de `apontamento_funcional` (separada de "registro crítico" só por predicado), o parâmetro `empresa.feedforward` não tem efeito no mobile e o endpoint web `POST /feedsRecebidos` usa o avaliado do corpo e não é chamado por nenhuma tela. Não lidos: layout `.jrxml`, `commons`, i18n. Lista original do que ler, mantida por referência:
 - **Ler:** `PDIAcaoServiceImpl` (704), `PDIAcaoCompetenciaDetalhamentoServiceImpl` (235), `FeedForwardRecebidoServiceImpl`, `FeedForwardMobileServiceImpl`, `FeedForwardRecebidoMobile`, `ApontamentoMobile`; enum `SituacaoPDI`; `PDIAcaoResource`, `FeedForwardRecebidoResource`; método `obterAvaliacoesPDI` de `AvaliacaoServiceImpl` (linha ~2028).
 - **Extrair:** ciclo do PDI (estados e quem pode cada transição; já se vê em `PDIAcaoServiceImpl:130` que só o funcionário do PDI aprova para andamento e finaliza); vínculo com competências e resultados da avaliação; feedforward.
 
-### 9. Comunicação
+### 9. Comunicação (concluído em 2026-10-01; ver `09-comunicacao.md`)
+Achados: todo e-mail passa por `email_controle` → RabbitMQ → `queue/`, e **"enviado" não prova entrega** (o consumidor engole erros de SMTP); 28% das linhas (792) estão em REENVIO por um defeito de estado compartilhado no consumidor (o erro é gravado na linha do último e-mail processado, não na do que falhou); o e-mail de troca de senha **não sai** (envio comentado) apesar do parâmetro `true`; a caixa "Notificar via e-mail" é ignorada pelo servidor; o parâmetro `notificacao.email.resposta.mensagem` é código morto; as 8 chaves de template da tabela `parametros` não são lidas (os modelos vivem no `queue/`); mensagens de liberação, erro e home office viram registros de `mensageria` **sem destinatário** (276 linhas), e o erro de liberação vai só para o suporte; senhas ficam em texto em `email_controle`; há credencial SMTP real como valor padrão em `queue/.../application.yml`; o fluxo home office foi usado em 2020 (132 mensagens), apesar de `av_homeoffice` nulo. Não lidos: `commons`, i18n dos avisos, 5 dos 8 modelos HTML, telas de contato e fale conosco. Lista original do que ler, mantida por referência:
 - **Ler:** `MensageriaServiceImpl` (534), `MensagemServiceImpl`, `EmailControleServiceImpl` (388), `ParametroServiceImpl` (templates), `FaleConoscoServiceImpl`, `ContatoServiceImpl`, `BugReportServiceImpl`, `web/services/.../rabbitmq/sender`; enums `TipoMensagem`, `TipoEmailStatus`; módulo `queue/` (consumidor RabbitMQ que envia e-mail, fora do `web/`).
 - **Extrair:** gatilhos de e-mail (liberação de avaliação, liberação concluída, erro de liberação, boas-vindas, lembretes); templates e parâmetros (V2.0_0012, V2.0_0017, V2.0_0020, V2.0_0028); reenvio, status e falhas; ligação com o `queue/`.
 - **Já sabido (5a):** `mensagemLiberarAvaliacao` não é enviada quando o usuário é administrador; `mensagemLiberarAvaliacaoConcluido` é enviada ao fim da liberação e `mensagemLiberarAvaliacaoErro` em caso de falha.
@@ -96,13 +99,23 @@ Decisões do responsável (registradas em 5a, seção 7.1):
 
 8. **Defeitos do legado a levar como requisito do sistema novo, vindos do item 2** (não corrigir o legado; lista em 02, seção 11): gestor como dado próprio, não como efeito de salvar pessoa; separar perfil de acesso de papel de gestão; recesso com término automático; unicidade garantida no banco (e-mail, código do cliente, nome da unidade); departamento, cargo e unidade inativos com efeito definido sobre pessoas; controle de ciclo nas hierarquias; escopo no servidor para foto, apontamento e empresa.
 
-Pontos "a confirmar" abertos: 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em 06 (seção 12), 14 em 07 (seção 9), 12 em 01 (seção 12), 14 em 02 (seção 12) e 12 em 03 (seção 11). A dúvida sobre precedência `AND`/`OR` da view v2 (5a, ponto 8) e a semântica do peso dos agentes (5b, RN-CRI-13) foram **resolvidas** em 07. Os mais importantes para decidir com o negócio:
+10. **Defeitos do legado a levar como requisito do sistema novo, vindos do item 4** (não corrigir o legado; lista em 04, seção 10): dimensão da escala sem sentido; `qtd_graduacoes`/`nao_graduar` sem semântica e NPA identificado por texto; unicidade no banco sem diferenciar maiúsculas; faixa e consistência de ponto no servidor e escala de comentário como tipo explícito; editar nível sem apagar texto personalizado; inativação de escala e nível com efeito definido; cor definida em um só lugar e ordem de exibição única entre web e mobile; congelar por versão sem `NullPointerException` nem vínculos ausentes ou divergentes; conceito: decidir se existe; autorização por perfil e escopo por empresa no servidor.
+
+11. **Defeitos do legado a levar como requisito do sistema novo, vindos do item 8** (não corrigir o legado; lista em 08, seção 9): máquina de estados e permissões do PDI no servidor, com o dono lido do registro; datas definidas pelo servidor e histórico de transições; exclusão lógica e com escopo; vínculo da ação com a avaliação (não com participante arbitrário); validar competência e detalhamento contra cargo; relatórios Excel e PDF com colunas, observações e período corretos; separar apontamento de feedforward e decidir o destino de `empresa.feedforward`; feedforward recebido sempre pelo usuário logado.
+
+12. **Defeitos do legado a levar como requisito do sistema novo, vindos do item 9** (não corrigir o legado; lista em 09, seções 4, 6, 7 e 10): estado de envio confiável (entrega confirmada, falha de SMTP visível, reenvio de tudo que falhou, sem estado compartilhado no consumidor); publicar na fila só depois do commit; troca de senha com e-mail ou remover o parâmetro; respeitar "Notificar via e-mail" por destinatário e o valor do parâmetro; mensagem de sistema como registro próprio (não como mensagem sem destinatário); RH avisado do erro de liberação; assunto e destinatários da conclusão pela empresa da campanha; modelos de e-mail com dono único (arquivo ou tabela, não os dois); links de acesso padronizados e com HTTPS; sem senha em texto no e-mail nem em `email_controle` (link de definição de senha); remetente e endereços de suporte por configuração; **rotacionar a credencial SMTP exposta** e retirar segredos do repositório; autorização no servidor para mensageria (usuário logado, não `userId` da URL).
+
+Pontos "a confirmar" abertos: 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em 06 (seção 12), 14 em 07 (seção 9), 12 em 01 (seção 12), 14 em 02 (seção 12), 12 em 03 (seção 11), 15 em 04 (seção 9), 13 em 08 (seção 8) e 14 em 09 (seção 11). A dúvida sobre precedência `AND`/`OR` da view v2 (5a, ponto 8) e a semântica do peso dos agentes (5b, RN-CRI-13) foram **resolvidas** em 07. Os mais importantes para decidir com o negócio:
 - se `CANCELADA` é necessário no sistema novo (nunca usada);
 - semântica de Av1..Av4 e do peso dos agentes;
 - se revisor e dimensões ainda fazem parte do processo (0 usos);
 - apagar avaliadores/participantes que já preencheram;
 - fluxo home office (campanhas rápidas) e suas propriedades de configuração;
-- encerramento: por data ou por estado.
+- encerramento: por data ou por estado;
+- se conceito (faixa de nota → classificação) deve existir no sistema novo (04, RN-GRA-26), e se a escala de comentário (`ponto = 0`) vira tipo de pergunta;
+- quem cria, aprova e exclui ação de PDI, e se o PDI continua sendo processo vivo (08, RN-PDI-02, 07, 15, 16);
+- se feedforward e `empresa.feedforward` têm função no sistema novo (08, RN-PDI-39, 47);
+- por que 28% dos e-mails estão em REENVIO e o que "enviado" deve significar (09, RN-COM-10, 12 a 14); se a redefinição de senha nas boas-vindas em massa é regra (09, RN-COM-17).
 
 ## 4. Dependências entre o item 5 e os demais
 
@@ -111,11 +124,11 @@ Pontos "a confirmar" abertos: 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em
 | Quem pode cancelar/concluir, quem pode liberar, `TipoPerfil.ADMINISTRADOR` | 1 (feito; ver 01, seções 6 e 10) |
 | Situação funcional, gestor, subordinados, snapshot de cargo/departamento | 2 (feito; ver 02, seções 5 a 8) |
 | Validação do cargo para liberar (12 pendências), snapshot de perguntas, dimensões | 3 (feito; ver 03, seções 5 a 9) |
-| Modelo de graduação congelado na liberação | 4 |
+| Modelo de graduação congelado na liberação | 4 (feito; ver 04, seção 6) |
 | Preenchimento Av1..Av4, `preenchida_avN`, consenso, revisão | 6 |
 | Peso dos agentes, percentual de preenchimento, views de resultado | 7 |
-| PDI a partir da avaliação (`obterAvaliacoesPDI`) | 8 |
-| Mensagens de liberação | 9 |
+| PDI a partir da avaliação (`obterAvaliacoesPDI`) | 8 (feito; ver 08, seções 3, 5 e 6) |
+| Mensagens de liberação | 9 (feito; ver 09, seção 7) |
 
 ## 5. Como continuar em outra conversa
 
@@ -130,7 +143,7 @@ A nova conversa começa sem memória da anterior: ela só sabe o que está nos a
 ```
 e depois:
 ```
-Continue o levantamento de regras de negócio a partir do item 4.
+Continue o levantamento de regras de negócio a partir do item 9.
 Leia docs/regras-negocio/00-plano-e-progresso.md e o AGENTS.md antes,
 e use 05a e 05b como modelo de formato.
 ```
