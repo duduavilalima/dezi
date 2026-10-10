@@ -66,11 +66,11 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 - CRI-12 Participantes LIBERADA/CONCLUIDA sem snapshot de cargo/depto (11 e 2).
 
 ## 06 Preenchimento
-- PRE-1 `consenso_iniciado` chega a verdadeiro (328). PRE-2 Web × mobile liberam consenso diferente. PRE-3 Mobile sem rastro (`tipo_client`).
+- PRE-1 ✔ Verificado (2026-10-10): nenhum código atual (`web/`, `webapp/`, `support/`) grava `consenso_iniciado = true`; o Java só o zera (`AvaliacaoParticipanteServiceImpl:334, 385`) ou normaliza nulo para falso. No banco, as 328 linhas verdadeiras têm todas `consenso_liberado` verdadeiro e última atualização entre 2017-06 e 2019-01-24: resíduo de versão antiga do código. Hoje o marcador é código morto de fato (a tela só o lê); no novo, derivar do estado do consenso em vez de gravar. PRE-2 ✔ Decidido (D30): libera com Av1 e Av2 finalizadas, regra única no servidor. PRE-3 Mobile sem rastro (`tipo_client`).
 - PRE-4 ✔ Decidido (D16): servidor valida. PRE-5 ✔ Decidido (D17): servidor recusa após o prazo.
-- PRE-6 Login do outro participante no consenso só no front. PRE-7 Copia-e-cola em `doBeforeUpdate`; início de Av2 sem resposta.
-- PRE-8 `preenchida_avN` nulo × falso. PRE-9 27 participantes sem linhas. PRE-10 ✔ Resolvido (D7): revisor/Av4 não entra.
-- PRE-11 1.181 respostas sem vínculo congelado. PRE-12 Quem libera consenso/reabre etapas e quem vê acompanhamento.
+- PRE-6 ✔ Decidido (D31): aceite explícito de cada parte, no servidor. PRE-7 Copia-e-cola em `doBeforeUpdate`; início de Av2 sem resposta.
+- PRE-8 ✔ Verificado (2026-10-10): o DDL tem `DEFAULT false`, mas o Hibernate insere `NULL` explícito porque nenhum código define o valor na criação do participante; o getter `DomainUtils.safeBoolean` trata nulo como falso, então o Java não distingue. Só `ParticipanteServiceImpl:244-246` e `ParticipanteResource:183-194` calculam o marcador (`total == preenchimentoAvN`), então **nulo = nunca recalculado; falso = recalculado e incompleto**. Corrige a leitura "nulo = etapa não se aplica" de RN-PRE-16. Banco: Av1 nulo 1.098 / falso 5.438; Av2 nulo 1.501 / falso 2; Av3 nulo 7.007 / falso 91. No novo, derivar das respostas (já em D16). PRE-9 27 participantes sem linhas. PRE-10 ✔ Resolvido (D7): revisor/Av4 não entra.
+- PRE-11 1.181 respostas sem vínculo congelado. PRE-12 ✔ Parcial (D32): reabrir = ADMINISTRADOR e GESTOR_RH; falta definir quem vê o acompanhamento.
 - PRE-13 3 Av1 de subordinados; 3 AUTOAVALIACAO com `limite_av3`. PRE-14 `limite_avN` é date ou timestamp.
 
 ## 07 Resultados
@@ -92,11 +92,11 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 
 ## 09 Comunicação
 - COM-1 ✔ Decidido (D18): ENVIADO = aceito pelo SMTP. COM-2 249 PENDENTE nunca enviados; 0 ERRO.
-- COM-3 "Notificar via e-mail" por destinatário; parâmetro `false` desliga? COM-4 Acompanhamento respeita parâmetro e valida e-mail?
-- COM-5 `notificacao.email.resposta.mensagem` e resposta fora de avaliação. COM-6 E-mail de troca de senha deve existir?
+- COM-3 ✔ Decidido (D27): caixa e parâmetro valem, os dois, no servidor. COM-4 ✔ Decidido (D28): mesma regra, valida e-mail, sem duplicar.
+- COM-5 `notificacao.email.resposta.mensagem` e resposta fora de avaliação. COM-6 ✔ Decidido (D29): aviso de segurança sem a senha, sempre enviado.
 - COM-7 Falha de validação no meio do lote. COM-8 Assunto da conclusão pela empresa do logado; sem GESTOR_RH.
 - COM-9 RH avisado do erro de liberação? COM-10 Forma e protocolo do link. COM-11 ✔ Decidido (D19): link de definição de senha.
-- COM-12 Valores fora do repositório (`dezi.queue.*`, `homeoffice.*`, `email.contato.suporte`). COM-13 `doBeforeSave` redefine senha a cada gravação?
+- COM-12 Valores fora do repositório (`dezi.queue.*`, `homeoffice.*`, `email.contato.suporte`). COM-13 `doBeforeSave` redefine senha a cada gravação? Parcial (2026-10-10): a edição tem hook próprio (`doBeforeUpdate`, `FuncionarioServiceImpl:253`) sem tratar senha, e 460 funcionários atualizados depois da criação têm `primeiro_acesso` falso; indício forte de que não redefine na edição, mas só a `commons` (quem chama qual hook) confirma. Sem fonte (D25): no novo, redefinir senha nunca é efeito de salvar cadastro (D19).
 - COM-14 Necessidade do relatório de bug e de `Mensagem`/`TipoMensagem`.
 
 ## Itens de infraestrutura que travam a leitura

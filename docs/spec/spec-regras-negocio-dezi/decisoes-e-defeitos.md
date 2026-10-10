@@ -36,6 +36,12 @@ Política: **não corrigir o legado**. Cada defeito abaixo é requisito de redes
   - **Dados:** participantes e respostas são preservados para auditoria; a avaliação fica somente leitura e sai dos resultados, do progresso e do acompanhamento.
   - **Efeitos:** ações de PDI vinculadas continuam válidas (vínculo histórico); participantes com pendência recebem aviso de cancelamento e a pendência some.
   - **Reversão:** irreversível (estado final). Exige motivo e registra quem, quando e por quê. Para refazer, copia-se a avaliação.
+- **D27** **E-mail das mensagens de avaliação respeita a caixa e o parâmetro** (COM-3): a mensagem interna é sempre gravada; o e-mail só sai se o parâmetro de notificação da empresa estiver ligado **e** a caixa "Notificar via e-mail" do destinatário estiver marcada. O servidor impõe as duas condições.
+- **D28** **Mensagem de acompanhamento segue a mesma regra** (COM-4): respeita parâmetro e caixa como D27, valida e-mail funcional do destinatário e não duplica mensagem para o mesmo colaborador.
+- **D29** **Troca de senha envia aviso de segurança, nunca a senha** (COM-6): o usuário recebe e-mail informando que a senha foi alterada, com data e hora; sempre enviado, sem parâmetro (o parâmetro `notificacao.email.funcionario.troca.senha`, hoje sem efeito, sai). Complementa D19.
+- **D30** **Consenso (Av3) é liberado quando Av1 e Av2 estão finalizadas** (PRE-2): liberação automática, calculada no servidor e igual para web e mobile; nunca se desliga sozinha. Só reabre por ação explícita (D32).
+- **D31** **Aceite explícito de cada parte no consenso** (PRE-6): avaliado e avaliador registram, cada um na própria sessão, que concordam (autor e data), validado no servidor. Sem digitar a senha da outra parte.
+- **D32** **Reabrir consenso ou etapa finalizada: `ADMINISTRADOR` e `GESTOR_RH`** (PRE-12), com motivo e auditoria, imposto no servidor; reabrir apaga o aceite do consenso (D31). Mesmos perfis de D3.
 
 ## Defeitos por módulo
 **01 Acesso (RN-ACE-12):** autorização por perfil também no servidor; `seclogin` com bloqueio e log; senha nunca enviada nem registrada em texto; "esqueci minha senha" por link com expiração, sem revelar se o e-mail existe e sem derrubar a senha de terceiros; política de senha; desbloqueio e suspensão manuais; auditoria dos cadastros (principalmente perfil); chave do BI imprevisível; quem pode definir ADMINISTRADOR.
