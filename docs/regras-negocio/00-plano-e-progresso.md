@@ -2,7 +2,7 @@
 
 Sistema legado DEZI (`web/`). Documento de passagem entre conversas: mostra a ordem sugerida, o que já foi feito, o que falta e o contexto necessário para continuar.
 Roteiro geral: [`../roteiro-bmad-levantamento-regras-negocio.md`](../roteiro-bmad-levantamento-regras-negocio.md) (passo 3, analista Mary, `/bmad-agent-analyst`).
-Última atualização: 2026-10-01 (itens 1 a 9 concluídos; levantamento por módulo completo; próximo: etapas posteriores da seção 6).
+Última atualização: 2026-10-10 (itens 1 a 9 concluídos; spec condensado em 2026-10-06; passo 5 do roteiro em andamento, com as decisões D6 a D19 de 2026-10-09; ver seção 6).
 
 ## 1. Sequência sugerida e progresso
 
@@ -105,7 +105,9 @@ Decisões do responsável (registradas em 5a, seção 7.1):
 
 12. **Defeitos do legado a levar como requisito do sistema novo, vindos do item 9** (não corrigir o legado; lista em 09, seções 4, 6, 7 e 10): estado de envio confiável (entrega confirmada, falha de SMTP visível, reenvio de tudo que falhou, sem estado compartilhado no consumidor); publicar na fila só depois do commit; troca de senha com e-mail ou remover o parâmetro; respeitar "Notificar via e-mail" por destinatário e o valor do parâmetro; mensagem de sistema como registro próprio (não como mensagem sem destinatário); RH avisado do erro de liberação; assunto e destinatários da conclusão pela empresa da campanha; modelos de e-mail com dono único (arquivo ou tabela, não os dois); links de acesso padronizados e com HTTPS; sem senha em texto no e-mail nem em `email_controle` (link de definição de senha); remetente e endereços de suporte por configuração; **rotacionar a credencial SMTP exposta** e retirar segredos do repositório; autorização no servidor para mensageria (usuário logado, não `userId` da URL).
 
-Pontos "a confirmar" abertos: 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em 06 (seção 12), 14 em 07 (seção 9), 12 em 01 (seção 12), 14 em 02 (seção 12), 12 em 03 (seção 11), 15 em 04 (seção 9), 13 em 08 (seção 8) e 14 em 09 (seção 11). A dúvida sobre precedência `AND`/`OR` da view v2 (5a, ponto 8) e a semântica do peso dos agentes (5b, RN-CRI-13) foram **resolvidas** em 07. Os mais importantes para decidir com o negócio:
+13. **Decisões do responsável em 2026-10-09 (passo 5 do roteiro; texto completo em `docs/spec/spec-regras-negocio-dezi/decisoes-e-defeitos.md`, D6 a D19):** dimensões, revisor/Av4 e conceito **não entram** no sistema novo (D6 a D8); o PDI **entra, com ciclo de vida revisto** (D9); só `ADMINISTRADOR` atribui `ADMINISTRADOR` (D10); gestor do departamento é dado próprio (D11); excluir avaliador ou participante com resposta é bloqueado (D12); a avaliação encerra por data e por estado (D13); peso cargo×tipo é relativo e tem tela (D14); pesos congelados na liberação, fonte única do BI (D15); o servidor valida comentário obrigatório, completude e prazo (D16, D17); `ENVIADO` = aceito pelo SMTP (D18); boas-vindas por link de definição de senha (D19). Isso **resolve** os itens da lista abaixo sobre revisor e dimensões, apagar quem já preencheu, encerramento, conceito e `ENVIADO`; os demais seguem abertos. A lista consolidada e atual dos pontos abertos é `docs/spec/spec-regras-negocio-dezi/a-confirmar.md`.
+
+Pontos "a confirmar" abertos (contagem na data de cada documento-fonte, anterior às decisões de 2026-10-09): 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em 06 (seção 12), 14 em 07 (seção 9), 12 em 01 (seção 12), 14 em 02 (seção 12), 12 em 03 (seção 11), 15 em 04 (seção 9), 13 em 08 (seção 8) e 14 em 09 (seção 11). A dúvida sobre precedência `AND`/`OR` da view v2 (5a, ponto 8) e a semântica do peso dos agentes (5b, RN-CRI-13) foram **resolvidas** em 07. Os mais importantes para decidir com o negócio:
 - se `CANCELADA` é necessário no sistema novo (nunca usada);
 - semântica de Av1..Av4 e do peso dos agentes;
 - se revisor e dimensões ainda fazem parte do processo (0 usos);
@@ -136,21 +138,27 @@ Pontos "a confirmar" abertos: 10 em 5a (seção 7), 12 em 5b (seção 11), 14 em
 
 ### 5.1 Como retomar
 
-A nova conversa começa sem memória da anterior: ela só sabe o que está nos arquivos. Chame a analista Mary e aponte este arquivo:
+A nova conversa começa sem memória da anterior: ela só sabe o que está nos arquivos. O levantamento por módulo (itens 1 a 9) está concluído e condensado em spec, então **a fonte canônica é o spec** em `docs/spec/spec-regras-negocio-dezi/`. Os documentos 00 a 09 desta pasta ficam como evidência (arquivo e linha, consultas ao banco), citada pelos IDs `RN-xxx`.
+
+O trabalho que resta é o passo 5 do roteiro (decidir os pontos "a confirmar") e, depois, os passos 6 a 9 (seção 6). Para decidir pontos, chame a analista Mary e aponte o spec:
 
 ```
 /bmad-agent-analyst
 ```
 e depois:
 ```
-Continue o levantamento de regras de negócio a partir do item 9.
-Leia docs/regras-negocio/00-plano-e-progresso.md e o AGENTS.md antes,
-e use 05a e 05b como modelo de formato.
+Continue o passo 5 do levantamento de regras do DEZI (decidir os pontos a confirmar).
+Leia o AGENTS.md, docs/regras-negocio/00-plano-e-progresso.md e, no spec,
+spec-regras-negocio-dezi.md, decisoes-e-defeitos.md e a-confirmar.md.
+Comece pelos itens que mais bloqueiam (seção 6 do plano).
 ```
 
-- Sem a referência a este arquivo, ela não sabe que o item 5 já foi feito, nem as decisões tomadas, nem como acessar o banco.
-- O menu da Mary (brainstorming, pesquisa de mercado, product brief e outros) não tem item para este trabalho; a análise é conduzida na conversa, lendo o código. Se a sua mensagem já disser o que você quer, ela pula o menu e começa direto.
-- Contexto a carregar: `AGENTS.md` (política: só código e banco valem; regra sem evidência nos dois lados vai como "a confirmar"; não refatorar nem corrigir o legado), este arquivo e `05a`/`05b` como modelo de formato e nível de detalhe.
+Para os passos seguintes, use direto o skill do passo (`/bmad-architecture`, `/bmad-review`, `/bmad-walkthrough`, `/bmad-ticket`), apontando para o kernel do spec.
+
+- Sem a referência ao spec e a este arquivo, a conversa não sabe quais decisões (D1 a D19) já foram tomadas, nem como acessar o banco (seção 5.3).
+- O menu da Mary (brainstorming, pesquisa de mercado, product brief e outros) não tem item para este trabalho; a conversa é conduzida lendo o spec e, quando preciso, o código. Se a sua mensagem já disser o que você quer, ela pula o menu e começa direto.
+- Contexto a carregar: `AGENTS.md` (política: só código e banco valem; regra sem evidência nos dois lados vai como "a confirmar"; não refatorar nem corrigir o legado), este arquivo e os três arquivos do spec acima.
+- Para voltar a **levantar regras de um módulo** (novas leituras do código), use `05a`/`05b` como modelo de formato e nível de detalhe, e depois atualize o spec e `a-confirmar.md`.
 
 ### 5.2 Rotina de trabalho
 
@@ -179,8 +187,18 @@ psql -c "select current_user, current_database()"
 
 ### 5.5 Estado do repositório
 
-Os documentos desta pasta estão na branch `feature/bmad_init` e ainda **não foram commitados** (commit só a pedido do responsável).
+Branch `feature/bmad_init`. Os documentos desta pasta (00 a 09) estão commitados (`fe70281`, `ac25dcc`). **Sem commit:** `docs/spec/` (spec) e `_bmad-output/` (iniciativa). Commit só a pedido do responsável.
 
-## 6. Ideias de etapas posteriores (do roteiro geral)
+## 6. Etapas posteriores (do roteiro geral) e situação
 
-Depois dos módulos: `/bmad-spec` (condensar em spec com arquivo central e um de apoio por módulo), `/bmad-advanced-elicitation` e `/bmad-party-mode` para os pontos "a confirmar", `/bmad-architecture` (onde vivem as regras: camadas, integrações, banco), `/bmad-review` e `/bmad-walkthrough` para validar com especialistas de negócio.
+| Passo do roteiro | Situação |
+|---|---|
+| 3. Analista, módulo a módulo | `[x]` Concluído (itens 1 a 9, seção 1). |
+| 4. `/bmad-spec` | `[x]` Concluído em 2026-10-06: `docs/spec/spec-regras-negocio-dezi/` (kernel `spec-regras-negocio-dezi.md`, 9 companions por módulo, `glossario.md`, `decisoes-e-defeitos.md`, `a-confirmar.md`). Iniciativa em `_bmad-output/initiative-levantamento-regras-dezi/` (só o frontmatter; sem épicos nem histórias). |
+| 5. Aprofundar pontos duvidosos | `[~]` Em andamento. Feitas: decisões D6 a D19 (2026-10-09) e verificação em código de ACE-6, ORG-1 e MOD-5. Faltam os itens de `a-confirmar.md` ainda abertos; os que mais bloqueiam: gatilho e consequências de `CANCELADA` (ACE-2, EST-1), conjunto de subordinados (ORG-4), escala de comentário `ponto=0` (GRA-6), quem cria e aprova PDI (PDI-1, PDI-3), e ETL/Pentaho e `commons` fora do repositório (RES-1). Ferramentas: `/bmad-party-mode`, `/bmad-advanced-elicitation`. |
+| 6. `/bmad-architecture` | `[ ]` Não iniciado. Só depois de decidir os pontos a confirmar do passo 5. |
+| 7. `/bmad-prd` (opcional) | `[ ]` Não iniciado. |
+| 8. `/bmad-review` e `/bmad-walkthrough` | `[ ]` Não iniciados. |
+| 9. `/bmad-ticket` (opcional) | `[ ]` Iniciativa criada, sem fatiamento. |
+
+Para retomar, a fonte canônica agora é o spec (kernel + `decisoes-e-defeitos.md` + `a-confirmar.md`); estes documentos 00 a 09 guardam a evidência (arquivo e linha, consultas ao banco) citada pelos IDs `RN-xxx`.
