@@ -14,7 +14,7 @@ Volumes [B]: 118 tipos, 1.408 competências, 2.931 perguntas, 14.386 hints, 2.04
 - Inativar inativa todos os cargo×competência dela (gabaritos apagados); não toca detalhamentos (382 ativos em competências inativas) nem avaliações liberadas. Reativar não reativa vínculos; ativar vínculo com competência inativa → `validation.status`. (MOD-14, 15) [C+B]
 - Direcionamentos (texto para gestor e não gestor): opcionais, copiados ao snapshot. (MOD-16) [C]
 - **Modelo de graduação efetivo = o do detalhamento** (V2.0_0021 copiou o da competência; 63 detalhamentos divergem; 83 competências têm perguntas com escalas diferentes). (MOD-17) [C+B]
-- Trocar o tipo de competência já associada não é bloqueado nem propagado (9 vínculos sem cargo×tipo). (MOD-18) [B] ⚠
+- Trocar o tipo de competência já associada não é bloqueado nem propagado (9 vínculos sem cargo×tipo). **No novo (D47):** troca bloqueada se há cargos associados. (MOD-18) [B]
 
 ## Perguntas (detalhamentos) e hints
 - Nasce ATIVA; descrição, ordem e escala obrigatórias. Descrição única na competência só ao **criar** (sem caixa, inclusive inativo); ordem repetida possível (5 casos). (MOD-19, 20) [C+B]
@@ -27,7 +27,7 @@ Volumes [B]: 118 tipos, 1.408 competências, 2.931 perguntas, 14.386 hints, 2.04
 - **Pesos em três níveis**, todos inteiros e **não percentuais** (sem validar soma): cargo×competência (tela 1–100, padrão 1; valores 1–4), gabarito (tela 1–100 se aplicável; 1–4), cargo×tipo (obrigatório, **sem tela de edição**; 1.982 de 2.048 valem 1, até 81). (MOD-28) [C+B] ⚠ origem dos ≠1
 - Tela permite salvar associação sem nenhuma pergunta aplicável (15 casos → pendência `cargo-not-found-gabarito`). (MOD-29) [C+B]
 - **Cascatas:** inativar cargo → cargo×tipo → cargo×competência (gabarito apagado). **Ativação sobe**: ativar cargo×competência ativa cargo×tipo e o **cargo** (cargo ativa-se assim); NPE se faltar cargo×tipo. Inconsistências existentes: 35 vínculos inativos com gabarito, 40 gabaritos aplicáveis em vínculo inativo. (MOD-30, 31) [C+B]
-- Escopo de leitura do cargo×competência por perfil (como cargo). Nada valida que a pergunta pertence à competência do vínculo (195 gabaritos cruzados) ⚠. Cópia de cargo duplica vínculos e gabaritos. (MOD-32, 33) [C+B]
+- Escopo de leitura do cargo×competência por perfil (como cargo). Nada valida que a pergunta pertence à competência do vínculo (195 gabaritos cruzados). **No novo (D49, ajusta D48):** pergunta com competência dona; cascata da D35 só atinge a dona; inativar pergunta reutilizada bloqueado com gabarito ativo em outro vínculo; uma vez por cargo. **No novo (D48):** reuso entre competências permitido; a pergunta conta na competência do vínculo do cargo (a confirmar). Cópia de cargo duplica vínculos e gabaritos. (MOD-32, 33) [C+B]
 
 ## Dimensões
 - Nome único só ao criar (2 duplicadas); editar com lista vazia não esvazia; só ATIVA na seleção. Com `campanha.dimensao=true` a liberação restringe perguntas às dimensões da avaliação e grava o vínculo no snapshot (NPE se a pergunta não tem dimensão). **0 vínculos, 0 `avaliacao_dimensao`, 1 campanha** — sem uso real. (MOD-34..37) [C+B] ⚠

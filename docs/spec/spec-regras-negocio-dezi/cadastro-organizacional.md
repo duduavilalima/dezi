@@ -7,7 +7,7 @@
 - 19 empresas ativas, 8 contratantes; inativar empresa não tem endpoint nem efeito sobre o login. (ORG-05) [B] ⚠
 
 ## Unidade
-- Escopo = empresa. Nome único por empresa, sem caixa, com `trim` (só no código; 3 grupos duplicados já existem; validação olha só o 1º resultado). Nasce ATIVA. (ORG-06..08) [C+B]
+- Escopo = empresa. Nome único por empresa, sem caixa, com `trim` (só no código; 3 grupos duplicados já existem; **no novo, D46:** também no banco; validação olha só o 1º resultado). Nasce ATIVA. (ORG-06..08) [C+B]
 - Hierarquia por `id_pai`; árvore desce só por filhos ativos; sem controle de ciclo. Hoje todas as 34 ativas são raiz (hierarquia sem uso). (ORG-09) [C+B]
 
 ## Departamento
@@ -39,10 +39,11 @@
 - 33 cargos ativos sem tipo de competência geram pendência na avaliação. (ORG-32) [B]
 
 ## Funcionário
+- **No novo (D58):** GESTOR_AREA = par (unidade, departamento) e descendentes na mesma unidade.
 - Escopo de leitura: ADM/GESTOR_RH/CONSULTOR_RH empresa; GESTOR_AREA depto + filhos diretos; demais só ele; funcionário sem unidade (10 ADMINISTRADOR) some das consultas com projeção. (ORG-33) [C+B]
 - Criação: empresa do usuário, ATIVA, senha temporária, `primeiroAcesso`, configuração pessoal, vínculo de gestor. (ORG-34) [C]
-- **Validações ao gravar** (ORG-35) [C]: e-mail funcional único entre ATIVA da empresa (2 duplicados já existem); matrícula única (sem caixa); **inativar só `DESLIGADO`** (18 INATIVA em atividade existem); desligamento ≥ admissão; recesso exige início e fim, fim ≥ início; ADMINISTRADOR só editado por administrador.
-- **Recesso** (10 situações): ao salvar situação não-recesso, as duas datas são zeradas; **não termina sozinho** e as datas não afetam nenhuma regra de avaliação (as 7 pessoas em recesso estão com data fim vencida). Quem está em recesso fica barrado como avaliado na liberação. (ORG-36, 37) [C+B] ⚠
+- **Validações ao gravar** (ORG-35) [C]: e-mail funcional único entre ATIVA da empresa (2 duplicados já existem; **no novo, D46:** garantido no banco, sem caixa); matrícula única (sem caixa); **inativar só `DESLIGADO`** (18 INATIVA em atividade existem; **no novo, D45:** situação única, ativo derivado; **D50:** RECESSO conta como ativo para unicidade de e-mail); desligamento ≥ admissão; recesso exige início e fim, fim ≥ início; ADMINISTRADOR só editado por administrador.
+- **Recesso** (10 situações): ao salvar situação não-recesso, as duas datas são zeradas; **não termina sozinho** e as datas não afetam nenhuma regra de avaliação (as 7 pessoas em recesso estão com data fim vencida). **No novo (D44):** volta sozinho à atividade na data fim. Quem está em recesso fica barrado como avaliado na liberação. (ORG-36, 37) [C+B]
 - **Desligamento:** `DESLIGADO` → INATIVA e data de desligamento = hoje se vazia; outra situação apaga a data. `inactivate` força DESLIGADO; `activate` volta a EM_ATIVIDADE só se estava DESLIGADO. Nunca é apagado. (ORG-38) [C+B]
 - Perfil: tela lista perfis menos ADMINISTRADOR; o perfil acumula acesso e papel de gestão. (ORG-39) [C+B]
 - Campos informativos sem regra: `ponto_focal_rh` (131), `preenche_formacao_e_idiomas` (137), sexo (M/F), datas. (ORG-40) [B] ⚠
