@@ -6,15 +6,15 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 - ACE-1 ✔ Decidido (D3), imposto no servidor. Original: quais perfis concluem/inativam/reativam avaliação e se o servidor impõe (transição genérica em `commons`). Ver D3.
 - ACE-2 ✔ Decidido (D26): gatilho, estados, dados, efeitos e reversão. Original: `CANCELADA` no novo, gatilho e consequências (D2). Verificado em código (2026-10-10): o legado tem só esqueleto — `doAfterTransition` grava o status com `TODO` e `FIXME` (`AvaliacaoServiceImpl:274-279`), `doBeforeUpdate` recusa editar avaliação cancelada (`validation.canceled`, `:374`) e a tela esconde colunas da análise; nada trata participantes, preenchimentos ou mensagens. Banco: 0 avaliações canceladas. Continua dependendo de decisão do negócio.
 - ACE-3 Efeito da transição genérica INATIVA→LIBERADA sobre as datas limite. Banco (2026-10-10): inconclusivo; não há como distinguir avaliação reativada (1 LIBERADA tem limites perto da data de atualização, a de id 188, caso ambíguo) e as 58 LIBERADA já têm todos os limites vencidos. Segue em aberto (depende de `commons`).
-- ACE-4 Validade/algoritmo do token; matrícula inexistente no login; CORS irrestrito com credenciais.
+- ACE-4 ✔ Decidido (D41, D42): sessão com expiração; resposta única e limite também para matrícula inexistente. CORS irrestrito com credenciais: implantação, vai ao `bmad-architecture`.
 - ACE-5 Bloqueio por IP atrás de proxy; volumes de `log_auth`; por que `log_auth`/`log_entity` não existem na instância.
 - ACE-6 ★ Verificado em código (2026-10-09): `FuncionarioServiceImpl.validar` só bloqueia **editar** quem já é ADMINISTRADOR; nada impede **definir** o perfil ADMINISTRADOR em outro funcionário (ou em si mesmo), e `FuncionarioResource` não tem `PreAuthorize`. Escalada pela API é possível no legado, salvo filtro em `commons` (inacessível). ✔ Decidido (D10): só ADMINISTRADOR atribui ADMINISTRADOR.
-- ACE-7 Alcance do GESTOR_AREA (um nível × todos os descendentes) e filtro ausente no mobile.
+- ACE-7 ✔ Decidido (D33): toda a árvore, imposto no servidor e no mobile.
 - ACE-8 Quem aciona boas-vindas em massa.
 - ACE-9 Resíduos de gestor com perfil FUNCIONARIO.
 - ACE-10 Redirecionamento de quem já está logado é caminho usado?
 - ACE-11 CONSULTOR_RH com mais de uma empresa?
-- ACE-12 Resto do filtro de campanhas para perfis ≠ ADM/GESTOR_RH.
+- ACE-12 ✔ Decidido (D43): campanhas por escopo do perfil.
 
 ## 02 Cadastro organizacional
 - ORG-1 ★ Verificado em código (2026-10-09): `doBeforeUpdate` (edição) e `doAfterSave` (criação) chamam `atualizaGestorUnidadeDepartamento`, que **sempre apaga** a linha do par (unidade, departamento) e só recria se o salvo é GESTOR_AREA/GESTOR_RH. Salvar funcionário comum apaga o gestor do par. Incerteza restante: se `entity` na edição é o estado antes da alteração (`commons`). ✔ Decidido (D11): gestor é dado próprio do departamento; falta só o conjunto de subordinados (ORG-4).
@@ -23,9 +23,9 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 - ORG-4 ✔ Decidido (D20): toda a árvore. Original: conjunto desejado de subordinados (um nível, gestor do filho em vez da equipe, recesso, nome fixo "Administrador").
 - ORG-5 Cargo nasce INATIVA por desenho? Cópia de cargo em uso?
 - ORG-6 Papel de negócio do departamento do cargo (96 cargos com funcionários em outro depto).
-- ORG-7 Recesso vencido sem retorno automático: procedimento do RH.
-- ORG-8 18 funcionários INATIVA em atividade; 1 desligado sem data.
-- ORG-9 Duplicados já gravados (2 e-mails, 3 nomes de unidade) e impacto na edição.
+- ORG-7 ✔ Decidido (D44): recesso volta sozinho na data fim.
+- ORG-8 ✔ Decidido (D45): situação única com datas obrigatórias; resíduos não replicados.
+- ORG-9 ✔ Decidido (D46): unicidade no banco; duplicados do legado não migrados.
 - ORG-10 Cadastro de empresa (quem cria), `cbo`, `versao_bi`, consulta entre contratantes.
 - ORG-11 Papel de `ponto_focal_rh` e `preenche_formacao_e_idiomas`.
 - ORG-12 Apontamento em nome de outro avaliador; foto sem escopo.
@@ -34,17 +34,17 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 
 ## 03 Modelo de competências
 - MOD-1 Mais de dois níveis de tipo; competência em tipo com subtipos.
-- MOD-2 Inativar tipo deve inativar competências/subtipos? Reativar deve propagar?
-- MOD-3 Troca de tipo de competência já associada; 9 vínculos sem cargo×tipo.
+- MOD-2 ✔ Decidido (D35): propaga ao inativar; reativar restaura só o que a cascata inativou.
+- MOD-3 ✔ Decidido (D47): troca bloqueada se há cargos associados; 9 vínculos sem cargo×tipo são resíduo.
 - MOD-4 Igualdade de objeto na gravação de hints; 84 hints de escala antiga no home office.
 - MOD-5 ✔ Origem verificada em código (2026-10-09): o importador `support/` (`AssociacoesCargoSheet`) grava `cargo_tipo_competencia.peso` da coluna 5 da planilha, truncado para inteiro (`UtilsRow.converterDoubleCell`); valores como 50, 33, 67, 25 são pesos digitados na planilha. A tela do legado não edita esse peso. ✔ Decidido (D14): peso relativo, com tela.
 - MOD-6 Associação sem pergunta aplicável (15 casos).
 - MOD-7 Gabaritos/vínculos que sobrevivem à regra de exclusão (3, 35 e 40 casos).
-- MOD-8 Gabaritos com pergunta de outra competência (195): erro de carga ou reuso intencional?
+- MOD-8 ✔ Decidido (D48): reuso entre competências permitido; a nota conta na competência do vínculo do cargo (deduzido do legado, a confirmar).
 - MOD-9 ✔ Resolvido (D6): dimensões não entram no novo.
 - MOD-10 ✔ Decidido (D23): versão congelada. Pesos duplicados: ver D15.
 - MOD-11 NPE ao ativar cargo×competência sem cargo×tipo.
-- MOD-12 Quem pode editar o catálogo (servidor não impõe perfil).
+- MOD-12 ✔ Decidido (D34): ADMINISTRADOR e GESTOR_RH, no servidor.
 
 ## 04 Graduação e conceitos
 - GRA-1 Semântica de `nao_graduar`. GRA-2 `doAfterSave` na edição? GRA-3 Posição de nível novo antes da renumeração.
@@ -61,7 +61,7 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 - EST-7 Atalho de liberação só com autoavaliação. EST-8 (resolvido em 07) precedência AND/OR. EST-9 Significado Av1..Av4 (respondido em 06). EST-10 (validado no banco).
 - CRI-1 Av1..4 e sobrescrita de limites. CRI-2 ★ Semântica do peso dos agentes (resolvido em 07: relativo). CRI-3 Laço de remoção de agentes.
 - CRI-4 Avaliado avaliando a si mesmo como PARES; uso do revisado e revisor. CRI-5 ✔ Decidido (D12): bloquear.
-- CRI-6 Planilha de pares: descartes e homônimos. CRI-7 Gestor em recesso sem subir de nível. CRI-8 Cópia: criador/data, dimensões, e-mail padrão.
+- CRI-6 Planilha de pares: descartes e homônimos. CRI-7 ✔ Decidido (D36): sobe ao próximo gestor ativo; sem gestor, pendência para o RH. CRI-8 Cópia: criador/data, dimensões, e-mail padrão.
 - CRI-9 Fluxo home office e configuração. CRI-10 ✔ Decidido (D13): por data e por estado. CRI-11 Assimetria de padrões criar×editar; 8 `autoavaliacao` nulos.
 - CRI-12 Participantes LIBERADA/CONCLUIDA sem snapshot de cargo/depto (11 e 2).
 
@@ -74,13 +74,13 @@ Regra sem evidência suficiente no código **e** no banco não é fato. Cada ite
 - PRE-13 3 Av1 de subordinados; 3 AUTOAVALIACAO com `limite_av3`. PRE-14 `limite_avN` é date ou timestamp.
 
 ## 07 Resultados
-- RES-1 ✔ Resolvido (D24): Pentaho descartado; o novo define cálculo e relatórios. Original: onde ficam ETL, `.wcdf`, periodicidade e frescor de `bi_media_*`. RES-2 Fórmula da média por agente (5%) e 0,02% dos demais níveis.
-- RES-3 ✔ Decidido (D15): congelados na liberação, fonte única. RES-4 Duplicatas dobram resposta nas médias.
-- RES-5 Consenso NPA anula a avaliação. RES-6 Respostas sem vínculo fora do BI. RES-7 Escalas misturadas; peso 0/divisão por zero.
-- RES-8 Filtro de campanha ativa só na view real. RES-9 Escopo por nome, chave sem expiração, escopo na URL (v1).
-- RES-10 Quem acessa resultados/histórico/`/pentaho/login`/`ajustarpesos`. RES-11 Outro cliente dos endpoints de gráfico?
-- RES-12 Percentuais do painel (autoavaliação, `Integer ==`, lista vazia). RES-13 Qual progresso a tela usa.
-- RES-14 47 AUTOAVALIACAO com `limite_av2`.
+- RES-1 ✔ Resolvido (D24): Pentaho descartado; o novo define cálculo e relatórios. Original: onde ficam ETL, `.wcdf`, periodicidade e frescor de `bi_media_*`. RES-2 ✔ Sem objeto (D24/D38): fórmula do legado é só referência; divergência de 5% na média por agente não vira requisito.
+- RES-3 ✔ Decidido (D15): congelados na liberação, fonte única. RES-4 ✔ Defeito (não replicar): o novo garante uma resposta por participante × pergunta × agente e uma linha de peso por resposta (D15).
+- RES-5 ✔ Decidido (D37): consenso NPA exclui a pergunta. RES-6 ✔ Defeito (não replicar): toda resposta aponta para a graduação congelada (D23); sem vínculo não é gravada. RES-7 ✔ Decidido (D38): normalizar escala; peso 0 exclui, sem nota se vazio.
+- RES-8 ✔ Sem objeto (D24): view/migração do legado descartadas; o novo define o filtro de resultados. RES-9 ✔ Decidido (D39): escopo no servidor pela sessão.
+- RES-10 ✔ Decidido (D40): RH/gestor/próprio; `ajustarpesos` descartado. RES-11 ✔ Verificado em código (2026-10-12): `ChartAvaliacao` (`webapp/services/avaliacao.js:6`) não tem consumidor em `webapp/` nem `mobile/`; endpoints de gráfico são código morto, não replicar.
+- RES-12 ✔ Defeito (não replicar): percentual correto por fase, autoavaliação própria, lista vazia = sem dados (não TOTALMENTE). RES-13 ✔ Sem objeto: o novo tem uma fonte única de progresso.
+- RES-14 ✔ Resíduo de dados do legado (migração é non-goal); no novo, `limite_avN` só existe para fases que o tipo de avaliação preenche.
 
 ## 08 PDI e feedforward
 - PDI-1 ✔ Decidido (D22): funcionário propõe a própria ação. Original: quem cria ação de PDI? PDI-2 Transições só no servidor (dono do corpo, sem máquina de estados).
