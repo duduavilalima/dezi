@@ -9,6 +9,7 @@ Tags de evidência: **[C]** código · **[B]** banco Postgres (agregados; dados 
 | Agente | Trio (avaliação, tipo de competência, perfil) com **peso** relativo. Perfis: AUTOAVALIACAO(100), GESTOR(101), SUBORDINADO(102), PARES(103) |
 | Participante | Linha (avaliado, avaliador) numa avaliação, com perfil, datas, marcadores `preenchida_avN`. Um avaliado tem vários |
 | Av1 / Av2 / Av3 / Av4 | Autoavaliação (avaliado responde) / Avaliação (avaliador responde) / Consenso (avaliado + gestor, só perfil GESTOR) / Revisão (sem uso, sem tela) |
+| "Ativo" (três predicados) | Um funcionário pode ser ativo em três sentidos, que dependem da situação de trabalho (D45): **pode acessar** o sistema, **é elegível a avaliar/ser avaliado** (D20, D36) e **ocupa o e-mail** na unicidade (D46, D50). EM_ATIVIDADE: sim, sim, sim. RECESSO: acessa ⚠ (ELI-17), não elegível, ocupa. DESLIGADO: não, não, não (libera o e-mail) |
 | Perfil de acesso (`TipoPerfil`) | ADMINISTRADOR(3), FUNCIONARIO(4), CONSULTOR_RH(14), GESTOR_RH(15), GESTOR_AREA(16); um por funcionário |
 | Situação cadastral | ATIVA(1) / INATIVA(98). Sem `CHECK` no banco; o enum Java é a única restrição |
 | Situação funcional | EM_ATIVIDADE, DESLIGADO e 10 situações de recesso (férias, licenças, dispensa médica, luto, núpcias, serviço militar, recesso) |

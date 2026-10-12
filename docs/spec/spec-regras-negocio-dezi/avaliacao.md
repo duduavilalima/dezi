@@ -14,6 +14,7 @@
 | excluir | só em AG_LIBERACAO; apaga participantes, mensageria, agentes, pendências e a avaliação (físico) (EST-25, 26) | [C] |
 
 - `doBeforeTransition` não valida nada; só LIBERADA zera a situação de preenchimento. Gatilho e perfis das transições dependem da biblioteca `commons`. (EST-21, 22) [C] ⚠
+- **No novo:** CONCLUIDA é imutável, não reabre (**D55**); ações privilegiadas só por outro ADMINISTRADOR/GESTOR_RH quando o ator é participante (**D52**).
 - Efeitos de CONCLUIDA: mobile exclui; tela desabilita participantes; views de BI excluem INATIVA/CANCELADA. (EST-23, 24) [C]
 - Bloqueios só de tela (não de servidor): LIBERADA desabilita edição de agentes, percentuais e datas e exclusão no servidor; `emLiberacao` não bloqueia ação alguma. (seção 5 de 05a)
 - **Situação de preenchimento da avaliação é campo morto** (sempre 1); progresso real = percentual `(Av1+Av2+Av3 preenchidas)*100/(totais)`, Av4 fora. Nunca vai a TOTALMENTE_PREENCH. (EST-28..31) [C+B]

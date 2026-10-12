@@ -5,7 +5,7 @@ Resposta = linha de `avaliacao_preenchimento` (participante × pergunta), criada
 ## Quem preenche o quê
 - **Av1 (autoavaliação):** o **avaliado** responde se a avaliação tem `preenche_av1` e o participante `limite_av1 >= agora`; vale para perfis GESTOR e AUTOAVALIACAO. (PRE-01, 04) [C+B]
 - **Av2 (avaliação):** o **avaliador** responde se `preenche_av2` e `limite_av2 >= agora`; subordinados e pares só respondem Av2. (PRE-02, 04) [C+B]
-- **Av3 (consenso):** só participante GESTOR (limite_av3 em 2.692 de 2.759); avaliado e gestor concluem juntos. (PRE-05) [B]
+- **Av3 (consenso):** só participante GESTOR (limite_av3 em 2.692 de 2.759); avaliado e gestor concluem juntos. **No novo:** aceite de cada parte com a própria senha (**D31**, **D53**). (PRE-05) [B]
 - **Av4 (revisão):** sem tela, sem uso (limite nulo, revisor nulo, concordância nula). (PRE-33) [B] ⚠
 - CONCLUIDA fica fora das listas (web e mobile); INATIVA fecha por prazo. Usuário só vê participantes em que é avaliador ou avaliado (exceção: acompanhamento). Resposta gravada **por competência** (todas as perguntas juntas). (PRE-06..08) [C]
 

@@ -15,7 +15,7 @@
 ## Gatilhos
 | Gatilho | Parâmetro (valor [B]) | Destinatário | Template |
 |---|---|---|---|
-| Esqueci minha senha | `notificacao.email.funcionario.esqueci.senha`=true | funcionário ATIVO com o e-mail | 2 |
+| Esqueci minha senha (**no novo, D56:** link de uso único, nunca para DESLIGADO, resposta igual) | `notificacao.email.funcionario.esqueci.senha`=true | funcionário ATIVO com o e-mail | 2 |
 | Troca de senha | `...troca.senha`=true | — | 3 — **não sai** (envio comentado) |
 | Novo cadastro | `...funcionario.novo`=**false** (intencional) | — | 4 |
 | Boas-vindas em massa | `...bemvindo`=true | 1 ou todos de um perfil | 1 |

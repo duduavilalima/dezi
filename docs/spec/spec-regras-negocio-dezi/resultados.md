@@ -28,6 +28,7 @@ Aderência: 99,9% a 100% nos níveis 1–5; média por agente na avaliação 95%
 - Versão do BI por empresa: v1 monta o escopo na URL (controlado pelo navegador); v2 usa `chave`. Relatório: campanha só de autoavaliação → `avaliacao.wcdf`; v1: ADM/GESTOR_RH `resultados`, GESTOR_AREA filtra por nome, colaborador `resultados_colaborador`; v2: `resultados` para todos; histórico `graficos_evolucao`. (RES-24, 25) [C]
 
 ## Painel de controle / acompanhamento (`acompanhamento/*`)
+- **No novo (D52):** quando o avaliado é o próprio gestor, vale a regra do FUNCIONARIO (consolidado, sem identificar avaliadores). ELI-2 e ELI-14 pendentes.
 - Escopo: GESTOR_AREA só participantes cujo **avaliador** é do seu departamento; FUNCIONARIO recusado; demais veem a empresa. (RES-35) [C]
 - Progresso **por avaliador** somando todos os seus participantes. Gráfico Av1/Av2: totalmente se Av2==total e (sem autoavaliação ou Av1==total); parcialmente se Av2>0 e Av1>0; senão não preenchido. Consenso: só quem tem `limite_av3`. (RES-36..38) [C]
 - Percentual = feitos×100/total (arredondado); lista: TOTALMENTE se percentuais existentes todos 100 (ausente conta 100). Filtro por situação aplicado depois do cálculo. (RES-40..42) [C]
