@@ -39,6 +39,7 @@
 - 33 cargos ativos sem tipo de competência geram pendência na avaliação. (ORG-32) [B]
 
 ## Funcionário
+- **No novo (D58):** GESTOR_AREA = par (unidade, departamento) e descendentes na mesma unidade.
 - Escopo de leitura: ADM/GESTOR_RH/CONSULTOR_RH empresa; GESTOR_AREA depto + filhos diretos; demais só ele; funcionário sem unidade (10 ADMINISTRADOR) some das consultas com projeção. (ORG-33) [C+B]
 - Criação: empresa do usuário, ATIVA, senha temporária, `primeiroAcesso`, configuração pessoal, vínculo de gestor. (ORG-34) [C]
 - **Validações ao gravar** (ORG-35) [C]: e-mail funcional único entre ATIVA da empresa (2 duplicados já existem; **no novo, D46:** garantido no banco, sem caixa); matrícula única (sem caixa); **inativar só `DESLIGADO`** (18 INATIVA em atividade existem; **no novo, D45:** situação única, ativo derivado; **D50:** RECESSO conta como ativo para unicidade de e-mail); desligamento ≥ admissão; recesso exige início e fim, fim ≥ início; ADMINISTRADOR só editado por administrador.
