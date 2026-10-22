@@ -52,3 +52,4 @@ Repositórios, build, CI, kernel `infra`, papéis de banco e base do frontend. N
 - Assumption: AD-14 (ShedLock) é [ASSUMPTION] na espinha; histórias que dependem dele levam `unknown`.
 - Decision: 12 histórias aprovadas; tracer pela trilha 1, 4 e 10; `plan_checkpoint` nas histórias 4 e 5; sem alteração de descrições (usuário, 2026-10-22).
 - Parked: deploy em nuvem, homologação, backup e restauração (provedor e RPO/RTO em aberto).
+- Decision: sem suíte e2e de fechamento neste épico; a verificação da história 10 é teste automatizado rodado no CI da história 11, e a suíte e2e fica para o épico acesso (usuário, 2026-10-22).

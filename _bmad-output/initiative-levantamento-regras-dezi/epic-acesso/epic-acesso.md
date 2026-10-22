@@ -45,3 +45,4 @@ Módulo `acesso`: política, credencial, sessão, matriz e plataforma. Não é c
 - Parked: valores do atraso progressivo e do teto do login (AD-7); o mecanismo entra, os valores esperam o negócio.
 - Open question: tempos de sessão (30 min, 10 h), fonte da lista de senhas vazadas e ELI-12 (ordem entre perfis).
 - Unknown: `ResolucaoDeEmpresa` e `EscopoOrganizacional` são implementados por `cadastro`; até lá as histórias usam stubs de teste.
+- Decision: este épico recebe a suíte e2e (login ponta a ponta), estendendo o teste automatizado da história 10 do épico fundação (usuário, 2026-10-22).
