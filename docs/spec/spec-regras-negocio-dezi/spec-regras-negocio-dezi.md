@@ -13,6 +13,7 @@ companions:
   - comunicacao.md
   - decisoes-e-defeitos.md
   - a-confirmar.md
+  - ../../../_bmad-output/initiative-levantamento-regras-dezi/architecture-dezi-novo/architecture-dezi-novo.md
 sources:
   - ../../regras-negocio/00-plano-e-progresso.md
   - ../../regras-negocio/01-acesso-perfis.md
@@ -86,7 +87,7 @@ O DEZI é um sistema legado de avaliações de desempenho e pesquisas de clima, 
 ## Non-goals
 
 - Replicar defeitos do legado (listados em `decisoes-e-defeitos.md`).
-- Definir stack, camadas e arquitetura do sistema novo (próximo passo: `/bmad-architecture`).
+- Definir stack, camadas e arquitetura do sistema novo: ficam na espinha adotada como companion (`architecture-dezi-novo.md`, AD-1 a AD-30).
 - Migração de dados e telas do legado.
 - Dimensões (D6), revisor/Av4 (D7) e conceito (D8): não entram no novo.
 - Reaproveitar o Pentaho (ETL, relatórios `.wcdf`, tabelas `bi_*`): o novo sistema define o próprio cálculo e relatórios (D24).
