@@ -1,0 +1,152 @@
+# tickets.toml — histórias do épico fundação, na ordem de construção.
+
+[[entry]]
+id = 1
+type = "story"
+title = "Esqueleto do backend e Docker Compose"
+description = "Cria os repositórios, o backend Spring com módulos vazios (`api` e `internal`, `@NamedInterface`), Postgres 18 no Compose, Flyway e logs estruturados com id de requisição."
+verify = "`docker compose up` sobe backend e Postgres e `GET /api/saude` responde 200; o teste de partida do Flyway 13.11.1 passa."
+covers = ["F1", "F6"]
+after = []
+hitl = true
+risk = "medium"
+unknown = "Flyway 13.11.1 sobrescreve o BOM do Boot (12.4.0); se o teste de partida falhar, volta ao 12.4.0."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-1", "architecture-dezi-novo/architecture-dezi-novo.md#ad-18"]
+
+[[entry]]
+id = 2
+type = "story"
+title = "Teste de arquitetura no build"
+description = "Spring Modulith `verify()` e regras ArchUnit para o grafo do AD-27, escrita em tabela só pelo dono (AD-19), `REQUIRES_NEW` direto e `@Async` no canal 1."
+verify = "Uma aresta fora do grafo, uma escrita em tabela de outro módulo e um `REQUIRES_NEW` direto quebram o build."
+covers = ["F1"]
+after = [1]
+hitl = false
+risk = "medium"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-19", "architecture-dezi-novo/architecture-dezi-novo.md#ad-27"]
+
+[[entry]]
+id = 3
+type = "story"
+title = "Papéis de banco e privilégios"
+description = "Cria `app_rw`, `app_descoberta`, `plataforma_ro`, `plataforma_rw` e `migracao` por migração, sem `BYPASSRLS` na aplicação, e o teste de privilégios."
+verify = "O teste de privilégios prova que `app_rw` não tem `BYPASSRLS` e que `app_descoberta` só lê as colunas enumeradas."
+covers = ["F2"]
+after = [1]
+hitl = false
+risk = "medium"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-29"]
+
+[[entry]]
+id = 4
+type = "story"
+title = "`ContextoDeEmpresa` e RLS"
+description = "Componente com `emRequisicao`, `paraEmpresa` e `novaTransacao`, política `NULLIF(current_setting('app.empresa_id', true), '')` com `FORCE`, e teste de esquema."
+verify = "Contra Postgres real: tabela com `empresa_id` sem política reprova o build; conexão reutilizada não carrega empresa; id de outra empresa responde 404."
+covers = ["F2"]
+after = [2, 3]
+hitl = false
+risk = "high"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-3", "architecture-dezi-novo/architecture-dezi-novo.md#ad-20"]
+plan_checkpoint = true
+
+[[entry]]
+id = 5
+type = "story"
+title = "`infra`: fila, jobs por empresa e ShedLock"
+description = "`infra_trabalho`, porta `EmpresasAtivas` sobre a view `empresa_ativa`, ShedLock e o adaptador que lê `empresa_id` da linha."
+verify = "Dois tenants na fila: o efeito de cada item aparece só no tenant correto, e dois nós não rodam o mesmo job."
+covers = ["F3"]
+after = [4]
+hitl = false
+risk = "high"
+unknown = "AD-14 (ShedLock) é [ASSUMPTION] na espinha."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-14", "architecture-dezi-novo/architecture-dezi-novo.md#ad-28"]
+plan_checkpoint = true
+
+[[entry]]
+id = 6
+type = "story"
+title = "`infra`: eventos publicados e consumo"
+description = "`infra_evento_publicado`, `infra_sequencia`, `infra_consumo` e `infra_consumo_falha`, com ordem por agregado, evento venenoso e expurgo 30 dias após o consumo."
+verify = "Eventos de um agregado são consumidos na ordem da `sequencia`; um evento venenoso vai para `ERRO` e o consumidor avança; o consumo é idempotente por `evento_id`."
+covers = ["F3"]
+after = [5]
+hitl = false
+risk = "high"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-21", "architecture-dezi-novo/architecture-dezi-novo.md#ad-28"]
+
+[[entry]]
+id = 7
+type = "story"
+title = "`Relogio`, `Prazo` e convenções de API"
+description = "`Relogio` injetado, `Prazo.vencido(dataLimite, fuso)`, chaves de idempotência de `infra`, Problem Details, `ETag`/`If-Match` e paginação com limite."
+verify = "Com o relógio fixado, o prazo vale até o fim do dia no fuso da empresa; a mesma `Idempotency-Key` não repete o efeito; erro sai em Problem Details."
+covers = ["F3", "F4"]
+after = [4]
+hitl = false
+risk = "medium"
+unknown = "Prazo até o fim do dia (ELI-19) está a confirmar."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-10", "architecture-dezi-novo/architecture-dezi-novo.md#ad-15"]
+
+[[entry]]
+id = 8
+type = "story"
+title = "Contrato OpenAPI e cliente gerado"
+description = "Repositório `api-contract` contract-first, geração do cliente Angular e verificação de divergência no build do backend e do frontend."
+verify = "Alterar o contrato sem atualizar o backend ou o cliente quebra o build dos dois."
+covers = ["F4"]
+after = [1]
+hitl = false
+risk = "medium"
+unknown = "O gerador `typescript-angular` com Angular 22 não está confirmado; se falhar, esta história vira spike."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-15"]
+
+[[entry]]
+id = 9
+type = "story"
+title = "Fuse limpo"
+description = "Copia o template Fuse para o repositório do frontend com versões fixas, remove exemplos e dados fictícios, mantém SSR, tema, login e pt-BR (Transloco)."
+verify = "O frontend sobe com SSR, sem módulos de exemplo, em pt-BR."
+covers = ["F5"]
+after = []
+hitl = true
+risk = "medium"
+unknown = "Licença Envato (A4) em aberto; não bloqueia o desenvolvimento."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-16"]
+
+[[entry]]
+id = 10
+type = "story"
+title = "Frontend base e tracer ponta a ponta"
+description = "Guard de rota, interceptor (cookie, XSRF, 401/403), CSP, repasse do cookie no SSR e proxy de dev que serve `/` e `/api` no mesmo domínio."
+verify = "Teste automatizado: uma tela do Fuse chama `/api` pelo cliente gerado, sob o mesmo domínio e sem CORS, e lê uma tabela com RLS sob `paraEmpresa`."
+covers = ["F4", "F5"]
+after = [4, 8, 9]
+hitl = false
+risk = "high"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-6", "architecture-dezi-novo/architecture-dezi-novo.md#ad-16"]
+
+[[entry]]
+id = 11
+type = "story"
+title = "Pipeline de CI"
+description = "CI dos três repositórios com build, arquitetura, isolamento contra Postgres real, privilégios, contrato e SCA, mais README de onboarding."
+verify = "Um PR que viola arquitetura, RLS, privilégio ou contrato fica vermelho; um desenvolvedor novo sobe tudo pelo README."
+covers = ["F6"]
+after = [2, 3, 4, 8, 9]
+hitl = false
+risk = "medium"
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-18"]
+
+[[entry]]
+id = 12
+type = "story"
+title = "Refactor sweep"
+description = "Limpeza de dívida registrada durante o épico; o escopo é fixado quando a história começa, a partir dos registros de build e dos achados adiados."
+verify = "O que foi registrado como dívida está tratado e o CI continua verde."
+covers = []
+after = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+hitl = false
+risk = "low"
+

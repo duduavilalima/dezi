@@ -1,0 +1,41 @@
+# Revisão r4: versões e segurança/LGPD da espinha de arquitetura do DEZI novo
+
+Data: 2026-10-21. Alvo: `architecture-dezi-novo.md` (texto atual). Continua `review-versoes-seguranca-r3.md`. A espinha não foi alterada. Revisão só por leitura do texto: não repeti experimentos nem consultas a registros (versões e advisories valem como na r3; não reverifiquei se saiu Boot 4.1.2, Flyway 13.11.2 ou novo Angular depois da r3).
+
+## Veredito
+
+**PASSA COM RESSALVAS.** Os dois achados altos da r3 foram fechados no texto (parcialmente no caso do AD-30, por decisão consciente de remeter ao jurídico). As mudanças introduziram riscos novos, nenhum bloqueante, concentrados no papel `migracao` e na função `SECURITY DEFINER`. A Stack reflete a compatibilidade provada, mas não contém os pisos de patch e deixa Flyway e Angular em aberto.
+
+## Fechamento dos achados altos da r3
+
+| Achado r3 | Situação | Evidência no texto |
+| --- | --- | --- |
+| S-R3-1 (`auditoria_manutencao` dono das partições) | **Fechado** no desenho | AD-29: "Não há papel dono de partições"; expurgo por função `SECURITY DEFINER` do papel `migracao`, que só remove partição vencida e se registra; `migracao` é dono de tabelas e partições; teste de privilégios no CI (altera, trunca, desabilita gatilho). AD-8 e AD-21 coerentes. Falta o detalhamento em R4-1. |
+| S-R3-2 (RLS de plataforma atada ao papel) | Fechado | AD-29: política "atada ao papel e não à variável de sessão". |
+| S-R3-4 (pseudonimização x anonimização) | **Fechado como registro, aberto como decisão** | AD-30 admite que consolidado com `funcionario_id`, cargo e unidade é pseudonimização e remete ao jurídico; `resposta.observacao` entra na porta `EliminacaoDeTitular`; IP truncado ou com hash; matrícula digitada fora da trilha (AD-8); catálogo testado. Backups e retenção de texto livre ficam como "decisão jurídica". Aceitável para espinha, desde que vire pendência com dono (R4-3). |
+| S-R3-7 (acesso privilegiado) | Não tratado (era média); segue como sugestão | AD-8 mantém código fechado, sem referência opaca de chamado. |
+
+## Achados (priorizados)
+
+**R4-1 (Média). A função `SECURITY DEFINER` herda `BYPASSRLS`, e o texto diz que o papel nunca é usado em execução.** AD-29 declara `migracao` com `BYPASSRLS` "nunca usado em tempo de execução", mas o expurgo (e, por consequência, a criação de partições, que o texto não atribui a ninguém) roda em tempo de execução com os atributos do dono da função. Contradiz literalmente o "Prevents: BYPASSRLS em produção" do AD-20 e o AD-3. Faltam, para a função ser de fato uma barreira: (a) `REVOKE EXECUTE ... FROM PUBLIC` e `GRANT` só ao papel que dispara o job (qual? `app_rw` comprometido por injeção SQL poderia chamá-la); (b) `SET search_path` fixo na função, com objetos qualificados; (c) prazo de retenção embutido na função/tabela de configuração e não recebido por argumento (hoje o prazo é "a confirmar"); (d) quem cria a partição do mês seguinte, e o que acontece quando falta (o `INSERT` de auditoria falha e a ação aborta, por desenho do AD-8); (e) o teste de CI deve cobrir também "papel de aplicação não consegue expurgar partição não vencida". Correção: reescrever a frase como "o `BYPASSRLS` do `migracao` só é exercido por migração e pelas funções DEFINER enumeradas", ou criar um terceiro papel dono só das funções sem `BYPASSRLS` quando a função não precisar dele (expurgar partição não lê linhas, não precisa de `BYPASSRLS`).
+
+**R4-2 (Média). `BYPASSRLS` e funções `SECURITY DEFINER` dependem do provedor, ainda "a confirmar".** Em PostgreSQL gerenciado, criar papel com `BYPASSRLS` costuma exigir superusuário ou um papel administrativo do provedor, que pode não existir ou ser proibido. O mesmo papel `migracao` dono de tudo também é o ponto de maior privilégio e suas credenciais (pipeline de CI/deploy) não têm dono declarado no AD-18/AD-29. Fechar com: (i) o backfill de migração usar o dono das tabelas sem `BYPASSRLS` (o dono com `FORCE` ainda é sujeito à política; escrever migração com `SET LOCAL app.empresa_id` ou política temporária), eliminando o atributo; ou (ii) exigir da lista de provedores candidatos a prova de que suportam o atributo. Credencial de `migracao` fora do runtime da aplicação, rotação, uso só pelo passo de migração no pipeline. Se a migração usar `SET ROLE`, Flyway >= 13.11.0 (r3 V-R3-1).
+
+**R4-3 (Média). AD-30: o que ficou "jurídico" precisa de pendência com dono, e há três lacunas técnicas que não dependem do jurídico.** (a) IP "truncado **ou** hash" e "só contagem e hash" da matrícula (AD-8): hash simples de IP (espaço de 2^32) e de matrícula (curta, previsível) é reversível por enumeração; especificar HMAC com segredo do cofre, e dizer qual dos dois para IP. (b) `EliminacaoDeTitular` é irreversível e não está na lista "Cobre" do AD-8 nem exige `confirmarSenha`/reautenticação recente: acrescentar eliminação/anonimização de titular às ações auditadas e à exigência de reautenticação, com código de motivo fechado e contador do pedido do titular (rastro do pedido sem o nome). (c) Backups: a restauração reintroduz o dado eliminado; precisa ao menos de registro das eliminações reaplicáveis (a trilha guarda só ids, então reaplicar é viável) e do prazo máximo de retenção do backup, hoje só "decisão jurídica". Acrescentar `comentários finais`, PDI e apontamentos à lista de texto livre ou dizer que o teste do catálogo os cobre (hoje só `resposta.observacao` é citada).
+
+**R4-4 (Baixa a Média). `confirmarSenha(sessao, finalidade)` é um bom funil, mas cria um oráculo e um ponto único de falha novos.** O consenso (D53) e a reautenticação do AD-8 passam a gastar o mesmo orçamento de tentativas da matrícula: um terceiro com sessão roubada pode queimar o contador e provocar atraso progressivo ao dono (o AD-7 só protege o login por IP; aqui a chave é a sessão). Definir: contador por sessão com teto que **encerra a sessão** (não bloqueia a matrícula), `finalidade` de lista fechada versionada com a matriz do AD-4, e que a falha de `confirmarSenha` não entra no atraso por (empresa, matrícula) do login. Incluir no critério de aceite do CAP-1 um teste de que sessão comprometida não consegue travar o login legítimo.
+
+**R4-5 (Média, decisões de Stack). A tabela não traz os pisos de patch e deixa duas decisões em aberto.**
+- **Flyway 13.11.1 x BOM 12.4.0:** a Stack já registra o conflito, mas deixa "manter ou voltar ao 12.4.0, a decidir". Recomendação: manter 13.11.1 **somente** se o teste de partida do CI (migração em `postgres:18`, incluindo o fluxo do papel `migracao`/`SET ROLE` e o expurgo DEFINER) for critério de aceite do scaffolding e `flyway.version` ficar fixado explicitamente; caso contrário, voltar a 12.4.0 e reavaliar quando o Boot gerenciar 13.x. A segunda opção é a de menor risco, pois nenhum recurso do 13.x é exigido pelo texto da espinha, salvo a correção de `afterConnect` citada na r3 (só relevante se `SET ROLE` for usado). Decidir e registrar o motivo.
+- **Pisos de patch (ausentes da Stack):** Tomcat >= 11.0.25 (gerenciado pelo Boot 4.1.1 em 11.0.24; sobrescrever até o Boot 4.1.2), `bcprov-jdk18on` >= 1.85, pgjdbc >= 42.7.12 (o Boot gerencia 42.7.13), Angular/SSR 22.2.3 em lugar de 22.1.1 (corrente em 2026-10-14, na r3; o Fuse comprado define a base real e a linha da Stack diz "fixos"). A Stack diz também "Flyway 13.11.1" mas o linha de Angular ainda copia 22.1.1: atualizar ou justificar. SCA/Dependabot em AD-18 continua ausente (nenhuma ocorrência no texto).
+- Seguem pendentes: gerador de cliente OpenAPI e biblioteca TOTP (spike no scaffolding), TLS ao banco `verify-full` e SCRAM (apenas "TLS ao banco" no AD-29), convenção `@NamedInterface` já registrada na Stack, mas a "Semente Estrutural" ainda diz só `api (pública) + internal (oculto)`.
+
+## O que a Stack reflete corretamente
+
+JDK 25, Boot 4.1.1, Modulith 2.1.1 (com a ressalva `@NamedInterface`), PostgreSQL 18, ShedLock 7.10.1 e Flyway 13.11.1 estão alinhados com as provas da r3. Nenhum ajuste de compatibilidade é necessário.
+
+## Não confirmado por mim nesta rodada
+
+- Que não houve nova versão (Boot, Flyway, Tomcat, Angular) depois da r3.
+- O comportamento real de `SECURITY DEFINER` com `BYPASSRLS` no provedor escolhido (não testado; deduzido da semântica documentada do PostgreSQL).
+- O que o provedor permite quanto ao atributo `BYPASSRLS`.
