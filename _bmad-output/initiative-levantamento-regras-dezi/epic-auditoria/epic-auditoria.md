@@ -24,6 +24,7 @@ Toda ação privilegiada dos módulos seguintes deixa rastro imutável sem derru
 - AU2: Tabela imutável: papel da aplicação só com `INSERT`/`SELECT`, gatilho recusa alteração, dono `dono_auditoria` (AD-8, AD-29).
 - AU3: Canal 2 (`AuditoriaDeNegado`) em transação própria, com reserva de conexões (AD-21).
 - AU4: Partições mensais criadas à frente, com alerta de falta (AD-29).
+- AU5: Leitura da trilha só pela porta `AutorizarLeitura`, declarada por `auditoria` e implementada por `acesso` (AD-4).
 
 ## Done when
 
@@ -46,3 +47,9 @@ Módulo `auditoria` e suas portas. Os motivos de lista fechada pertencem a cada 
 
 - Parked: `expurgar_particao_auditoria` com prazo embutido; retenção da auditoria é decisão do negócio em aberto (AD-8, AD-21).
 - Parked: anonimização de IP e matrícula por HMAC depende do cofre e vai ao épico lgpd-titular.
+- Decision: AU5 acrescentado a partir do Done when 4, que não tinha requisito (usuário, 2026-10-22).
+- Decision: 6 histórias; tracer pela 1; `plan_checkpoint` nas histórias 1, 2 e 4; closing story "Refactor sweep"; a 2 depende da 1.11 porque o Done when 2 exige o teste de privilégios no CI; a 4 depende da 3 porque as duas alteram o DDL de `auditoria`; sem suíte e2e de fechamento (2026-10-22).
+- Decision: `expurgar_particao_auditoria` e a anonimização de IP e matrícula por HMAC ficam fora das histórias; o registro do canal 2 não grava IP nem matrícula; `app_manutencao` só recebe `EXECUTE` de `criar_particao_auditoria`.
+- Open question: o job de partição mora em `infra` (AD-29) ou em `auditoria` registrando-se na API de jobs (AD-28)? A 1.5 aceita job global sem item por empresa?
+- Open question: mecanismo de métrica e alerta (a fundação entrega só logs); limiar do alerta lido como "cobertura à frente menor que 3 meses" (AD-29), a confirmar.
+- Open question: quem expõe a consulta da trilha por endpoint e com quais filtros; a implementação real de `AutorizarLeitura` fica no épico acesso.

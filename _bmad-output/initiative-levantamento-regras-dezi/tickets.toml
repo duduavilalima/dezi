@@ -11,7 +11,7 @@ id = 2
 slug = "epic-auditoria"
 title = "Trilha de auditoria imutável"
 covers = []
-after = [{ epic = 1, needs = "RLS, papéis de banco e `ContextoDeEmpresa`" }]
+after = [{ epic = 1, needs = "RLS, papéis de banco e `ContextoDeEmpresa` (1.3, 1.4), jobs com ShedLock (1.5), `Relogio` e convenções de API (1.7) e o pipeline de CI (1.11)" }]
 
 [[epic]]
 id = 3

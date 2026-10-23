@@ -1,0 +1,80 @@
+# tickets.toml — histórias do épico auditoria, na ordem de construção.
+
+[[entry]]
+id = 1
+type = "story"
+title = "Tracer: `RegistroDeAuditoria` grava na transação da ação"
+description = "Cria `dono_auditoria`, a tabela-mãe `auditoria` particionada por mês (partição do mês e dos 3 seguintes, sem `DEFAULT`) com `empresa_id` anulável e RLS por empresa, e a porta `RegistroDeAuditoria.registrar` (ator, ação, motivo de lista fechada, recurso por id, empresa) chamada por uma ação de teste na mesma transação; estende a regra de arquitetura da 1.2 para cobrir `RegistroDeAuditoria`."
+verify = "Contra Postgres real: a ação de teste grava a linha de auditoria junto com seu efeito; se a gravação falha, a ação inteira dá rollback; o teste de esquema da 1.4 passa com a tabela nova."
+covers = ["AU1", "AU2"]
+after = ["1.2", "1.3", "1.4"]
+hitl = false
+risk = "high"
+unknown = "RLS e `FORCE` na tabela particionada: a política precisa valer nas partições criadas depois; se não herdar, a função de criação de partição (história 3) a aplica."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-8", "architecture-dezi-novo/architecture-dezi-novo.md#ad-21", "architecture-dezi-novo/architecture-dezi-novo.md#ad-29"]
+plan_checkpoint = true
+
+[[entry]]
+id = 2
+type = "story"
+title = "Imutabilidade e teste de privilégios da trilha"
+description = "Gatilho que recusa `UPDATE`, `DELETE` e `TRUNCATE` na tabela e nas partições, `REVOKE` para `app_rw` (só `INSERT`/`SELECT`, inclusive nas partições), dono `dono_auditoria`, `migracao` membro de `dono_auditoria` sem herança (`NOINHERIT`) e usada só na migração, e a extensão do teste de privilégios da 1.3 para a trilha."
+verify = "O teste de privilégios prova que `app_rw` não altera, trunca nem desabilita o gatilho da trilha e não acessa as partições diretamente, e passa no pipeline de CI da 1.11."
+covers = ["AU2"]
+after = [1, "1.3", "1.11"]
+hitl = false
+risk = "high"
+unknown = "Gatilho `TRUNCATE` em tabela particionada: `TRUNCATE` direto numa partição pode não disparar o gatilho da mãe; se não disparar, o `REVOKE` e o dono das partições são a barreira e o teste cobre a partição."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-8", "architecture-dezi-novo/architecture-dezi-novo.md#ad-29"]
+plan_checkpoint = true
+
+[[entry]]
+id = 3
+type = "story"
+title = "Partições mensais à frente e alerta de falta"
+description = "Papel `app_manutencao` (só `EXECUTE`), função `SECURITY DEFINER` `criar_particao_auditoria` que se registra, cria as partições dos próximos 3 meses e instala em cada uma o gatilho de `TRUNCATE` e a política de RLS, job agendado com ShedLock que a chama, e o alerta de partição futura faltando; sem `expurgar_particao_auditoria`."
+verify = "Com o relógio fixado, o job cria as partições que faltam, é idempotente, e uma partição criada por ele recusa `UPDATE`, `DELETE` e `TRUNCATE` para `app_rw`; sem partição futura o alerta dispara com mais de 2 meses de antecedência e a ação auditada aborta."
+covers = ["AU4"]
+after = [2, "1.5", "1.7"]
+hitl = false
+risk = "medium"
+unknown = "AD-29 chama o job de `infra`, mas `infra` não depende de módulo de negócio (AD-28): a decisão de onde o job mora (`auditoria` registrando-se na API de jobs de `infra`) e se a 1.5 aceita job global, sem item por empresa, está a confirmar; o limiar do alerta é lido como 'cobertura à frente menor que 3 meses', a confirmar; a fundação não entrega métrica nem alerta (só logs), o mecanismo (por exemplo Micrometer) está a confirmar; `app_manutencao` precisa de `DataSource` próprio."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-20", "architecture-dezi-novo/architecture-dezi-novo.md#ad-28", "architecture-dezi-novo/architecture-dezi-novo.md#ad-29"]
+
+[[entry]]
+id = 4
+type = "story"
+title = "Canal 2: `AuditoriaDeNegado` com reserva de conexões"
+description = "Porta `AuditoriaDeNegado.registrar` em transação própria aberta por `ContextoDeEmpresa.novaTransacao`, com `DataSource` de reserva dedicada, linhas com `empresa_id` nulo (política de `INSERT` para `app_rw` só neste canal e `SELECT` só para `plataforma_ro`), rejeição 401/429 sem auditoria quando a reserva enche e métrica de falha que não derruba o fluxo."
+verify = "Uma ação auditada que lança erro de negócio ainda deixa o registro de negado após o rollback; com a reserva cheia a chamada responde 401/429 sem auditar e conta em métrica; falha de gravação do canal 2 não propaga ao chamador."
+covers = ["AU3"]
+after = [3, "1.4", "1.7"]
+hitl = false
+risk = "high"
+unknown = "Tamanho da reserva de conexões e seu `DataSource` com credencial de `app_rw`; o registro do canal 2 não leva IP nem matrícula (a anonimização por HMAC e o hash de matrícula são do épico lgpd-titular), a confirmar com o negócio."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-20", "architecture-dezi-novo/architecture-dezi-novo.md#ad-21"]
+plan_checkpoint = true
+
+[[entry]]
+id = 5
+type = "story"
+title = "Leitura da trilha pela porta `AutorizarLeitura`"
+description = "Declara a porta `AutorizarLeitura` e a consulta paginada da trilha em `auditoria`, que chama a porta antes de qualquer leitura; a implementação real é de `acesso` e aqui entra só um duplo de teste."
+verify = "Com o duplo negando, a consulta falha sem tocar a tabela; com ele permitindo, devolve só linhas da empresa da sessão; um teste de arquitetura reprova leitura da tabela `auditoria` fora da consulta."
+covers = ["AU5"]
+after = [1, "1.2", "1.7"]
+hitl = false
+risk = "low"
+unknown = "Filtros da consulta e quem a expõe por endpoint não estão definidos; a implementação de `AutorizarLeitura` pertence ao épico acesso."
+references = ["architecture-dezi-novo/architecture-dezi-novo.md#ad-4", "architecture-dezi-novo/architecture-dezi-novo.md#ad-19"]
+
+[[entry]]
+id = 6
+type = "story"
+title = "Refactor sweep"
+description = "Limpeza de dívida registrada durante o épico; o escopo é fixado quando a história começa, a partir dos registros de build e dos achados adiados."
+verify = "O que foi registrado como dívida está tratado e o CI continua verde."
+covers = []
+after = [1, 2, 3, 4, 5]
+hitl = false
+risk = "low"
